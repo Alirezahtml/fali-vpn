@@ -4,4 +4,4 @@ package tunservice
 
 // AdapterName is the TUN device's name (Linux allows no spaces; macOS names
 // it utunN itself, tunstack).
-const AdapterName = "fati-vpn"
+const AdapterName = "fali-vpn"

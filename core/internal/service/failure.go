@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/netcheck"
-	"github.com/Alirezahtml/fati-vpn/core/internal/netstate"
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
-	"github.com/Alirezahtml/fati-vpn/core/internal/resolver"
+	"github.com/Alirezahtml/fali-vpn/core/internal/netcheck"
+	"github.com/Alirezahtml/fali-vpn/core/internal/netstate"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/resolver"
 )
 
 // failureCode is proxy.FailureCode for err, made sure for failures that may

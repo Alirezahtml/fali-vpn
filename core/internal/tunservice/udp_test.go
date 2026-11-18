@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tun"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tun"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
 )
 
 // testUDPPorts is the shape of the core's list, without QUIC.

@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/fxa"
-	"github.com/Alirezahtml/fati-vpn/core/internal/guardian"
+	"github.com/Alirezahtml/fali-vpn/core/internal/fxa"
+	"github.com/Alirezahtml/fali-vpn/core/internal/guardian"
 )
 
 func TestProxyControllerSleepOrDoneWakesOnClose(t *testing.T) {

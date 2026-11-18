@@ -15,8 +15,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/controlplane"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
 )
 
 var errProxyHTTP1Unavailable = errors.New("proxy did not take HTTP/1.1")

@@ -16,9 +16,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/version"
+	"github.com/Alirezahtml/fali-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/version"
 )
 
 // A backup is the data folder as a zip file, in the same layout, so that it
@@ -81,7 +81,7 @@ type backupContents struct {
 
 // backupFileName is the name a backup is saved under.
 func backupFileName(now time.Time) string {
-	return "Fati-VPN-backup-" + now.Format("2006-01-02") + ".zip"
+	return "Fali-VPN-backup-" + now.Format("2006-01-02") + ".zip"
 }
 
 // writeBackup writes the data folder to w as a zip file.
@@ -92,7 +92,7 @@ func (d *Daemon) writeBackup(w io.Writer) error {
 	}
 	zw := zip.NewWriter(w)
 	info, _ := json.MarshalIndent(backupInfo{
-		App:      "Fati VPN",
+		App:      "Fali VPN",
 		Format:   backupFormat,
 		Version:  version.Current,
 		Created:  time.Now().UTC().Truncate(time.Second),

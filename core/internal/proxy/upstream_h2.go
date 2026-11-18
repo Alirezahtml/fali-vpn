@@ -15,8 +15,8 @@ import (
 
 	"golang.org/x/net/http2"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/controlplane"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
 )
 
 // The keepalive PINGs the connection this often and waits this long for

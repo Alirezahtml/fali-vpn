@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest a new feature or improvement for Fati VPN.
+description: Suggest a new feature or improvement for Fali VPN.
 body:
   - type: textarea
     id: feature

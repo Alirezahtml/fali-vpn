@@ -14,13 +14,13 @@ func TestTheInstalledVersionIsSetForSetupsFolderOnly(t *testing.T) {
 	random := make([]byte, 6)
 	rand.Read(random)
 	old := uninstallKey
-	uninstallKey = `Software\FatiVPNUpdateTest-` + hex.EncodeToString(random)
+	uninstallKey = `Software\FaliVPNUpdateTest-` + hex.EncodeToString(random)
 	t.Cleanup(func() {
 		registry.DeleteKey(registry.CURRENT_USER, uninstallKey)
 		uninstallKey = old
 	})
 	// No entry: a portable copy.
-	if err := setInstalledVersion(`C:\Apps\Fati VPN`, "1.2.3"); err != nil {
+	if err := setInstalledVersion(`C:\Apps\Fali VPN`, "1.2.3"); err != nil {
 		t.Fatal(err)
 	}
 	k, _, err := registry.CreateKey(registry.CURRENT_USER, uninstallKey, registry.ALL_ACCESS)
@@ -28,16 +28,16 @@ func TestTheInstalledVersionIsSetForSetupsFolderOnly(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer k.Close()
-	k.SetStringValue("InstallLocation", `C:\Apps\Fati VPN\`)
+	k.SetStringValue("InstallLocation", `C:\Apps\Fali VPN\`)
 	k.SetStringValue("DisplayVersion", "1.0.0")
 	version := func() string {
 		v, _, _ := k.GetStringValue("DisplayVersion")
 		return v
 	}
-	if err := setInstalledVersion(`D:\Portable\Fati VPN`, "1.2.3"); err != nil || version() != "1.0.0" {
+	if err := setInstalledVersion(`D:\Portable\Fali VPN`, "1.2.3"); err != nil || version() != "1.0.0" {
 		t.Fatalf("another folder: %v, %q", err, version())
 	}
-	if err := setInstalledVersion(`c:\apps\fati vpn`, "1.12.3"); err != nil || version() != "1.12.3" {
+	if err := setInstalledVersion(`c:\apps\fali vpn`, "1.12.3"); err != nil || version() != "1.12.3" {
 		t.Fatalf("Setup's folder: %v, %q", err, version())
 	}
 	for name, want := range map[string]uint64{"MajorVersion": 1, "VersionMajor": 1, "MinorVersion": 12, "VersionMinor": 12} {

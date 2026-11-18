@@ -12,14 +12,14 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/netstate"
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
-	"github.com/Alirezahtml/fati-vpn/core/internal/serverlist"
-	"github.com/Alirezahtml/fati-vpn/core/internal/update"
-	"github.com/Alirezahtml/fati-vpn/core/internal/version"
+	"github.com/Alirezahtml/fali-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/netstate"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/serverlist"
+	"github.com/Alirezahtml/fali-vpn/core/internal/update"
+	"github.com/Alirezahtml/fali-vpn/core/internal/version"
 )
 
 type proxyView struct {

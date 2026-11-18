@@ -7,13 +7,13 @@
 *.ipa
 *.dmg
 *.msix
-/core/cmd/fati-vpn-core/fati-vpn-core
-/core/fati-vpn-core*
+/core/cmd/fali-vpn-core/fali-vpn-core
+/core/fali-vpn-core*
 # The Windows resources (icon, version) of the core and the TUN service,
-# made by the build: go generate ./cmd/fati-vpn-core ./cmd/fati-vpn-tun
-/core/cmd/fati-vpn-core/rsrc_windows_*.syso
-/core/cmd/fati-vpn-tun/rsrc_windows_*.syso
-/core/cmd/fati-vpn-tun/fati-vpn-tun
+# made by the build: go generate ./cmd/fali-vpn-core ./cmd/fali-vpn-tun
+/core/cmd/fali-vpn-core/rsrc_windows_*.syso
+/core/cmd/fali-vpn-tun/rsrc_windows_*.syso
+/core/cmd/fali-vpn-tun/fali-vpn-tun
 # Update signing keys (tools/sign) never go into the repository.
 *.signing-key
 # gomobile's output for the Android app (core.aar, core-sources.jar),

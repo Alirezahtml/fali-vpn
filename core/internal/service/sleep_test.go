@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
 )
 
 // sleepyEngine is an engine whose wake only installs a new (empty)

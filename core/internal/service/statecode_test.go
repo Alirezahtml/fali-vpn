@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
 )
 
 // waitCode waits until /api/status reports the state code, and returns the

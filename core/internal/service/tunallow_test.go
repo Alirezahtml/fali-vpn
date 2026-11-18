@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/routing"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/routing"
 )
 
 // The phone's VPN refuses at once what Mozilla would refuse, unless the

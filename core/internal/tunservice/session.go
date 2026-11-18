@@ -10,11 +10,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tun"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunstack"
+	"github.com/Alirezahtml/fali-vpn/core/internal/egress"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tun"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunstack"
 )
 
 // session is one core's TUN: the adapter, then its routes and stack and

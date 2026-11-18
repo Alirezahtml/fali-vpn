@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
-	"github.com/Alirezahtml/fati-vpn/core/internal/netcheck"
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/controlplane"
+	"github.com/Alirezahtml/fali-vpn/core/internal/netcheck"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
 )
 
 // All values in this file are local fixtures; the control plane transport

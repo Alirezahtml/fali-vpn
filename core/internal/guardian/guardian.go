@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
+	"github.com/Alirezahtml/fali-vpn/core/internal/controlplane"
 )
 
 // DefaultEndpoint is the production Guardian endpoint, matching Firefox's

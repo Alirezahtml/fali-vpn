@@ -1,6 +1,6 @@
 //go:generate go run ../../tools/winres -program tun
 
-// Command fati-vpn-tun is the TUN service of the desktop TUN mode: it
+// Command fali-vpn-tun is the TUN service of the desktop TUN mode: it
 // holds the TUN adapter, its routes, and the DNS filters with the system's
 // rights, for the core, which stays an ordinary program (internal/tunservice,
 // protocol internal/tunapi). The app carries it beside the core and
@@ -8,10 +8,10 @@
 // a systemd service in /opt, on macOS as a launchd daemon in
 // /Library/Application Support.
 //
-//	fati-vpn-tun install     install or update the service for this user (asks for administrator rights)
-//	fati-vpn-tun uninstall   remove the service (no prompt while it runs)
-//	fati-vpn-tun update      make the running service this signed executable
-//	fati-vpn-tun -version    print the version
+//	fali-vpn-tun install     install or update the service for this user (asks for administrator rights)
+//	fali-vpn-tun uninstall   remove the service (no prompt while it runs)
+//	fali-vpn-tun update      make the running service this signed executable
+//	fali-vpn-tun -version    print the version
 //
 // On macOS, install and uninstall take -prompt, the reason the
 // administrator prompt shows (the app passes it in the user's language).
@@ -27,7 +27,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/version"
+	"github.com/Alirezahtml/fali-vpn/core/internal/version"
 )
 
 // Exit statuses.
@@ -54,11 +54,11 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "Usage: fati-vpn-tun install | uninstall | update | -version")
+	fmt.Fprintln(os.Stderr, "Usage: fali-vpn-tun install | uninstall | update | -version")
 	os.Exit(exitUsage)
 }
 
 func fail(err error) int {
-	fmt.Fprintln(os.Stderr, "fati-vpn-tun:", err)
+	fmt.Fprintln(os.Stderr, "fali-vpn-tun:", err)
 	return exitFailed
 }

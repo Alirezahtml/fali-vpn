@@ -15,12 +15,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/fxa"
-	"github.com/Alirezahtml/fati-vpn/core/internal/guardian"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/fxa"
+	"github.com/Alirezahtml/fali-vpn/core/internal/guardian"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
 )
 
 // All credentials in this file are local fixtures; the control plane
@@ -202,7 +202,7 @@ func TestDashboardLoginProtectsAPI(t *testing.T) {
 	if rec := c.do(http.MethodGet, "/api/status", nil); rec.Code != http.StatusUnauthorized {
 		t.Fatalf("expected a login to be required, got %d", rec.Code)
 	}
-	if rec := c.do(http.MethodGet, "/app/", nil); rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "Fati VPN") {
+	if rec := c.do(http.MethodGet, "/app/", nil); rec.Code != http.StatusOK || !strings.Contains(rec.Body.String(), "Fali VPN") {
 		t.Fatalf("expected the page itself to load without a login, got %d", rec.Code)
 	}
 	if rec := c.do(http.MethodGet, "/app", nil); rec.Code/100 != 3 || rec.Header().Get("Location") != "/app/" {

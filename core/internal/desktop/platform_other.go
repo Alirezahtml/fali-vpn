@@ -9,7 +9,7 @@ import (
 	"runtime"
 	"syscall"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
 )
 
 func enableTerminalColors() bool {
@@ -41,7 +41,7 @@ func notify(title, body string) {
 	if err != nil {
 		return
 	}
-	cmd := exec.Command(path, "--app-name=Fati VPN", "--", title, body)
+	cmd := exec.Command(path, "--app-name=Fali VPN", "--", title, body)
 	if err := cmd.Start(); err != nil {
 		return
 	}

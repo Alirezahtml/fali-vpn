@@ -18,7 +18,7 @@ import (
 
 	"golang.org/x/net/http2"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
 )
 
 // cuttableConn carries its connection until cut, then carries nothing,

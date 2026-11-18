@@ -10,7 +10,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => 'Fati VPN';
+  String get appTitle => 'Fali VPN';
 
   @override
   String get navOverview => '概览';
@@ -1445,7 +1445,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tunAppOutdated => 'TUN 服务比此应用新。请更新应用以使用 TUN 模式。';
 
   @override
-  String get tunBusy => '另一个 Fati VPN 副本正在使用 TUN 模式。';
+  String get tunBusy => '另一个 Fali VPN 副本正在使用 TUN 模式。';
 
   @override
   String get tunNoDriver => '系统的 TUN 驱动不可用。请重启电脑后重试。';
@@ -1469,10 +1469,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tunServiceRemoved => '已移除 TUN 服务。';
 
   @override
-  String get tunInstallPrompt => 'Fati VPN 想要安装 TUN 模式的服务。';
+  String get tunInstallPrompt => 'Fali VPN 想要安装 TUN 模式的服务。';
 
   @override
-  String get tunRemovePrompt => 'Fati VPN 想要移除 TUN 模式的服务。';
+  String get tunRemovePrompt => 'Fali VPN 想要移除 TUN 模式的服务。';
 
   @override
   String tunRemoveFailed(String error) {
@@ -1595,7 +1595,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   AppLocalizationsZhHant() : super('zh_Hant');
 
   @override
-  String get appTitle => 'Fati VPN';
+  String get appTitle => 'Fali VPN';
 
   @override
   String get navOverview => '總覽';
@@ -3031,7 +3031,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get tunAppOutdated => 'TUN 服務比此應用程式新。請更新應用程式以使用 TUN 模式。';
 
   @override
-  String get tunBusy => '另一個 Fati VPN 副本正在使用 TUN 模式。';
+  String get tunBusy => '另一個 Fali VPN 副本正在使用 TUN 模式。';
 
   @override
   String get tunNoDriver => '系統的 TUN 驅動程式無法使用。請重新啟動電腦後再試一次。';
@@ -3055,10 +3055,10 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get tunServiceRemoved => '已移除 TUN 服務。';
 
   @override
-  String get tunInstallPrompt => 'Fati VPN 想要安裝 TUN 模式的服務。';
+  String get tunInstallPrompt => 'Fali VPN 想要安裝 TUN 模式的服務。';
 
   @override
-  String get tunRemovePrompt => 'Fati VPN 想要移除 TUN 模式的服務。';
+  String get tunRemovePrompt => 'Fali VPN 想要移除 TUN 模式的服務。';
 
   @override
   String tunRemoveFailed(String error) {

@@ -5,7 +5,7 @@ package desktop
 import (
 	"errors"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
 )
 
 func RunTray(service.DataPaths, bool) error {

@@ -18,8 +18,8 @@ import (
 
 	xproxy "golang.org/x/net/proxy"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/controlplane"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
 )
 
 // Local fixtures for the lazy start: a stand-in for Mozilla's CONNECT proxy

@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/signing"
+	"github.com/Alirezahtml/fali-vpn/core/internal/signing"
 )
 
 // Updates of the service must be signed with the key built into it

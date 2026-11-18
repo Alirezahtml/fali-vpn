@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/fxa"
+	"github.com/Alirezahtml/fali-vpn/core/internal/fxa"
 )
 
 // The manager's saves keep the device record that another writer stored

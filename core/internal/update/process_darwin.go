@@ -13,10 +13,10 @@ import (
 
 	"golang.org/x/sys/unix"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
 )
 
-// On macOS the app is its bundle (Fati VPN.app), in the release's
+// On macOS the app is its bundle (Fali VPN.app), in the release's
 // tar.gz.
 func init() { thePackage = macPackage }
 

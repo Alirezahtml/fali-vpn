@@ -119,7 +119,7 @@ class _SignInMethodRow extends StatelessWidget {
 
   Future<void> _change(BuildContext context) async {
     final l = AppLocalizations.of(context);
-    final picked = await showFatiDialog<SignInMethod>(
+    final picked = await showFaliDialog<SignInMethod>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l.signInMethod),
@@ -182,7 +182,7 @@ class _AccountSwitching extends StatelessWidget {
   final double percent;
 
   Future<void> _change(BuildContext context) async {
-    final value = await showFatiDialog<int>(
+    final value = await showFaliDialog<int>(
       context: context,
       builder: (_) => _SwitchThresholdDialog(percent: percent.round()),
     );
@@ -615,7 +615,7 @@ class _AccountCard extends StatelessWidget {
 
   Future<void> _remove(BuildContext context) async {
     final l = AppLocalizations.of(context);
-    final ok = await showFatiDialog<bool>(
+    final ok = await showFaliDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l.removeTitle),

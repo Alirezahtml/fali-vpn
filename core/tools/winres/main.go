@@ -1,11 +1,11 @@
 // Command winres writes the Windows resources of an executable (its icon,
 // version information, and application manifest) as .syso objects that go
-// build links into the package in the current folder: ./cmd/fati-vpn-core,
-// or with -program tun ./cmd/fati-vpn-tun. scripts/build-windows.ps1 runs
+// build links into the package in the current folder: ./cmd/fali-vpn-core,
+// or with -program tun ./cmd/fali-vpn-tun. scripts/build-windows.ps1 runs
 // it before each build with the release version in APP_VERSION (else
 // version.Current):
 //
-//	APP_VERSION=1.1.0 go generate ./cmd/fati-vpn-core ./cmd/fati-vpn-tun
+//	APP_VERSION=1.1.0 go generate ./cmd/fali-vpn-core ./cmd/fali-vpn-tun
 //
 // The objects are build output, not kept in Git; a build without them has
 // no icon, version information, or manifest.
@@ -20,18 +20,18 @@ import (
 	"github.com/tc-hib/winres"
 	winversion "github.com/tc-hib/winres/version"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/desktop"
-	"github.com/Alirezahtml/fati-vpn/core/internal/version"
+	"github.com/Alirezahtml/fali-vpn/core/internal/desktop"
+	"github.com/Alirezahtml/fali-vpn/core/internal/version"
 )
 
 // program is what each executable's version information says.
 type program struct{ description, name string }
 
 var programs = map[string]program{
-	"core": {"Fati VPN Core", "fati-vpn-core"},
+	"core": {"Fali VPN Core", "fali-vpn-core"},
 	// The administrator prompt shows this description when the app
 	// installs the service.
-	"tun": {"Fati VPN TUN", "fati-vpn-tun"},
+	"tun": {"Fali VPN TUN", "fali-vpn-tun"},
 }
 
 func main() {
@@ -67,13 +67,13 @@ func run(p program) error {
 	vi.SetFileVersion(release)
 	vi.SetProductVersion(release)
 	for key, value := range map[string]string{
-		winversion.ProductName:      "Fati VPN",
+		winversion.ProductName:      "Fali VPN",
 		winversion.FileDescription:  p.description,
 		winversion.OriginalFilename: p.name + ".exe",
 		winversion.InternalName:     p.name,
 		// The publisher, as in the installer (AppPublisher) and the app.
-		winversion.CompanyName:    "Fati",
-		winversion.LegalCopyright: "Copyright (c) 2026 Fati",
+		winversion.CompanyName:    "Fali",
+		winversion.LegalCopyright: "Copyright (c) 2026 Fali",
 	} {
 		if err := vi.Set(winversion.LangDefault, key, value); err != nil {
 			return err

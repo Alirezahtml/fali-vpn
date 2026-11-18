@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
 )
 
 func waitPhase(t *testing.T, d *Daemon, want string) {

@@ -10,8 +10,8 @@ import (
 
 // ServiceName and ExeName name the service and its executable.
 const (
-	ServiceName = "fati-vpn-tun"
-	ExeName     = "fati-vpn-tun"
+	ServiceName = "fali-vpn-tun"
+	ExeName     = "fali-vpn-tun"
 )
 
 // ErrNoService means no service answers: it is not installed, or it is

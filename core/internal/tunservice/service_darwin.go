@@ -11,11 +11,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
 )
 
 // InstallDir is the installed service's folder.
-const InstallDir = "/Library/Application Support/Fati VPN TUN"
+const InstallDir = "/Library/Application Support/Fali VPN TUN"
 
 // jobTarget is the service in launchctl's commands.
 const jobTarget = "system/" + tunapi.LaunchdLabel

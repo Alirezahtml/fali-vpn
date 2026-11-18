@@ -10,7 +10,7 @@ import (
 
 	"golang.org/x/net/dns/dnsmessage"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
 )
 
 // DNSPort is DNS's port, which Mozilla's proxy does not connect to. A

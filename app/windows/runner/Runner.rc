@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Fati" "\0"
-            VALUE "FileDescription", "Fati VPN" "\0"
+            VALUE "CompanyName", "Fali" "\0"
+            VALUE "FileDescription", "Fali VPN" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "fati-vpn" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 Fati" "\0"
-            VALUE "OriginalFilename", "fati-vpn.exe" "\0"
-            VALUE "ProductName", "Fati VPN" "\0"
+            VALUE "InternalName", "fali-vpn" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Fali" "\0"
+            VALUE "OriginalFilename", "fali-vpn.exe" "\0"
+            VALUE "ProductName", "Fali VPN" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

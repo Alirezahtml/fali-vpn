@@ -1,11 +1,11 @@
-﻿; The Windows installer of Fati VPN (Inno Setup 6). scripts\build-windows.ps1
+﻿; The Windows installer of Fali VPN (Inno Setup 6). scripts\build-windows.ps1
 ; compiles it with the built app:
 ;
 ;   ISCC /DAppVersion=1.1.9 /DSourceDir=<the app's folder> /DOutputDir=<dir>
-;        /DOutputName=<file name without .exe> fati-vpn.iss
+;        /DOutputName=<file name without .exe> fali-vpn.iss
 ;
 ; It installs for the current user only, without administrator rights, by
-; default into %LOCALAPPDATA%\Programs\Fati VPN (apart from
+; default into %LOCALAPPDATA%\Programs\Fali VPN (apart from
 ; Mozilla's own client). The first install lets the user choose another
 ; folder; it must be one the user can write to, because the app keeps its
 ; data (accounts, settings, logs) in user-data beside it. A new version
@@ -16,13 +16,13 @@
 ; its folder, which the next install offers again.
 ;
 ; The TUN mode's service is the one part that needs administrator rights:
-; Setup always runs core\fati-vpn-tun.exe install, which asks for them
+; Setup always runs core\fali-vpn-tun.exe install, which asks for them
 ; itself and installs the service in Program Files; the uninstall removes it
 ; again.
 
-#define AppName "Fati VPN"
-#define AppExe "fati-vpn.exe"
-#define AppDir "Fati VPN"
+#define AppName "Fali VPN"
+#define AppExe "fali-vpn.exe"
+#define AppDir "Fali VPN"
 #ifndef AppVersion
   #define AppVersion "0.0.0"
 #endif
@@ -33,7 +33,7 @@
   #define OutputDir "."
 #endif
 #ifndef OutputName
-  #define OutputName "Fati-VPN-Setup"
+  #define OutputName "Fali-VPN-Setup"
 #endif
 
 [Setup]
@@ -43,10 +43,10 @@ AppId={{6F3A2C1E-9B4D-4E7A-8C21-5D0F7B9E4A63}
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppVerName={#AppName} {#AppVersion}
-AppPublisher=Fati
-AppPublisherURL=https://github.com/Alirezahtml/fati-vpn
-AppSupportURL=https://github.com/Alirezahtml/fati-vpn/issues
-AppUpdatesURL=https://github.com/Alirezahtml/fati-vpn/releases
+AppPublisher=Fali
+AppPublisherURL=https://github.com/Alirezahtml/fali-vpn
+AppSupportURL=https://github.com/Alirezahtml/fali-vpn/issues
+AppUpdatesURL=https://github.com/Alirezahtml/fali-vpn/releases
 VersionInfoVersion={#AppVersion}
 DefaultDirName={code:DefaultDir}
 ; The folder is asked on the first install only; an update goes where the
@@ -89,71 +89,71 @@ Name: "bn"; MessagesFile: "languages\Bengali.islu"
 ; Uninstalling asks about the data, keeping it unless the user chooses
 ; otherwise.
 DataQuestion=Keep your accounts and settings?
-DataText=They stay in the user-data folder, so installing the app again brings them back. Delete them only if you will not use Fati VPN again.
+DataText=They stay in the user-data folder, so installing the app again brings them back. Delete them only if you will not use Fali VPN again.
 DataKeep=Keep them (recommended)
 DataDelete=Delete them
 fa.DataQuestion=حساب‌ها و تنظیمات شما نگه داشته شوند؟
-fa.DataText=در پوشه user-data می‌مانند و با نصب دوباره برنامه برمی‌گردند. فقط اگر دیگر از Fati VPN استفاده نمی‌کنید پاکشان کنید.
+fa.DataText=در پوشه user-data می‌مانند و با نصب دوباره برنامه برمی‌گردند. فقط اگر دیگر از Fali VPN استفاده نمی‌کنید پاکشان کنید.
 fa.DataKeep=نگه داشته شوند (پیشنهادی)
 fa.DataDelete=پاک شوند
 ar.DataQuestion=هل تريد الاحتفاظ بحساباتك وإعداداتك؟
-ar.DataText=تبقى في مجلد user-data، فتعود عند تثبيت التطبيق مرة أخرى. احذفها فقط إذا كنت لن تستخدم Fati VPN مجددًا.
+ar.DataText=تبقى في مجلد user-data، فتعود عند تثبيت التطبيق مرة أخرى. احذفها فقط إذا كنت لن تستخدم Fali VPN مجددًا.
 ar.DataKeep=احتفظ بها (موصى به)
 ar.DataDelete=احذفها
 ru.DataQuestion=Сохранить ваши аккаунты и настройки?
-ru.DataText=Они останутся в папке user-data, и при повторной установке приложение их вернёт. Удаляйте их, только если больше не будете пользоваться Fati VPN.
+ru.DataText=Они останутся в папке user-data, и при повторной установке приложение их вернёт. Удаляйте их, только если больше не будете пользоваться Fali VPN.
 ru.DataKeep=Сохранить (рекомендуется)
 ru.DataDelete=Удалить
 tr.DataQuestion=Hesaplarınız ve ayarlarınız saklansın mı?
-tr.DataText=user-data klasöründe kalırlar; uygulamayı yeniden kurduğunuzda geri gelirler. Yalnızca Fati VPN'i bir daha kullanmayacaksanız silin.
+tr.DataText=user-data klasöründe kalırlar; uygulamayı yeniden kurduğunuzda geri gelirler. Yalnızca Fali VPN'i bir daha kullanmayacaksanız silin.
 tr.DataKeep=Sakla (önerilen)
 tr.DataDelete=Sil
 az.DataQuestion=Hesablarınız və ayarlarınız saxlanılsın?
-az.DataText=Onlar user-data qovluğunda qalır və tətbiqi yenidən quraşdıranda geri qayıdır. Yalnız Fati VPN-dən bir daha istifadə etməyəcəksinizsə silin.
+az.DataText=Onlar user-data qovluğunda qalır və tətbiqi yenidən quraşdıranda geri qayıdır. Yalnız Fali VPN-dən bir daha istifadə etməyəcəksinizsə silin.
 az.DataKeep=Saxla (tövsiyə olunur)
 az.DataDelete=Sil
 id.DataQuestion=Simpan akun dan pengaturan Anda?
-id.DataText=Semuanya tetap di folder user-data, jadi akan kembali saat aplikasi dipasang lagi. Hapus hanya jika Anda tidak akan memakai Fati VPN lagi.
+id.DataText=Semuanya tetap di folder user-data, jadi akan kembali saat aplikasi dipasang lagi. Hapus hanya jika Anda tidak akan memakai Fali VPN lagi.
 id.DataKeep=Simpan (disarankan)
 id.DataDelete=Hapus
 es.DataQuestion=¿Conservar tus cuentas y ajustes?
-es.DataText=Se quedan en la carpeta user-data, así que vuelven al instalar de nuevo la aplicación. Bórralos solo si no vas a volver a usar Fati VPN.
+es.DataText=Se quedan en la carpeta user-data, así que vuelven al instalar de nuevo la aplicación. Bórralos solo si no vas a volver a usar Fali VPN.
 es.DataKeep=Conservarlos (recomendado)
 es.DataDelete=Borrarlos
 fr.DataQuestion=Conserver vos comptes et paramètres ?
-fr.DataText=Ils restent dans le dossier user-data et reviennent si vous réinstallez l'application. Ne les supprimez que si vous n'utiliserez plus Fati VPN.
+fr.DataText=Ils restent dans le dossier user-data et reviennent si vous réinstallez l'application. Ne les supprimez que si vous n'utiliserez plus Fali VPN.
 fr.DataKeep=Les conserver (recommandé)
 fr.DataDelete=Les supprimer
 hu.DataQuestion=Megtartja a fiókjait és a beállításait?
-hu.DataText=A user-data mappában maradnak, így az alkalmazás újratelepítésekor visszakerülnek. Csak akkor törölje őket, ha többé nem használja az Fati VPN-t.
+hu.DataText=A user-data mappában maradnak, így az alkalmazás újratelepítésekor visszakerülnek. Csak akkor törölje őket, ha többé nem használja az Fali VPN-t.
 hu.DataKeep=Megtartás (ajánlott)
 hu.DataDelete=Törlés
 pt.DataQuestion=Manter suas contas e configurações?
-pt.DataText=Elas ficam na pasta user-data e voltam se você instalar o aplicativo de novo. Apague-as só se não for mais usar o Fati VPN.
+pt.DataText=Elas ficam na pasta user-data e voltam se você instalar o aplicativo de novo. Apague-as só se não for mais usar o Fali VPN.
 pt.DataKeep=Manter (recomendado)
 pt.DataDelete=Apagar
 vi.DataQuestion=Giữ lại tài khoản và cài đặt của bạn?
-vi.DataText=Chúng vẫn nằm trong thư mục user-data, nên sẽ quay lại khi bạn cài lại ứng dụng. Chỉ xóa nếu bạn sẽ không dùng Fati VPN nữa.
+vi.DataText=Chúng vẫn nằm trong thư mục user-data, nên sẽ quay lại khi bạn cài lại ứng dụng. Chỉ xóa nếu bạn sẽ không dùng Fali VPN nữa.
 vi.DataKeep=Giữ lại (khuyên dùng)
 vi.DataDelete=Xóa
 bn.DataQuestion=আপনার অ্যাকাউন্ট ও সেটিংস রেখে দেবেন?
-bn.DataText=এগুলো user-data ফোল্ডারে থেকে যায়, তাই অ্যাপটি আবার ইনস্টল করলে ফিরে আসে। Fati VPN আর ব্যবহার না করলে তবেই মুছুন।
+bn.DataText=এগুলো user-data ফোল্ডারে থেকে যায়, তাই অ্যাপটি আবার ইনস্টল করলে ফিরে আসে। Fali VPN আর ব্যবহার না করলে তবেই মুছুন।
 bn.DataKeep=রেখে দিন (প্রস্তাবিত)
 bn.DataDelete=মুছে ফেলুন
 ; A chosen folder the user cannot write to (such as Program Files).
-DirNotWritable=Fati VPN can't write to this folder. It keeps your accounts and settings beside itself, so it needs a folder you can change without administrator rights (not Program Files). Choose another folder.
-fa.DirNotWritable=Fati VPN نمی‌تواند در این پوشه بنویسد. حساب‌ها و تنظیمات کنار خود برنامه نگه داشته می‌شوند، پس پوشه‌ای لازم است که بدون دسترسی Administrator قابل تغییر باشد (نه Program Files). پوشه دیگری انتخاب کنید.
-ar.DirNotWritable=لا يستطيع Fati VPN الكتابة في هذا المجلد. فهو يحتفظ بحساباتك وإعداداتك بجانبه، لذا يحتاج إلى مجلد يمكنك تعديله دون صلاحيات المسؤول (وليس Program Files). اختر مجلدًا آخر.
-ru.DirNotWritable=Fati VPN не может записывать в эту папку. Аккаунты и настройки хранятся рядом с программой, поэтому нужна папка, которую можно менять без прав администратора (не Program Files). Выберите другую папку.
-tr.DirNotWritable=Fati VPN bu klasöre yazamıyor. Hesaplarınız ve ayarlarınız uygulamanın yanında tutulur; bu yüzden yönetici hakları olmadan değiştirebileceğiniz bir klasör gerekir (Program Files değil). Başka bir klasör seçin.
-az.DirNotWritable=Fati VPN bu qovluğa yaza bilmir. Hesablarınız və ayarlarınız tətbiqin yanında saxlanılır, ona görə də administrator hüquqları olmadan dəyişə biləcəyiniz qovluq lazımdır (Program Files yox). Başqa qovluq seçin.
-id.DirNotWritable=Fati VPN tidak dapat menulis ke folder ini. Akun dan pengaturan Anda disimpan di samping aplikasi, jadi diperlukan folder yang dapat Anda ubah tanpa hak administrator (bukan Program Files). Pilih folder lain.
-es.DirNotWritable=Fati VPN no puede escribir en esta carpeta. Guarda tus cuentas y ajustes junto a sí mismo, así que necesita una carpeta que puedas modificar sin permisos de administrador (no Program Files). Elige otra carpeta.
-fr.DirNotWritable=Fati VPN ne peut pas écrire dans ce dossier. Il garde vos comptes et paramètres à côté de lui ; il lui faut donc un dossier modifiable sans droits d'administrateur (pas Program Files). Choisissez un autre dossier.
-hu.DirNotWritable=Az Fati VPN nem tud írni ebbe a mappába. A fiókjait és a beállításait maga mellett tárolja, ezért olyan mappa kell, amelyet rendszergazdai jogok nélkül módosíthat (nem a Program Files). Válasszon másik mappát.
-pt.DirNotWritable=O Fati VPN não consegue gravar nesta pasta. Ele guarda suas contas e configurações ao lado de si, então precisa de uma pasta que você possa alterar sem direitos de administrador (não a Program Files). Escolha outra pasta.
-vi.DirNotWritable=Fati VPN không thể ghi vào thư mục này. Tài khoản và cài đặt của bạn được lưu ngay cạnh ứng dụng, nên cần một thư mục bạn có thể thay đổi mà không cần quyền quản trị (không phải Program Files). Hãy chọn thư mục khác.
-bn.DirNotWritable=Fati VPN এই ফোল্ডারে লিখতে পারছে না। আপনার অ্যাকাউন্ট ও সেটিংস অ্যাপের পাশেই রাখা হয়, তাই এমন একটি ফোল্ডার দরকার যা অ্যাডমিনিস্ট্রেটর অনুমতি ছাড়াই বদলানো যায় (Program Files নয়)। অন্য একটি ফোল্ডার বেছে নিন।
+DirNotWritable=Fali VPN can't write to this folder. It keeps your accounts and settings beside itself, so it needs a folder you can change without administrator rights (not Program Files). Choose another folder.
+fa.DirNotWritable=Fali VPN نمی‌تواند در این پوشه بنویسد. حساب‌ها و تنظیمات کنار خود برنامه نگه داشته می‌شوند، پس پوشه‌ای لازم است که بدون دسترسی Administrator قابل تغییر باشد (نه Program Files). پوشه دیگری انتخاب کنید.
+ar.DirNotWritable=لا يستطيع Fali VPN الكتابة في هذا المجلد. فهو يحتفظ بحساباتك وإعداداتك بجانبه، لذا يحتاج إلى مجلد يمكنك تعديله دون صلاحيات المسؤول (وليس Program Files). اختر مجلدًا آخر.
+ru.DirNotWritable=Fali VPN не может записывать в эту папку. Аккаунты и настройки хранятся рядом с программой, поэтому нужна папка, которую можно менять без прав администратора (не Program Files). Выберите другую папку.
+tr.DirNotWritable=Fali VPN bu klasöre yazamıyor. Hesaplarınız ve ayarlarınız uygulamanın yanında tutulur; bu yüzden yönetici hakları olmadan değiştirebileceğiniz bir klasör gerekir (Program Files değil). Başka bir klasör seçin.
+az.DirNotWritable=Fali VPN bu qovluğa yaza bilmir. Hesablarınız və ayarlarınız tətbiqin yanında saxlanılır, ona görə də administrator hüquqları olmadan dəyişə biləcəyiniz qovluq lazımdır (Program Files yox). Başqa qovluq seçin.
+id.DirNotWritable=Fali VPN tidak dapat menulis ke folder ini. Akun dan pengaturan Anda disimpan di samping aplikasi, jadi diperlukan folder yang dapat Anda ubah tanpa hak administrator (bukan Program Files). Pilih folder lain.
+es.DirNotWritable=Fali VPN no puede escribir en esta carpeta. Guarda tus cuentas y ajustes junto a sí mismo, así que necesita una carpeta que puedas modificar sin permisos de administrador (no Program Files). Elige otra carpeta.
+fr.DirNotWritable=Fali VPN ne peut pas écrire dans ce dossier. Il garde vos comptes et paramètres à côté de lui ; il lui faut donc un dossier modifiable sans droits d'administrateur (pas Program Files). Choisissez un autre dossier.
+hu.DirNotWritable=Az Fali VPN nem tud írni ebbe a mappába. A fiókjait és a beállításait maga mellett tárolja, ezért olyan mappa kell, amelyet rendszergazdai jogok nélkül módosíthat (nem a Program Files). Válasszon másik mappát.
+pt.DirNotWritable=O Fali VPN não consegue gravar nesta pasta. Ele guarda suas contas e configurações ao lado de si, então precisa de uma pasta que você possa alterar sem direitos de administrador (não a Program Files). Escolha outra pasta.
+vi.DirNotWritable=Fali VPN không thể ghi vào thư mục này. Tài khoản và cài đặt của bạn được lưu ngay cạnh ứng dụng, nên cần một thư mục bạn có thể thay đổi mà không cần quyền quản trị (không phải Program Files). Hãy chọn thư mục khác.
+bn.DirNotWritable=Fali VPN এই ফোল্ডারে লিখতে পারছে না। আপনার অ্যাকাউন্ট ও সেটিংস অ্যাপের পাশেই রাখা হয়, তাই এমন একটি ফোল্ডার দরকার যা অ্যাডমিনিস্ট্রেটর অনুমতি ছাড়াই বদলানো যায় (Program Files নয়)। অন্য একটি ফোল্ডার বেছে নিন।
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"
@@ -184,13 +184,13 @@ Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExe}"; Tasks: desktopico
 ; prompt; declined, the app installs it the first time TUN mode is chosen.
 ; Not in a silent run: no prompt there, and an installed service updates
 ; itself from the app.
-Filename: "{app}\core\fati-vpn-tun.exe"; Parameters: "install"; Flags: waituntilterminated skipifsilent; Check: not TunServiceInstalled
+Filename: "{app}\core\fali-vpn-tun.exe"; Parameters: "install"; Flags: waituntilterminated skipifsilent; Check: not TunServiceInstalled
 Filename: "{app}\{#AppExe}"; Description: "{cm:LaunchProgram,{#AppName}}"; Flags: nowait postinstall skipifsilent
 
 ; The TUN service goes with the app: through its pipe, with no prompt while
 ; it runs; it does nothing when the service is not installed.
 [UninstallRun]
-Filename: "{app}\core\fati-vpn-tun.exe"; Parameters: "uninstall"; Flags: waituntilterminated; RunOnceId: "RemoveTunService"
+Filename: "{app}\core\fali-vpn-tun.exe"; Parameters: "uninstall"; Flags: waituntilterminated; RunOnceId: "RemoveTunService"
 
 ; The app updates itself (core\internal\update) by replacing its files, so
 ; this uninstaller does not know every file a later version brought: the
@@ -227,10 +227,10 @@ begin
 end;
 
 // TunServiceInstalled tells whether the TUN mode's Windows service is
-// installed (core\cmd\fati-vpn-tun).
+// installed (core\cmd\fali-vpn-tun).
 function TunServiceInstalled: Boolean;
 begin
-  Result := RegKeyExists(HKLM, 'SYSTEM\CurrentControlSet\Services\FatiVPNTun');
+  Result := RegKeyExists(HKLM, 'SYSTEM\CurrentControlSet\Services\FaliVPNTun');
 end;
 
 // IsUnder tells whether Dir is Parent or a folder inside it.

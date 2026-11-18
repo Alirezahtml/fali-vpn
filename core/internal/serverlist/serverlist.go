@@ -12,8 +12,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
-	"github.com/Alirezahtml/fati-vpn/core/internal/securefile"
+	"github.com/Alirezahtml/fali-vpn/core/internal/controlplane"
+	"github.com/Alirezahtml/fali-vpn/core/internal/securefile"
 )
 
 const remoteSettingsURL = "https://firefox.settings.services.mozilla.com/v1/buckets/main/collections/vpn-serverlist/records"

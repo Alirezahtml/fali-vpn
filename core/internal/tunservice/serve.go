@@ -5,8 +5,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
 )
 
 // serve listens on the service's channel for the users that users names,

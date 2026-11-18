@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fati_vpn/ui/browser_signin.dart';
+import 'package:fali_vpn/ui/browser_signin.dart';
 
 void main() {
   group('FxaWebChannel', () {

@@ -717,8 +717,8 @@ class ScaleSwitcher extends StatelessWidget {
 
 /// A page the shell pushes slides in from the reading direction's side,
 /// with the page behind easing back a little, Material's shared axis x.
-class FatiRoute<T> extends PageRouteBuilder<T> {
-  FatiRoute({required WidgetBuilder builder, super.settings})
+class FaliRoute<T> extends PageRouteBuilder<T> {
+  FaliRoute({required WidgetBuilder builder, super.settings})
     : super(
         transitionDuration: Motion.slow,
         reverseTransitionDuration: Motion.normal,
@@ -753,7 +753,7 @@ class FatiRoute<T> extends PageRouteBuilder<T> {
 
 /// A dialog that grows from a little smaller and fades in, instead of
 /// Material's plain fade.
-Future<T?> showFatiDialog<T>({
+Future<T?> showFaliDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   bool barrierDismissible = true,

@@ -10,15 +10,15 @@ import (
 
 	"golang.org/x/sys/windows/registry"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
 )
 
 // useTestProxyKeys points the system proxy code at temporary keys under
 // HKCU\Software, so the user's real proxy setting is never touched.
 func useTestProxyKeys(t *testing.T) registry.Key {
 	t.Helper()
-	base := fmt.Sprintf(`Software\FatiVPNTest-%d`, time.Now().UnixNano())
+	base := fmt.Sprintf(`Software\FaliVPNTest-%d`, time.Now().UnixNano())
 	oldSettings, oldBackup, oldAnnounce := internetSettingsKey, backupKey, announceProxyChange
 	internetSettingsKey, backupKey = base+`\Internet Settings`, base+`\PreviousProxy`
 	announceProxyChange = func() {}

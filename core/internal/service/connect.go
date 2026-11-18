@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/netstate"
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/netstate"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
 )
 
 // An explicit connect owns its first wake and one retry within connectWindow.

@@ -17,8 +17,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/fxa"
-	"github.com/Alirezahtml/fati-vpn/core/internal/securefile"
+	"github.com/Alirezahtml/fali-vpn/core/internal/fxa"
+	"github.com/Alirezahtml/fali-vpn/core/internal/securefile"
 )
 
 const (

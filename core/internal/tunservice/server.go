@@ -1,4 +1,4 @@
-// Package tunservice is the TUN service (cmd/fati-vpn-tun): it serves
+// Package tunservice is the TUN service (cmd/fali-vpn-tun): it serves
 // the tunapi protocol on the service's channel and runs one TUN session at
 // a time, for the core that opened it, until that core closes it or its
 // connection ends. Every TCP flow goes to the core's SOCKS5 server on
@@ -14,10 +14,10 @@ import (
 	"net/netip"
 	"sync"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tun"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunstack"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tun"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunstack"
 )
 
 // adapterMTU is the TUN adapter's MTU; AdapterName (adapter_*.go) its name.

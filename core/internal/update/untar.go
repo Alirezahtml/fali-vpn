@@ -14,12 +14,12 @@ import (
 )
 
 // linuxPackage is the Linux app's tar.gz for this processor
-// (scripts/build-linux.sh): an fati-vpn folder with the app, its lib/ and
+// (scripts/build-linux.sh): an fali-vpn folder with the app, its lib/ and
 // data/, and core/.
 var linuxPackage = appPackage{
-	name:   func(v string) string { return "Fati-VPN-" + v + "-Linux-" + runtime.GOARCH + ".tar.gz" },
-	app:    "fati-vpn",
-	core:   "core/fati-vpn-core",
+	name:   func(v string) string { return "Fali-VPN-" + v + "-Linux-" + runtime.GOARCH + ".tar.gz" },
+	app:    "fali-vpn",
+	core:   "core/fali-vpn-core",
 	unpack: untar,
 }
 
@@ -27,9 +27,9 @@ var linuxPackage = appPackage{
 // VPN.app, for Apple silicon and Intel, as the disk image holds it. The
 // app's folder is the bundle, so an update replaces its Contents.
 var macPackage = appPackage{
-	name:   func(v string) string { return "Fati-VPN-" + v + "-macOS.tar.gz" },
-	app:    "Contents/MacOS/Fati VPN",
-	core:   "Contents/MacOS/fati-vpn-core",
+	name:   func(v string) string { return "Fali-VPN-" + v + "-macOS.tar.gz" },
+	app:    "Contents/MacOS/Fali VPN",
+	core:   "Contents/MacOS/fali-vpn-core",
 	unpack: untar,
 }
 
@@ -124,7 +124,7 @@ func untar(file, dir string) error {
 	linked := map[string]string{}
 	for _, e := range entries {
 		// The top folder's own entry; the app inside it has its name too
-		// (fati-vpn/fati-vpn).
+		// (fali-vpn/fali-vpn).
 		if top != "" && strings.TrimSuffix(e.name, "/")+"/" == top {
 			continue
 		}

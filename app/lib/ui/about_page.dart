@@ -11,7 +11,7 @@ import '../platform.dart';
 import 'motion.dart';
 import 'widgets.dart';
 
-/// The versions, the update check, the source link, and the data folder.
+/// The versions, the update check, and the data folder.
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key, required this.core});
 
@@ -72,7 +72,6 @@ class _AboutPageState extends State<AboutPage> {
     final muted = theme.textTheme.bodySmall?.copyWith(
       color: theme.colorScheme.onSurfaceVariant,
     );
-    final github = githubRepo.isEmpty ? '' : 'https://github.com/$githubRepo';
     return ListView(
       padding: pagePadding(context),
       children: [
@@ -134,31 +133,6 @@ class _AboutPageState extends State<AboutPage> {
                 const SizedBox(height: 10),
                 _UpdateAction(core: widget.core, release: release),
               ],
-              const Divider(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(l.sourceCode, style: theme.textTheme.titleSmall),
-                        const SizedBox(height: 2),
-                        Text(
-                          github.isEmpty ? l.repoNotSet : github,
-                          style: muted,
-                        ),
-                      ],
-                    ),
-                  ),
-                  OutlinedButton.icon(
-                    onPressed: github.isEmpty
-                        ? null
-                        : () => openLink(context, github),
-                    icon: const Icon(Icons.open_in_new_rounded, size: 18),
-                    label: const Text('GitHub'),
-                  ),
-                ],
-              ),
               if (Platform.isAndroid) ...[
                 const Divider(height: 24),
                 Row(

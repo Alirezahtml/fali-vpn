@@ -11,12 +11,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
 )
 
 // The desktop TUN mode (system_proxy.mode "tun"): the TUN service
-// (cmd/fati-vpn-tun) sends every TCP connection of the computer, and UDP
+// (cmd/fali-vpn-tun) sends every TCP connection of the computer, and UDP
 // on the ports the VPN carries, to a SOCKS5 listener of its own here, on
 // loopback with a login made for this
 // process, so that another program holding proxy.listen never receives

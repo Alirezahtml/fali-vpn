@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
 )
 
 func TestLocalClientReadsStatusThroughToken(t *testing.T) {

@@ -13,9 +13,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
-	"github.com/Alirezahtml/fati-vpn/core/internal/fxa"
-	"github.com/Alirezahtml/fati-vpn/core/internal/guardian"
+	"github.com/Alirezahtml/fali-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fali-vpn/core/internal/fxa"
+	"github.com/Alirezahtml/fali-vpn/core/internal/guardian"
 )
 
 // All credentials in this file are local fixtures; the control plane

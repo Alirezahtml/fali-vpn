@@ -10,7 +10,7 @@ class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
   @override
-  String get appTitle => 'Fati VPN';
+  String get appTitle => 'Fali VPN';
 
   @override
   String get navOverview => 'Resumen';
@@ -1515,7 +1515,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'El servicio TUN es más reciente que esta app. Actualice la app para usar el modo TUN.';
 
   @override
-  String get tunBusy => 'Otra copia de Fati VPN está usando el modo TUN.';
+  String get tunBusy => 'Otra copia de Fali VPN está usando el modo TUN.';
 
   @override
   String get tunNoDriver =>
@@ -1542,11 +1542,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tunInstallPrompt =>
-      'Fati VPN quiere instalar el servicio para el modo TUN.';
+      'Fali VPN quiere instalar el servicio para el modo TUN.';
 
   @override
   String get tunRemovePrompt =>
-      'Fati VPN quiere quitar el servicio del modo TUN.';
+      'Fali VPN quiere quitar el servicio del modo TUN.';
 
   @override
   String tunRemoveFailed(String error) {

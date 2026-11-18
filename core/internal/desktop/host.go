@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
 )
 
 // Code shared by the desktop processes that host the service in-process:

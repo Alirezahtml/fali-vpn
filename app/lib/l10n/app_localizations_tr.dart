@@ -10,7 +10,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get appTitle => 'Fati VPN';
+  String get appTitle => 'Fali VPN';
 
   @override
   String get navOverview => 'Genel bakış';
@@ -1504,7 +1504,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'TUN hizmeti bu uygulamadan yeni. TUN modunu kullanmak için uygulamayı güncelleyin.';
 
   @override
-  String get tunBusy => 'Fati VPN\'in başka bir kopyası TUN modunu kullanıyor.';
+  String get tunBusy => 'Fali VPN\'in başka bir kopyası TUN modunu kullanıyor.';
 
   @override
   String get tunNoDriver =>
@@ -1531,11 +1531,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tunInstallPrompt =>
-      'Fati VPN, TUN modu için hizmeti yüklemek istiyor.';
+      'Fali VPN, TUN modu için hizmeti yüklemek istiyor.';
 
   @override
   String get tunRemovePrompt =>
-      'Fati VPN, TUN modunun hizmetini kaldırmak istiyor.';
+      'Fali VPN, TUN modunun hizmetini kaldırmak istiyor.';
 
   @override
   String tunRemoveFailed(String error) {

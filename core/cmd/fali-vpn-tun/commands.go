@@ -7,7 +7,7 @@ import (
 	"flag"
 	"os"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunservice"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunservice"
 )
 
 // run runs a command. The init system (the service manager, systemd,

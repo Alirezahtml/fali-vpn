@@ -10,8 +10,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/guardian"
-	"github.com/Alirezahtml/fati-vpn/core/internal/securefile"
+	"github.com/Alirezahtml/fali-vpn/core/internal/guardian"
+	"github.com/Alirezahtml/fali-vpn/core/internal/securefile"
 )
 
 // Explicit opt-in only: refreshes the OAuth credentials of one stored

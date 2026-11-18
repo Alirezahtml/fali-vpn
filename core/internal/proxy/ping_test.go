@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/serverlist"
+	"github.com/Alirezahtml/fali-vpn/core/internal/serverlist"
 )
 
 func pingTestCountries() []serverlist.Country {

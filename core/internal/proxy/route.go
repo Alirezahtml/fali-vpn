@@ -11,10 +11,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/resolver"
-	"github.com/Alirezahtml/fati-vpn/core/internal/routing"
+	"github.com/Alirezahtml/fali-vpn/core/internal/egress"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/resolver"
+	"github.com/Alirezahtml/fali-vpn/core/internal/routing"
 )
 
 // ErrBlockedByRule is a connection refused by a routing rule.

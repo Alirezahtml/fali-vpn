@@ -3,8 +3,8 @@ package service
 import (
 	"testing"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
-	"github.com/Alirezahtml/fati-vpn/core/internal/serverlist"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/serverlist"
 )
 
 func oneServerCountry(code, host string) serverlist.Country {

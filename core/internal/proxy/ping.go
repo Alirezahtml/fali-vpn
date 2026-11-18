@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/serverlist"
+	"github.com/Alirezahtml/fali-vpn/core/internal/serverlist"
 )
 
 // FastestCountry is the proxy.country value that picks the location with

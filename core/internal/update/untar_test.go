@@ -70,26 +70,26 @@ func writeTar(t *testing.T, files ...tarFile) string {
 	return file
 }
 
-// The release's archive: one fati-vpn folder, whose contents go into
+// The release's archive: one fali-vpn folder, whose contents go into
 // the folder, executables staying executable. GNU tar's "./" entry first
 // changes nothing.
 func TestUntarUnpacksTheAppFolder(t *testing.T) {
 	file := writeTar(t,
 		tarFolder("./"),
-		tarFolder("fati-vpn/"),
-		tarExe("fati-vpn/fati-vpn", "app"),
-		tarRegular("fati-vpn/lib/libapp.so", "lib"),
-		tarExe("fati-vpn/core/fati-vpn-core", "core"),
+		tarFolder("fali-vpn/"),
+		tarExe("fali-vpn/fali-vpn", "app"),
+		tarRegular("fali-vpn/lib/libapp.so", "lib"),
+		tarExe("fali-vpn/core/fali-vpn-core", "core"),
 	)
 	out := filepath.Join(t.TempDir(), "out")
 	if err := untar(file, out); err != nil {
 		t.Fatal(err)
 	}
-	if read(t, filepath.Join(out, "fati-vpn")) != "app" || read(t, filepath.Join(out, "core", "fati-vpn-core")) != "core" || read(t, filepath.Join(out, "lib", "libapp.so")) != "lib" {
+	if read(t, filepath.Join(out, "fali-vpn")) != "app" || read(t, filepath.Join(out, "core", "fali-vpn-core")) != "core" || read(t, filepath.Join(out, "lib", "libapp.so")) != "lib" {
 		t.Fatal("wrong layout")
 	}
 	if runtime.GOOS != "windows" {
-		info, _ := os.Stat(filepath.Join(out, "fati-vpn"))
+		info, _ := os.Stat(filepath.Join(out, "fali-vpn"))
 		lib, _ := os.Stat(filepath.Join(out, "lib", "libapp.so"))
 		if info.Mode().Perm()&0o111 == 0 || lib.Mode().Perm()&0o111 != 0 {
 			t.Fatalf("modes %v %v", info.Mode(), lib.Mode())
@@ -105,9 +105,9 @@ func TestUntarKeepsLinksWithinTheApp(t *testing.T) {
 	if runtime.GOOS == "windows" {
 		t.Skip("links need Windows' developer mode")
 	}
-	fw := "Fati VPN.app/Contents/Frameworks/FlutterMacOS.framework/"
+	fw := "Fali VPN.app/Contents/Frameworks/FlutterMacOS.framework/"
 	file := writeTar(t,
-		tarExe("Fati VPN.app/Contents/MacOS/Fati VPN", "app"),
+		tarExe("Fali VPN.app/Contents/MacOS/Fali VPN", "app"),
 		tarSymlink(fw+"FlutterMacOS", "Versions/Current/FlutterMacOS"),
 		tarSymlink(fw+"Versions/Current", "A"),
 		tarExe(fw+"Versions/A/FlutterMacOS", "flutter"),
@@ -128,22 +128,22 @@ func TestUntarKeepsLinksWithinTheApp(t *testing.T) {
 func TestUntarRefusesNamesOutsideTheFolderAndLinks(t *testing.T) {
 	for _, bad := range [][]tarFile{
 		{tarRegular("../evil", "x")},
-		{tarRegular("fati-vpn/../../evil", "x")},
+		{tarRegular("fali-vpn/../../evil", "x")},
 		// Inside the archive, but outside the folder once its top is cut.
-		{tarRegular("fati-vpn/../evil", "x")},
+		{tarRegular("fali-vpn/../evil", "x")},
 		{tarRegular("/abs", "x")},
-		{tarSymlink("fati-vpn/core/passwd", "/etc/passwd")},
-		{tarSymlink("fati-vpn/core/up", "../../etc")},
-		{tarHardlink("fati-vpn/core/hard", "fati-vpn/fati-vpn")},
+		{tarSymlink("fali-vpn/core/passwd", "/etc/passwd")},
+		{tarSymlink("fali-vpn/core/up", "../../etc")},
+		{tarHardlink("fali-vpn/core/hard", "fali-vpn/fali-vpn")},
 		// Each link stays inside on its own; followed, the second leads
 		// out: l is the app's folder, so l/.. is its parent.
-		{tarSymlink("fati-vpn/deep/deeper/l", "../.."), tarSymlink("fati-vpn/out", "deep/deeper/l/..")},
+		{tarSymlink("fali-vpn/deep/deeper/l", "../.."), tarSymlink("fali-vpn/out", "deep/deeper/l/..")},
 		// A link made inside another link that leads to its own folder.
-		{tarSymlink("fati-vpn/here", "."), tarSymlink("fati-vpn/here/up", "..")},
+		{tarSymlink("fali-vpn/here", "."), tarSymlink("fali-vpn/here/up", "..")},
 		// APFS ignores case: "Here" is the link "here".
-		{tarSymlink("fati-vpn/here", "."), tarSymlink("fati-vpn/out", "Here/..")},
+		{tarSymlink("fali-vpn/here", "."), tarSymlink("fali-vpn/out", "Here/..")},
 	} {
-		file := writeTar(t, append([]tarFile{tarExe("fati-vpn/fati-vpn", "app")}, bad...)...)
+		file := writeTar(t, append([]tarFile{tarExe("fali-vpn/fali-vpn", "app")}, bad...)...)
 		if err := untar(file, filepath.Join(t.TempDir(), "out")); err == nil {
 			t.Errorf("%q: unpacked", bad[len(bad)-1].name)
 		}
@@ -157,9 +157,9 @@ func TestALinuxReleaseInstalls(t *testing.T) {
 	t.Cleanup(func() { thePackage = windowsPackage })
 	r := newRelease(t, "1.2.3")
 	r.files[AssetName("1.2.3")] = appTar(t,
-		tarExe("fati-vpn/fati-vpn", "app 1.2.3"),
-		tarExe("fati-vpn/core/fati-vpn-core", "core 1.2.3"),
-		tarExe("fati-vpn/core/fati-vpn-tun", "tun 1.2.3"),
+		tarExe("fali-vpn/fali-vpn", "app 1.2.3"),
+		tarExe("fali-vpn/core/fali-vpn-core", "core 1.2.3"),
+		tarExe("fali-vpn/core/fali-vpn-tun", "tun 1.2.3"),
 	)
 	r.sign()
 	r.serve(t)
@@ -167,9 +167,9 @@ func TestALinuxReleaseInstalls(t *testing.T) {
 		t.Fatalf("asset %s", AssetName("1.2.3"))
 	}
 	appDir, dataDir := appFolder(t, "1.0.0", false)
-	write(t, filepath.Join(appDir, "fati-vpn"), "app 1.0.0")
+	write(t, filepath.Join(appDir, "fali-vpn"), "app 1.0.0")
 	p := installed(t, appDir, dataDir)
-	if read(t, filepath.Join(p.Package, "core", "fati-vpn-core")) != "core 1.2.3" || read(t, filepath.Join(p.Package, "fati-vpn")) != "app 1.2.3" {
+	if read(t, filepath.Join(p.Package, "core", "fali-vpn-core")) != "core 1.2.3" || read(t, filepath.Join(p.Package, "fali-vpn")) != "app 1.2.3" {
 		t.Fatalf("unpacked into %s", p.Package)
 	}
 }
@@ -180,24 +180,24 @@ func TestAMacReleaseInstalls(t *testing.T) {
 	t.Cleanup(func() { thePackage = windowsPackage })
 	r := newRelease(t, "1.2.3")
 	files := []tarFile{
-		tarRegular("Fati VPN.app/Contents/Info.plist", "plist 1.2.3"),
-		tarExe("Fati VPN.app/Contents/MacOS/Fati VPN", "app 1.2.3"),
-		tarExe("Fati VPN.app/Contents/MacOS/fati-vpn-core", "core 1.2.3"),
-		tarExe("Fati VPN.app/Contents/MacOS/fati-vpn-tun", "tun 1.2.3"),
+		tarRegular("Fali VPN.app/Contents/Info.plist", "plist 1.2.3"),
+		tarExe("Fali VPN.app/Contents/MacOS/Fali VPN", "app 1.2.3"),
+		tarExe("Fali VPN.app/Contents/MacOS/fali-vpn-core", "core 1.2.3"),
+		tarExe("Fali VPN.app/Contents/MacOS/fali-vpn-tun", "tun 1.2.3"),
 	}
 	if runtime.GOOS != "windows" {
-		files = append(files, tarSymlink("Fati VPN.app/Contents/Frameworks/App.framework/App", "Versions/Current/App"))
+		files = append(files, tarSymlink("Fali VPN.app/Contents/Frameworks/App.framework/App", "Versions/Current/App"))
 	}
 	r.files[AssetName("1.2.3")] = appTar(t, files...)
 	r.sign()
 	r.serve(t)
-	if AssetName("1.2.3") != "Fati-VPN-1.2.3-macOS.tar.gz" {
+	if AssetName("1.2.3") != "Fali-VPN-1.2.3-macOS.tar.gz" {
 		t.Fatalf("asset %s", AssetName("1.2.3"))
 	}
 	appDir, dataDir := appFolder(t, "1.0.0", false)
 	p := installed(t, appDir, dataDir)
 	contents := filepath.Join(p.Package, "Contents")
-	if read(t, filepath.Join(contents, "MacOS", "fati-vpn-core")) != "core 1.2.3" || read(t, filepath.Join(contents, "MacOS", "Fati VPN")) != "app 1.2.3" {
+	if read(t, filepath.Join(contents, "MacOS", "fali-vpn-core")) != "core 1.2.3" || read(t, filepath.Join(contents, "MacOS", "Fali VPN")) != "app 1.2.3" {
 		t.Fatalf("unpacked into %s", p.Package)
 	}
 	if entries, _ := os.ReadDir(p.Package); len(entries) != 1 {
@@ -213,9 +213,9 @@ func TestAppDirIsTheFolderThatHoldsTheCore(t *testing.T) {
 		pkg       appPackage
 		exe, want string
 	}{
-		{windowsPackage, "/Users/a/Fati VPN/core/fati-vpn-core.exe", "/Users/a/Fati VPN"},
-		{linuxPackage, "/home/a/.local/opt/fati-vpn/core/fati-vpn-core", "/home/a/.local/opt/fati-vpn"},
-		{macPackage, "/Applications/Fati VPN.app/Contents/MacOS/fati-vpn-core", "/Applications/Fati VPN.app"},
+		{windowsPackage, "/Users/a/Fali VPN/core/fali-vpn-core.exe", "/Users/a/Fali VPN"},
+		{linuxPackage, "/home/a/.local/opt/fali-vpn/core/fali-vpn-core", "/home/a/.local/opt/fali-vpn"},
+		{macPackage, "/Applications/Fali VPN.app/Contents/MacOS/fali-vpn-core", "/Applications/Fali VPN.app"},
 	} {
 		thePackage = c.pkg
 		if got := AppDir(filepath.FromSlash(c.exe)); got != filepath.FromSlash(c.want) {

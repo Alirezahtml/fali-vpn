@@ -10,18 +10,18 @@ import (
 	"slices"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
-	"github.com/Alirezahtml/fati-vpn/core/internal/version"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/egress"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/version"
 )
 
 // The TUN mode in the app's core process. While the daemon wants a TUN
 // (Daemon.TunWanted), tunSync holds a session with the TUN service
-// (cmd/fati-vpn-tun, protocol internal/tunapi): it opens the adapter,
+// (cmd/fali-vpn-tun, protocol internal/tunapi): it opens the adapter,
 // binds the core's own connections outside it (egress), routes everything
 // into it, and closes it when the mode changes, the proxy goes off, or the
 // app quits. However this process ends, its pipe connection ends with it,

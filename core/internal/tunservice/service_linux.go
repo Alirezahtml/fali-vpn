@@ -6,11 +6,11 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
 )
 
 // InstallDir is the installed service's folder.
-const InstallDir = "/opt/fati-vpn-tun"
+const InstallDir = "/opt/fali-vpn-tun"
 
 const unitName = tunapi.ServiceName + ".service"
 
@@ -18,8 +18,8 @@ const unitName = tunapi.ServiceName + ".service"
 // a crash and after an update (which ends it); an uninstall stops it for
 // good (stopForGood).
 const unit = `[Unit]
-Description=Fati VPN TUN
-Documentation=https://github.com/Alirezahtml/fati-vpn
+Description=Fali VPN TUN
+Documentation=https://github.com/Alirezahtml/fali-vpn
 After=network.target
 
 [Service]

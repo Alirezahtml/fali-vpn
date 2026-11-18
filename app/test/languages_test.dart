@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fati_vpn/app_settings.dart';
-import 'package:fati_vpn/core/models.dart';
-import 'package:fati_vpn/l10n/app_localizations.dart';
-import 'package:fati_vpn/ui/accounts_page.dart';
-import 'package:fati_vpn/ui/format.dart';
+import 'package:fali_vpn/app_settings.dart';
+import 'package:fali_vpn/core/models.dart';
+import 'package:fali_vpn/l10n/app_localizations.dart';
+import 'package:fali_vpn/ui/accounts_page.dart';
+import 'package:fali_vpn/ui/format.dart';
 
 void main() {
   test('the system locale picks the app language', () {

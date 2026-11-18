@@ -5,9 +5,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fati_vpn/core/core_api.dart';
-import 'package:fati_vpn/core/remote_flags.dart';
-import 'package:fati_vpn/ui/widgets.dart';
+import 'package:fali_vpn/core/core_api.dart';
+import 'package:fali_vpn/core/remote_flags.dart';
+import 'package:fali_vpn/ui/widgets.dart';
 
 /// A core that has the flag of Iran only.
 class _FlagCore implements CoreApi {

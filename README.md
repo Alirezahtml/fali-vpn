@@ -5,29 +5,29 @@
 </div>
 <br>
 
-<p align="center"><img src="docs/images/logo.png" width="128" alt="Fati VPN"></p>
+<p align="center"><img src="docs/images/logo.png" width="128" alt="Fali VPN"></p>
 
-<h1 align="center">Fati VPN</h1>
+<h1 align="center">Fali VPN</h1>
 
 <h2 align="center">⚠️ Unofficial project</h2>
 
-<h3 align="center">Fati VPN is an independent project. It is not made, owned, sponsored, or endorsed by Mozilla, and is not affiliated with Mozilla in any way. See the <a href="#disclaimer">disclaimer</a>.</h3>
+<h3 align="center">Fali VPN is an independent project. It is not made, owned, sponsored, or endorsed by Mozilla, and is not affiliated with Mozilla in any way. See the <a href="#disclaimer">disclaimer</a>.</h3>
 
 <div align="center">
 
-[![Downloads](https://img.shields.io/github/downloads/Alirezahtml/fati-vpn/total?style=flat-square&logo=github&label=Downloads)](https://github.com/Alirezahtml/fati-vpn/releases)
-[![Last Version](https://img.shields.io/github/v/release/Alirezahtml/fati-vpn?style=flat-square&label=Version)](https://github.com/Alirezahtml/fati-vpn/releases/latest)
-[![License](https://img.shields.io/github/license/Alirezahtml/fati-vpn?style=flat-square&label=License)](LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/Alirezahtml/fali-vpn/total?style=flat-square&logo=github&label=Downloads)](https://github.com/Alirezahtml/fali-vpn/releases)
+[![Last Version](https://img.shields.io/github/v/release/Alirezahtml/fali-vpn?style=flat-square&label=Version)](https://github.com/Alirezahtml/fali-vpn/releases/latest)
+[![License](https://img.shields.io/github/license/Alirezahtml/fali-vpn?style=flat-square&label=License)](LICENSE)
 
 </div>
 
-## What is Fati VPN?
+## What is Fali VPN?
 
-**Fati VPN** is a free, open-source VPN that works with a Firefox Account. It carries your internet traffic through Mozilla's servers, on **Fastly**'s infrastructure, over secure **HTTP/1.1, HTTP/2, and HTTP/3** tunnels.
+**Fali VPN** is a free, open-source VPN that works with a Firefox Account. It carries your internet traffic through Mozilla's servers, on **Fastly**'s infrastructure, over secure **HTTP/1.1, HTTP/2, and HTTP/3** tunnels.
 
 For **Android, Windows, macOS, and Linux**; completely free, with no ads.
 
-<p align="center"><a href="https://raw.githubusercontent.com/Alirezahtml/fati-vpn/main/docs/screenshots/main.webp" target="_blank"><img src="docs/screenshots/main.webp" width="720" alt="Fati VPN"></a></p>
+<p align="center"><a href="https://raw.githubusercontent.com/Alirezahtml/fali-vpn/main/docs/screenshots/main.webp" target="_blank"><img src="docs/screenshots/main.webp" width="720" alt="Fali VPN"></a></p>
 
 ## 🚀 Main features
 
@@ -78,12 +78,12 @@ For **Android, Windows, macOS, and Linux**; completely free, with no ads.
 <tr><th>System</th><th>Download</th></tr>
 </thead>
 <tbody>
-<tr><td>Android</td><td><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-Android-universal.apk"><img src="https://img.shields.io/badge/APK-Universal-1a7f37?logo=android&logoColor=white" alt="APK Universal"></a><br><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-Android-arm64-v8a.apk"><img src="https://img.shields.io/badge/APK-ARMv8-2da44e?logo=android&logoColor=white" alt="APK ARMv8"></a><br><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-Android-armeabi-v7a.apk"><img src="https://img.shields.io/badge/APK-ARMv7-4ac26b?logo=android&logoColor=white" alt="APK ARMv7"></a><br><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-Android-x86_64.apk"><img src="https://img.shields.io/badge/APK-x64-6fdd8b?logo=android&logoColor=white" alt="APK x64"></a></td></tr>
-<tr><td>Android TV</td><td><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-Android-universal.apk"><img src="https://img.shields.io/badge/APK-Universal-1a7f37?logo=android&logoColor=white" alt="APK Universal"></a></td></tr>
-<tr><td>Windows</td><td><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-Windows-Setup-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-0550ae?logo=windows&logoColor=white" alt="Setup x64"></a><br><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-Windows-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-0969da" alt="Portable x64"></a></td></tr>
-<tr><td>macOS</td><td><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-macOS.dmg"><img src="https://img.shields.io/badge/DMG-Universal-24292f?logo=apple&logoColor=white" alt="DMG Universal"></a></td></tr>
-<tr><td rowspan="2">Linux</td><td><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-Linux-amd64.tar.gz"><img src="https://img.shields.io/badge/App-amd64-e36209?logo=linux&logoColor=white" alt="App amd64"></a><br><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/Fati-VPN-Linux-arm64.tar.gz"><img src="https://img.shields.io/badge/App-ARM64-e36209?logo=linux&logoColor=white" alt="App ARM64"></a></td></tr>
-<tr><td><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/fati-vpn-core-linux-amd64.tar.gz"><img src="https://img.shields.io/badge/Core-amd64-f0883e?logo=linux&logoColor=white" alt="Core amd64"></a><br><a href="https://github.com/Alirezahtml/fati-vpn/releases/latest/download/fati-vpn-core-linux-arm64.tar.gz"><img src="https://img.shields.io/badge/Core-ARM64-f6a35e?logo=linux&logoColor=white" alt="Core ARM64"></a></td></tr>
+<tr><td>Android</td><td><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-Android-universal.apk"><img src="https://img.shields.io/badge/APK-Universal-1a7f37?logo=android&logoColor=white" alt="APK Universal"></a><br><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-Android-arm64-v8a.apk"><img src="https://img.shields.io/badge/APK-ARMv8-2da44e?logo=android&logoColor=white" alt="APK ARMv8"></a><br><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-Android-armeabi-v7a.apk"><img src="https://img.shields.io/badge/APK-ARMv7-4ac26b?logo=android&logoColor=white" alt="APK ARMv7"></a><br><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-Android-x86_64.apk"><img src="https://img.shields.io/badge/APK-x64-6fdd8b?logo=android&logoColor=white" alt="APK x64"></a></td></tr>
+<tr><td>Android TV</td><td><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-Android-universal.apk"><img src="https://img.shields.io/badge/APK-Universal-1a7f37?logo=android&logoColor=white" alt="APK Universal"></a></td></tr>
+<tr><td>Windows</td><td><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-Windows-Setup-x64.exe"><img src="https://img.shields.io/badge/Setup-x64-0550ae?logo=windows&logoColor=white" alt="Setup x64"></a><br><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-Windows-x64.zip"><img src="https://img.shields.io/badge/Portable-x64-0969da" alt="Portable x64"></a></td></tr>
+<tr><td>macOS</td><td><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-macOS.dmg"><img src="https://img.shields.io/badge/DMG-Universal-24292f?logo=apple&logoColor=white" alt="DMG Universal"></a></td></tr>
+<tr><td rowspan="2">Linux</td><td><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-Linux-amd64.tar.gz"><img src="https://img.shields.io/badge/App-amd64-e36209?logo=linux&logoColor=white" alt="App amd64"></a><br><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/Fali-VPN-Linux-arm64.tar.gz"><img src="https://img.shields.io/badge/App-ARM64-e36209?logo=linux&logoColor=white" alt="App ARM64"></a></td></tr>
+<tr><td><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/fali-vpn-core-linux-amd64.tar.gz"><img src="https://img.shields.io/badge/Core-amd64-f0883e?logo=linux&logoColor=white" alt="Core amd64"></a><br><a href="https://github.com/Alirezahtml/fali-vpn/releases/latest/download/fali-vpn-core-linux-arm64.tar.gz"><img src="https://img.shields.io/badge/Core-ARM64-f6a35e?logo=linux&logoColor=white" alt="Core ARM64"></a></td></tr>
 </tbody>
 </table>
 
@@ -98,12 +98,12 @@ For **Android, Windows, macOS, and Linux**; completely free, with no ads.
 > Windows and Android users don't need this section: take the installer from the "Download" table above.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Alirezahtml/fati-vpn/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Alirezahtml/fali-vpn/main/install.sh | bash
 ```
 
 ### 🌐 Web panel
 
-For Linux servers, Fati VPN has a **web panel** that opens in any browser and has everything the app has: managing accounts and data, choosing a server and testing delay, the connection test, the live log, and every setting.
+For Linux servers, Fali VPN has a **web panel** that opens in any browser and has everything the app has: managing accounts and data, choosing a server and testing delay, the connection test, the live log, and every setting.
 
 <p align="center"><img src="docs/screenshots/web.webp" width="720" alt="Web panel"></p>
 
@@ -112,35 +112,35 @@ For Linux servers, Fati VPN has a **web panel** that opens in any browser and ha
 
 ### ⌨️ Managing from the terminal
 
-On the server, run `sudo fati-vpn` to open the management menu:
+On the server, run `sudo fali-vpn` to open the management menu:
 
 ```text
-$ sudo fati-vpn
+$ sudo fali-vpn
 
-  Fati VPN
+  Fali VPN
   ────────────────────────────────────────────────────────────────────────────
     Service     ● running
     Autostart   on
   ────────────────────────────────────────────────────────────────────────────
    0) Exit
   ────────────────────────────────────────────────────────────────────────────
-   1) Update                                   fati-vpn update
-   2) Uninstall                                fati-vpn uninstall
+   1) Update                                   fali-vpn update
+   2) Uninstall                                fali-vpn uninstall
   ────────────────────────────────────────────────────────────────────────────
-   3) Set panel login                          fati-vpn panel
-   4) View panel info                          fati-vpn panel-info
+   3) Set panel login                          fali-vpn panel
+   4) View panel info                          fali-vpn panel-info
   ────────────────────────────────────────────────────────────────────────────
-   5) Status                                   fati-vpn status
-   6) Start                                    fati-vpn start
-   7) Stop                                     fati-vpn stop
-   8) Restart                                  fati-vpn restart
-   9) Show the log                             fati-vpn logs
+   5) Status                                   fali-vpn status
+   6) Start                                    fali-vpn start
+   7) Stop                                     fali-vpn stop
+   8) Restart                                  fali-vpn restart
+   9) Show the log                             fali-vpn logs
   ────────────────────────────────────────────────────────────────────────────
-  10) Enable autostart                         fati-vpn enable
-  11) Disable autostart                        fati-vpn disable
+  10) Enable autostart                         fali-vpn enable
+  11) Disable autostart                        fali-vpn disable
   ────────────────────────────────────────────────────────────────────────────
-  12) Add a Firefox Account                    fati-vpn add-account
-  13) List the accounts                        fati-vpn list-accounts
+  12) Add a Firefox Account                    fali-vpn add-account
+  13) List the accounts                        fali-vpn list-accounts
   ────────────────────────────────────────────────────────────────────────────
   Enter a number [0-13]:
 ```

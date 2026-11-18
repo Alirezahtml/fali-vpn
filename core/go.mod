@@ -1,4 +1,4 @@
-module github.com/Alirezahtml/fati-vpn/core
+module github.com/Alirezahtml/fali-vpn/core
 
 go 1.27.2
 

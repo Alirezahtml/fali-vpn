@@ -12,7 +12,7 @@ import (
 
 	"golang.org/x/sys/windows"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
 )
 
 // InstallForUser installs the service for the user running this process.
@@ -60,7 +60,7 @@ func runElevated(args ...string) error {
 	if err != nil {
 		return err
 	}
-	report, err := os.CreateTemp("", "fati-vpn-tun-*.txt")
+	report, err := os.CreateTemp("", "fali-vpn-tun-*.txt")
 	if err != nil {
 		return err
 	}

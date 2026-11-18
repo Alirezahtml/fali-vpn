@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
 )
 
 // The phone's proxy never sleeps: the setting is turned off on start,

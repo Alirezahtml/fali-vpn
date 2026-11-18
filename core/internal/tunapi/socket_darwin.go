@@ -10,10 +10,10 @@ import (
 )
 
 // SocketPath is the service's socket, in a folder only root may write to.
-const SocketPath = "/var/run/fati-vpn-tun.sock"
+const SocketPath = "/var/run/fali-vpn-tun.sock"
 
 // LaunchdLabel is the service's launchd job.
-const LaunchdLabel = "com.fati.vpn.tun"
+const LaunchdLabel = "com.fali.vpn.tun"
 
 // ServiceFile is the service's launchd job file.
 const ServiceFile = "/Library/LaunchDaemons/" + LaunchdLabel + ".plist"

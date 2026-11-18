@@ -4,15 +4,15 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
 )
 
 // ownPrograms are this app's own executables, which never skip the VPN by
 // choice.
 var ownPrograms = map[string]bool{
-	"fati-vpn.exe": true, "fati-vpn-core.exe": true, "fati-vpn-tun.exe": true,
-	"fati-vpn": true, "fati-vpn-core": true, "fati-vpn-tun": true,
+	"fali-vpn.exe": true, "fali-vpn-core.exe": true, "fali-vpn-tun.exe": true,
+	"fali-vpn": true, "fali-vpn-core": true, "fali-vpn-tun": true,
 }
 
 // runningPrograms are the programs running on this computer, for the TUN

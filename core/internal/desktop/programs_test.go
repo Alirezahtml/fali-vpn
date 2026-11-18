@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
 )
 
 // The running programs include this test, once each by name, in order of

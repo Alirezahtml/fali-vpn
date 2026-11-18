@@ -1,4 +1,4 @@
-package com.fati.vpn
+package com.fali.vpn
 
 import android.Manifest
 import android.app.ActivityManager

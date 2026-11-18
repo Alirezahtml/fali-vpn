@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/fxa"
+	"github.com/Alirezahtml/fali-vpn/core/internal/fxa"
 )
 
 // All credentials in this file are local fixtures.
@@ -52,9 +52,9 @@ func TestBackupLeavesOutLargeAndRunFiles(t *testing.T) {
 	dir := d.paths.Dir
 	writeBackupTestFile(t, filepath.Join(dir, "config.json"), "{}")
 	writeBackupTestFile(t, filepath.Join(dir, "app-settings.json"), "{}")
-	writeBackupTestFile(t, filepath.Join(dir, "logs", "fati-vpn-2026-11-06.log"), "log")
+	writeBackupTestFile(t, filepath.Join(dir, "logs", "fali-vpn-2026-11-06.log"), "log")
 	writeBackupTestFile(t, filepath.Join(dir, "routing", "geosite.dat"), "lists")
-	writeBackupTestFile(t, filepath.Join(dir, "update", "Fati-VPN.zip"), "update")
+	writeBackupTestFile(t, filepath.Join(dir, "update", "Fali-VPN.zip"), "update")
 	writeBackupTestFile(t, filepath.Join(dir, localTokenName), "token")
 	writeBackupTestFile(t, filepath.Join(dir, statusFileName), "{}")
 
@@ -224,7 +224,7 @@ func TestBackupAPI(t *testing.T) {
 	c := newDashboardClient(t, from)
 	rec := c.do(http.MethodGet, "/api/backup", nil)
 	if rec.Code != http.StatusOK || rec.Header().Get("Content-Type") != "application/zip" ||
-		!strings.Contains(rec.Header().Get("Content-Disposition"), "Fati-VPN-backup-") {
+		!strings.Contains(rec.Header().Get("Content-Disposition"), "Fali-VPN-backup-") {
 		t.Fatalf("export: %d %v", rec.Code, rec.Header())
 	}
 	data := rec.Body.Bytes()

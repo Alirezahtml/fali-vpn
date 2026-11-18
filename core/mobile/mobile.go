@@ -18,12 +18,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/netstate"
-	"github.com/Alirezahtml/fati-vpn/core/internal/securefile"
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tun"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/netstate"
+	"github.com/Alirezahtml/fali-vpn/core/internal/securefile"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tun"
 )
 
 var (

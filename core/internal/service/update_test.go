@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/update"
+	"github.com/Alirezahtml/fali-vpn/core/internal/update"
 )
 
 // Only the app on this computer may download or install an update, and

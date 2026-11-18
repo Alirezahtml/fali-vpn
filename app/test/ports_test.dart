@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fati_vpn/core/core_api.dart';
-import 'package:fati_vpn/core/core_process.dart';
-import 'package:fati_vpn/core/ports.dart';
+import 'package:fali_vpn/core/core_api.dart';
+import 'package:fali_vpn/core/core_process.dart';
+import 'package:fali_vpn/core/ports.dart';
 
 void main() {
   test('reads and replaces ports', () {

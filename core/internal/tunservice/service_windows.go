@@ -18,9 +18,9 @@ import (
 	"golang.org/x/sys/windows/svc"
 	"golang.org/x/sys/windows/svc/mgr"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
-	"github.com/Alirezahtml/fati-vpn/core/internal/version"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/version"
 )
 
 // The installed service lives in Program Files, where only administrators
@@ -28,11 +28,11 @@ import (
 // its file or put a library beside it. The app carries the same
 // executable in its core folder, and installs it from there.
 const (
-	installFolder = "Fati VPN"
-	displayName   = "Fati VPN TUN"
-	description   = "Runs the TUN mode of Fati VPN."
-	newExeName    = "fati-vpn-tun.new.exe"
-	oldExeName    = "fati-vpn-tun.old.exe"
+	installFolder = "Fali VPN"
+	displayName   = "Fali VPN TUN"
+	description   = "Runs the TUN mode of Fali VPN."
+	newExeName    = "fali-vpn-tun.new.exe"
+	oldExeName    = "fali-vpn-tun.old.exe"
 )
 
 // usersKey holds the SIDs of the users who installed the service, the
@@ -303,7 +303,7 @@ func Cleanup(pid int, dir string) error {
 }
 
 // removeFolder removes the service's folder, never another: only the
-// Fati VPN folder in Program Files.
+// Fali VPN folder in Program Files.
 func removeFolder(dir string) error {
 	want, err := InstallDir()
 	if err != nil {
@@ -410,7 +410,7 @@ func startDetached(exe, command string, copyFirst bool, args ...string) error {
 		if err != nil {
 			return err
 		}
-		tmp, err := os.CreateTemp(os.TempDir(), "fati-vpn-tun-cleanup-*.exe")
+		tmp, err := os.CreateTemp(os.TempDir(), "fali-vpn-tun-cleanup-*.exe")
 		if err != nil {
 			return err
 		}

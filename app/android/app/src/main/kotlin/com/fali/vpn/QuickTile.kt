@@ -1,4 +1,4 @@
-package com.fati.vpn
+package com.fali.vpn
 
 import android.app.PendingIntent
 import android.content.ComponentName

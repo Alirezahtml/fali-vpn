@@ -18,7 +18,7 @@ import (
 func testPipe(t *testing.T) {
 	t.Helper()
 	old := pipeName
-	pipeName = fmt.Sprintf(`\\.\pipe\fati-vpn-tun-test-%d-%d`, os.Getpid(), time.Now().UnixNano())
+	pipeName = fmt.Sprintf(`\\.\pipe\fali-vpn-tun-test-%d-%d`, os.Getpid(), time.Now().UnixNano())
 	t.Cleanup(func() { pipeName = old })
 }
 

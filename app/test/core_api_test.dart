@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:fati_vpn/core/core_api.dart';
+import 'package:fali_vpn/core/core_api.dart';
 
 void main() {
   group('CoreApi', () {
@@ -21,7 +21,7 @@ void main() {
             ..headers.contentType = ContentType('application', 'zip')
             ..headers.set(
               'Content-Disposition',
-              'attachment; filename="Fati-VPN-backup-2026-11-06.zip"',
+              'attachment; filename="Fali-VPN-backup-2026-11-06.zip"',
             )
             ..add([0x50, 0x4b, 0x03, 0x04]);
           await req.response.close();
@@ -104,7 +104,7 @@ void main() {
     test('saves and takes in a backup', () async {
       final file = await api.exportBackup();
       expect(seen['token'], 'secret-token');
-      expect(file.name, 'Fati-VPN-backup-2026-11-06.zip');
+      expect(file.name, 'Fali-VPN-backup-2026-11-06.zip');
       expect(file.bytes, [0x50, 0x4b, 0x03, 0x04]);
 
       final contents = await api.inspectBackup(file.bytes);
@@ -195,21 +195,21 @@ void main() {
         Map<String, String>? env,
       }) => CoreLocator.dataDirFor(
         args: const [],
-        exeDir: r'D:\dist\Fati-VPN-1.3',
+        exeDir: r'D:\dist\Fali-VPN-1.3',
         portable: portable,
         env: env ?? {'LOCALAPPDATA': r'C:\Users\u\AppData\Local'},
         os: os,
       );
       // Windows: always beside the app.
-      expect(dir(), r'D:\dist\Fati-VPN-1.3\user-data');
-      expect(dir(portable: true), r'D:\dist\Fati-VPN-1.3\user-data');
+      expect(dir(), r'D:\dist\Fali-VPN-1.3\user-data');
+      expect(dir(portable: true), r'D:\dist\Fali-VPN-1.3\user-data');
       expect(
         dir(os: 'macos', env: {'HOME': '/Users/u'}),
-        '/Users/u/Library/Application Support/Fati VPN',
+        '/Users/u/Library/Application Support/Fali VPN',
       );
       expect(
         dir(os: 'linux', env: {'HOME': '/home/u'}),
-        '/home/u/.local/share/fati-vpn',
+        '/home/u/.local/share/fali-vpn',
       );
     });
 
@@ -228,8 +228,8 @@ void main() {
     () {
       final sep = Platform.pathSeparator;
       for (final names in [
-        ['Firefox VPN Client', 'Fati VPN'],
-        ['firefox-vpn-client', 'fati-vpn'],
+        ['Firefox VPN Client', 'Fali VPN'],
+        ['firefox-vpn-client', 'fali-vpn'],
       ]) {
         final base = Directory.systemTemp.createTempSync('legacy');
         addTearDown(() => base.deleteSync(recursive: true));

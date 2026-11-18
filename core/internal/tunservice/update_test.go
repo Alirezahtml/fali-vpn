@@ -8,13 +8,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/signing"
+	"github.com/Alirezahtml/fali-vpn/core/internal/signing"
 )
 
 // signedFile writes an executable and its signature by priv.
 func signedFile(t *testing.T, data []byte, priv ed25519.PrivateKey) string {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "fati-vpn-tun.exe")
+	path := filepath.Join(t.TempDir(), "fali-vpn-tun.exe")
 	if err := os.WriteFile(path, data, 0o600); err != nil {
 		t.Fatal(err)
 	}
@@ -73,12 +73,12 @@ func TestABuildWithoutAKeyTakesNoUpdates(t *testing.T) {
 }
 
 func TestTheSignatureOfAMacAppsExecutableIsInItsResources(t *testing.T) {
-	app := filepath.Join("Applications", "Fati VPN.app", "Contents")
+	app := filepath.Join("Applications", "Fali VPN.app", "Contents")
 	for exe, want := range map[string]string{
-		filepath.Join(app, "MacOS", "fati-vpn-tun"): filepath.Join(app, "Resources", "fati-vpn-tun.sig"),
-		filepath.Join("opt", "fati-vpn-tun", "x"):   filepath.Join("opt", "fati-vpn-tun", "x.sig"),
-		filepath.Join("core", "fati-vpn-tun.exe"):   filepath.Join("core", "fati-vpn-tun.exe.sig"),
-		filepath.Join("MacOS", "fati-vpn-tun"):      filepath.Join("MacOS", "fati-vpn-tun.sig"),
+		filepath.Join(app, "MacOS", "fali-vpn-tun"): filepath.Join(app, "Resources", "fali-vpn-tun.sig"),
+		filepath.Join("opt", "fali-vpn-tun", "x"):   filepath.Join("opt", "fali-vpn-tun", "x.sig"),
+		filepath.Join("core", "fali-vpn-tun.exe"):   filepath.Join("core", "fali-vpn-tun.exe.sig"),
+		filepath.Join("MacOS", "fali-vpn-tun"):      filepath.Join("MacOS", "fali-vpn-tun.sig"),
 	} {
 		if got := SignatureFile(exe); got != want {
 			t.Errorf("SignatureFile(%s) = %s, want %s", exe, got, want)

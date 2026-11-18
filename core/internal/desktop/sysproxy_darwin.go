@@ -21,7 +21,7 @@ var macNetworkSetup = networkSetup{
 		if err != nil {
 			return "", err
 		}
-		return filepath.Join(dir, "Fati VPN", "previous-proxy.json"), nil
+		return filepath.Join(dir, "Fali VPN", "previous-proxy.json"), nil
 	},
 }
 

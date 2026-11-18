@@ -3,7 +3,7 @@ package tunservice
 import (
 	"io"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/wfp"
+	"github.com/Alirezahtml/fali-vpn/core/internal/wfp"
 )
 
 // startFilters keeps DNS (and, for an adapter without IPv6, IPv6) inside

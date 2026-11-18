@@ -16,10 +16,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunstack"
-	"github.com/Alirezahtml/fati-vpn/core/internal/version"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunstack"
+	"github.com/Alirezahtml/fali-vpn/core/internal/version"
 )
 
 // The installed service lives in a folder only root may write to

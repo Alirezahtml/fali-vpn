@@ -11,7 +11,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/routing"
+	"github.com/Alirezahtml/fali-vpn/core/internal/routing"
 )
 
 // countingOpener answers every tunnel with one end of a pipe.

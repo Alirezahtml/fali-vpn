@@ -18,7 +18,7 @@ import (
 
 	utls "github.com/refraction-networking/utls"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/hellosplit"
+	"github.com/Alirezahtml/fali-vpn/core/internal/hellosplit"
 )
 
 // parsedHello is what a ClientHello record says, as hex lists.

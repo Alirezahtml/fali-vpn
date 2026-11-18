@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
+	"github.com/Alirezahtml/fali-vpn/core/internal/egress"
 )
 
 // One own address coming back is chance; two different ones within the

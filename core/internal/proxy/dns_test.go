@@ -13,7 +13,7 @@ import (
 
 	"golang.org/x/net/dns/dnsmessage"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/routing"
+	"github.com/Alirezahtml/fali-vpn/core/internal/routing"
 )
 
 func dnsQuery(t *testing.T, id uint16, host string, qtype dnsmessage.Type) []byte {

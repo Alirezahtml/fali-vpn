@@ -49,7 +49,7 @@ class _MobileShellState extends State<MobileShell> {
   /// slides in from the reading direction's side.
   void _push(String title, Widget Function() page) {
     Navigator.of(context).push(
-      FatiRoute<void>(
+      FaliRoute<void>(
         builder: (context) => ListenableBuilder(
           listenable: widget.core,
           builder: (context, _) => Scaffold(

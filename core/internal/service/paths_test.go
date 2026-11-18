@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
 )
 
 func TestReconcileAccountOrder(t *testing.T) {

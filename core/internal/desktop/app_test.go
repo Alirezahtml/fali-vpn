@@ -14,8 +14,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
 )
 
 // The app's end of the standard input closing ends the watch; data the
@@ -177,7 +177,7 @@ func TestReportAppError(t *testing.T) {
 			exit: ExitAlreadyRunning,
 			want: []string{
 				"app-error: already_running " + dir,
-				"fati-vpn-core: " + ErrAlreadyRunning.Error() + " (" + dir + "): a tray icon runs for it",
+				"fali-vpn-core: " + ErrAlreadyRunning.Error() + " (" + dir + "): a tray icon runs for it",
 			},
 		},
 		"dashboard port in use": {

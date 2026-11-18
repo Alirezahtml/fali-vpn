@@ -1,6 +1,6 @@
 # Builds the Windows app and its core and puts them over the installed copy
 # (the Setup's per-user install, in the folder chosen at install time; by
-# default %LOCALAPPDATA%\Programs\Fati VPN), to try a change
+# default %LOCALAPPDATA%\Programs\Fali VPN), to try a change
 # without making and running an installer:
 # - a running copy is closed first: the app by its process id, after which
 #   its core restores the system proxy and exits, as when the app quits;
@@ -10,7 +10,7 @@
 #   was connected;
 # - an installed TUN service is asked to replace itself with the new one,
 #   which it does when the build is signed with its key (the developer key
-#   in FATI_VPN_SIGNING_KEY_FILE; scripts\signing-key.ps1). The core gets
+#   in FALI_VPN_SIGNING_KEY_FILE; scripts\signing-key.ps1). The core gets
 #   the same key: the app then installs only updates signed with it.
 # The version is "major.minor.patch" from app\pubspec.yaml, or -AppVersion: an
 # older one makes the app find the latest release as an update, to try the
@@ -27,12 +27,12 @@ $version = $match.Matches[0].Groups[1].Value
 if ($AppVersion) { $version = $AppVersion }
 
 # The install folder, from the Setup's uninstall entry (AppId in
-# app\windows\installer\fati-vpn.iss).
+# app\windows\installer\fali-vpn.iss).
 $uninstallKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\{6F3A2C1E-9B4D-4E7A-8C21-5D0F7B9E4A63}_is1'
 $dir = (Get-ItemProperty $uninstallKey -ErrorAction SilentlyContinue).InstallLocation
-if (-not $dir) { throw 'Fati VPN is not installed for this user; run the Setup once' }
+if (-not $dir) { throw 'Fali VPN is not installed for this user; run the Setup once' }
 $dir = $dir.TrimEnd('\')
-$appExe = "$dir\fati-vpn.exe"
+$appExe = "$dir\fali-vpn.exe"
 $dataDir = "$dir\user-data"
 
 # The same build as scripts\build-windows.ps1, the core into app\build.
@@ -53,11 +53,11 @@ $public = & "$PSScriptRoot\signing-key.ps1"
 Push-Location "$root\core"
 try {
     $env:APP_VERSION = $version
-    go generate ./cmd/fati-vpn-core
+    go generate ./cmd/fali-vpn-core
     if ($LASTEXITCODE -ne 0) { throw 'go generate failed' }
-    $ldflags = "-s -w -X github.com/Alirezahtml/fati-vpn/core/internal/version.Current=$version"
-    if ($public) { $ldflags += " -X github.com/Alirezahtml/fati-vpn/core/internal/signing.Key=$public" }
-    go build -trimpath -ldflags $ldflags -o "$coreOut\fati-vpn-core.exe" ./cmd/fati-vpn-core
+    $ldflags = "-s -w -X github.com/Alirezahtml/fali-vpn/core/internal/version.Current=$version"
+    if ($public) { $ldflags += " -X github.com/Alirezahtml/fali-vpn/core/internal/signing.Key=$public" }
+    go build -trimpath -ldflags $ldflags -o "$coreOut\fali-vpn-core.exe" ./cmd/fali-vpn-core
     if ($LASTEXITCODE -ne 0) { throw 'go build failed' }
 } finally {
     Remove-Item Env:APP_VERSION -ErrorAction SilentlyContinue
@@ -117,10 +117,10 @@ if ($LASTEXITCODE -ge 8) { throw "copying the app failed (robocopy $LASTEXITCODE
 # old icon, say) must not stay behind and be used.
 robocopy "$release\data" "$dir\data" /MIR /R:10 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
 if ($LASTEXITCODE -ge 8) { throw "copying the app's assets failed (robocopy $LASTEXITCODE)" }
-robocopy $coreOut "$dir\core" fati-vpn-core.exe fati-vpn-tun.exe fati-vpn-tun.exe.sig /R:10 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
+robocopy $coreOut "$dir\core" fali-vpn-core.exe fali-vpn-tun.exe fali-vpn-tun.exe.sig /R:10 /W:1 /NFL /NDL /NJH /NJS /NP | Out-Null
 if ($LASTEXITCODE -ge 8) { throw "copying the core failed (robocopy $LASTEXITCODE)" }
-if (-not (Test-Path "$coreOut\fati-vpn-tun.exe.sig")) {
-    Remove-Item "$dir\core\fati-vpn-tun.exe.sig" -ErrorAction SilentlyContinue
+if (-not (Test-Path "$coreOut\fali-vpn-tun.exe.sig")) {
+    Remove-Item "$dir\core\fali-vpn-tun.exe.sig" -ErrorAction SilentlyContinue
 }
 Set-ItemProperty $uninstallKey -Name DisplayVersion -Value $version
 Write-Host "Installed $version in $dir"
@@ -128,9 +128,9 @@ Write-Host "Installed $version in $dir"
 # The installed TUN service, if any, replaces itself with the new one: the
 # app's core asks only when the service is older, and a test build keeps
 # the version. It refuses a build its key did not sign (then install it
-# again: core\fati-vpn-tun.exe install, with the administrator prompt).
-if (Get-Service FatiVPNTun -ErrorAction SilentlyContinue) {
-    $p = Start-Process -FilePath "$dir\core\fati-vpn-tun.exe" -ArgumentList update -Wait -PassThru -NoNewWindow -RedirectStandardError "$coreOut\tun-update.txt"
+# again: core\fali-vpn-tun.exe install, with the administrator prompt).
+if (Get-Service FaliVPNTun -ErrorAction SilentlyContinue) {
+    $p = Start-Process -FilePath "$dir\core\fali-vpn-tun.exe" -ArgumentList update -Wait -PassThru -NoNewWindow -RedirectStandardError "$coreOut\tun-update.txt"
     $why = (Get-Content "$coreOut\tun-update.txt" -Raw -ErrorAction SilentlyContinue)
     if ($p.ExitCode -eq 0) { Write-Host 'The TUN service updated itself' }
     elseif ($why -match 'already this build') { Write-Host 'The TUN service is already this build' }

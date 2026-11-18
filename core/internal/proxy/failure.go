@@ -11,9 +11,9 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
-	"github.com/Alirezahtml/fati-vpn/core/internal/fxa"
-	"github.com/Alirezahtml/fati-vpn/core/internal/guardian"
+	"github.com/Alirezahtml/fali-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fali-vpn/core/internal/fxa"
+	"github.com/Alirezahtml/fali-vpn/core/internal/guardian"
 )
 
 // Failure codes say why a connection through Mozilla failed, so the apps
@@ -30,7 +30,7 @@ const (
 	FailureUnreachable = "unreachable"
 	// FailureInsideVPN: as unreachable, on a device whose own internet
 	// already leaves through a VPN's exit (Fastly's network: another
-	// Fati VPN, on this device or one whose proxy it uses), which lets
+	// Fali VPN, on this device or one whose proxy it uses), which lets
 	// only web ports through, not Mozilla's proxy port.
 	FailureInsideVPN = "inside_vpn"
 	// FailureUpstreamProxy: as unreachable, through the user's own SOCKS5

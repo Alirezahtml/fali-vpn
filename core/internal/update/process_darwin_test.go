@@ -25,7 +25,7 @@ func TestTheAppOpensWithItsArguments(t *testing.T) {
 	<key>CFBundleExecutable</key>
 	<string>run</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.fati.vpn.updatetest</string>
+	<string>com.fali.vpn.updatetest</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 </dict>

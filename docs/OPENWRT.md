@@ -1,4 +1,4 @@
-# Fati VPN on OpenWrt
+# Fali VPN on OpenWrt
 
 Your router becomes a **proxy** (SOCKS5 and HTTP, one port) with a **web panel**. Your devices use it, and their traffic goes through Mozilla's VPN servers.
 
@@ -29,15 +29,15 @@ Tested on a Xiaomi Redmi Router AX6S: 12 MB of RAM idle, 20 MB with traffic.
 **Way A: on the router.** Copy all of this and paste it. It picks the right file for your router:
 
 ```sh
-mkdir -p /root/fati-vpn && cd /root/fati-vpn
+mkdir -p /root/fali-vpn && cd /root/fali-vpn
 case "$(uname -m)" in
   aarch64) arch=arm64 ;;
   x86_64) arch=amd64 ;;
   armv7*) arch=armv7 ;;
 esac
-wget -O core.tar.gz "https://github.com/Alirezahtml/fati-vpn/releases/latest/download/fati-vpn-core-linux-$arch.tar.gz"
-tar -xzf core.tar.gz && mv "fati-vpn-core-linux-$arch/fati-vpn-core" . && rm -r core.tar.gz "fati-vpn-core-linux-$arch"
-chmod +x fati-vpn-core
+wget -O core.tar.gz "https://github.com/Alirezahtml/fali-vpn/releases/latest/download/fali-vpn-core-linux-$arch.tar.gz"
+tar -xzf core.tar.gz && mv "fali-vpn-core-linux-$arch/fali-vpn-core" . && rm -r core.tar.gz "fali-vpn-core-linux-$arch"
+chmod +x fali-vpn-core
 ```
 
 - Certificate error? `opkg update && opkg install ca-bundle` (on 25.12 and newer: `apk add ca-bundle`)
@@ -47,28 +47,28 @@ chmod +x fati-vpn-core
 
 1. On the router, check the processor: `grep DISTRIB_ARCH /etc/openwrt_release`
    `x86_64` → **amd64** · `aarch64_…` → **arm64** · `arm_cortex-a…` → **armv7**
-2. Download [arm64](https://github.com/Alirezahtml/fati-vpn/releases/latest/download/fati-vpn-core-linux-arm64.tar.gz), [amd64](https://github.com/Alirezahtml/fati-vpn/releases/latest/download/fati-vpn-core-linux-amd64.tar.gz), or [armv7](https://github.com/Alirezahtml/fati-vpn/releases/latest/download/fati-vpn-core-linux-armv7.tar.gz) and unpack it.
+2. Download [arm64](https://github.com/Alirezahtml/fali-vpn/releases/latest/download/fali-vpn-core-linux-arm64.tar.gz), [amd64](https://github.com/Alirezahtml/fali-vpn/releases/latest/download/fali-vpn-core-linux-amd64.tar.gz), or [armv7](https://github.com/Alirezahtml/fali-vpn/releases/latest/download/fali-vpn-core-linux-armv7.tar.gz) and unpack it.
 3. Open [Bitvise SSH Client](https://www.bitvise.com/ssh-client-download) or [WinSCP](https://winscp.net/): router address, port 22, user `root`.
-4. Put `fati-vpn-core` in `/root/fati-vpn/` (make the folder).
-5. On the router: `chmod +x /root/fati-vpn/fati-vpn-core`
+4. Put `fali-vpn-core` in `/root/fali-vpn/` (make the folder).
+5. On the router: `chmod +x /root/fali-vpn/fali-vpn-core`
 
 The file window does not open? Install `openssh-sftp-server` on the router, or pick **SCP** in WinSCP.
 
 ## 2. Open it to your network
 
 ```sh
-cd /root/fati-vpn
-./fati-vpn-core -setup-server admin
+cd /root/fali-vpn
+./fali-vpn-core -setup-server admin
 ```
 
 - The panel and the proxy now listen on **0.0.0.0** (every address of the router), not only on `127.0.0.1` (the router itself). If the panel ever stops opening from your devices, check this, and run this step again.
 - It prints the **panel** login and the **proxy** login. **Write them down**: they are shown only once.
-- Your own panel password: run `./fati-vpn-core -panel` now.
+- Your own panel password: run `./fali-vpn-core -panel` now.
 - Never open the ports 10810 and 10820 on WAN.
 
 ## 3. Start it with the router
 
-Save this as `/etc/init.d/fati-vpn`:
+Save this as `/etc/init.d/fali-vpn`:
 
 ```sh
 #!/bin/sh /etc/rc.common
@@ -77,7 +77,7 @@ USE_PROCD=1
 
 start_service() {
 	procd_open_instance
-	procd_set_param command /root/fati-vpn/fati-vpn-core -plain
+	procd_set_param command /root/fali-vpn/fali-vpn-core -plain
 	procd_set_param respawn
 	procd_set_param stdout 1
 	procd_set_param stderr 1
@@ -88,9 +88,9 @@ start_service() {
 Then:
 
 ```sh
-chmod +x /etc/init.d/fati-vpn
-/etc/init.d/fati-vpn enable
-/etc/init.d/fati-vpn start
+chmod +x /etc/init.d/fali-vpn
+/etc/init.d/fali-vpn enable
+/etc/init.d/fali-vpn start
 ```
 
 It shows in LuCI under **System → Startup**. Do not use `-app` (that is the desktop app's mode).
@@ -131,11 +131,11 @@ Calls and games on other ports do not work.
 
 ## 6. The whole network, with PassWall2
 
-With [PassWall2](https://github.com/Openwrt-Passwall/openwrt-passwall2) on the router, every device goes through Fati VPN with no setting on the device, and PassWall2's own rules choose what goes through it and what goes direct.
+With [PassWall2](https://github.com/Openwrt-Passwall/openwrt-passwall2) on the router, every device goes through Fali VPN with no setting on the device, and PassWall2's own rules choose what goes through it and what goes direct.
 
 1. **Node List → Add:** protocol **Socks**, address `127.0.0.1`, port `10810`, and the proxy login from step 2.
 2. **Basic Settings:** choose this node and turn the main switch on.
-3. **Turn off Localhost Proxy** (the router's own traffic). Otherwise Fati VPN's own connections go back into it in a loop, and nothing connects.
+3. **Turn off Localhost Proxy** (the router's own traffic). Otherwise Fali VPN's own connections go back into it in a loop, and nothing connects.
 4. **DNS → Remote DNS Protocol: DoH** (`https://1.1.1.1/dns-query`).
 5. Make your routing rules in PassWall2 (for example, your country's sites direct).
 
@@ -146,9 +146,9 @@ UDP goes through only on the ports in step 5. Menu names differ a little between
 **Update:**
 
 ```sh
-/etc/init.d/fati-vpn stop
-# put the new fati-vpn-core in /root/fati-vpn (step 1)
-/etc/init.d/fati-vpn start
+/etc/init.d/fali-vpn stop
+# put the new fali-vpn-core in /root/fali-vpn (step 1)
+/etc/init.d/fali-vpn start
 ```
 
 Accounts and settings stay.
@@ -156,20 +156,20 @@ Accounts and settings stay.
 **Remove:**
 
 ```sh
-/etc/init.d/fati-vpn stop
-/etc/init.d/fati-vpn disable
-rm /etc/init.d/fati-vpn
-rm -r /root/fati-vpn
+/etc/init.d/fali-vpn stop
+/etc/init.d/fali-vpn disable
+rm /etc/init.d/fali-vpn
+rm -r /root/fali-vpn
 ```
 
 ## Problems
 
 | Problem | Fix |
 |---|---|
-| Is it running? | `/root/fati-vpn/fati-vpn-core -status` |
-| See the log | `logread -e fati-vpn` |
+| Is it running? | `/root/fali-vpn/fali-vpn-core -status` |
+| See the log | `logread -e fali-vpn` |
 | Panel does not open | the service runs? `netstat -ltn \| grep 1082` shows `127.0.0.1:10820` instead of `0.0.0.0` or `:::`? then run step 2 again; use the router's address, not `127.0.0.1` |
-| Forgot the panel password | `/root/fati-vpn/fati-vpn-core -panel`, then `/etc/init.d/fati-vpn restart` |
+| Forgot the panel password | `/root/fali-vpn/fali-vpn-core -panel`, then `/etc/init.d/fali-vpn restart` |
 | Proxy port does not answer | add a working account (step 4); the panel's Overview says why it waits |
 | Accounts from the desktop app | stop the service, copy only the `user-data/accounts` folder (not `config.json`: it would replace the router's settings, and then step 2 is needed again), start it |
 | Slow or times out | panel: **Settings → Connection → Protocol: HTTP/2** |

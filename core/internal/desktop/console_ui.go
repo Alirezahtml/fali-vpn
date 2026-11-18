@@ -17,11 +17,11 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/config"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
-	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
-	"github.com/Alirezahtml/fati-vpn/core/internal/version"
+	"github.com/Alirezahtml/fali-vpn/core/internal/config"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/version"
 
 	"golang.org/x/term"
 )
@@ -642,7 +642,7 @@ func (ui *consoleUI) exitCompletely(own bool, status *service.StatusView) {
 		return
 	}
 	// Exiting never waits for another task (such as a latency measurement).
-	ui.setMessage("Exiting Fati VPN…", ansiYellow)
+	ui.setMessage("Exiting Fali VPN…", ansiYellow)
 	go func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 		defer cancel()
@@ -817,7 +817,7 @@ func (ui *consoleUI) render() {
 }
 
 func (ui *consoleUI) header(width int) []string {
-	title := ansiBold + ansiOrange + "  ◆ FATI VPN" + ansiReset + ansiGrey + "  version " + version.Current + ansiReset
+	title := ansiBold + ansiOrange + "  ◆ FALI VPN" + ansiReset + ansiGrey + "  version " + version.Current + ansiReset
 	return []string{"", title, ansiGrey + "  " + strings.Repeat("─", max(10, min(width-4, 64))) + ansiReset}
 }
 
@@ -832,9 +832,9 @@ func (ui *consoleUI) homeScreen(width, height int) []string {
 	label, text, color := "connecting", "Connecting…", ansiGrey
 	switch {
 	case st == nil && ui.lastErr != "":
-		label, text, color = "stopped", "Fati VPN is not running", ansiRed
+		label, text, color = "stopped", "Fali VPN is not running", ansiRed
 	case st != nil && ui.lastErr != "":
-		label, text = "unreachable", "Fati VPN does not answer"
+		label, text = "unreachable", "Fali VPN does not answer"
 	case st != nil:
 		label, text = phaseLabel(st.State.Phase), st.State.Message
 		switch st.State.Phase {
@@ -939,14 +939,14 @@ func (ui *consoleUI) menuItems() []menuItem {
 			items = append(items, menuItem{action: actSysProxy, label: label, group: 2})
 		}
 	} else if !own {
-		items = append(items, menuItem{action: actStart, label: "Start Fati VPN", group: 2})
+		items = append(items, menuItem{action: actStart, label: "Start Fali VPN", group: 2})
 	}
 	if online {
 		items = append(items, menuItem{action: actReset, label: "Set panel login", group: 3})
 	}
 	items = append(items, menuItem{action: actLog, label: "Show the log", group: 4})
 	if !own && st != nil && st.CanExit {
-		items = append(items, menuItem{action: actExit, label: "Exit Fati VPN completely", group: 4})
+		items = append(items, menuItem{action: actExit, label: "Exit Fali VPN completely", group: 4})
 	}
 	return items
 }

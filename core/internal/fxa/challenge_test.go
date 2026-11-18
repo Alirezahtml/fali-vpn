@@ -16,7 +16,7 @@ import (
 	"testing/synctest"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
+	"github.com/Alirezahtml/fali-vpn/core/internal/controlplane"
 )
 
 func TestSolvePowFindsSuffix(t *testing.T) {

@@ -10,7 +10,7 @@ import (
 
 	"golang.org/x/sys/windows"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
+	"github.com/Alirezahtml/fali-vpn/core/internal/egress"
 )
 
 // connected looks for an adapter that is up and has a default gateway.

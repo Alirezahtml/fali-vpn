@@ -1,6 +1,6 @@
 "use strict";
 
-// Fati VPN dashboard. All server data is rendered with textContent; no
+// Fali VPN dashboard. All server data is rendered with textContent; no
 // response value is ever interpreted as HTML.
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -374,7 +374,7 @@ function showView(name) {
   $("#page-title").textContent = title;
   $("#page-sub").textContent = sub;
   $("#page-sub").hidden = !sub;
-  document.title = `${title} · Fati VPN`;
+  document.title = `${title} · Fali VPN`;
   if (name === "settings") loadSettings().catch(reportError);
   if (name === "accounts") loadAccounts().catch(reportError);
   if (name === "locations") loadLocations().catch(reportError);
@@ -477,7 +477,7 @@ function renderStatus() {
   const phase = s.state.phase;
   const label = PHASE_LABELS[phase] || phase;
 
-  $("#version-tag").textContent = s.version ? `Fati VPN ${s.version}` : "";
+  $("#version-tag").textContent = s.version ? `Fali VPN ${s.version}` : "";
   const pill = $("#state-pill");
   const asleep = phase === "running" && s.proxy && s.proxy.sleeping_since;
   // A sleeping proxy has its own look everywhere: it is not connected.
@@ -811,10 +811,10 @@ async function renderHelp() {
   const hostPart = host.includes(":") ? `[${host}]` : host;
   const address = `${hostPart}:${port}`;
   const userinfo = base64(`${proxy.username || ""}:${proxy.password || ""}`).replace(/=+$/, "");
-  const link = `socks://${userinfo}@${address}#${encodeURIComponent("Fati VPN")}`;
+  const link = `socks://${userinfo}@${address}#${encodeURIComponent("Fali VPN")}`;
   $("#help-socks-addr").textContent = address;
   // The password stays out of sight; the copied link has it.
-  $("#help-socks-link").textContent = proxy.password ? `socks://…@${address}#Fati VPN` : `socks://${userinfo}@${address}#Fati VPN`;
+  $("#help-socks-link").textContent = proxy.password ? `socks://…@${address}#Fali VPN` : `socks://${userinfo}@${address}#Fali VPN`;
   $("#help-copy-addr").onclick = () => copyText(address);
   $("#help-copy-link").onclick = () => copyText(link, "the link");
 }
@@ -1292,11 +1292,11 @@ function renderSignIn(view) {
       // browser sign-in, moved over by its data folder.
       if (view.error_code === "blocked") {
         message.replaceChildren(
-          el("span", { text: "Tip: sign in with the browser in the Fati VPN app, then copy that device's data folder to this machine." }),
+          el("span", { text: "Tip: sign in with the browser in the Fali VPN app, then copy that device's data folder to this machine." }),
           el("a", {
             class: "btn primary",
             style: "margin-top:10px; width:fit-content",
-            href: "https://github.com/Alirezahtml/fati-vpn/blob/main/docs/BROWSER-SIGNIN.md",
+            href: "https://github.com/Alirezahtml/fali-vpn/blob/main/docs/BROWSER-SIGNIN.md",
             target: "_blank",
             rel: "noreferrer",
             text: "How to do it",
@@ -1354,7 +1354,7 @@ async function saveBackup() {
       try { data = await response.json(); } catch { /* empty body */ }
       throw new ApiError(response.status, (data && data.error) || response.statusText);
     }
-    const name = /filename="([^"]+)"/.exec(response.headers.get("Content-Disposition") || "")?.[1] || "Fati-VPN-backup.zip";
+    const name = /filename="([^"]+)"/.exec(response.headers.get("Content-Disposition") || "")?.[1] || "Fali-VPN-backup.zip";
     const url = URL.createObjectURL(await response.blob());
     const link = el("a", { href: url, download: name });
     document.body.append(link);

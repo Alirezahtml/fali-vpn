@@ -301,7 +301,7 @@ class _SettingsPageState extends State<SettingsPage> {
     if (!mounted) return;
     final l = AppLocalizations.of(context);
     final country = regionName(l, region);
-    final yes = await showFatiDialog<bool>(
+    final yes = await showFaliDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         icon: const Icon(Icons.alt_route_rounded),
@@ -1075,7 +1075,7 @@ class _SettingsPageState extends State<SettingsPage> {
     });
     final list = running;
     if (!ok || list == null || !mounted) return;
-    final picked = await showFatiDialog<RunningProgram>(
+    final picked = await showFaliDialog<RunningProgram>(
       context: context,
       builder: (_) => _RunningProgramsDialog(
         programs: list,
@@ -1089,7 +1089,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   /// A program by a name the user types, * for any text.
   Future<void> _addProgramByName() async {
-    final name = await showFatiDialog<String>(
+    final name = await showFaliDialog<String>(
       context: context,
       builder: (_) => const _ProgramNameDialog(),
     );
@@ -1101,7 +1101,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _confirmRemoveTunService() async {
     final l = AppLocalizations.of(context);
     final colors = Theme.of(context).colorScheme;
-    final yes = await showFatiDialog<bool>(
+    final yes = await showFaliDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         icon: Icon(Icons.delete_rounded, color: colors.error),
@@ -1433,7 +1433,7 @@ Future<T?> _pickOne<T>(
   required T value,
   required List<(T, String, TextStyle?)> options,
   List<String>? hints,
-}) => showFatiDialog<T>(
+}) => showFaliDialog<T>(
   context: context,
   builder: (context) => AlertDialog(
     title: Text(title),

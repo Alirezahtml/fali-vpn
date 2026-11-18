@@ -18,9 +18,9 @@ import (
 	utls "github.com/refraction-networking/utls"
 	"golang.org/x/net/http2"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/firefoxtls"
-	"github.com/Alirezahtml/fati-vpn/core/internal/hellosplit"
-	"github.com/Alirezahtml/fati-vpn/core/internal/resolver"
+	"github.com/Alirezahtml/fali-vpn/core/internal/firefoxtls"
+	"github.com/Alirezahtml/fali-vpn/core/internal/hellosplit"
+	"github.com/Alirezahtml/fali-vpn/core/internal/resolver"
 )
 
 const (

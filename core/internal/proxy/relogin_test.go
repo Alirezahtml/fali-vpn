@@ -7,7 +7,7 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fali-vpn/core/internal/accounts"
 )
 
 func TestGuardianRejectsRefreshedTokenWithoutSigningIn(t *testing.T) {

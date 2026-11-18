@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/routing"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tun"
+	"github.com/Alirezahtml/fali-vpn/core/internal/routing"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tun"
 )
 
 // fakeUDPTunnel echoes its packets, with its target in front.

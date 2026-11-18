@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/fxa"
-	"github.com/Alirezahtml/fati-vpn/core/internal/guardian"
-	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fali-vpn/core/internal/fxa"
+	"github.com/Alirezahtml/fali-vpn/core/internal/guardian"
+	"github.com/Alirezahtml/fali-vpn/core/internal/logx"
 )
 
 const (

@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/securefile"
+	"github.com/Alirezahtml/fali-vpn/core/internal/securefile"
 )
 
 // The desktop's proxy setting: GNOME's (gsettings org.gnome.system.proxy),
@@ -30,7 +30,7 @@ var (
 		if err != nil {
 			return "", err
 		}
-		return filepath.Join(dir, "fati-vpn", "previous-proxy.json"), nil
+		return filepath.Join(dir, "fali-vpn", "previous-proxy.json"), nil
 	}
 )
 

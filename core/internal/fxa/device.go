@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
+	"github.com/Alirezahtml/fali-vpn/core/internal/controlplane"
 )
 
 // DeviceName is how this program appears in the account's connected

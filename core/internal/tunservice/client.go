@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
-	"github.com/Alirezahtml/fati-vpn/core/internal/version"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/version"
 )
 
 // The commands an ordinary user runs: the app (installing on the first TUN

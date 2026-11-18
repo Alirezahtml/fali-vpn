@@ -10,7 +10,7 @@ import (
 	"strings"
 	"unsafe"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/service"
+	"github.com/Alirezahtml/fali-vpn/core/internal/service"
 
 	"golang.org/x/sys/windows"
 )
@@ -57,7 +57,7 @@ func acquireSingleInstance(paths service.DataPaths) (release func(), ok bool) {
 
 func trayMutexName(paths service.DataPaths) *uint16 {
 	sum := sha256.Sum256([]byte(strings.ToLower(paths.Dir)))
-	name, _ := windows.UTF16PtrFromString(`Local\FatiVPN-tray-` + hex.EncodeToString(sum[:8]))
+	name, _ := windows.UTF16PtrFromString(`Local\FaliVPN-tray-` + hex.EncodeToString(sum[:8]))
 	return name
 }
 
@@ -92,6 +92,6 @@ func enableTerminalColors() bool {
 	if err := windows.SetConsoleMode(h, mode|windows.ENABLE_VIRTUAL_TERMINAL_PROCESSING|windows.ENABLE_PROCESSED_OUTPUT); err != nil {
 		return false
 	}
-	os.Stdout.WriteString("\x1b]0;Fati VPN\x07")
+	os.Stdout.WriteString("\x1b]0;Fali VPN\x07")
 	return true
 }

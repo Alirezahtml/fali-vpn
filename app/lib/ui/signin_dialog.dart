@@ -22,7 +22,7 @@ Future<void> showSignInDialog(
   String email = '',
   SignInState? started,
   VoidCallback? onBrowserRetry,
-}) => showFatiDialog<void>(
+}) => showFaliDialog<void>(
   context: context,
   barrierDismissible: false,
   builder: (_) => _SignInDialog(

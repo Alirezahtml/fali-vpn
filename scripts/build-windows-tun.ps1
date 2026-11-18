@@ -1,10 +1,10 @@
-# Builds the TUN service (core\cmd\fati-vpn-tun) into -Out as
-# fati-vpn-tun.exe, beside the core, from where the app installs it.
+# Builds the TUN service (core\cmd\fali-vpn-tun) into -Out as
+# fali-vpn-tun.exe, beside the core, from where the app installs it.
 # scripts\build-windows.ps1 and scripts\update-installed-windows.ps1 run it.
 #
 # Updates of an installed service must be signed (Ed25519): with a signing
 # key (scripts\signing-key.ps1; -PublicKey when the caller read it already),
-# the service accepts updates signed with it, and fati-vpn-tun.exe.sig is
+# the service accepts updates signed with it, and fali-vpn-tun.exe.sig is
 # written beside the executable. Without a key the service takes no
 # updates: a newer one is installed again, with the administrator prompt.
 #Requires -Version 7
@@ -20,15 +20,15 @@ $public = if ($PSBoundParameters.ContainsKey('PublicKey')) { $PublicKey } else {
 Push-Location "$root\core"
 try {
     $env:APP_VERSION = $Version
-    go generate ./cmd/fati-vpn-tun
-    if ($LASTEXITCODE -ne 0) { throw 'go generate failed (fati-vpn-tun)' }
+    go generate ./cmd/fali-vpn-tun
+    if ($LASTEXITCODE -ne 0) { throw 'go generate failed (fali-vpn-tun)' }
 
     # windowsgui: no console window when the app or Setup starts it.
-    $ldflags = "-s -w -H windowsgui -X github.com/Alirezahtml/fati-vpn/core/internal/version.Current=$Version"
-    if ($public) { $ldflags += " -X github.com/Alirezahtml/fati-vpn/core/internal/signing.Key=$public" }
-    $exe = Join-Path $Out 'fati-vpn-tun.exe'
-    go build -tags with_gvisor -trimpath -ldflags $ldflags -o $exe ./cmd/fati-vpn-tun
-    if ($LASTEXITCODE -ne 0) { throw 'go build failed (fati-vpn-tun)' }
+    $ldflags = "-s -w -H windowsgui -X github.com/Alirezahtml/fali-vpn/core/internal/version.Current=$Version"
+    if ($public) { $ldflags += " -X github.com/Alirezahtml/fali-vpn/core/internal/signing.Key=$public" }
+    $exe = Join-Path $Out 'fali-vpn-tun.exe'
+    go build -tags with_gvisor -trimpath -ldflags $ldflags -o $exe ./cmd/fali-vpn-tun
+    if ($LASTEXITCODE -ne 0) { throw 'go build failed (fali-vpn-tun)' }
     if ($public) {
         go run ./tools/sign $exe
         if ($LASTEXITCODE -ne 0) { throw 'signing the TUN service failed' }

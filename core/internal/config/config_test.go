@@ -325,13 +325,13 @@ func TestDefaultDataDirFollowsTheApp(t *testing.T) {
 		t.Fatalf("alone: %s", got)
 	}
 	// Beside the desktop app on Windows: user-data beside both.
-	files["fati-vpn.exe"] = true
+	files["fali-vpn.exe"] = true
 	if got := defaultDataDirFor(dir, "windows", getenv, exists); got != filepath.Join(dir, "user-data") {
 		t.Fatalf("beside the app on Windows: %s", got)
 	}
 	// On macOS: the app's folder in the user's data location.
-	files["Fati VPN"] = true
-	if got := defaultDataDirFor(dir, "darwin", getenv, exists); got != filepath.Join("/home/u", "Library", "Application Support", "Fati VPN") {
+	files["Fali VPN"] = true
+	if got := defaultDataDirFor(dir, "darwin", getenv, exists); got != filepath.Join("/home/u", "Library", "Application Support", "Fali VPN") {
 		t.Fatalf("beside the app on macOS: %s", got)
 	}
 	// A portable app keeps user-data beside it.
@@ -345,12 +345,12 @@ func TestAppDir(t *testing.T) {
 	// Files by their full path, so the parent folder counts.
 	files := map[string]bool{}
 	exists := func(p string) bool { return files[p] }
-	app := filepath.Join("opt", "Fati VPN")
+	app := filepath.Join("opt", "Fali VPN")
 	core := filepath.Join(app, "core")
 	if got := appDir(app, exists); got != "" {
 		t.Fatalf("a core on its own belongs to %q", got)
 	}
-	for _, name := range []string{"fati-vpn.exe", "fati-vpn", "Fati VPN"} {
+	for _, name := range []string{"fali-vpn.exe", "fali-vpn", "Fali VPN"} {
 		files = map[string]bool{filepath.Join(app, name): true}
 		if got := appDir(app, exists); got != app {
 			t.Fatalf("beside %s: %q", name, got)
@@ -361,7 +361,7 @@ func TestAppDir(t *testing.T) {
 		}
 	}
 	// The parent counts only from a folder named core.
-	files = map[string]bool{filepath.Join(app, "fati-vpn.exe"): true}
+	files = map[string]bool{filepath.Join(app, "fali-vpn.exe"): true}
 	if got := appDir(filepath.Join(app, "tools"), exists); got != "" {
 		t.Fatalf("a core in another folder belongs to %q", got)
 	}

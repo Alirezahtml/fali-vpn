@@ -12,10 +12,10 @@ import (
 func TestMigrateFixesTheMenuEntryAndRemovesTheLinks(t *testing.T) {
 	app := t.TempDir()
 	os.MkdirAll(filepath.Join(app, "core"), 0o755)
-	os.WriteFile(filepath.Join(app, "fati-vpn"), []byte("app"), 0o755)
-	os.Symlink("fati-vpn", filepath.Join(app, "firefox-vpn"))
-	os.Symlink("fati-vpn-core", filepath.Join(app, "core", "firefox-vpn-core"))
-	entry := filepath.Join(t.TempDir(), "com.fati.vpn.desktop")
+	os.WriteFile(filepath.Join(app, "fali-vpn"), []byte("app"), 0o755)
+	os.Symlink("fali-vpn", filepath.Join(app, "firefox-vpn"))
+	os.Symlink("fali-vpn-core", filepath.Join(app, "core", "firefox-vpn-core"))
+	entry := filepath.Join(t.TempDir(), "com.fali.vpn.desktop")
 	old := desktopFile
 	desktopFile = func() string { return entry }
 	t.Cleanup(func() { desktopFile = old })
@@ -25,7 +25,7 @@ func TestMigrateFixesTheMenuEntryAndRemovesTheLinks(t *testing.T) {
 		t.Fatal(err)
 	}
 	data, _ := os.ReadFile(entry)
-	want := "[Desktop Entry]\nName=Fati VPN\nExec=\"" + filepath.Join(app, "fati-vpn") + "\"\nIcon=" + app + "/data/app_icon.png\n"
+	want := "[Desktop Entry]\nName=Fali VPN\nExec=\"" + filepath.Join(app, "fali-vpn") + "\"\nIcon=" + app + "/data/app_icon.png\n"
 	if string(data) != want {
 		t.Fatalf("entry:\n%s\nwant:\n%s", data, want)
 	}

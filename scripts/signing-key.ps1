@@ -1,17 +1,17 @@
 # Prints the public half of the key that updates are signed with
 # (core\internal\signing): the release's SHA256SUMS.txt, which the Windows
-# app checks before it installs a new version, and fati-vpn-tun.exe,
+# app checks before it installs a new version, and fali-vpn-tun.exe,
 # which the installed TUN service checks before it replaces itself. The
-# private key comes from FATI_VPN_SIGNING_KEY (base64, CI's secret) or
-# the file named by FATI_VPN_SIGNING_KEY_FILE (a developer key); without
+# private key comes from FALI_VPN_SIGNING_KEY (base64, CI's secret) or
+# the file named by FALI_VPN_SIGNING_KEY_FILE (a developer key); without
 # one it prints nothing and warns: such a build takes no updates. The build
 # scripts pass the result to the core and the TUN service
 # (-X ...internal/signing.Key=...).
 #Requires -Version 7
 $ErrorActionPreference = 'Stop'
 
-if (-not ($env:FATI_VPN_SIGNING_KEY -or $env:FATI_VPN_SIGNING_KEY_FILE)) {
-    Write-Warning 'No signing key (FATI_VPN_SIGNING_KEY or FATI_VPN_SIGNING_KEY_FILE): this build takes no updates'
+if (-not ($env:FALI_VPN_SIGNING_KEY -or $env:FALI_VPN_SIGNING_KEY_FILE)) {
+    Write-Warning 'No signing key (FALI_VPN_SIGNING_KEY or FALI_VPN_SIGNING_KEY_FILE): this build takes no updates'
     return ''
 }
 Push-Location (Join-Path (Split-Path -Parent $PSScriptRoot) 'core')

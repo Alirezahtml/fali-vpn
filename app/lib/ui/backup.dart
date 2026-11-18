@@ -61,7 +61,7 @@ class BackupMenuButton extends StatelessWidget {
       if (zip != null) contents = await api.inspectBackup(zip!);
     });
     if (zip == null || contents == null || !context.mounted) return;
-    final go = await showFatiDialog<bool>(
+    final go = await showFaliDialog<bool>(
       context: context,
       builder: (context) => _ImportDialog(contents: contents!),
     );

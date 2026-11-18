@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
+	"github.com/Alirezahtml/fali-vpn/core/internal/egress"
 )
 
 // fastlyASN is Fastly's network, where Firefox VPN's exits are.

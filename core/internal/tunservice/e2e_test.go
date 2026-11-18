@@ -20,8 +20,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
-	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fali-vpn/core/internal/egress"
+	"github.com/Alirezahtml/fali-vpn/core/internal/tunapi"
 )
 
 // TestEndToEnd runs a TUN for real, on a computer whose network it may

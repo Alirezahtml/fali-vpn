@@ -42,10 +42,10 @@ class CoreProcess {
     }
     final sep = Platform.pathSeparator;
     final dir = File(Platform.resolvedExecutable).parent.path;
-    if (Platform.isMacOS) return '$dir${sep}fati-vpn-core';
+    if (Platform.isMacOS) return '$dir${sep}fali-vpn-core';
     final name = Platform.isWindows
-        ? 'fati-vpn-core.exe'
-        : 'fati-vpn-core';
+        ? 'fali-vpn-core.exe'
+        : 'fali-vpn-core';
     return '$dir${sep}core$sep$name';
   }
 

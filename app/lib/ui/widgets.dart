@@ -858,7 +858,7 @@ Future<void> openLink(BuildContext context, String url) async {
   if (await openUrl(url) || !context.mounted) return;
   final l = AppLocalizations.of(context);
   final theme = Theme.of(context);
-  await showFatiDialog<void>(
+  await showFaliDialog<void>(
     context: context,
     builder: (context) => AlertDialog(
       title: Text(l.noBrowserTitle),
