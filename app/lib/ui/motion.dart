@@ -833,7 +833,8 @@ class _DropInBannerState extends State<DropInBanner>
     }
     return SizeTransition(
       sizeFactor: _curve,
-      axisAlignment: -1,
+      // The drop-in pins to the top edge (the old axisAlignment: -1).
+      alignment: Alignment(-1.0, -1.0),
       child: FadeTransition(opacity: _curve, child: widget.child),
     );
   }
