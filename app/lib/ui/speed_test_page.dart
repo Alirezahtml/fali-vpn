@@ -101,7 +101,9 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
   }
 
   void _stop() {
-    for (final c in _clients ?? const <HttpClient>[]) c.close(force: true);
+    for (final c in _clients ?? const <HttpClient>[]) {
+      c.close(force: true);
+    }
     _clients = null;
     _ui?.cancel();
     _ui = null;
@@ -148,7 +150,9 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
     _ui = Timer.periodic(const Duration(milliseconds: 120), (_) {
       final now = DateTime.now();
       samples.add((now, total.value));
-      if (now.isAfter(deadline) && !done.isCompleted) done.complete();
+      if (now.isAfter(deadline) && !done.isCompleted) {
+        done.complete();
+      }
       if (!mounted) return;
       setState(() {
         _down = _sustained(samples) / 125000;
