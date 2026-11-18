@@ -10,7 +10,7 @@ class AppLocalizationsId extends AppLocalizations {
   AppLocalizationsId([String locale = 'id']) : super(locale);
 
   @override
-  String get appTitle => 'Arman VPN';
+  String get appTitle => 'Fati VPN';
 
   @override
   String get navOverview => 'Ringkasan';
@@ -1183,6 +1183,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get stateOff => 'Tidak terhubung';
 
   @override
+  String get verbConnect => 'Sambungkan';
+
+  @override
+  String get verbDisconnect => 'Putuskan';
+
+
+  @override
   String get tapToConnectPhone => 'Ketuk untuk terhubung';
 
   @override
@@ -1498,7 +1505,7 @@ class AppLocalizationsId extends AppLocalizations {
       'Layanan TUN lebih baru dari aplikasi ini. Perbarui aplikasi untuk memakai mode TUN.';
 
   @override
-  String get tunBusy => 'Salinan lain Arman VPN sedang memakai mode TUN.';
+  String get tunBusy => 'Salinan lain Fati VPN sedang memakai mode TUN.';
 
   @override
   String get tunNoDriver =>
@@ -1525,10 +1532,10 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get tunInstallPrompt =>
-      'Arman VPN ingin memasang layanan untuk mode TUN.';
+      'Fati VPN ingin memasang layanan untuk mode TUN.';
 
   @override
-  String get tunRemovePrompt => 'Arman VPN ingin menghapus layanan mode TUN.';
+  String get tunRemovePrompt => 'Fati VPN ingin menghapus layanan mode TUN.';
 
   @override
   String tunRemoveFailed(String error) {

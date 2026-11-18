@@ -1,4 +1,4 @@
-package com.arman.firefoxvpn
+package com.fati.vpn
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -438,8 +438,8 @@ class CoreService : VpnService() {
     }
 
     companion object {
-        const val ACTION_STOP = "com.arman.firefoxvpn.STOP"
-        private const val ACTION_RECONNECT = "com.arman.firefoxvpn.RECONNECT"
+        const val ACTION_STOP = "com.fati.vpn.STOP"
+        private const val ACTION_RECONNECT = "com.fati.vpn.RECONNECT"
         private const val PREFS = "vpn"
         private const val MODE = "app_mode"
         const val MODE_EXCLUDE = "exclude"

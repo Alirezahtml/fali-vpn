@@ -22,53 +22,221 @@ import 'settings_page.dart';
 import 'welcome_page.dart';
 import 'widgets.dart';
 
+/// The app's theme, built to read like Google Pixel's Material You: the
+/// electric blue accent over near-white blue-tinted surfaces by day and
+/// deep navy ones at night, big 26-pixel rounded cards, pill buttons, and
+/// the state colors of Google's palette. Vazirmatn for Persian and Arabic;
+/// the system font (Segoe UI, Roboto) otherwise. Styles set here name the
+/// font too, or they would fall back to the system font.
 ThemeData _theme(Brightness brightness, Locale locale) {
-  final scheme = ColorScheme.fromSeed(
-    seedColor: const Color(0xFF5B5BD6),
-    brightness: brightness,
-  );
   final dark = brightness == Brightness.dark;
-  // Vazirmatn for Persian and Arabic; the system font (Segoe UI)
-  // otherwise. Styles set here name it too, or they would fall back to the
-  // system font.
   final font = languageFont(locale.languageCode);
+  final scheme = ColorScheme.fromSeed(
+    seedColor: PixelAccent.blue,
+    brightness: brightness,
+  ).copyWith(
+          // The Pixel surfaces: near-white with a breath of blue by day,
+          // deep navy at night.
+          surface: dark ? const Color(0xFF0E1420) : const Color(0xFFF5F8FE),
+          surfaceContainerLowest: dark ? const Color(0xFF0B111C) : Colors.white,
+          surfaceContainerLow: dark ? const Color(0xFF121926) : const Color(0xFFF8FAFF),
+          surfaceContainer: dark ? const Color(0xFF171E2C) : Colors.white,
+          surfaceContainerHigh: dark ? const Color(0xFF1D2534) : const Color(0xFFEDF2FC),
+          surfaceContainerHighest: dark ? const Color(0xFF242E40) : const Color(0xFFE2EAF8),
+          onSurface: dark ? const Color(0xFFE6ECF6) : const Color(0xFF1A1D24),
+          onSurfaceVariant: dark ? const Color(0xFF9AA6BC) : const Color(0xFF5B6474),
+          primaryContainer: dark
+              ? PixelAccent.darkContainer
+              : PixelAccent.lightContainer,
+          onPrimaryContainer: dark
+              ? PixelAccent.darkOnContainer
+              : PixelAccent.lightOnContainer,
+        );
   return ThemeData(
     colorScheme: scheme,
     fontFamily: font,
-    scaffoldBackgroundColor: dark
-        ? const Color(0xFF111218)
-        : const Color(0xFFF5F5FA),
+    splashFactory: InkSparkle.splashFactory,
+    scaffoldBackgroundColor: scheme.surface,
+    // A partial text theme: what it does not name keeps Material's
+    // brightness-appropriate default. Google Sans's spirit: bold titles,
+    // comfortable reading.
+    textTheme: TextTheme(
+      headlineMedium: TextStyle(fontFamily: font, fontWeight: FontWeight.w700),
+      headlineSmall: TextStyle(fontFamily: font, fontWeight: FontWeight.w700),
+      titleLarge: TextStyle(fontFamily: font, fontWeight: FontWeight.w700),
+      titleMedium: TextStyle(fontFamily: font, fontWeight: FontWeight.w600),
+      titleSmall: TextStyle(fontFamily: font, fontWeight: FontWeight.w600),
+      labelLarge: TextStyle(fontFamily: font, fontWeight: FontWeight.w600),
+      bodyLarge: TextStyle(fontFamily: font, height: 1.5),
+      bodyMedium: TextStyle(fontFamily: font, height: 1.45),
+      bodySmall: TextStyle(fontFamily: font, height: 1.4),
+    ),
     cardTheme: CardThemeData(
       elevation: 0,
-      color: dark ? const Color(0xFF1A1B23) : Colors.white,
+      color: scheme.surfaceContainer,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: scheme.outlineVariant.withValues(alpha: 0.4)),
+        borderRadius: BorderRadius.circular(26),
+        side: BorderSide(
+          color: dark
+              ? Colors.white.withValues(alpha: 0.08)
+              : const Color(0xFF0B3B78).withValues(alpha: 0.05),
+        ),
+      ),
+    ),
+    appBarTheme: AppBarTheme(
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      backgroundColor: scheme.surface,
+      surfaceTintColor: Colors.transparent,
+      titleTextStyle: TextStyle(
+        fontFamily: font,
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        color: scheme.onSurface,
+      ),
+      iconTheme: IconThemeData(color: scheme.onSurface),
+    ),
+    navigationBarTheme: NavigationBarThemeData(
+      elevation: 0,
+      height: 74,
+      backgroundColor: dark ? Midnight.nav : scheme.surfaceContainerLowest,
+      surfaceTintColor: Colors.transparent,
+      indicatorColor: dark
+          ? PixelAccent.darkContainer
+          : PixelAccent.lightContainer,
+      iconTheme: WidgetStatePropertyAll(
+        IconThemeData(color: scheme.onSurfaceVariant, size: 24),
+      ),
+      selectedIconTheme: WidgetStatePropertyAll(
+        IconThemeData(
+          color: dark
+              ? PixelAccent.darkOnContainer
+              : PixelAccent.lightOnContainer,
+          size: 24,
+        ),
+      ),
+      labelTextStyle: WidgetStatePropertyAll(
+        TextStyle(
+          fontFamily: font,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: scheme.onSurface,
+        ),
       ),
     ),
     navigationRailTheme: NavigationRailThemeData(
-      backgroundColor: dark ? const Color(0xFF15161D) : const Color(0xFFECECF4),
+      backgroundColor: dark ? const Color(0xFF10161F) : const Color(0xFFEFF3FB),
+      indicatorColor: dark
+          ? PixelAccent.darkContainer
+          : PixelAccent.lightContainer,
+      indicatorShape: const StadiumBorder(),
       // The menu's names semi-bold, the open page's bold.
       selectedLabelTextStyle: TextStyle(
         fontFamily: font,
-        fontSize: 15.5,
+        fontSize: 15,
         fontWeight: FontWeight.w700,
         color: scheme.onSurface,
       ),
       unselectedLabelTextStyle: TextStyle(
         fontFamily: font,
-        fontSize: 15.5,
+        fontSize: 15,
         fontWeight: FontWeight.w600,
         color: scheme.onSurfaceVariant,
       ),
       selectedIconTheme: IconThemeData(
         size: 24,
-        color: scheme.onSecondaryContainer,
+        color: dark
+            ? PixelAccent.darkOnContainer
+            : PixelAccent.lightOnContainer,
       ),
       unselectedIconTheme: IconThemeData(
         size: 24,
         color: scheme.onSurfaceVariant,
       ),
+    ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        backgroundColor: scheme.primary,
+        foregroundColor: Colors.white,
+        // Pixel's buttons are full pills.
+        shape: const StadiumBorder(),
+        minimumSize: const Size(58, 46),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        textStyle: TextStyle(
+          fontFamily: font,
+          fontSize: 15,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        shape: const StadiumBorder(),
+        minimumSize: const Size(58, 46),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        side: BorderSide(color: scheme.outlineVariant),
+        textStyle: TextStyle(
+          fontFamily: font,
+          fontSize: 15,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    ),
+    segmentedButtonTheme: SegmentedButtonThemeData(
+      style: ButtonStyle(
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+        ),
+        side: WidgetStatePropertyAll(
+          BorderSide(color: scheme.outlineVariant),
+        ),
+        textStyle: WidgetStatePropertyAll(
+          TextStyle(
+            fontFamily: font,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    ),
+    listTileTheme: ListTileThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: scheme.surfaceContainerHigh.withValues(alpha: dark ? 1 : 0.6),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: scheme.primary, width: 2),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    ),
+    chipTheme: ChipThemeData(
+      shape: const StadiumBorder(),
+      side: BorderSide(color: scheme.outlineVariant),
+    ),
+    dialogTheme: DialogThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      backgroundColor: dark ? const Color(0xFF1A2130) : Colors.white,
+    ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    ),
+    dividerTheme: DividerThemeData(
+      color: (dark ? Colors.white : const Color(0xFF0B3B78)).withValues(
+        alpha: dark ? 0.08 : 0.06,
+      ),
+      thickness: 1,
+    ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: scheme.primary,
+      linearTrackColor: scheme.surfaceContainerHighest,
+      circularTrackColor: scheme.surfaceContainerHighest.withValues(alpha: 0.4),
     ),
   );
 }

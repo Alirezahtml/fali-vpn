@@ -19,11 +19,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/guardian"
-	"github.com/armanlife/arman-vpn-client/core/internal/hellosplit"
-	"github.com/armanlife/arman-vpn-client/core/internal/resolver"
-	"github.com/armanlife/arman-vpn-client/core/internal/routing"
-	"github.com/armanlife/arman-vpn-client/core/internal/securefile"
+	"github.com/Alirezahtml/fati-vpn/core/internal/guardian"
+	"github.com/Alirezahtml/fati-vpn/core/internal/hellosplit"
+	"github.com/Alirezahtml/fati-vpn/core/internal/resolver"
+	"github.com/Alirezahtml/fati-vpn/core/internal/routing"
+	"github.com/Alirezahtml/fati-vpn/core/internal/securefile"
 )
 
 // CurrentVersion is the config schema version written by this build.
@@ -150,7 +150,7 @@ func CleanTunPrograms(programs []TunProgram) []TunProgram {
 //	clear  turn the system proxy off, once when chosen (a setting this
 //	       program made is restored first)
 //	tun    leave the setting alone (restoring this program's) and send every
-//	       app's TCP through the TUN service (cmd/arman-vpn-tun) while the
+//	       app's TCP through the TUN service (cmd/fati-vpn-tun) while the
 //	       proxy is on; only the desktop app's core does it
 type SystemProxy struct {
 	Mode string `json:"mode"`
@@ -770,14 +770,14 @@ const DataDirName = "user-data"
 // (inside the macOS bundle). A core started from either place uses the
 // app's data folder, so it sees the app's accounts and settings.
 const (
-	AppFolder      = "Arman VPN"
+	AppFolder      = "Fati VPN"
 	PortableMarker = "portable"
 	CoreFolder     = "core"
 )
 
 // appExecutables are the desktop app's executables: Windows, Linux, and
-// macOS (inside Arman VPN.app/Contents/MacOS).
-var appExecutables = []string{"arman-vpn.exe", "arman-vpn", "Arman VPN"}
+// macOS (inside Fati VPN.app/Contents/MacOS).
+var appExecutables = []string{"fati-vpn.exe", "fati-vpn", "Fati VPN"}
 
 // DefaultDataDir returns the data folder: DataDirName next to the running
 // executable (symlinks resolved, so a linked binary still uses its real
@@ -890,7 +890,7 @@ func defaultDataDirFor(exeDir, goos string, getenv func(string) string, exists f
 }
 
 // linuxDataFolder is the app's data folder on Linux, in XDG_DATA_HOME.
-const linuxDataFolder = "arman-vpn"
+const linuxDataFolder = "fati-vpn"
 
 // CheckWritable verifies that dir can be created and written, so a
 // read-only installation folder fails with a clear message at startup.

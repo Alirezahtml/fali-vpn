@@ -98,7 +98,7 @@ class AppSettings extends ChangeNotifier {
 
   /// The app language for the system's [locale]: Traditional Chinese for
   /// the Hant script or Taiwan, Hong Kong, and Macau; else the language
-  /// when the app has it; else English.
+  /// when the app has it; else Persian, the app's default language.
   static String languageFor(Locale locale) {
     if (locale.languageCode == 'zh') {
       final traditional =
@@ -108,12 +108,12 @@ class AppSettings extends ChangeNotifier {
     }
     return supportedLanguages.contains(locale.languageCode)
         ? locale.languageCode
-        : 'en';
+        : 'fa';
   }
 
   /// The app language for the system's preferred [locales], in order: the
-  /// first one the app has; else English (not Flutter's default, the first
-  /// language it was built with).
+  /// first one the app has; else Persian, the app's default language (not
+  /// Flutter's first language).
   static String languageForList(List<Locale>? locales) {
     for (final locale in locales ?? const <Locale>[]) {
       if (locale.languageCode == 'zh' ||
@@ -121,7 +121,7 @@ class AppSettings extends ChangeNotifier {
         return languageFor(locale);
       }
     }
-    return 'en';
+    return 'fa';
   }
 
   /// The core's routing regions (`routing.region`); empty is none.

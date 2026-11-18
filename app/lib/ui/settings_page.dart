@@ -137,8 +137,13 @@ class SettingsGroup extends StatelessWidget {
           padding: const EdgeInsetsDirectional.fromSTEB(8, 20, 8, 8),
           child: Text(
             title,
+            // Pixel's settings: the group's name in the accent color,
+            // outside the card that holds its tiles.
             style: theme.textTheme.labelLarge?.copyWith(
               color: theme.colorScheme.primary,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.2,
             ),
           ),
         ),

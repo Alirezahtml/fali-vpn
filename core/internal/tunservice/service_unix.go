@@ -16,10 +16,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunstack"
-	"github.com/armanlife/arman-vpn-client/core/internal/version"
+	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fati-vpn/core/internal/tunstack"
+	"github.com/Alirezahtml/fati-vpn/core/internal/version"
 )
 
 // The installed service lives in a folder only root may write to

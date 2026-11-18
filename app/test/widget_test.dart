@@ -3,20 +3,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:arman_vpn/app_info.dart';
-import 'package:arman_vpn/app_settings.dart';
-import 'package:arman_vpn/core/core_api.dart';
-import 'package:arman_vpn/core/core_controller.dart';
-import 'package:arman_vpn/core/models.dart';
-import 'package:arman_vpn/core/tun_service.dart';
-import 'package:arman_vpn/core/updates.dart';
-import 'package:arman_vpn/desktop/close_dialog.dart';
-import 'package:arman_vpn/l10n/app_localizations.dart';
-import 'package:arman_vpn/ui/app.dart';
-import 'package:arman_vpn/ui/settings_page.dart'
+import 'package:fati_vpn/app_info.dart';
+import 'package:fati_vpn/app_settings.dart';
+import 'package:fati_vpn/core/core_api.dart';
+import 'package:fati_vpn/core/core_controller.dart';
+import 'package:fati_vpn/core/models.dart';
+import 'package:fati_vpn/core/tun_service.dart';
+import 'package:fati_vpn/core/updates.dart';
+import 'package:fati_vpn/desktop/close_dialog.dart';
+import 'package:fati_vpn/l10n/app_localizations.dart';
+import 'package:fati_vpn/ui/app.dart';
+import 'package:fati_vpn/ui/settings_page.dart'
     show SettingsGroup, pickProgramFile;
-import 'package:arman_vpn/ui/signin_dialog.dart';
-import 'package:arman_vpn/ui/widgets.dart';
+import 'package:fati_vpn/ui/signin_dialog.dart';
+import 'package:fati_vpn/ui/widgets.dart';
 
 Map<String, Object?> _account(
   String id,
@@ -450,7 +450,7 @@ void main() {
     final core = CoreController(
       () async => throw const CoreUnavailable(
         CoreProblem.noCore,
-        'C:/x/arman-vpn-core.exe',
+        'C:/x/fati-vpn-core.exe',
       ),
       pollInterval: const Duration(hours: 1),
     );
@@ -461,7 +461,7 @@ void main() {
     expect(find.text("Can't reach the core"), findsOneWidget);
     expect(
       find.text(
-        'The core program was not found next to the app (C:/x/arman-vpn-core.exe).',
+        'The core program was not found next to the app (C:/x/fati-vpn-core.exe).',
       ),
       findsOneWidget,
     );
@@ -673,7 +673,7 @@ void main() {
     addTearDown(core.dispose);
     const rawError =
         "Mozilla's security check refused this sign-in from here. "
-        'Sign in with the browser in the Arman VPN app instead.';
+        'Sign in with the browser in the Fati VPN app instead.';
     final state = SignInState.fromJson({
       'email': 'me@example.com',
       'step': SignInStep.failed,
@@ -2857,7 +2857,7 @@ void main() {
       // The reason macOS' prompt shows, in the app's language.
       expect(
         service.prompt,
-        'Arman VPN wants to install the service for TUN mode.',
+        'Fati VPN wants to install the service for TUN mode.',
       );
       expect(api.mode, 'tun');
       api.tun = {'state': 'on', 'installed': true};
@@ -2930,7 +2930,7 @@ void main() {
       expect(service.removals, 1);
       expect(
         service.prompt,
-        'Arman VPN wants to remove the service for TUN mode.',
+        'Fati VPN wants to remove the service for TUN mode.',
       );
       expect(find.text('The TUN service was removed.'), findsOneWidget);
       expect(api.tun?['installed'], isFalse);
@@ -3167,7 +3167,7 @@ void main() {
           'The TUN service is newer than this app. Update the app to use TUN mode.',
           null,
         ),
-        ('busy', 'Another copy of Arman VPN is using TUN mode.', null),
+        ('busy', 'Another copy of Fati VPN is using TUN mode.', null),
         (
           'no_driver',
           "The system's TUN driver isn't available. Restart the computer and try again.",
@@ -3236,7 +3236,7 @@ class FakeTunService implements TunService {
   String? prompt;
 
   @override
-  String get executable => 'arman-vpn-tun.exe';
+  String get executable => 'fati-vpn-tun.exe';
 
   @override
   Future<TunServiceResult> install({String? prompt}) async {

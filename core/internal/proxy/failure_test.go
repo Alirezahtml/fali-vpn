@@ -10,10 +10,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/accounts"
-	"github.com/armanlife/arman-vpn-client/core/internal/fxa"
-	"github.com/armanlife/arman-vpn-client/core/internal/guardian"
-	"github.com/armanlife/arman-vpn-client/core/internal/netstate"
+	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fati-vpn/core/internal/fxa"
+	"github.com/Alirezahtml/fati-vpn/core/internal/guardian"
+	"github.com/Alirezahtml/fati-vpn/core/internal/netstate"
 )
 
 func TestFailureCode(t *testing.T) {

@@ -364,7 +364,7 @@ class _Row extends StatelessWidget {
     final muted = _mono.copyWith(color: theme.colorScheme.onSurfaceVariant);
     final (label, color) = switch (c.route) {
       'vpn' => (l.connRouteVpn, StatusColors.good),
-      'direct' => (l.connRouteDirect, const Color(0xFF3E8AF0)),
+      'direct' => (l.connRouteDirect, const Color(0xFF4285F4)),
       'blocked' => (l.connRouteBlocked, StatusColors.idle),
       'port' => (l.connRoutePort, StatusColors.busy),
       'failed' => (l.connRouteFailed, StatusColors.bad),

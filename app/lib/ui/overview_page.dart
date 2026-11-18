@@ -971,8 +971,6 @@ class _HomePalette {
     required this.error,
     required this.second,
     required this.third,
-    required this.discOff,
-    required this.discOffEdge,
   });
 
   final bool dark;
@@ -990,48 +988,43 @@ class _HomePalette {
   /// Colors of the background's soft lights, with the state's.
   final Color second;
   final Color third;
-  final List<Color> discOff;
-  final Color discOffEdge;
 
   static const night = _HomePalette(
     dark: true,
     top: Midnight.top,
     bottom: Midnight.bottom,
-    text: Colors.white,
+    text: Midnight.on,
     muted: Midnight.muted,
-    card: Color(0x10FFFFFF),
+    card: Midnight.surface,
     cardBorder: Color(0x14FFFFFF),
     idle: Midnight.idle,
     connected: Midnight.connected,
     busy: Midnight.busy,
     error: Midnight.error,
-    second: Color(0xFF2EA8FF),
-    third: Color(0xFFB45CFF),
-    discOff: [Color(0xFF262E5A), Color(0xFF161C3C)],
-    discOffEdge: Color(0x1FFFFFFF),
+    // The background's other soft lights: Google's blue and purple.
+    second: Color(0xFF4285F4),
+    third: Color(0xFFA142F4),
   );
 
   static const day = _HomePalette(
     dark: false,
-    top: Color(0xFFE9EEFF),
-    bottom: Color(0xFFF9FAFF),
-    text: Color(0xFF151A35),
-    muted: Color(0xFF646C92),
-    card: Color(0xD9FFFFFF),
-    cardBorder: Color(0x12202A66),
-    idle: Color(0xFF6A5CF0),
-    connected: Color(0xFF0DB37C),
-    busy: Color(0xFFF08C00),
-    error: Color(0xFFE5484D),
-    second: Color(0xFF38B6FF),
-    third: Color(0xFFFF7EB6),
-    discOff: [Colors.white, Color(0xFFF0F2FF)],
-    discOffEdge: Color(0x336A5CF0),
+    top: Color(0xFFE8F0FE),
+    bottom: Color(0xFFF5F8FE),
+    text: Color(0xFF1A1D24),
+    muted: Color(0xFF5B6474),
+    card: Color(0xE6FFFFFF),
+    cardBorder: Color(0x0F0B3B78),
+    idle: Color(0xFF5B6474),
+    connected: Color(0xFF1E8E3E),
+    busy: Color(0xFFF9AB00),
+    error: Color(0xFFD93025),
+    second: Color(0xFF4285F4),
+    third: Color(0xFFA142F4),
   );
 }
 
-/// The phone's home: the switch in the middle over soft lights and wavy
-/// contour lines in the state's color, the state under it, then where the
+/// The phone's home: the switch in the middle over soft lights in the
+/// state's color, the state under it, then where the
 /// traffic goes and the data used. Light or dark with the app's theme; the
 /// email is on the accounts page.
 class _PhoneHome extends StatelessWidget {
@@ -1472,21 +1465,21 @@ class _HomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: BorderRadius.circular(26),
       boxShadow: palette.dark
           ? null
           : [
               BoxShadow(
-                color: const Color(0xFF2A3375).withValues(alpha: 0.08),
-                blurRadius: 24,
-                offset: const Offset(0, 8),
+                color: const Color(0xFF12315E).withValues(alpha: 0.08),
+                blurRadius: 26,
+                offset: const Offset(0, 10),
               ),
             ],
     ),
     child: Material(
       color: palette.card,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(26),
         side: BorderSide(color: palette.cardBorder),
       ),
       clipBehavior: Clip.antiAlias,
@@ -1559,10 +1552,11 @@ class _HomeDelay extends StatelessWidget {
   }
 }
 
-/// The switch: an orb in the state's color with a glow and a thin ring,
-/// over wavy contour lines. It stays still: an endless animation redraws the
-/// window every frame, and kept a CPU core busy even with the window hidden
-/// in the tray.
+/// The switch: a wide pill in the state's color — Google's green while
+/// connected, amber while connecting — with a power icon and its verb, over
+/// a soft light. It stays still: an endless animation redraws the window
+/// every frame, and kept a CPU core busy even with the window hidden in
+/// the tray.
 class _PowerOrb extends StatelessWidget {
   const _PowerOrb({
     required this.palette,
@@ -1589,152 +1583,103 @@ class _PowerOrb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = palette;
-    final area = 250.0 * scale;
-    final ring = 186.0 * scale;
-    final disc = 148.0 * scale;
-    final reach = 70.0 * scale;
+    final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
+    final label = on ? l.verbDisconnect : l.verbConnect;
+    final width = 196.0 * scale;
+    final height = 62.0 * scale;
     return Tooltip(
       message: tooltip,
-      child: SizedBox.square(
-        dimension: area,
-        child: Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: [
-            // Contour lines reaching past the button's area.
-            Positioned(
-              left: -reach,
-              top: -reach,
-              right: -reach,
-              bottom: -reach,
-              child: IgnorePointer(
-                child: CustomPaint(
-                  painter: _Contours(
-                    color: accent,
-                    alpha: p.dark ? 0.16 : 0.22,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              width: area,
-              height: area,
+      child: Stack(
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
+        children: [
+          // A soft round light behind the pill, in the state's color.
+          IgnorePointer(
+            child: Container(
+              width: width + 110,
+              height: height + 110,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    accent.withValues(alpha: on ? 0.30 : 0.10),
+                    accent.withValues(alpha: on ? 0.24 : 0.12),
                     accent.withValues(alpha: 0),
                   ],
                 ),
               ),
             ),
-            Container(
-              width: ring,
-              height: ring,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: accent.withValues(alpha: on ? 0.55 : 0.28),
-                  width: 1.5,
-                ),
+          ),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 400),
+            width: width,
+            height: height,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(999),
+              color: on ? accent : p.card,
+              border: Border.all(
+                width: 1.5,
+                color: on
+                    ? Colors.white.withValues(alpha: 0.25)
+                    : p.cardBorder,
               ),
-            ),
-            if (busy)
-              SizedBox.square(
-                dimension: ring,
-                child: CircularProgressIndicator(strokeWidth: 2, color: accent),
-              ),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 400),
-              width: disc,
-              height: disc,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: on
-                      ? [Color.lerp(accent, Colors.white, 0.28)!, accent]
-                      : p.discOff,
-                ),
-                border: Border.all(
-                  color: on
-                      ? Colors.white.withValues(alpha: 0.4)
-                      : p.discOffEdge,
-                  width: 1.5,
-                ),
-                boxShadow: [
+              boxShadow: [
+                if (on)
                   BoxShadow(
-                    color: on
-                        ? accent.withValues(alpha: 0.5)
-                        : (p.dark ? Colors.black : const Color(0xFF2A3375))
-                              .withValues(alpha: p.dark ? 0.45 : 0.14),
-                    blurRadius: on ? 36 : 26,
-                    offset: const Offset(0, 10),
+                    color: accent.withValues(alpha: 0.42),
+                    blurRadius: 26,
+                    offset: const Offset(0, 8),
+                  )
+                else if (!p.dark)
+                  BoxShadow(
+                    color: const Color(0xFF12315E).withValues(alpha: 0.10),
+                    blurRadius: 22,
+                    offset: const Offset(0, 8),
                   ),
-                ],
-              ),
-              child: Material(
-                type: MaterialType.transparency,
-                shape: const CircleBorder(),
-                clipBehavior: Clip.antiAlias,
-                child: InkWell(
-                  autofocus: autofocus,
-                  onTap: busy ? null : onPressed,
-                  child: Icon(
-                    Icons.power_settings_new_rounded,
-                    size: 58 * scale,
-                    color: on ? Colors.white : (p.dark ? p.muted : p.idle),
-                  ),
+              ],
+            ),
+            child: Material(
+              type: MaterialType.transparency,
+              shape: const StadiumBorder(),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                autofocus: autofocus,
+                onTap: busy ? null : onPressed,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (busy)
+                      SizedBox.square(
+                        dimension: 19,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.4,
+                          color: on ? Colors.white : theme.colorScheme.primary,
+                        ),
+                      )
+                    else
+                      Icon(
+                        Icons.power_settings_new_rounded,
+                        size: 24 * scale,
+                        color: on ? Colors.white : p.text,
+                      ),
+                    const SizedBox(width: 10),
+                    Text(
+                      label,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w800,
+                        color: on ? Colors.white : p.text,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-}
-
-/// Wavy closed lines around the center, like the contours of a map, fading
-/// outwards.
-class _Contours extends CustomPainter {
-  _Contours({required this.color, required this.alpha});
-
-  final Color color;
-  final double alpha;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = size.center(Offset.zero);
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.2;
-    const lines = 7;
-    for (var i = 0; i < lines; i++) {
-      final base = 112.0 + i * 22;
-      final amp = 3.0 + i * 1.6;
-      final path = Path();
-      for (var k = 0; k <= 120; k++) {
-        final a = k / 120 * 2 * math.pi;
-        final r =
-            base +
-            amp * math.sin(3 * a + i * 0.8) +
-            amp * 0.5 * math.sin(5 * a - i * 0.5);
-        final point = center + Offset(math.cos(a) * r, math.sin(a) * r);
-        k == 0
-            ? path.moveTo(point.dx, point.dy)
-            : path.lineTo(point.dx, point.dy);
-      }
-      path.close();
-      paint.color = color.withValues(alpha: alpha * (1 - i / lines));
-      canvas.drawPath(path, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_Contours old) => old.color != color || old.alpha != alpha;
 }
 
 /// The data used of the active account: a ring that fills as it is used,

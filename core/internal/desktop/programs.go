@@ -4,15 +4,15 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/service"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
+	"github.com/Alirezahtml/fati-vpn/core/internal/service"
+	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
 )
 
 // ownPrograms are this app's own executables, which never skip the VPN by
 // choice.
 var ownPrograms = map[string]bool{
-	"arman-vpn.exe": true, "arman-vpn-core.exe": true, "arman-vpn-tun.exe": true,
-	"arman-vpn": true, "arman-vpn-core": true, "arman-vpn-tun": true,
+	"fati-vpn.exe": true, "fati-vpn-core.exe": true, "fati-vpn-tun.exe": true,
+	"fati-vpn": true, "fati-vpn-core": true, "fati-vpn-tun": true,
 }
 
 // runningPrograms are the programs running on this computer, for the TUN

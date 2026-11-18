@@ -10,7 +10,7 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get appTitle => 'Arman VPN';
+  String get appTitle => 'Fati VPN';
 
   @override
   String get navOverview => 'Обзор';
@@ -1187,6 +1187,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get stateOff => 'Отключено';
 
   @override
+  String get verbConnect => 'Подключить';
+
+  @override
+  String get verbDisconnect => 'Отключить';
+
+
+  @override
   String get tapToConnectPhone => 'Нажмите, чтобы подключиться';
 
   @override
@@ -1507,7 +1514,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Служба TUN новее этого приложения. Обновите приложение, чтобы пользоваться режимом TUN.';
 
   @override
-  String get tunBusy => 'Режимом TUN пользуется другая копия Arman VPN.';
+  String get tunBusy => 'Режимом TUN пользуется другая копия Fati VPN.';
 
   @override
   String get tunNoDriver =>
@@ -1534,10 +1541,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tunInstallPrompt =>
-      'Arman VPN хочет установить службу для режима TUN.';
+      'Fati VPN хочет установить службу для режима TUN.';
 
   @override
-  String get tunRemovePrompt => 'Arman VPN хочет удалить службу режима TUN.';
+  String get tunRemovePrompt => 'Fati VPN хочет удалить службу режима TUN.';
 
   @override
   String tunRemoveFailed(String error) {

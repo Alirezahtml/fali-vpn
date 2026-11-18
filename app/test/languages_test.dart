@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:arman_vpn/app_settings.dart';
-import 'package:arman_vpn/core/models.dart';
-import 'package:arman_vpn/l10n/app_localizations.dart';
-import 'package:arman_vpn/ui/accounts_page.dart';
-import 'package:arman_vpn/ui/format.dart';
+import 'package:fati_vpn/app_settings.dart';
+import 'package:fati_vpn/core/models.dart';
+import 'package:fati_vpn/l10n/app_localizations.dart';
+import 'package:fati_vpn/ui/accounts_page.dart';
+import 'package:fati_vpn/ui/format.dart';
 
 void main() {
   test('the system locale picks the app language', () {
@@ -18,16 +18,16 @@ void main() {
       ),
       'zh_Hant',
     );
-    expect(AppSettings.languageFor(const Locale('de')), 'en');
-    // The first preferred language the app has; else English, also for a
-    // system without one (Linux's C locale).
+    expect(AppSettings.languageFor(const Locale('de')), 'fa');
+    // The first preferred language the app has; else Persian, the app's
+    // default language, also for a system without one (Linux's C locale).
     expect(
       AppSettings.languageForList(const [Locale('de'), Locale('fa')]),
       'fa',
     );
-    expect(AppSettings.languageForList(const [Locale('de')]), 'en');
-    expect(AppSettings.languageForList(const [Locale('und')]), 'en');
-    expect(AppSettings.languageForList(null), 'en');
+    expect(AppSettings.languageForList(const [Locale('de')]), 'fa');
+    expect(AppSettings.languageForList(const [Locale('und')]), 'fa');
+    expect(AppSettings.languageForList(null), 'fa');
     expect(
       AppSettings.localeOf('zh_Hant'),
       const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),

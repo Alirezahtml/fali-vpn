@@ -10,7 +10,7 @@ class AppLocalizationsAz extends AppLocalizations {
   AppLocalizationsAz([String locale = 'az']) : super(locale);
 
   @override
-  String get appTitle => 'Arman VPN';
+  String get appTitle => 'Fati VPN';
 
   @override
   String get navOverview => 'İcmal';
@@ -1184,6 +1184,13 @@ class AppLocalizationsAz extends AppLocalizations {
   String get stateOff => 'Qoşulmayıb';
 
   @override
+  String get verbConnect => 'Qoşul';
+
+  @override
+  String get verbDisconnect => 'Kəs';
+
+
+  @override
   String get tapToConnectPhone => 'Qoşulmaq üçün toxunun';
 
   @override
@@ -1499,7 +1506,7 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get tunBusy =>
-      'Arman VPN-in başqa nüsxəsi TUN rejimindən istifadə edir.';
+      'Fati VPN-in başqa nüsxəsi TUN rejimindən istifadə edir.';
 
   @override
   String get tunNoDriver =>
@@ -1526,11 +1533,11 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get tunInstallPrompt =>
-      'Arman VPN TUN rejimi üçün xidməti quraşdırmaq istəyir.';
+      'Fati VPN TUN rejimi üçün xidməti quraşdırmaq istəyir.';
 
   @override
   String get tunRemovePrompt =>
-      'Arman VPN TUN rejiminin xidmətini silmək istəyir.';
+      'Fati VPN TUN rejiminin xidmətini silmək istəyir.';
 
   @override
   String tunRemoveFailed(String error) {

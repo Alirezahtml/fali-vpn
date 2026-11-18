@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/routing"
+	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fati-vpn/core/internal/routing"
 )
 
 // The phone's VPN refuses at once what Mozilla would refuse, unless the

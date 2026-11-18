@@ -11,10 +11,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/egress"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/resolver"
-	"github.com/armanlife/arman-vpn-client/core/internal/routing"
+	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
+	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fati-vpn/core/internal/resolver"
+	"github.com/Alirezahtml/fati-vpn/core/internal/routing"
 )
 
 // ErrBlockedByRule is a connection refused by a routing rule.

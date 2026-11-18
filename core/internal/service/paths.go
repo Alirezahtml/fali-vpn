@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/accounts"
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
+	"github.com/Alirezahtml/fati-vpn/core/internal/accounts"
+	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
 )
 
 // Files the service keeps in its data folder.

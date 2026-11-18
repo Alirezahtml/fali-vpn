@@ -10,7 +10,7 @@ class AppLocalizationsFa extends AppLocalizations {
   AppLocalizationsFa([String locale = 'fa']) : super(locale);
 
   @override
-  String get appTitle => 'Arman VPN';
+  String get appTitle => 'Fati VPN';
 
   @override
   String get navOverview => 'نمای کلی';
@@ -1176,6 +1176,13 @@ class AppLocalizationsFa extends AppLocalizations {
   String get stateOff => 'قطع';
 
   @override
+  String get verbConnect => 'اتصال';
+
+  @override
+  String get verbDisconnect => 'قطع';
+
+
+  @override
   String get tapToConnectPhone => 'برای اتصال ضربه بزنید';
 
   @override
@@ -1487,7 +1494,7 @@ class AppLocalizationsFa extends AppLocalizations {
       'سرویس TUN از این برنامه جدیدتر است. برای استفاده از حالت TUN برنامه را به‌روز کنید.';
 
   @override
-  String get tunBusy => 'حالت TUN را نسخه دیگری از Arman VPN استفاده می‌کند.';
+  String get tunBusy => 'حالت TUN را نسخه دیگری از Fati VPN استفاده می‌کند.';
 
   @override
   String get tunNoDriver =>
@@ -1513,11 +1520,11 @@ class AppLocalizationsFa extends AppLocalizations {
   String get tunServiceRemoved => 'سرویس TUN حذف شد.';
 
   @override
-  String get tunInstallPrompt => 'برای حالت TUN، سرویس Arman VPN باید نصب شود.';
+  String get tunInstallPrompt => 'برای حالت TUN، سرویس Fati VPN باید نصب شود.';
 
   @override
   String get tunRemovePrompt =>
-      'برای حذف حالت TUN، سرویس Arman VPN باید حذف شود.';
+      'برای حذف حالت TUN، سرویس Fati VPN باید حذف شود.';
 
   @override
   String tunRemoveFailed(String error) {

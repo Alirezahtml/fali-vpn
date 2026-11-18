@@ -15,12 +15,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/proxy"
-	"github.com/armanlife/arman-vpn-client/core/internal/routing"
-	"github.com/armanlife/arman-vpn-client/core/internal/tun"
+	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
+	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fati-vpn/core/internal/routing"
+	"github.com/Alirezahtml/fati-vpn/core/internal/tun"
 )
 
 // listDownloadTimeout bounds downloading both routing lists.

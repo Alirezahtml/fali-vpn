@@ -38,12 +38,22 @@ class AppLogo extends StatelessWidget {
   );
 }
 
-/// Status colors that read in both themes.
+/// Status colors that read in both themes: Google's palette (green, amber,
+/// red) with Google grey for the idle state.
 abstract final class StatusColors {
-  static const good = Color(0xFF22A06B);
-  static const busy = Color(0xFFE2A400);
-  static const bad = Color(0xFFE5484D);
-  static const idle = Color(0xFF8B8D98);
+  static const good = Color(0xFF34A853);
+  static const busy = Color(0xFFF9AB00);
+  static const bad = Color(0xFFEA4335);
+  static const idle = Color(0xFF80868B);
+}
+
+/// The app's accent, the electric blue of the Pixel look.
+abstract final class PixelAccent {
+  static const blue = Color(0xFF2D7DFF);
+  static const lightContainer = Color(0xFFD6E4FF);
+  static const darkContainer = Color(0xFF284E7E);
+  static const lightOnContainer = Color(0xFF0B3B78);
+  static const darkOnContainer = Color(0xFFD6E4FF);
 }
 
 /// How the app presents the engine state.
@@ -141,38 +151,51 @@ String locationName(AppLocalizations l, String code, String name) =>
     ? l.recommendedLocation
     : countryName(l, code, name);
 
-/// The phone home's colors: a deep navy night and the state's light.
+/// The phone home's colors at night: the Pixel dark surfaces and the
+/// state's color in Google's palette.
 abstract final class Midnight {
-  static const top = Color(0xFF141B3D);
-  static const bottom = Color(0xFF070A18);
-  static const connected = Color(0xFF10D9A0);
-  static const busy = Color(0xFFFFB547);
-  static const error = Color(0xFFFF5C7A);
-  static const idle = Color(0xFF7C83FF);
-  static const muted = Color(0xFF9AA3C7);
+  static const top = Color(0xFF0E1420);
+  static const bottom = Color(0xFF0B111C);
+  static const surface = Color(0xFF171E2C);
+  static const surface2 = Color(0xFF1D2534);
+  static const surface3 = Color(0xFF242E40);
+  static const nav = Color(0xFF121926);
+  static const on = Color(0xFFE6ECF6);
+  static const connected = Color(0xFF34A853);
+  static const busy = Color(0xFFFBBC04);
+  static const error = Color(0xFFEA4335);
+  static const idle = Color(0xFF8FA0BC);
+  static const muted = Color(0xFF93A0B8);
 }
 
 /// A dark theme for the phone's home and its navigation bar, with the
-/// app's fonts.
+/// app's fonts: the Pixel dark surfaces and the blue pill the Navigation
+/// Bar draws around the chosen tab.
 ThemeData midnightTheme(ThemeData base) {
   final scheme =
       ColorScheme.fromSeed(
-        seedColor: Midnight.idle,
+        seedColor: PixelAccent.blue,
         brightness: Brightness.dark,
       ).copyWith(
         surface: Midnight.bottom,
-        surfaceContainer: Midnight.bottom,
-        onSurface: Colors.white,
+        surfaceContainer: Midnight.surface,
+        surfaceContainerLow: Midnight.nav,
+        surfaceContainerHigh: Midnight.surface2,
+        surfaceContainerHighest: Midnight.surface3,
+        onSurface: Midnight.on,
         onSurfaceVariant: Midnight.muted,
-        secondaryContainer: Colors.white.withValues(alpha: 0.10),
-        onSecondaryContainer: Colors.white,
+        primaryContainer: PixelAccent.darkContainer,
+        onPrimaryContainer: PixelAccent.darkOnContainer,
+        secondaryContainer: PixelAccent.darkContainer,
+        onSecondaryContainer: PixelAccent.darkOnContainer,
       );
   return ThemeData(
     colorScheme: scheme,
     fontFamily: base.textTheme.bodyMedium?.fontFamily,
     navigationBarTheme: base.navigationBarTheme.copyWith(
-      backgroundColor: Midnight.bottom,
+      backgroundColor: Midnight.nav,
       surfaceTintColor: Colors.transparent,
+      indicatorColor: PixelAccent.darkContainer,
     ),
   );
 }

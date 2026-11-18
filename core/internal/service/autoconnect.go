@@ -4,8 +4,8 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
+	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
 )
 
 // Auto-connect: the desktop app, started with the computer and set to

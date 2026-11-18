@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
+	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
 )
 
 func TestChallengeCookiesReachAlternateOAuthWithoutOtherHosts(t *testing.T) {

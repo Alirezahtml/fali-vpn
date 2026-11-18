@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Arman" "\0"
-            VALUE "FileDescription", "Arman VPN" "\0"
+            VALUE "CompanyName", "Fati" "\0"
+            VALUE "FileDescription", "Fati VPN" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "arman-vpn" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 Arman" "\0"
-            VALUE "OriginalFilename", "arman-vpn.exe" "\0"
-            VALUE "ProductName", "Arman VPN" "\0"
+            VALUE "InternalName", "fati-vpn" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 Fati" "\0"
+            VALUE "OriginalFilename", "fati-vpn.exe" "\0"
+            VALUE "ProductName", "Fati VPN" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

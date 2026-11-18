@@ -11,9 +11,9 @@ import (
 
 	utls "github.com/refraction-networking/utls"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/firefoxtls"
-	"github.com/armanlife/arman-vpn-client/core/internal/hellosplit"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
+	"github.com/Alirezahtml/fati-vpn/core/internal/firefoxtls"
+	"github.com/Alirezahtml/fati-vpn/core/internal/hellosplit"
+	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
 )
 
 var (

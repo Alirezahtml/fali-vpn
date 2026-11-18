@@ -10,7 +10,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
+	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
 )
 
 const (

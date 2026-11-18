@@ -10,7 +10,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get appTitle => 'Arman VPN';
+  String get appTitle => 'Fati VPN';
 
   @override
   String get navOverview => 'Genel bakış';
@@ -1182,6 +1182,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get stateOff => 'Bağlı değil';
 
   @override
+  String get verbConnect => 'Bağlan';
+
+  @override
+  String get verbDisconnect => 'Bağlantıyı kes';
+
+
+  @override
   String get tapToConnectPhone => 'Bağlanmak için dokunun';
 
   @override
@@ -1499,7 +1506,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tunBusy =>
-      'Arman VPN\'in başka bir kopyası TUN modunu kullanıyor.';
+      'Fati VPN\'in başka bir kopyası TUN modunu kullanıyor.';
 
   @override
   String get tunNoDriver =>
@@ -1526,11 +1533,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tunInstallPrompt =>
-      'Arman VPN, TUN modu için hizmeti yüklemek istiyor.';
+      'Fati VPN, TUN modu için hizmeti yüklemek istiyor.';
 
   @override
   String get tunRemovePrompt =>
-      'Arman VPN, TUN modunun hizmetini kaldırmak istiyor.';
+      'Fati VPN, TUN modunun hizmetini kaldırmak istiyor.';
 
   @override
   String tunRemoveFailed(String error) {

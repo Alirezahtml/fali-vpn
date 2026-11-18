@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
+	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
 )
 
 type versionRoundTripper func(*http.Request) (*http.Response, error)

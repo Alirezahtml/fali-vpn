@@ -1,4 +1,4 @@
-package com.arman.firefoxvpn
+package com.fati.vpn
 
 import android.Manifest
 import android.app.ActivityManager

@@ -10,18 +10,18 @@ import (
 	"slices"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/config"
-	"github.com/armanlife/arman-vpn-client/core/internal/egress"
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
-	"github.com/armanlife/arman-vpn-client/core/internal/proxy"
-	"github.com/armanlife/arman-vpn-client/core/internal/service"
-	"github.com/armanlife/arman-vpn-client/core/internal/tunapi"
-	"github.com/armanlife/arman-vpn-client/core/internal/version"
+	"github.com/Alirezahtml/fati-vpn/core/internal/config"
+	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
+	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
+	"github.com/Alirezahtml/fati-vpn/core/internal/proxy"
+	"github.com/Alirezahtml/fati-vpn/core/internal/service"
+	"github.com/Alirezahtml/fati-vpn/core/internal/tunapi"
+	"github.com/Alirezahtml/fati-vpn/core/internal/version"
 )
 
 // The TUN mode in the app's core process. While the daemon wants a TUN
 // (Daemon.TunWanted), tunSync holds a session with the TUN service
-// (cmd/arman-vpn-tun, protocol internal/tunapi): it opens the adapter,
+// (cmd/fati-vpn-tun, protocol internal/tunapi): it opens the adapter,
 // binds the core's own connections outside it (egress), routes everything
 // into it, and closes it when the mode changes, the proxy goes off, or the
 // app quits. However this process ends, its pipe connection ends with it,

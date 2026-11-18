@@ -19,7 +19,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/egress"
+	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
 )
 
 // Result is what a check found.

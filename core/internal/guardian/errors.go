@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/controlplane"
+	"github.com/Alirezahtml/fati-vpn/core/internal/controlplane"
 )
 
 var (

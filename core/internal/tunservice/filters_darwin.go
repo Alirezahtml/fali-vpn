@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/logx"
+	"github.com/Alirezahtml/fati-vpn/core/internal/logx"
 )
 
 // The filters on macOS: the DNS servers of every network service are the

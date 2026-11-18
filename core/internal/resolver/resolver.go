@@ -24,7 +24,7 @@ import (
 
 	"golang.org/x/net/proxy"
 
-	"github.com/armanlife/arman-vpn-client/core/internal/egress"
+	"github.com/Alirezahtml/fati-vpn/core/internal/egress"
 )
 
 const (

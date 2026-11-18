@@ -10,7 +10,7 @@ class AppLocalizationsHu extends AppLocalizations {
   AppLocalizationsHu([String locale = 'hu']) : super(locale);
 
   @override
-  String get appTitle => 'Arman VPN';
+  String get appTitle => 'Fati VPN';
 
   @override
   String get navOverview => 'Áttekintés';
@@ -1191,6 +1191,13 @@ class AppLocalizationsHu extends AppLocalizations {
   String get stateOff => 'Nincs csatlakozva';
 
   @override
+  String get verbConnect => 'Kapcsolódás';
+
+  @override
+  String get verbDisconnect => 'Szétkapcsolás';
+
+
+  @override
   String get tapToConnectPhone => 'Koppintson a csatlakozáshoz';
 
   @override
@@ -1512,7 +1519,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get tunBusy =>
-      'Az Arman VPN egy másik példánya használja a TUN módot.';
+      'Az Fati VPN egy másik példánya használja a TUN módot.';
 
   @override
   String get tunNoDriver =>
@@ -1539,11 +1546,11 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get tunInstallPrompt =>
-      'Az Arman VPN telepíteni szeretné a TUN mód szolgáltatását.';
+      'Az Fati VPN telepíteni szeretné a TUN mód szolgáltatását.';
 
   @override
   String get tunRemovePrompt =>
-      'Az Arman VPN el szeretné távolítani a TUN mód szolgáltatását.';
+      'Az Fati VPN el szeretné távolítani a TUN mód szolgáltatását.';
 
   @override
   String tunRemoveFailed(String error) {

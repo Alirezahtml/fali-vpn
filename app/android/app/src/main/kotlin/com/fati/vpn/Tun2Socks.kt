@@ -1,4 +1,4 @@
-package com.arman.firefoxvpn
+package com.fati.vpn
 
 import android.os.ParcelFileDescriptor
 
