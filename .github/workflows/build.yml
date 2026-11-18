@@ -129,7 +129,7 @@ jobs:
           # The key updates are signed with (scripts/signing-key.ps1): the
           # core and the TUN service take only updates it signed; without
           # it they take none.
-          FALI_VPN_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
+          FALI_VPN_SIGNING_KEY: ${{ secrets.FALI_VPN_SIGNING_KEY }}
         run: ./scripts/build-windows.ps1
       - name: Release names
         shell: pwsh
@@ -287,7 +287,7 @@ jobs:
         env:
           # The key updates are signed with: the core and the TUN service
           # take only updates it signed; without it they take none.
-          FALI_VPN_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
+          FALI_VPN_SIGNING_KEY: ${{ secrets.FALI_VPN_SIGNING_KEY }}
         run: bash scripts/build-linux.sh
       - name: Release name
         run: |
@@ -358,7 +358,7 @@ jobs:
         env:
           # The key updates are signed with: the core and the TUN service
           # take only updates it signed; without it they take none.
-          FALI_VPN_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
+          FALI_VPN_SIGNING_KEY: ${{ secrets.FALI_VPN_SIGNING_KEY }}
         run: bash scripts/build-macos.sh
       # The app's own update, end to end: the app just built, in
       # /Applications, updates itself to a test release on loopback
@@ -407,21 +407,15 @@ jobs:
         with:
           path: release
           merge-multiple: true
-      # A copy of each file with the version after the program's name; and
-      # the app's files under their names before 1.0.9 (Firefox-VPN-*),
-      # which the update and the Android Download button of those versions
-      # look for.
+      # A copy of each file with the version after the program's name,
+      # which the update check and the Download button look for.
       - name: Versioned names
         working-directory: release
         run: |
           v="${GITHUB_REF_NAME#v}"
           for f in *; do
             case "$f" in
-              Fali-VPN-*)
-                rest="${f#Fali-VPN-}"
-                cp "$f" "Fali-VPN-$v-$rest"
-                cp "$f" "Firefox-VPN-$rest"
-                cp "$f" "Firefox-VPN-$v-$rest" ;;
+              Fali-VPN-*) cp "$f" "Fali-VPN-$v-${f#Fali-VPN-}" ;;
               fali-vpn-core-*) cp "$f" "fali-vpn-core-$v-${f#fali-vpn-core-}" ;;
             esac
           done
@@ -434,7 +428,7 @@ jobs:
       - name: Sign the checksums
         working-directory: core
         env:
-          FALI_VPN_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
+          FALI_VPN_SIGNING_KEY: ${{ secrets.FALI_VPN_SIGNING_KEY }}
         run: |
           if [ -z "$FALI_VPN_SIGNING_KEY" ]; then
             # The checksums stay unsigned: desktop apps will not auto-update
