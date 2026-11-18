@@ -495,7 +495,7 @@ void main() {
     core.dispose();
   });
 
-  testWidgets('a system language the app lacks gives English, not Arabic', (
+  testWidgets("a system language the app lacks gives Persian, the app's default", (
     tester,
   ) async {
     stillMotion(tester);
@@ -517,9 +517,9 @@ void main() {
     core.start();
     await tester.pumpAndSettle();
 
-    final context = tester.element(find.text('Connected'));
-    expect(Localizations.localeOf(context), const Locale('en'));
-    expect(Directionality.of(context), TextDirection.ltr);
+    final context = tester.element(find.text('متصل'));
+    expect(Localizations.localeOf(context), const Locale('fa'));
+    expect(Directionality.of(context), TextDirection.rtl);
 
     await tester.pumpWidget(const SizedBox());
     core.dispose();
