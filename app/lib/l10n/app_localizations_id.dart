@@ -1188,7 +1188,6 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get verbDisconnect => 'Putuskan';
 
-
   @override
   String get tapToConnectPhone => 'Ketuk untuk terhubung';
 

@@ -10,6 +10,7 @@ import '../core/core_api.dart';
 import '../core/core_controller.dart';
 import '../core/models.dart';
 import '../l10n/app_localizations.dart';
+import 'motion.dart';
 import 'format.dart';
 import 'widgets.dart';
 
@@ -21,7 +22,7 @@ Future<void> showSignInDialog(
   String email = '',
   SignInState? started,
   VoidCallback? onBrowserRetry,
-}) => showDialog<void>(
+}) => showFatiDialog<void>(
   context: context,
   barrierDismissible: false,
   builder: (_) => _SignInDialog(

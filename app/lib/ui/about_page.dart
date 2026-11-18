@@ -8,6 +8,7 @@ import '../core/core_controller.dart';
 import '../core/updates.dart';
 import '../l10n/app_localizations.dart';
 import '../platform.dart';
+import 'motion.dart';
 import 'widgets.dart';
 
 /// The versions, the update check, the source link, and the data folder.
@@ -80,7 +81,13 @@ class _AboutPageState extends State<AboutPage> {
         Panel(
           child: Column(
             children: [
-              const AppLogo(size: 72),
+              // The logo and the name arrive first, growing into place.
+              MotionEntrance(
+                offset: const Offset(0, 14),
+                fromScale: 0.92,
+                duration: Motion.grand,
+                child: const AppLogo(size: 72),
+              ),
               const SizedBox(height: 10),
               Text(l.appTitle, style: theme.textTheme.titleLarge),
               const SizedBox(height: 4),
@@ -116,7 +123,11 @@ class _AboutPageState extends State<AboutPage> {
                 const SizedBox(height: 8),
                 Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: Text(_result!, style: muted),
+                  child: MotionEntrance(
+                    offset: const Offset(0, 8),
+                    duration: Motion.fast,
+                    child: Text(_result!, style: muted),
+                  ),
                 ),
               ],
               if (_release case final release?) ...[

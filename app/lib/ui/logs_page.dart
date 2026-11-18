@@ -300,7 +300,7 @@ class _LogsPageState extends State<LogsPage> {
 
   Widget _clearButton(AppLocalizations l) => IconButton(
     tooltip: l.clear,
-    icon: const Icon(Icons.delete_sweep_outlined),
+    icon: const Icon(Icons.delete_sweep_rounded),
     onPressed: () => setState(() {
       widget.core.logsClearedAfter = _after;
       widget.core.logsClearedAt = DateTime.now();
@@ -335,7 +335,7 @@ class _LogsPageState extends State<LogsPage> {
                 segments: [
                   ButtonSegment(
                     value: false,
-                    icon: const Icon(Icons.receipt_long_outlined, size: 18),
+                    icon: const Icon(Icons.receipt_long_rounded, size: 18),
                     label: Text(l.tabLog),
                   ),
                   ButtonSegment(

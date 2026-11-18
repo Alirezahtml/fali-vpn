@@ -1181,7 +1181,6 @@ class AppLocalizationsFa extends AppLocalizations {
   @override
   String get verbDisconnect => 'قطع';
 
-
   @override
   String get tapToConnectPhone => 'برای اتصال ضربه بزنید';
 

@@ -1193,7 +1193,6 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get verbDisconnect => 'قطع';
 
-
   @override
   String get tapToConnectPhone => 'اضغط للاتصال';
 

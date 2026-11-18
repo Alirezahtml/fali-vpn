@@ -1192,7 +1192,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get verbDisconnect => 'Отключить';
 
-
   @override
   String get tapToConnectPhone => 'Нажмите, чтобы подключиться';
 

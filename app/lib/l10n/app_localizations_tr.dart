@@ -1187,7 +1187,6 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get verbDisconnect => 'Bağlantıyı kes';
 
-
   @override
   String get tapToConnectPhone => 'Bağlanmak için dokunun';
 
@@ -1505,8 +1504,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'TUN hizmeti bu uygulamadan yeni. TUN modunu kullanmak için uygulamayı güncelleyin.';
 
   @override
-  String get tunBusy =>
-      'Fati VPN\'in başka bir kopyası TUN modunu kullanıyor.';
+  String get tunBusy => 'Fati VPN\'in başka bir kopyası TUN modunu kullanıyor.';
 
   @override
   String get tunNoDriver =>

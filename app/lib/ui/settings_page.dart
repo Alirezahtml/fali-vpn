@@ -16,6 +16,7 @@ import '../platform.dart';
 import 'bypass_apps_page.dart';
 import 'connection_mode.dart';
 import 'format.dart';
+import 'motion.dart';
 import 'port_dialog.dart';
 import 'widgets.dart';
 
@@ -107,16 +108,16 @@ List<(String, List<SettingsEntry>)> settingsGroups(
   (
     l.sectionBypass,
     [
-      (SettingsSection.relay, Icons.cloud_outlined, l.apiRelay),
+      (SettingsSection.relay, Icons.cloud_rounded, l.apiRelay),
       (SettingsSection.fragment, Icons.content_cut_rounded, l.tlsFragment),
-      (SettingsSection.upstreamProxy, Icons.lan_outlined, l.upstreamProxy),
+      (SettingsSection.upstreamProxy, Icons.lan_rounded, l.upstreamProxy),
     ],
   ),
   // The app's port and the web dashboard: computers only.
   if (!Platform.isAndroid)
     (
       l.groupApp,
-      [(SettingsSection.advanced, Icons.build_outlined, l.sectionAdvanced)],
+      [(SettingsSection.advanced, Icons.build_rounded, l.sectionAdvanced)],
     ),
 ];
 
@@ -300,7 +301,7 @@ class _SettingsPageState extends State<SettingsPage> {
     if (!mounted) return;
     final l = AppLocalizations.of(context);
     final country = regionName(l, region);
-    final yes = await showDialog<bool>(
+    final yes = await showFatiDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         icon: const Icon(Icons.alt_route_rounded),
@@ -355,28 +356,49 @@ class _SettingsPageState extends State<SettingsPage> {
           final onOpenLogs = widget.onOpenLogs;
           Widget row(IconData icon, String name, VoidCallback onTap) =>
               ListTile(
-                leading: Icon(icon),
+                leading: IconBadge(icon),
                 title: Text(name),
                 // Mirrors itself in right-to-left languages.
                 trailing: const Icon(Icons.chevron_right_rounded),
                 onTap: onTap,
               );
-          return ListView(
-            padding: pagePadding(context),
-            children: [
-              PageTitle(l.settingsTitle),
-              for (final (title, entries) in groups)
-                SettingsGroup(
-                  title: title,
-                  tiles: [
-                    for (final (section, icon, name) in entries)
-                      row(icon, name, () => setState(() => _open = section)),
-                    if (onOpenLogs != null &&
-                        entries.last.$1 == SettingsSection.advanced)
-                      row(Icons.receipt_long_outlined, l.navLogs, onOpenLogs),
-                  ],
-                ),
-            ],
+          return SlideFadeSwitcher(
+            child: KeyedSubtree(
+              key: const ValueKey('#list'),
+              child: ListView(
+                padding: pagePadding(context),
+                children: [
+                  MotionStagger(
+                    offset: const Offset(0, 16),
+                    children: [
+                      PageTitle(l.settingsTitle),
+                      for (final (gi, (title, entries)) in groups.indexed)
+                        MotionEntrance(
+                          delay: Motion.staggerStep * gi,
+                          child: SettingsGroup(
+                            title: title,
+                            tiles: [
+                              for (final (section, icon, name) in entries)
+                                row(
+                                  icon,
+                                  name,
+                                  () => setState(() => _open = section),
+                                ),
+                              if (onOpenLogs != null &&
+                                  entries.last.$1 == SettingsSection.advanced)
+                                row(
+                                  Icons.receipt_long_rounded,
+                                  l.navLogs,
+                                  onOpenLogs,
+                                ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           );
         }
         final fixed = widget.section != null;
@@ -418,14 +440,26 @@ class _SettingsPageState extends State<SettingsPage> {
               },
           ],
         );
-        if (fixed) return page;
+        if (fixed) {
+          return SlideFadeSwitcher(
+            child: KeyedSubtree(
+              key: ValueKey(open),
+              child: page,
+            ),
+          );
+        }
         // Esc goes back to the list of sections, like the back arrow.
         return CallbackShortcuts(
           bindings: {
             const SingleActivator(LogicalKeyboardKey.escape): () =>
                 setState(() => _open = null),
           },
-          child: Focus(autofocus: true, child: page),
+          child: Focus(
+            autofocus: true,
+            child: SlideFadeSwitcher(
+              child: KeyedSubtree(key: ValueKey(open), child: page),
+            ),
+          ),
         );
       },
     );
@@ -448,7 +482,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
         _Choice<ThemeMode>(
-          icon: Icons.brightness_6_outlined,
+          icon: Icons.brightness_6_rounded,
           title: l.theme,
           value: s.themeMode,
           onChanged: (v) => s.update(themeMode: v),
@@ -471,7 +505,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           ),
         _Row(
-          icon: Icons.visibility_outlined,
+          icon: Icons.visibility_rounded,
           label: l.showPublicIp,
           child: Switch(
             value: s.showPublicIp,
@@ -529,7 +563,7 @@ class _SettingsPageState extends State<SettingsPage> {
         // How the app reaches Mozilla.
         Panel(
           title: l.sectionConnection,
-          icon: Icons.cloud_outlined,
+          icon: Icons.cloud_rounded,
           child: Column(
             children: [
               _Choice<String>(
@@ -557,7 +591,7 @@ class _SettingsPageState extends State<SettingsPage> {
               // The connection to Mozilla's servers alone: the sign-in and
               // the DNS keep their own way.
               _Choice<String>(
-                icon: Icons.lan_outlined,
+                icon: Icons.lan_rounded,
                 title: l.ipVersion,
                 value: switch (_str(['proxy', 'ip_version'])) {
                   final v
@@ -624,7 +658,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ValueListenableBuilder(
                   valueListenable: AndroidCore.mode,
                   builder: (context, mode, _) => _Choice<String>(
-                    icon: Icons.vpn_lock_outlined,
+                    icon: Icons.vpn_lock_rounded,
                     title: l.connectionMode,
                     value: mode,
                     onChanged: (v) =>
@@ -663,7 +697,7 @@ class _SettingsPageState extends State<SettingsPage> {
               // interfaces). A login is optional either way; the core warns
               // in its log when the proxy is open to the network without one.
               _Choice<bool>(
-                icon: Icons.share_outlined,
+                icon: Icons.share_rounded,
                 title: l.listenAddress,
                 value: sharedWithLan(proxyListen),
                 onChanged: _saving
@@ -679,7 +713,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
               ),
               _Expand(
-                icon: Icons.key_outlined,
+                icon: Icons.key_rounded,
                 title: l.proxyLogin,
                 children: [
                   // Both are saved together: the core takes both or neither.
@@ -708,7 +742,7 @@ class _SettingsPageState extends State<SettingsPage> {
   /// requests go directly; without an address it stays off.
   Widget _bypass(AppLocalizations l) => Panel(
     title: l.sectionBypass,
-    icon: Icons.shield_outlined,
+    icon: Icons.shield_rounded,
     trailing: Semantics(
       label: l.apiRelayUse,
       child: Switch(
@@ -811,7 +845,7 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             children: [
               _Choice<String>(
-                icon: Icons.flag_outlined,
+                icon: Icons.flag_rounded,
                 title: l.region,
                 value: AppSettings.regions.contains(region) ? region : '',
                 onChanged: _saving || !on
@@ -936,7 +970,7 @@ class _SettingsPageState extends State<SettingsPage> {
         const SizedBox(height: 16),
         Panel(
           title: l.testDestination,
-          icon: Icons.science_outlined,
+          icon: Icons.science_rounded,
           child: _DestinationTest(core: _core),
         ),
       ],
@@ -1041,7 +1075,7 @@ class _SettingsPageState extends State<SettingsPage> {
     });
     final list = running;
     if (!ok || list == null || !mounted) return;
-    final picked = await showDialog<RunningProgram>(
+    final picked = await showFatiDialog<RunningProgram>(
       context: context,
       builder: (_) => _RunningProgramsDialog(
         programs: list,
@@ -1055,7 +1089,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   /// A program by a name the user types, * for any text.
   Future<void> _addProgramByName() async {
-    final name = await showDialog<String>(
+    final name = await showFatiDialog<String>(
       context: context,
       builder: (_) => const _ProgramNameDialog(),
     );
@@ -1067,10 +1101,10 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> _confirmRemoveTunService() async {
     final l = AppLocalizations.of(context);
     final colors = Theme.of(context).colorScheme;
-    final yes = await showDialog<bool>(
+    final yes = await showFatiDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        icon: Icon(Icons.delete_outline_rounded, color: colors.error),
+        icon: Icon(Icons.delete_rounded, color: colors.error),
         title: Text(l.removeTunService),
         content: SizedBox(width: 380, child: Text(l.removeTunServiceHint)),
         actions: [
@@ -1228,7 +1262,7 @@ class _SettingsPageState extends State<SettingsPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _Choice<String>(
-            icon: Icons.dns_outlined,
+            icon: Icons.dns_rounded,
             title: l.dnsPreset,
             value: preset,
             onChanged: _saving
@@ -1288,7 +1322,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ('1h', l.sleepHour, null),
     ];
     return _Choice<String>(
-      icon: Icons.bedtime_outlined,
+      icon: Icons.bedtime_rounded,
       title: l.idleSleep,
       value: current,
       onChanged: _saving
@@ -1317,13 +1351,13 @@ class _SettingsPageState extends State<SettingsPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _PortRow(
-                icon: Icons.hub_outlined,
+                icon: Icons.hub_rounded,
                 label: l.appPort,
                 listen: appListen,
                 onChange: () => _changePort(appListen, _core.setAppPort),
               ),
               _Row(
-                icon: Icons.dashboard_outlined,
+                icon: Icons.dashboard_rounded,
                 label: l.webDashboard,
                 // An address reads left to right in a right-to-left language.
                 value: ltr('$dashboard'),
@@ -1343,7 +1377,7 @@ class _SettingsPageState extends State<SettingsPage> {
           const SizedBox(height: 16),
           Panel(
             title: l.removeTunService,
-            icon: Icons.delete_outline_rounded,
+            icon: Icons.delete_rounded,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -1364,7 +1398,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     onPressed: _core.removingTun || _core.installingTun
                         ? null
                         : _confirmRemoveTunService,
-                    icon: const Icon(Icons.delete_outline_rounded, size: 18),
+                    icon: const Icon(Icons.delete_rounded, size: 18),
                     label: Text(l.remove),
                   ),
                 ),
@@ -1399,7 +1433,7 @@ Future<T?> _pickOne<T>(
   required T value,
   required List<(T, String, TextStyle?)> options,
   List<String>? hints,
-}) => showDialog<T>(
+}) => showFatiDialog<T>(
   context: context,
   builder: (context) => AlertDialog(
     title: Text(title),
@@ -2004,7 +2038,7 @@ class _ProxyLoginState extends State<_ProxyLogin> {
             border: const OutlineInputBorder(),
             suffixIcon: IconButton(
               icon: Icon(
-                _show ? Icons.visibility_off : Icons.visibility,
+                _show ? Icons.visibility_off_rounded : Icons.visibility_rounded,
                 size: 18,
               ),
               onPressed: () => setState(() => _show = !_show),
@@ -2194,7 +2228,7 @@ class _UpstreamProxyState extends State<_UpstreamProxy> {
     // then the port, as in 127.0.0.1:1080. Tab goes in that order.
     return Panel(
       title: l.upstreamProxy,
-      icon: Icons.lan_outlined,
+      icon: Icons.lan_rounded,
       trailing: Semantics(
         label: l.upstreamProxy,
         child: Switch(
@@ -2293,7 +2327,7 @@ class _UpstreamProxyState extends State<_UpstreamProxy> {
                 border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _show ? Icons.visibility_off : Icons.visibility,
+                    _show ? Icons.visibility_off_rounded : Icons.visibility_rounded,
                     size: 18,
                   ),
                   onPressed: () => setState(() => _show = !_show),
@@ -2418,7 +2452,7 @@ class _RoutingListsState extends State<_RoutingLists> {
     final sources = info?.sources ?? const [];
     // A tap downloads the lists again.
     final lists = _Row(
-      icon: Icons.folder_outlined,
+      icon: Icons.folder_rounded,
       label: l.updateLists,
       value: lines.join('\n'),
       onTap: _updating ? null : _update,
@@ -2435,7 +2469,7 @@ class _RoutingListsState extends State<_RoutingLists> {
         // Where the lists come from, as in v2rayNG; the country picks its
         // usual one by itself.
         _Choice<String>(
-          icon: Icons.cloud_outlined,
+          icon: Icons.cloud_rounded,
           title: l.listSource,
           value: info.source,
           onChanged: (id) {
@@ -2762,8 +2796,8 @@ class _DnsSummary extends StatelessWidget {
             l.dnsSummaryFailed(failed),
           )
         : differs > 0
-        ? (Icons.shield_outlined, StatusColors.busy, l.dnsSummaryOk)
-        : (Icons.verified_outlined, StatusColors.good, l.dnsSummaryOk);
+        ? (Icons.shield_rounded, StatusColors.busy, l.dnsSummaryOk)
+        : (Icons.verified_rounded, StatusColors.good, l.dnsSummaryOk);
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(

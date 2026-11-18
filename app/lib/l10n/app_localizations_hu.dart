@@ -1196,7 +1196,6 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get verbDisconnect => 'Szétkapcsolás';
 
-
   @override
   String get tapToConnectPhone => 'Koppintson a csatlakozáshoz';
 
@@ -1518,8 +1517,7 @@ class AppLocalizationsHu extends AppLocalizations {
       'A TUN-szolgáltatás újabb, mint ez az alkalmazás. A TUN mód használatához frissítse az alkalmazást.';
 
   @override
-  String get tunBusy =>
-      'Az Fati VPN egy másik példánya használja a TUN módot.';
+  String get tunBusy => 'Az Fati VPN egy másik példánya használja a TUN módot.';
 
   @override
   String get tunNoDriver =>

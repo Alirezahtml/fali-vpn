@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../core/ports.dart';
 import '../l10n/app_localizations.dart';
+import 'motion.dart';
 
 /// Asks for a port: in place of [taken], with a free one filled in, or to
 /// change the [current] one, starting from it. The chosen port, or null
@@ -11,7 +12,7 @@ Future<int?> showPortDialog(
   BuildContext context, {
   String? taken,
   String? current,
-}) => showDialog<int>(
+}) => showFatiDialog<int>(
   context: context,
   builder: (_) => _PortDialog(taken: taken, current: current),
 );

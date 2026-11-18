@@ -1191,7 +1191,6 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get verbDisconnect => 'Desconectar';
 
-
   @override
   String get tapToConnectPhone => 'Toque para conectar';
 

@@ -9,6 +9,7 @@ import '../core/core_api.dart';
 import '../core/core_controller.dart';
 import '../core/models.dart';
 import '../l10n/app_localizations.dart';
+import 'motion.dart';
 import 'widgets.dart';
 
 /// A backup file: the core's data folder (accounts and settings) as a
@@ -60,7 +61,7 @@ class BackupMenuButton extends StatelessWidget {
       if (zip != null) contents = await api.inspectBackup(zip!);
     });
     if (zip == null || contents == null || !context.mounted) return;
-    final go = await showDialog<bool>(
+    final go = await showFatiDialog<bool>(
       context: context,
       builder: (context) => _ImportDialog(contents: contents!),
     );
@@ -125,7 +126,7 @@ class BackupMenuButton extends StatelessWidget {
           value: true,
           child: ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.save_alt_rounded),
+            leading: const Icon(Icons.save_rounded),
             title: Text(l.backupExport),
           ),
         ),
@@ -133,7 +134,7 @@ class BackupMenuButton extends StatelessWidget {
           value: false,
           child: ListTile(
             contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.file_open_outlined),
+            leading: const Icon(Icons.file_open_rounded),
             title: Text(l.backupImport),
           ),
         ),
@@ -165,7 +166,7 @@ class _ImportDialog extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.zero,
                   dense: true,
-                  leading: const Icon(Icons.account_circle_outlined),
+                  leading: const Icon(Icons.account_circle_rounded),
                   // An email reads left to right in every language.
                   title: Text(a.email, textDirection: TextDirection.ltr),
                   subtitle: a.exists

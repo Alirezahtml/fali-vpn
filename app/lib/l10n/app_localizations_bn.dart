@@ -1185,7 +1185,6 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get verbDisconnect => 'বিচ্ছিন্ন';
 
-
   @override
   String get tapToConnectPhone => 'সংযোগ করতে ট্যাপ করুন';
 

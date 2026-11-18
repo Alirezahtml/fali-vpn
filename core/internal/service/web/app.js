@@ -1965,3 +1965,24 @@ window.addEventListener("hashchange", () => {
 });
 if (PAGES[location.hash.slice(1)]) state.view = location.hash.slice(1);
 start();
+
+// Numbers that change settle with a small pop: a text change under the
+// watched nodes marks them .bump for one run of the animation (one-shot,
+// so a still dashboard costs no frames).
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const selector = ".kpi-value, .kpi-sub, #hero-title, #hero-message, .mini-title, .mini-sub";
+  const mark = (node) => {
+    const el = node.nodeType === 1 && node.matches(selector)
+      ? node
+      : node.parentElement?.closest?.(selector);
+    if (!el) return;
+    el.classList.remove("bump");
+    void el.offsetWidth; // restart the animation
+    el.classList.add("bump");
+  };
+  const observer = new MutationObserver((records) => {
+    for (const r of records) mark(r.target);
+  });
+  observer.observe(document.body, { childList: true, characterData: true, subtree: true });
+})();

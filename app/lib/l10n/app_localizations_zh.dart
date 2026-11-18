@@ -1155,7 +1155,6 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get verbDisconnect => '断开连接';
 
-
   @override
   String get tapToConnectPhone => '点击连接';
 

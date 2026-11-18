@@ -15,6 +15,7 @@ import 'focus_ring.dart';
 import 'format.dart';
 import 'logs_page.dart';
 import 'mobile_shell.dart';
+import 'motion.dart';
 import 'overview_page.dart';
 import 'port_dialog.dart';
 import 'servers_page.dart';
@@ -107,14 +108,6 @@ ThemeData _theme(Brightness brightness, Locale locale) {
       iconTheme: WidgetStatePropertyAll(
         IconThemeData(color: scheme.onSurfaceVariant, size: 24),
       ),
-      selectedIconTheme: WidgetStatePropertyAll(
-        IconThemeData(
-          color: dark
-              ? PixelAccent.darkOnContainer
-              : PixelAccent.lightOnContainer,
-          size: 24,
-        ),
-      ),
       labelTextStyle: WidgetStatePropertyAll(
         TextStyle(
           fontFamily: font,
@@ -123,6 +116,16 @@ ThemeData _theme(Brightness brightness, Locale locale) {
           color: scheme.onSurface,
         ),
       ),
+    ),
+    // Pages the Navigator pushes slide in Material's newest way: the old
+    // page fades forward, the new one glides the rest of the way.
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: FadeForwardsPageTransitionsBuilder(),
+        TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
+        TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
+        TargetPlatform.macOS: FadeForwardsPageTransitionsBuilder(),
+      },
     ),
     navigationRailTheme: NavigationRailThemeData(
       backgroundColor: dark ? const Color(0xFF10161F) : const Color(0xFFEFF3FB),
@@ -377,49 +380,60 @@ class _ShellState extends State<Shell> {
       ];
       final content = Column(
         children: [
-          if (core.unavailable != null && status != null) const _LostBanner(),
+          DropInBanner(
+            visible: core.unavailable != null && status != null,
+            child: const _LostBanner(),
+          ),
           Expanded(
             child: status == null
                 ? _NoCore(core: core)
-                : switch (page) {
-                    // Its cards open the pages beside it.
-                    _Page.overview => OverviewPage(
-                      core: core,
-                      settings: widget.settings,
-                      onOpenServers: () =>
-                          setState(() => _page = _Page.servers),
-                      onOpenAccounts: () =>
-                          setState(() => _page = _Page.accounts),
-                      onOpenConnection: () => setState(() {
-                        _page = _Page.settings;
-                        _settingsOpening = SettingsSection.connection;
-                      }),
-                      onOpenUpstreamProxy: () => setState(() {
-                        _page = _Page.settings;
-                        _settingsOpening = SettingsSection.upstreamProxy;
-                      }),
+                : SlideFadeSwitcher(
+                    child: KeyedSubtree(
+                      // The key: a page change, not a traffic tick, swaps
+                      // with the slide.
+                      key: ValueKey((page, _settingsOpening)),
+                      child: switch (page) {
+                        // Its cards open the pages beside it.
+                        _Page.overview => OverviewPage(
+                          core: core,
+                          settings: widget.settings,
+                          onOpenServers: () =>
+                              setState(() => _page = _Page.servers),
+                          onOpenAccounts: () =>
+                              setState(() => _page = _Page.accounts),
+                          onOpenConnection: () => setState(() {
+                            _page = _Page.settings;
+                            _settingsOpening = SettingsSection.connection;
+                          }),
+                          onOpenUpstreamProxy: () => setState(() {
+                            _page = _Page.settings;
+                            _settingsOpening = SettingsSection.upstreamProxy;
+                          }),
+                        ),
+                        _Page.servers => ServersPage(
+                          core: core,
+                          settings: widget.settings,
+                        ),
+                        _Page.accounts => AccountsPage(
+                          core: core,
+                          settings: widget.settings,
+                        ),
+                        _Page.settings => SettingsPage(
+                          key: ValueKey(_settingsOpening),
+                          core: core,
+                          settings: widget.settings,
+                          opening: _settingsOpening,
+                          onOpenLogs: () =>
+                              setState(() => _page = _Page.logs),
+                        ),
+                        _Page.logs => LogsPage(
+                          core: core,
+                          settings: widget.settings,
+                        ),
+                        _Page.about => AboutPage(core: core),
+                      },
                     ),
-                    _Page.servers => ServersPage(
-                      core: core,
-                      settings: widget.settings,
-                    ),
-                    _Page.accounts => AccountsPage(
-                      core: core,
-                      settings: widget.settings,
-                    ),
-                    _Page.settings => SettingsPage(
-                      key: ValueKey(_settingsOpening),
-                      core: core,
-                      settings: widget.settings,
-                      opening: _settingsOpening,
-                      onOpenLogs: () => setState(() => _page = _Page.logs),
-                    ),
-                    _Page.logs => LogsPage(
-                      core: core,
-                      settings: widget.settings,
-                    ),
-                    _Page.about => AboutPage(core: core),
-                  },
+                  ),
           ),
         ],
       );

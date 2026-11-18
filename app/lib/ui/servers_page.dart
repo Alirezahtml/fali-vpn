@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ import '../core/models.dart';
 import '../l10n/app_localizations.dart';
 import 'format.dart';
 import 'browser_signin.dart';
+import 'motion.dart';
 import 'widgets.dart';
 
 /// The server list, one choice in one list: Recommended and Fastest, which
@@ -225,15 +227,22 @@ class _ServersPageState extends State<ServersPage> {
         else
           _ChoiceCard(
             children: [
-              for (final loc in countries)
-                _ChoiceRow(
-                  leading: CountryFlag(code: loc.code, width: 36),
-                  title: locationName(l, loc.code, loc.name),
-                  subtitle: _subtitle(loc),
-                  delay: _Delay(location: loc, testing: _testing),
-                  selected: chosen == loc.code.toLowerCase(),
-                  busy: _busy?.toLowerCase() == loc.code.toLowerCase(),
-                  onTap: () => _choose(loc.code),
+              // Each location arrives a beat after the one before it; a
+              // long list keeps its entrance within half a second.
+              for (final (i, loc) in countries.indexed)
+                MotionEntrance(
+                  offset: const Offset(0, 14),
+                  duration: Motion.normal,
+                  delay: Motion.staggerStep * math.min(i, 10),
+                  child: _ChoiceRow(
+                    leading: CountryFlag(code: loc.code, width: 36),
+                    title: locationName(l, loc.code, loc.name),
+                    subtitle: _subtitle(loc),
+                    delay: _Delay(location: loc, testing: _testing),
+                    selected: chosen == loc.code.toLowerCase(),
+                    busy: _busy?.toLowerCase() == loc.code.toLowerCase(),
+                    onTap: () => _choose(loc.code),
+                  ),
                 ),
             ],
           ),
@@ -342,62 +351,74 @@ class _ChoiceRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    return Material(
+    // The chosen row's wash glides in, instead of arriving at once.
+    return AnimatedContainer(
+      duration: Motion.normal,
+      curve: Motion.emphasized,
       color: selected
           ? scheme.primary.withValues(alpha: 0.08)
           : Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 12, 12),
-          child: Row(
-            children: [
-              leading,
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: selected
-                            ? FontWeight.w700
-                            : FontWeight.w500,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (subtitle != null) ...[
-                      const SizedBox(height: 2),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 12, 12),
+            child: Row(
+              children: [
+                leading,
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        subtitle!,
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: scheme.onSurfaceVariant,
+                        title,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: selected
+                              ? FontWeight.w700
+                              : FontWeight.w500,
                         ),
-                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
+                      if (subtitle != null) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          subtitle!,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: scheme.onSurfaceVariant,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
-              ),
-              if (delay != null) ...[const SizedBox(width: 10), delay!],
-              const SizedBox(width: 6),
-              SizedBox.square(
-                dimension: 24,
-                child: busy
-                    ? const Padding(
-                        padding: EdgeInsets.all(3),
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : Icon(
-                        selected
-                            ? Icons.radio_button_checked_rounded
-                            : Icons.radio_button_unchecked_rounded,
-                        color: selected ? scheme.primary : scheme.outline,
-                      ),
-              ),
-            ],
+                if (delay != null) ...[const SizedBox(width: 10), delay!],
+                const SizedBox(width: 6),
+                SizedBox.square(
+                  dimension: 24,
+                  // The mark swaps with a small pop: radio to spinner,
+                  // spinner to radio, empty to full.
+                  child: ScaleSwitcher(
+                    child: busy
+                        ? const Padding(
+                            key: ValueKey('busy'),
+                            padding: EdgeInsets.all(3),
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
+                        : Icon(
+                            key: ValueKey(selected),
+                            selected
+                                ? Icons.radio_button_checked_rounded
+                                : Icons.radio_button_unchecked_rounded,
+                            color: selected ? scheme.primary : scheme.outline,
+                          ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -428,24 +449,34 @@ class _Delay extends StatelessWidget {
         : loc.pingError.isNotEmpty
         ? (l.noAnswer, muted)
         : ('—', muted);
-    return Container(
+    // The badge's wash glides between the colors of its delays.
+    return AnimatedContainer(
+      duration: Motion.normal,
+      curve: Motion.emphasized,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(999),
       ),
-      child: testing
-          ? SizedBox.square(
-              dimension: 12,
-              child: CircularProgressIndicator(strokeWidth: 1.5, color: muted),
-            )
-          : Text(
-              text,
-              style: theme.textTheme.labelMedium?.copyWith(
-                color: color,
-                fontWeight: FontWeight.w700,
+      child: ScaleSwitcher(
+        child: testing
+            ? SizedBox.square(
+                key: const ValueKey('testing'),
+                dimension: 12,
+                child: CircularProgressIndicator(
+                  strokeWidth: 1.5,
+                  color: muted,
+                ),
+              )
+            : Text(
+                text,
+                key: ValueKey((text, color)),
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
+      ),
     );
   }
 }

@@ -7,6 +7,7 @@ import '../app_settings.dart';
 import '../core/android_core.dart';
 import '../core/core_controller.dart';
 import '../l10n/app_localizations.dart';
+import 'motion.dart';
 import 'widgets.dart';
 
 /// The first run: the user picks a language and a country, and the
@@ -77,9 +78,11 @@ class _WelcomePageState extends State<WelcomePage> {
             constraints: const BoxConstraints(maxWidth: 460),
             child: Panel(
               padding: const EdgeInsets.all(32),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              // The welcome arrives in steps: the shield, the words, the
+              // two choices, the start.
+              child: MotionStagger(
+                offset: const Offset(0, 18),
+                duration: Motion.grand,
                 children: [
                   Icon(
                     Icons.shield_rounded,

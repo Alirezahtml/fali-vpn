@@ -828,3 +828,49 @@ dialog::backdrop { background: rgba(5, 7, 12, .6); backdrop-filter: blur(3px); }
 }
 .more-menu .menu-panel button:hover { background: var(--surface-3); }
 .more-menu .menu-panel svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* ---------------------------------------------------------------- motion
+   The dashboard's motion layer: views and their cards rise into place,
+   one after another; cards answer the hand with a small lift; numbers
+   settle when they change (the observer in app.js marks them). Everything
+   here bows to prefers-reduced-motion, and everything is one-shot — a
+   still dashboard costs no frames. */
+@media (prefers-reduced-motion: no-preference) {
+  .view:not([hidden]) { animation: view-in .34s cubic-bezier(.05, .7, .1, 1) both; }
+  .view:not([hidden]) > * { animation: card-in .46s cubic-bezier(.05, .7, .1, 1) both; }
+  .view:not([hidden]) > *:nth-child(2) { animation-delay: .05s; }
+  .view:not([hidden]) > *:nth-child(3) { animation-delay: .09s; }
+  .view:not([hidden]) > *:nth-child(n + 4) { animation-delay: .13s; }
+  .kpis > .kpi:nth-child(2),
+  .grid-2 > .card:nth-child(2) { animation-delay: .05s; }
+  .kpis > .kpi:nth-child(3) { animation-delay: .1s; }
+  .kpis > .kpi:nth-child(4) { animation-delay: .15s; }
+  .settings-form fieldset.card:nth-of-type(2),
+  .help-cards .help-card:nth-child(2) { animation-delay: .05s; }
+  .settings-form fieldset.card:nth-of-type(3),
+  .help-cards .help-card:nth-child(3) { animation-delay: .1s; }
+  .settings-form fieldset.card:nth-of-type(n + 4),
+  .help-cards .help-card:nth-child(n + 4) { animation-delay: .14s; }
+  @keyframes view-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes card-in { from { opacity: 0; transform: translateY(14px) scale(.99); } to { opacity: 1; transform: none; } }
+
+  /* A number that just changed settles with a small pop. */
+  .bump { animation: bump .32s cubic-bezier(.34, 1.4, .64, 1); }
+  @keyframes bump { 0% { transform: translateY(4px); opacity: .4; } 100% { transform: none; opacity: 1; } }
+
+  /* The badge over Accounts pops when it appears. */
+  .nav-badge:not([hidden]) { animation: badge-pop .3s cubic-bezier(.34, 1.4, .64, 1); }
+  @keyframes badge-pop { from { transform: scale(.4); opacity: 0; } }
+
+  /* Cards answer the hand: a breath of a lift under the pointer. */
+  @media (hover: hover) {
+    .hero, .kpi, .help-card, .mode-card {
+      transition: transform .18s cubic-bezier(.05, .7, .1, 1), box-shadow .18s;
+    }
+    .hero:hover, .kpi:hover, .help-card:hover, .mode-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .03) inset, 0 14px 34px rgba(0, 0, 0, .34);
+    }
+    .btn:active { transform: translateY(1px) scale(.97); }
+  }
+}

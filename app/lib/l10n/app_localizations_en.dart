@@ -1190,7 +1190,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get verbDisconnect => 'Disconnect';
 
-
   @override
   String get tapToConnectPhone => 'Tap to connect';
 

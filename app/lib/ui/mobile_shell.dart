@@ -7,15 +7,19 @@ import '../core/core_controller.dart';
 import '../l10n/app_localizations.dart';
 import 'about_page.dart';
 import 'accounts_page.dart';
+import 'floating_nav.dart';
 import 'logs_page.dart';
+import 'motion.dart';
 import 'overview_page.dart';
 import 'servers_page.dart';
 import 'settings_page.dart';
 import 'widgets.dart';
 
 /// The phone layout: two tabs, Home and Settings, as phone apps have. The
-/// rest (accounts, servers, each group of settings, logs, about) opens as a
-/// page of its own with the system's back button.
+/// rest (accounts, servers, each group of settings, logs, about) opens as
+/// a page of its own with the system's back button. The tabs sit in a
+/// capsule that floats above the bottom edge, and every change of page
+/// slides, fades and settles.
 class MobileShell extends StatefulWidget {
   const MobileShell({
     super.key,
@@ -41,10 +45,11 @@ class MobileShell extends StatefulWidget {
 class _MobileShellState extends State<MobileShell> {
   int _tab = 0;
 
-  /// Opens [page] under a top bar named [title]; it follows the core.
+  /// Opens [page] under a top bar named [title]; it follows the core, and
+  /// slides in from the reading direction's side.
   void _push(String title, Widget Function() page) {
     Navigator.of(context).push(
-      MaterialPageRoute<void>(
+      FatiRoute<void>(
         builder: (context) => ListenableBuilder(
           listenable: widget.core,
           builder: (context, _) => Scaffold(
@@ -127,8 +132,20 @@ class _MobileShellState extends State<MobileShell> {
           top: _tab != 0 || widget.noCore != null || widget.banner != null,
           child: Column(
             children: [
-              ?widget.banner,
-              Expanded(child: page),
+              if (widget.banner != null)
+                DropInBanner(
+                  visible: true,
+                  child: widget.banner!,
+                ),
+              Expanded(
+                child: SlideFadeSwitcher(
+                  child: KeyedSubtree(
+                    // A tab change, not a traffic tick, is what slides.
+                    key: ValueKey((_tab, widget.noCore != null)),
+                    child: page,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -139,18 +156,18 @@ class _MobileShellState extends State<MobileShell> {
               _tab == 0 &&
               widget.noCore == null &&
               Theme.of(context).brightness == Brightness.dark,
-          child: NavigationBar(
+          child: FloatingNavBar(
             selectedIndex: _tab,
-            onDestinationSelected: (i) => setState(() => _tab = i),
+            onSelected: (i) => setState(() => _tab = i),
             destinations: [
-              NavigationDestination(
-                icon: const Icon(Icons.home_outlined),
-                selectedIcon: const Icon(Icons.home_rounded),
+              FloatingNavDestination(
+                icon: Icons.home_outlined,
+                selectedIcon: Icons.home_rounded,
                 label: l.navHome,
               ),
-              NavigationDestination(
-                icon: const Icon(Icons.settings_outlined),
-                selectedIcon: const Icon(Icons.settings_rounded),
+              FloatingNavDestination(
+                icon: Icons.settings_outlined,
+                selectedIcon: Icons.settings_rounded,
                 label: l.navSettings,
               ),
             ],
@@ -171,7 +188,7 @@ class _MobileShellState extends State<MobileShell> {
 }
 
 /// The Settings tab: what the app manages, the groups of settings, and the
-/// app's own pages.
+/// app's own pages, each group arriving a beat after the one before it.
 class _SettingsList extends StatelessWidget {
   const _SettingsList({
     required this.onOpenServers,
@@ -190,10 +207,11 @@ class _SettingsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
     Widget group(String title, List<Widget> tiles) =>
         SettingsGroup(title: title, tiles: tiles);
     Widget tile(IconData icon, String title, VoidCallback onTap) => ListTile(
-      leading: Icon(icon),
+      leading: IconBadge(icon, color: scheme.primary),
       title: Text(title),
       // Mirrors itself in right-to-left languages.
       trailing: const Icon(Icons.chevron_right_rounded),
@@ -210,65 +228,71 @@ class _SettingsList extends StatelessWidget {
     return ListView(
       padding: pagePadding(context),
       children: [
-        PageTitle(l.settingsTitle),
-        // Language and theme first, what someone looks for before anything
-        // else, with which country and account; then how the traffic goes,
-        // what helps when Mozilla is blocked, and the app itself.
-        group(l.sectionGeneral, [
-          section(
-            SettingsSection.general,
-            Icons.tune_rounded,
-            l.sectionGeneral,
-          ),
-          tile(Icons.public_rounded, l.navServers, onOpenServers),
-          tile(Icons.people_outline_rounded, l.navAccounts, onOpenAccounts),
-        ]),
-        group(l.groupNetwork, [
-          section(
-            SettingsSection.connection,
-            Icons.vpn_lock_outlined,
-            l.sectionConnection,
-          ),
-          section(
-            SettingsSection.routing,
-            Icons.alt_route_rounded,
-            l.sectionRouting,
-          ),
-          section(SettingsSection.dns, Icons.dns_rounded, l.sectionDns),
-        ]),
-        group(l.sectionBypass, [
-          section(SettingsSection.relay, Icons.cloud_outlined, l.apiRelay),
-          section(
-            SettingsSection.fragment,
-            Icons.content_cut_rounded,
-            l.tlsFragment,
-          ),
-          section(
-            SettingsSection.upstreamProxy,
-            Icons.lan_outlined,
-            l.upstreamProxy,
-          ),
-        ]),
-        group(l.groupApp, [
-          // The app's port and the web dashboard: computers only (a narrow
-          // window shows this layout too).
-          if (!Platform.isAndroid)
-            section(
-              SettingsSection.advanced,
-              Icons.build_outlined,
-              l.sectionAdvanced,
-            ),
-          tile(
-            Icons.receipt_long_outlined,
-            l.navLogs,
-            () => push(l.navLogs, () => LogsPage(core: core)),
-          ),
-          tile(
-            Icons.info_outline_rounded,
-            l.navAbout,
-            () => push(l.navAbout, () => AboutPage(core: core)),
-          ),
-        ]),
+        MotionStagger(
+          offset: const Offset(0, 16),
+          children: [
+            PageTitle(l.settingsTitle),
+            // Language and theme first, what someone looks for before
+            // anything else, with which country and account; then how the
+            // traffic goes, what helps when Mozilla is blocked, and the
+            // app itself.
+            group(l.sectionGeneral, [
+              section(
+                SettingsSection.general,
+                Icons.tune_rounded,
+                l.sectionGeneral,
+              ),
+              tile(Icons.public_rounded, l.navServers, onOpenServers),
+              tile(Icons.people_rounded, l.navAccounts, onOpenAccounts),
+            ]),
+            group(l.groupNetwork, [
+              section(
+                SettingsSection.connection,
+                Icons.vpn_lock_rounded,
+                l.sectionConnection,
+              ),
+              section(
+                SettingsSection.routing,
+                Icons.alt_route_rounded,
+                l.sectionRouting,
+              ),
+              section(SettingsSection.dns, Icons.dns_rounded, l.sectionDns),
+            ]),
+            group(l.sectionBypass, [
+              section(SettingsSection.relay, Icons.cloud_rounded, l.apiRelay),
+              section(
+                SettingsSection.fragment,
+                Icons.content_cut_rounded,
+                l.tlsFragment,
+              ),
+              section(
+                SettingsSection.upstreamProxy,
+                Icons.lan_rounded,
+                l.upstreamProxy,
+              ),
+            ]),
+            group(l.groupApp, [
+              // The app's port and the web dashboard: computers only (a
+              // narrow window shows this layout too).
+              if (!Platform.isAndroid)
+                section(
+                  SettingsSection.advanced,
+                  Icons.build_rounded,
+                  l.sectionAdvanced,
+                ),
+              tile(
+                Icons.receipt_long_rounded,
+                l.navLogs,
+                () => push(l.navLogs, () => LogsPage(core: core)),
+              ),
+              tile(
+                Icons.info_rounded,
+                l.navAbout,
+                () => push(l.navAbout, () => AboutPage(core: core)),
+              ),
+            ]),
+          ],
+        ),
       ],
     );
   }

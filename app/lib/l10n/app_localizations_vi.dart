@@ -1187,7 +1187,6 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get verbDisconnect => 'Ngắt kết nối';
 
-
   @override
   String get tapToConnectPhone => 'Chạm để kết nối';
 

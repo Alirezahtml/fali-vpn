@@ -11,6 +11,11 @@
     :root { --bg: #f5f8fe; --card: #ffffff; --text: #1a1d24; --muted: #5b6474; --ok: #1e8e3e; --ring: rgba(30, 142, 62, .22); }
   }
   * { box-sizing: border-box; }
+  .card {
+    animation: arrive .5s cubic-bezier(.05, .7, .1, 1) both;
+  }
+  @keyframes arrive { from { opacity: 0; transform: translateY(16px) scale(.985); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .card { animation: none; } }
   html, body { height: 100%; margin: 0; }
   body {
     display: grid; place-items: center; padding: 24px;

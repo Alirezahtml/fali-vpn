@@ -1189,7 +1189,6 @@ class AppLocalizationsAz extends AppLocalizations {
   @override
   String get verbDisconnect => 'Kəs';
 
-
   @override
   String get tapToConnectPhone => 'Qoşulmaq üçün toxunun';
 

@@ -13,6 +13,7 @@ import '../platform.dart';
 import 'country_names.dart';
 import 'format.dart';
 import 'local_country_names.dart';
+import 'motion.dart';
 
 /// Where a Firefox Account is made: Mozilla's site.
 const firefoxAccountSignUpUrl = 'https://accounts.firefox.com/';
@@ -45,6 +46,44 @@ abstract final class StatusColors {
   static const busy = Color(0xFFF9AB00);
   static const bad = Color(0xFFEA4335);
   static const idle = Color(0xFF80868B);
+}
+
+/// The standard container of a leading icon: a rounded square the size of
+/// a thumb's pad, washed in its color, the icon itself in the deep ink of
+/// that color. Every list tile and card carries one, so the pages all
+/// read alike.
+class IconBadge extends StatelessWidget {
+  const IconBadge(
+    this.icon, {
+    super.key,
+    this.color,
+    this.size = 40,
+    this.iconSize = 21,
+  });
+
+  final IconData icon;
+
+  /// The color of the wash and the ink; the theme's primary without it.
+  final Color? color;
+  final double size;
+  final double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final c = color ?? scheme.primary;
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(size * 0.36),
+        color: c.withValues(alpha: scheme.brightness == Brightness.dark
+            ? 0.16
+            : 0.11),
+      ),
+      child: Icon(icon, size: iconSize, color: c),
+    );
+  }
 }
 
 /// The app's accent, the electric blue of the Pixel look.
@@ -628,25 +667,51 @@ class QuotaBar extends StatelessWidget {
         builder: (context, box) => Stack(
           clipBehavior: Clip.none,
           children: [
+            // The track.
             Positioned.fill(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: value,
-                  color: color,
-                  backgroundColor: scheme.surfaceContainerHighest,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: scheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
+            // The fill, gliding to its new width as the quota moves.
+            TweenAnimationBuilder<double>(
+              tween: Tween(end: value),
+              duration: Motion.slow,
+              curve: Motion.emphasized,
+              builder: (context, v, _) => Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: FractionallySizedBox(
+                  widthFactor: v.clamp(0.0, 1.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: color,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
                 ),
               ),
             ),
             if (threshold > 0 && threshold < 100)
-              PositionedDirectional(
-                start: box.maxWidth * threshold / 100 - 1,
-                top: -3,
-                bottom: -3,
-                child: Tooltip(
-                  message: AppLocalizations.of(context)
-                      .switchAt(threshold.round()),
-                  child: Container(width: 2, color: scheme.onSurfaceVariant),
+              TweenAnimationBuilder<double>(
+                tween: Tween(end: box.maxWidth * threshold / 100 - 1),
+                duration: Motion.slow,
+                curve: Motion.emphasized,
+                builder: (context, x, _) => PositionedDirectional(
+                  start: x,
+                  top: -3,
+                  bottom: -3,
+                  child: Tooltip(
+                    message: AppLocalizations.of(context).switchAt(
+                      threshold.round(),
+                    ),
+                    child: Container(
+                      width: 2,
+                      color: scheme.onSurfaceVariant,
+                    ),
+                  ),
                 ),
               ),
           ],
@@ -793,7 +858,7 @@ Future<void> openLink(BuildContext context, String url) async {
   if (await openUrl(url) || !context.mounted) return;
   final l = AppLocalizations.of(context);
   final theme = Theme.of(context);
-  await showDialog<void>(
+  await showFatiDialog<void>(
     context: context,
     builder: (context) => AlertDialog(
       title: Text(l.noBrowserTitle),
@@ -849,7 +914,7 @@ class NoAccountsPanel extends StatelessWidget {
           children: [
             const SizedBox(height: 12),
             Icon(
-              Icons.group_add_outlined,
+              Icons.group_add_rounded,
               size: 40,
               color: theme.colorScheme.primary,
             ),

@@ -207,13 +207,13 @@ class _ConnectionsViewState extends State<ConnectionsView> {
               ],
               builder: (context, menu, _) => IconButton(
                 tooltip: l.connColumns,
-                icon: const Icon(Icons.view_column_outlined),
+                icon: const Icon(Icons.view_column_rounded),
                 onPressed: () => menu.isOpen ? menu.close() : menu.open(),
               ),
             ),
             IconButton(
               tooltip: l.clear,
-              icon: const Icon(Icons.delete_sweep_outlined),
+              icon: const Icon(Icons.delete_sweep_rounded),
               onPressed: _clear,
             ),
           ],

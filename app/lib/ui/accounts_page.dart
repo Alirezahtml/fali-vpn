@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +11,7 @@ import '../l10n/app_localizations.dart';
 import 'backup.dart';
 import 'browser_signin.dart';
 import 'format.dart';
+import 'motion.dart';
 import 'signin_dialog.dart';
 import 'widgets.dart';
 
@@ -48,13 +51,18 @@ class AccountsPage extends StatelessWidget {
           else
             for (var i = 0; i < list.length; i++) ...[
               if (i > 0) const SizedBox(height: 12),
-              _AccountCard(
-                core: core,
-                settings: settings,
-                account: list[i],
-                threshold: threshold,
-                first: i == 0,
-                last: i == list.length - 1,
+              MotionEntrance(
+                offset: const Offset(0, 16),
+                duration: Motion.slow,
+                delay: Motion.staggerStep * math.min(i, 6),
+                child: _AccountCard(
+                  core: core,
+                  settings: settings,
+                  account: list[i],
+                  threshold: threshold,
+                  first: i == 0,
+                  last: i == list.length - 1,
+                ),
               ),
             ],
           const SizedBox(height: 12),
@@ -72,7 +80,7 @@ class AccountsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(
-              Icons.info_outline_rounded,
+              Icons.info_rounded,
               size: 18,
               color: theme.colorScheme.onSurfaceVariant,
             ),
@@ -111,7 +119,7 @@ class _SignInMethodRow extends StatelessWidget {
 
   Future<void> _change(BuildContext context) async {
     final l = AppLocalizations.of(context);
-    final picked = await showDialog<SignInMethod>(
+    final picked = await showFatiDialog<SignInMethod>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l.signInMethod),
@@ -151,7 +159,7 @@ class _SignInMethodRow extends StatelessWidget {
       margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
       child: ListTile(
-        leading: const Icon(Icons.login_rounded),
+        leading: IconBadge(Icons.login_rounded),
         title: Text(AppLocalizations.of(context).signInMethod),
         // The value goes under the title: too long beside it on a phone.
         subtitle: Text(
@@ -174,7 +182,7 @@ class _AccountSwitching extends StatelessWidget {
   final double percent;
 
   Future<void> _change(BuildContext context) async {
-    final value = await showDialog<int>(
+    final value = await showFatiDialog<int>(
       context: context,
       builder: (_) => _SwitchThresholdDialog(percent: percent.round()),
     );
@@ -196,7 +204,7 @@ class _AccountSwitching extends StatelessWidget {
     margin: EdgeInsets.zero,
     clipBehavior: Clip.antiAlias,
     child: ListTile(
-      leading: const Icon(Icons.swap_horiz_rounded),
+      leading: IconBadge(Icons.swap_horiz_rounded),
       title: Text(AppLocalizations.of(context).sectionAccounts),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
@@ -455,7 +463,7 @@ class _AccountCard extends StatelessWidget {
                   PopupMenuItem(
                     value: 'remove',
                     child: ListTile(
-                      leading: const Icon(Icons.delete_outline_rounded),
+                      leading: const Icon(Icons.delete_rounded),
                       title: Text(l.remove),
                     ),
                   ),
@@ -607,7 +615,7 @@ class _AccountCard extends StatelessWidget {
 
   Future<void> _remove(BuildContext context) async {
     final l = AppLocalizations.of(context);
-    final ok = await showDialog<bool>(
+    final ok = await showFatiDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(l.removeTitle),
@@ -640,6 +648,17 @@ class _StatusPill extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final a = account;
+    // The status's pill pops to its new color and words when it changes.
+    return ScaleSwitcher(
+      duration: Motion.fast,
+      child: KeyedSubtree(
+        key: ValueKey((a.enabled, a.active, a.status, a.retryAt)),
+        child: _pill(context, l, a),
+      ),
+    );
+  }
+
+  static Widget _pill(BuildContext context, AppLocalizations l, Account a) {
     if (!a.enabled) return Pill(l.statusDisabled);
     if (a.active) {
       return Pill(
