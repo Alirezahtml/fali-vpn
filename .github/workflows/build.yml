@@ -34,6 +34,10 @@ concurrency:
 env:
   FLUTTER_VERSION: 3.47.7
   GOMOBILE_VERSION: v0.0.0-20260908204917-8b95e45f8d3e
+  # The platforms a release builds. "android" until the fork builds the rest;
+  # empty builds every platform. The repository variable PLATFORMS (Settings,
+  # Secrets and variables, Actions, Variables) overrides this default.
+  PLATFORMS: ${{ vars.PLATFORMS || 'android' }}
 
 jobs:
   test:
@@ -108,7 +112,7 @@ jobs:
     needs: test
     # Built unless the repository variable PLATFORMS (Settings, Secrets and
     # variables, Actions, Variables) is set and leaves it out, e.g. "linux".
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'windows'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (env.PLATFORMS == '' || contains(env.PLATFORMS, 'windows'))
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
@@ -146,7 +150,7 @@ jobs:
 
   android:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'android'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (env.PLATFORMS == '' || contains(env.PLATFORMS, 'android'))
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -175,10 +179,9 @@ jobs:
           PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         run: |
           if [ -z "$KEYSTORE" ]; then
-            if [[ "$GITHUB_REF" == refs/tags/* ]]; then
-              echo "::error::a release needs the ANDROID_KEYSTORE_BASE64 and ANDROID_KEYSTORE_PASSWORD secrets"
-              exit 1
-            fi
+            # A fork without the secrets still gets an installable release:
+            # the APKs are signed with the runner's debug key, and installing
+            # the next properly signed build needs an uninstall first.
             echo "::warning::no release key: the APKs are signed with a debug key"
             exit 0
           fi
@@ -212,7 +215,7 @@ jobs:
 
   linux:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'linux'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (env.PLATFORMS == '' || contains(env.PLATFORMS, 'linux'))
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -230,7 +233,7 @@ jobs:
 
   linux-desktop:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'linux'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (env.PLATFORMS == '' || contains(env.PLATFORMS, 'linux'))
     strategy:
       matrix:
         include:
@@ -302,7 +305,7 @@ jobs:
 
   macos:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (vars.PLATFORMS == '' || contains(vars.PLATFORMS, 'macos'))
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && (env.PLATFORMS == '' || contains(env.PLATFORMS, 'macos'))
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v7
@@ -438,8 +441,10 @@ jobs:
           FATI_VPN_SIGNING_KEY: ${{ secrets.FIREFOX_VPN_SIGNING_KEY }}
         run: |
           if [ -z "$FATI_VPN_SIGNING_KEY" ]; then
-            echo "::error::no release key (the secret FATI_VPN_SIGNING_KEY): the apps could not install this release"
-            exit 1
+            # The checksums stay unsigned: desktop apps will not auto-update
+            # from this release, but its files install by hand.
+            echo "::warning::no release key: SHA256SUMS.txt stays unsigned"
+            exit 0
           fi
           go run ./tools/sign ../release/SHA256SUMS.txt
       # The notes are the README's download table only, linking to this
