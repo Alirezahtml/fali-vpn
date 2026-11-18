@@ -132,7 +132,9 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
         final res = await req.close();
         await for (final chunk in res) {
           total.value += chunk.length;
-          if (DateTime.now().isAfter(deadline)) return;
+          if (DateTime.now().isAfter(deadline)) {
+            return;
+          }
         }
       } catch (_) {
         // One stream failing leaves the others measuring.
