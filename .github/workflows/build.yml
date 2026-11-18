@@ -108,7 +108,7 @@ jobs:
     needs: test
     # Built unless the repository variable PLATFORMS (Settings, Secrets and
     # variables, Actions, Variables) is set and leaves it out, e.g. "linux".
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && contains(vars.PLATFORMS || 'windows', 'windows')
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && contains(vars.PLATFORMS || 'android', 'windows')
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
@@ -211,7 +211,7 @@ jobs:
 
   linux:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && contains(vars.PLATFORMS || 'linux', 'linux')
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && contains(vars.PLATFORMS || 'android', 'linux')
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
@@ -229,7 +229,7 @@ jobs:
 
   linux-desktop:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && contains(vars.PLATFORMS || 'linux', 'linux')
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && contains(vars.PLATFORMS || 'android', 'linux')
     strategy:
       matrix:
         include:
@@ -301,7 +301,7 @@ jobs:
 
   macos:
     needs: test
-    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && contains(vars.PLATFORMS || 'macos', 'macos')
+    if: (startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch') && contains(vars.PLATFORMS || 'android', 'macos')
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v7
