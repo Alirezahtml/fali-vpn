@@ -75,7 +75,7 @@ class SpeedGauge extends StatelessWidget {
                 lineWidth: lineWidth,
               ),
             ),
-            child,
+            if (child != null) child,
           ],
         ),
         child: Column(

@@ -165,12 +165,15 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
   /// the bytes actually sent.
   Future<double> _measureUp(HttpClient client) async {
     final bytes = Uint8List(6 * 1024 * 1024);
-    math.Random().nextBytes(bytes);
+    final random = math.Random();
+    for (var i = 0; i < bytes.length; i++) {
+      bytes[i] = random.nextInt(256);
+    }
     final watch = Stopwatch()..start();
     try {
       final req = await client.openUrl('POST', Uri.parse(_upUrl))
           .timeout(const Duration(seconds: 6));
-      req.headers.contentType = ContentType.octetStream;
+      req.headers.contentType = ContentType.binary;
       final sent = req.addStream(Stream.value(bytes)).timeout(_upBudget);
       await req.close();
       await sent;
@@ -398,7 +401,7 @@ class _HistoryRow extends StatelessWidget {
     final persian = l.localeName == 'fa';
     final ping = (entry['ping'] as num?)?.toInt() ?? 0;
     final at = DateTime.tryParse(entry['at'] as String? ?? '');
-    String num(Object? v) =>
+    String fig(Object? v) =>
         SpeedGauge.speedText((v as num?)?.toDouble() ?? 0, persian: persian);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -414,8 +417,8 @@ class _HistoryRow extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  '${l.downloadRate} ${num(entry['down'])} · '
-                  '${l.uploadRate} ${num(entry['up'])} · '
+                  '${l.downloadRate} ${fig(entry['down'])} · '
+                  '${l.uploadRate} ${fig(entry['up'])} · '
                   '${l.realDelay} ${ping > 0 ? l.milliseconds(ping) : '—'}',
                   style: theme.textTheme.bodyMedium,
                 ),
