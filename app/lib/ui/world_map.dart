@@ -3,6 +3,7 @@ import 'dart:ui' show PointMode;
 
 import 'package:flutter/material.dart';
 
+import 'motion.dart';
 import 'world_map_data.dart';
 
 /// The dotted world map with the connection's story on it: the user's pin
@@ -43,18 +44,24 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
   );
 
   @override
-  void initState() {
-    super.initState();
-    // The dashes only travel while the connection is on the map.
-    if (widget.connected) _flow.repeat();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _sync();
   }
 
   @override
   void didUpdateWidget(WorldMap old) {
     super.didUpdateWidget(old);
-    if (widget.connected && !_flow.isAnimating) {
+    _sync();
+  }
+
+  /// The dashes travel while the connection is on the map, and only when
+  /// the user has not asked the system for less motion.
+  void _sync() {
+    final moving = widget.connected && Motion.on(context);
+    if (moving && !_flow.isAnimating) {
       _flow.repeat();
-    } else if (!widget.connected && _flow.isAnimating) {
+    } else if (!moving && _flow.isAnimating) {
       _flow.stop();
     }
   }
