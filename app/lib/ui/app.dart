@@ -20,6 +20,7 @@ import 'overview_page.dart';
 import 'port_dialog.dart';
 import 'servers_page.dart';
 import 'settings_page.dart';
+import 'speed_test_page.dart';
 import 'welcome_page.dart';
 import 'widgets.dart';
 
@@ -306,7 +307,7 @@ class Shell extends StatefulWidget {
   State<Shell> createState() => _ShellState();
 }
 
-enum _Page { overview, servers, accounts, settings, logs, about }
+enum _Page { overview, servers, speedTest, accounts, settings, logs, about }
 
 class _ShellState extends State<Shell> {
   _Page _page = _Page.overview;
@@ -331,6 +332,7 @@ class _ShellState extends State<Shell> {
       final pages = [
         _Page.overview,
         _Page.servers,
+        _Page.speedTest,
         _Page.accounts,
         _Page.settings,
         _Page.logs,
@@ -355,6 +357,11 @@ class _ShellState extends State<Shell> {
               const Icon(Icons.public_outlined),
               const Icon(Icons.public_rounded),
               l.navServers,
+            ),
+            _Page.speedTest => (
+              const Icon(Icons.speed_outlined),
+              const Icon(Icons.speed_rounded),
+              l.navSpeedTest,
             ),
             _Page.accounts => (
               accountsIcon(Icons.people_outline_rounded),
@@ -414,6 +421,7 @@ class _ShellState extends State<Shell> {
                           core: core,
                           settings: widget.settings,
                         ),
+                        _Page.speedTest => SpeedTestPage(core: core),
                         _Page.accounts => AccountsPage(
                           core: core,
                           settings: widget.settings,

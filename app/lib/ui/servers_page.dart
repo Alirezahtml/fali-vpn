@@ -35,6 +35,7 @@ class _ServersPageState extends State<ServersPage> {
   List<Location>? _locations;
   DateTime? _pingedAt;
   String _country = '';
+  String _query = '';
   bool _testing = false;
 
   /// The choice being saved ('' recommended, 'fastest', or a code).
@@ -146,6 +147,15 @@ class _ServersPageState extends State<ServersPage> {
     return list;
   }
 
+  /// Whether [loc] matches the search box, by name, city, or code.
+  bool _matches(AppLocalizations l, Location loc) {
+    final q = _query.trim().toLowerCase();
+    if (q.isEmpty) return true;
+    return locationName(l, loc.code, loc.name).toLowerCase().contains(q) ||
+        loc.city.toLowerCase().contains(q) ||
+        loc.code.toLowerCase().contains(q);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
@@ -154,7 +164,7 @@ class _ServersPageState extends State<ServersPage> {
       color: theme.colorScheme.onSurfaceVariant,
     );
     final chosen = _country.toLowerCase();
-    final countries = _countries(l);
+    final countries = _countries(l).where((loc) => _matches(l, loc)).toList();
     final recommended = (_locations ?? const <Location>[])
         .where((loc) => isRecommendedPlace(loc.code))
         .firstOrNull;
@@ -166,6 +176,29 @@ class _ServersPageState extends State<ServersPage> {
       padding: pagePadding(context),
       children: [
         PageTitle(l.navServers),
+        // The search box: a letter narrows the list to what its name,
+        // city, or code carries.
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: TextField(
+            onChanged: (v) => setState(() => _query = v),
+            textInputAction: TextInputAction.done,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.search_rounded, size: 20),
+              hintText: l.searchServers,
+              isDense: true,
+              filled: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 12,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide.none,
+              ),
+            ),
+          ),
+        ),
         if (noAccounts) ...[
           NoAccountsPanel(
             onAdd: () => startAddAccount(context, _core, widget.settings),
@@ -223,7 +256,12 @@ class _ServersPageState extends State<ServersPage> {
             child: Center(child: CircularProgressIndicator()),
           )
         else if (countries.isEmpty)
-          Panel(child: Text(l.noServers, style: muted))
+          Panel(
+            child: Text(
+              _query.trim().isEmpty ? l.noServers : l.noSearchResults,
+              style: muted,
+            ),
+          )
         else
           _ChoiceCard(
             children: [

@@ -1018,5 +1018,40 @@
   "@connRoutePort": {
     "description": "Mozilla's proxy connects to ports 80, 443, 8080, and 8443 only."
   },
-  "connRouteFailed": "Failed"
+  "connRouteFailed": "Failed",
+  "navSpeedTest": "Speed test",
+  "@navSpeedTest": {
+    "description": "The speed test page's name, in the navigation."
+  },
+  "connectedFor": "Connected for",
+  "@connectedFor": {
+    "description": "Label over the stopwatch of the current connection."
+  },
+  "downloadRate": "Download",
+  "uploadRate": "Upload",
+  "detailsTitle": "Connection details",
+  "@detailsTitle": {
+    "description": "The page with the connection's map, gauge, and figures."
+  },
+  "exitIp": "Exit IP (VPN)",
+  "exitIp6": "Exit IPv6",
+  "exitPlace": "Exit country",
+  "exitNetwork": "Exit network",
+  "protocol": "Protocol",
+  "mapIdle": "The server shows here after it is chosen.",
+  "@mapIdle": {
+    "description": "The world map's strip while no server is set."
+  },
+  "searchServers": "Search country or city…",
+  "noSearchResults": "Nothing matches the search.",
+  "speedRun": "Run test",
+  "speedStop": "Stop",
+  "speedHint": "Turn the VPN on first, so the test measures the VPN's own path.",
+  "@speedHint": {
+    "description": "A line over the speed test: without the VPN the numbers are the bare connection's."
+  },
+  "speedFailed": "The test did not finish; check the internet and try again.",
+  "speedHistory": "History",
+  "speedHistoryEmpty": "No test yet; run one and it lands here.",
+  "speedClear": "Clear history"
 }

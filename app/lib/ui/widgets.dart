@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -93,6 +95,67 @@ abstract final class PixelAccent {
   static const darkContainer = Color(0xFF284E7E);
   static const lightOnContainer = Color(0xFF0B3B78);
   static const darkOnContainer = Color(0xFFD6E4FF);
+}
+
+/// The connection's age as a stopwatch's digits ("۰۱:۲۴:۰۶"), ticking
+/// once a second; a dash until the core says when it started.
+class ConnectedTimer extends StatefulWidget {
+  const ConnectedTimer({super.key, required this.startedAt, this.style});
+
+  /// When this connection started, from the core's proxy info.
+  final DateTime? startedAt;
+  final TextStyle? style;
+
+  @override
+  State<ConnectedTimer> createState() => _ConnectedTimerState();
+}
+
+class _ConnectedTimerState extends State<ConnectedTimer> {
+  Timer? _tick;
+
+  @override
+  void initState() {
+    super.initState();
+    _tick = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _tick?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final start = widget.startedAt;
+    final text = start == null
+        ? '—'
+        : ltr(
+            _digits(
+              DateTime.now().difference(start),
+              persian:
+                  AppLocalizations.of(context).localeName == 'fa',
+            ),
+          );
+    return Text(
+      text,
+      style: (widget.style ?? theme.textTheme.titleLarge)?.copyWith(
+        fontFeatures: const [FontFeature.tabularFigures()],
+      ),
+    );
+  }
+
+  /// Two digits per part, in the language's digits and marks.
+  static String _digits(Duration d, {required bool persian}) {
+    if (d.isNegative) d = Duration.zero;
+    String two(int v) => v.toString().padLeft(2, '0');
+    final s =
+        '${two(d.inHours)}:${two(d.inMinutes % 60)}:${two(d.inSeconds % 60)}';
+    return persian ? persianDigits(s) : s;
+  }
 }
 
 /// How the app presents the engine state.

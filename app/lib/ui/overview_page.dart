@@ -15,11 +15,13 @@ import '../core/ports.dart';
 import '../l10n/app_localizations.dart';
 import '../platform.dart';
 import 'browser_signin.dart';
+import 'connection_details_page.dart';
 import 'connection_mode.dart';
 import 'format.dart';
 import 'motion.dart';
 import 'port_dialog.dart';
 import 'widgets.dart';
+import 'world_map.dart';
 
 /// The home page: the switch, the state, where the traffic goes, and the
 /// data used; the phone's (_PhoneHome) and the computer's (_DesktopHome)
@@ -1279,6 +1281,29 @@ class _PhoneHome extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
+              // The connection's age, ticking like a stopwatch.
+              if (connected && proxy?.startedAt != null)
+                MotionEntrance(
+                  offset: const Offset(0, 10),
+                  duration: Motion.normal,
+                  child: Column(
+                    children: [
+                      Text(
+                        l.connectedFor,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: p.muted,
+                        ),
+                      ),
+                      ConnectedTimer(
+                        startedAt: proxy!.startedAt,
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w800,
+                          color: p.text,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               if (connected)
                 MotionEntrance(
                   offset: const Offset(0, 12),
@@ -1288,6 +1313,16 @@ class _PhoneHome extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 8,
                     children: [
+                      _SpeedPill(
+                        palette: p,
+                        rate: status.traffic?.downRate ?? 0,
+                        up: false,
+                      ),
+                      _SpeedPill(
+                        palette: p,
+                        rate: status.traffic?.upRate ?? 0,
+                        up: true,
+                      ),
                       _HomeDelay(core: core, palette: p),
                       if (ip.isNotEmpty)
                         _HomePill(
@@ -1337,6 +1372,33 @@ class _PhoneHome extends StatelessWidget {
                     style: theme.textTheme.bodyMedium?.copyWith(color: p.muted),
                   ),
                 ),
+              // The world: the path from home to the server, drawn live;
+              // a tap on the small gauge opens the connection's details.
+              MotionEntrance(
+                offset: const Offset(0, 14),
+                duration: Motion.slow,
+                delay: Motion.staggerStep,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 14),
+                  child: _WorldMapCard(
+                    palette: p,
+                    status: status,
+                    connected: connected,
+                    pingMs:
+                        connected &&
+                            status.isCurrentTest(core.lastTest) &&
+                            (core.lastTest?.ok ?? false)
+                        ? core.lastTest!.responseMs
+                        : null,
+                    onOpenServers: onOpenServers,
+                    onOpenDetails: () => Navigator.of(context).push(
+                      FaliRoute<void>(
+                        builder: (context) => ConnectionDetailsPage(core: core),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               // Where to find the proxy, on a line of its own under the delay.
               if (connected && proxyOnly && proxy != null)
                 Padding(
@@ -2626,6 +2688,186 @@ class _LowQuotaNoticeState extends State<_LowQuotaNotice> {
         ),
       ),
         ),
+    );
+  }
+}
+
+/// The speed now, as a pill beside the delay: an arrow and a rate.
+class _SpeedPill extends StatelessWidget {
+  const _SpeedPill({
+    required this.palette,
+    required this.rate,
+    required this.up,
+  });
+
+  final _HomePalette palette;
+  final int rate;
+  final bool up;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return _HomePill(
+      palette: palette,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            up ? Icons.upload_rounded : Icons.download_rounded,
+            size: 15,
+            color: palette.muted,
+          ),
+          const SizedBox(width: 5),
+          Text(
+            formatRate(rate),
+            style: theme.textTheme.labelLarge?.copyWith(
+              color: palette.text,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The world card: the dotted map with the path home–server drawn while
+/// the VPN is on, the server's name on a strip under it, and a small
+/// gauge button that opens the connection's details.
+class _WorldMapCard extends StatelessWidget {
+  const _WorldMapCard({
+    required this.palette,
+    required this.status,
+    required this.connected,
+    required this.pingMs,
+    this.onOpenServers,
+    this.onOpenDetails,
+  });
+
+  final _HomePalette palette;
+  final CoreStatus status;
+  final bool connected;
+
+  /// The connection's measured delay, or null while there is none.
+  final int? pingMs;
+  final VoidCallback? onOpenServers;
+  final VoidCallback? onOpenDetails;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final p = palette;
+    final proxy = status.proxy;
+    final country = proxy?.countryName ?? '';
+    final city = proxy?.cityName ?? '';
+    final code = proxy?.countryCode ?? '';
+    final named = country.isNotEmpty;
+    return _HomeCard(
+      palette: p,
+      onTap: onOpenServers,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 138,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                WorldMap(
+                  dotColor: p.text.withValues(alpha: p.dark ? 0.26 : 0.28),
+                  homeColor: p.connected,
+                  exitColor: theme.colorScheme.primary,
+                  exitCode: code,
+                  connected: connected,
+                ),
+                // The details open from the little gauge at the corner.
+                Positioned.directional(
+                  textDirection: Directionality.of(context),
+                  end: 0,
+                  top: 0,
+                  child: _MapGlassButton(
+                    palette: p,
+                    icon: Icons.query_stats_rounded,
+                    tooltip: l.detailsTitle,
+                    onTap: onOpenDetails,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              if (named) ...[
+                CountryFlag(code: code, width: 26),
+                const SizedBox(width: 8),
+              ],
+              Expanded(
+                child: Text(
+                  named
+                      ? (city.isNotEmpty && city != country
+                            ? '$country، $city'
+                            : country)
+                      : l.mapIdle,
+                  style: theme.textTheme.labelLarge?.copyWith(
+                    color: named ? p.text : p.muted,
+                    fontWeight: named ? FontWeight.w700 : FontWeight.w400,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              if (pingMs != null) ...[
+                const SizedBox(width: 8),
+                Text(
+                  l.milliseconds(pingMs!),
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: delayColor(pingMs!),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+              const SizedBox(width: 2),
+              Icon(Icons.chevron_left_rounded, size: 18, color: p.muted),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// A small glass round button that floats on the map card.
+class _MapGlassButton extends StatelessWidget {
+  const _MapGlassButton({
+    required this.palette,
+    required this.icon,
+    required this.tooltip,
+    this.onTap,
+  });
+
+  final _HomePalette palette;
+  final IconData icon;
+  final String tooltip;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = palette;
+    return Tooltip(
+      message: tooltip,
+      child: Material(
+        color: p.card,
+        shape: CircleBorder(side: BorderSide(color: p.cardBorder)),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Icon(icon, size: 16, color: p.muted),
+          ),
+        ),
+      ),
     );
   }
 }

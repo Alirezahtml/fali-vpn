@@ -13,13 +13,14 @@ import 'motion.dart';
 import 'overview_page.dart';
 import 'servers_page.dart';
 import 'settings_page.dart';
+import 'speed_test_page.dart';
 import 'widgets.dart';
 
-/// The phone layout: two tabs, Home and Settings, as phone apps have. The
-/// rest (accounts, servers, each group of settings, logs, about) opens as
-/// a page of its own with the system's back button. The tabs sit in a
-/// capsule that floats above the bottom edge, and every change of page
-/// slides, fades and settles.
+/// The phone layout: four tabs — Home, Servers, Speed test, and Settings —
+/// as phone apps have. The rest (accounts, each group of settings, logs,
+/// about) opens as a page of its own with the system's back button. The
+/// tabs sit in a capsule that floats above the bottom edge, and every
+/// change of page slides, fades and settles.
 class MobileShell extends StatefulWidget {
   const MobileShell({
     super.key,
@@ -113,13 +114,17 @@ class _MobileShellState extends State<MobileShell> {
                 phone: true,
               )
             : _readable(
-                _SettingsList(
-                  onOpenServers: openServers,
-                  onOpenAccounts: openAccounts,
-                  push: _push,
-                  core: core,
-                  settings: settings,
-                ),
+                switch (_tab) {
+                  1 => ServersPage(core: core, settings: settings),
+                  2 => SpeedTestPage(core: core),
+                  _ => _SettingsList(
+                      onOpenServers: openServers,
+                      onOpenAccounts: openAccounts,
+                      push: _push,
+                      core: core,
+                      settings: settings,
+                    ),
+                },
               ));
     return PopScope(
       canPop: _tab == 0,
@@ -164,6 +169,16 @@ class _MobileShellState extends State<MobileShell> {
                 icon: Icons.home_outlined,
                 selectedIcon: Icons.home_rounded,
                 label: l.navHome,
+              ),
+              FloatingNavDestination(
+                icon: Icons.public_outlined,
+                selectedIcon: Icons.public_rounded,
+                label: l.navServers,
+              ),
+              FloatingNavDestination(
+                icon: Icons.speed_outlined,
+                selectedIcon: Icons.speed_rounded,
+                label: l.navSpeedTest,
               ),
               FloatingNavDestination(
                 icon: Icons.settings_outlined,
