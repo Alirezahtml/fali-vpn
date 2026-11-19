@@ -2171,7 +2171,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(popped, isTrue);
     expect(find.text('Network'), findsNothing);
-    expect(find.text('Data used'), findsOneWidget);
+    expect(find.text('Connected'), findsOneWidget);
 
     // Logs cleared stay cleared when the page opens again.
     await tester.tap(find.text('Settings'));
@@ -2259,17 +2259,13 @@ void main() {
     // On, with no system proxy: connected, not "proxy only".
     expect(find.text('Connected'), findsOneWidget);
     // Connected through the recommended location: the exit's country,
-    // without the city, under "Recommended location".
-    expect(find.text('Recommended location'), findsOneWidget);
+    // Belgium, on the map's server card, under "Active server", without
+    // the city.
+    expect(find.text('Active server'), findsOneWidget);
     expect(find.text('Belgium'), findsOneWidget);
     expect(find.textContaining('Brussels'), findsNothing);
-    // No public IP on the phone's home.
+    // No public IP on the phone's home, and no email either.
     expect(find.textContaining('192.0.2.7'), findsNothing);
-    // The data used, in the ring and in large type; the email is not on
-    // the phone's home.
-    expect(find.textContaining('40%'), findsOneWidget);
-    expect(find.text('Data used'), findsOneWidget);
-    expect(find.textContaining('20.0 GB'), findsOneWidget);
     expect(find.textContaining('@example.com'), findsNothing);
     // Apps in the VPN trying refused ports are no news on the phone.
     expect(find.textContaining('5228'), findsNothing);

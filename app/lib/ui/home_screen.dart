@@ -182,10 +182,10 @@ class _HomeScreenState extends State<HomeScreen> {
         : (tv ? l.tapToConnectTv : l.tapToConnectPhone);
     final traffic = status.traffic;
     final pingMs = connected && test?.ok == true ? test!.responseMs : null;
-    final city = connected
-        ? (proxy?.cityName.isNotEmpty ?? false
-              ? proxy!.cityName
-              : (status.exit?.city ?? ''))
+    final city = connected &&
+            proxy != null &&
+            !isRecommendedPlace(proxy.countryCode)
+        ? (proxy.cityName.isNotEmpty ? proxy.cityName : (status.exit?.city ?? ''))
         : '';
 
     final page = AnnotatedRegion<SystemUiOverlayStyle>(
@@ -315,21 +315,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(height: 24),
                       const SizedBox(height: 16),
                       Center(
-                        child: PowerCapsule(
-                          label: status.proxyOn
-                              ? l.disconnectAction
-                              : l.connectAction,
-                          on: status.proxyOn,
-                          busy: core.switchingProxy,
-                          autofocus: tv,
-                          // No account yet: the accounts page, which
-                          // explains them.
-                          onPressed: status.totalAccounts == 0
-                              ? _openAccounts
-                              : () => runShowingErrors(
-                                  context,
-                                  () => _toggle(status.proxyOn),
-                                ),
+                        child: Tooltip(
+                          message: press,
+                          child: PowerCapsule(
+                            label: status.proxyOn
+                                ? l.disconnectAction
+                                : l.connectAction,
+                            on: status.proxyOn,
+                            busy: core.switchingProxy,
+                            autofocus: tv,
+                            // No account yet: the accounts page, which
+                            // explains them.
+                            onPressed: status.totalAccounts == 0
+                                ? _openAccounts
+                                : () => runShowingErrors(
+                                    context,
+                                    () => _toggle(status.proxyOn),
+                                  ),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),
