@@ -30,15 +30,21 @@ class AccountsPage extends StatelessWidget {
     return ListView(
       padding: pagePadding(context),
       children: [
-        Row(
+        // Title and its buttons: one row where the screen has room, and
+        // the buttons wrap under the title where it has not — the row
+        // never pushes past the screen's edge.
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 10,
           children: [
-            Expanded(child: PageTitle(l.navAccounts)),
+            PageTitle(l.navAccounts),
             FilledButton.icon(
               onPressed: () => startAddAccount(context, core, settings),
               icon: const Icon(Icons.add_rounded),
               label: Text(l.addAccount),
             ),
-            const SizedBox(width: 4),
             BackupMenuButton(core: core),
           ],
         ),

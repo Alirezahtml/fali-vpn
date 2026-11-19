@@ -99,14 +99,16 @@ class _AboutPageState extends State<AboutPage> {
               const Divider(height: 24),
               // The result and the Download button under the title, so a
               // phone's narrow screen keeps the text readable.
-              Row(
+              // The check's words and its button: one row where the
+              // screen has room, the button wrapping under the words where
+              // it has not — no squeezed words on a phone's narrow screen.
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 8,
                 children: [
-                  Expanded(
-                    child: Text(
-                      l.checkUpdates,
-                      style: theme.textTheme.titleSmall,
-                    ),
-                  ),
+                  Text(l.checkUpdates, style: theme.textTheme.titleSmall),
                   OutlinedButton.icon(
                     onPressed: _checking ? null : _check,
                     icon: _checking
@@ -115,7 +117,9 @@ class _AboutPageState extends State<AboutPage> {
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.update_rounded, size: 18),
-                    label: Text(_checking ? l.checkingUpdates : l.checkUpdates),
+                    label: Text(
+                      _checking ? l.checkingUpdates : l.checkUpdates,
+                    ),
                   ),
                 ],
               ),
@@ -285,10 +289,16 @@ class _Line extends StatelessWidget {
     return Row(
       children: [
         Expanded(child: Text(label, style: theme.textTheme.titleSmall)),
-        Text(
-          value,
-          style: theme.textTheme.bodyMedium,
-          textDirection: TextDirection.ltr,
+        // The value keeps whole where there is room; a long one shrinks to
+        // its share instead of pushing the row past the screen.
+        Flexible(
+          child: Text(
+            value,
+            style: theme.textTheme.bodyMedium,
+            textDirection: TextDirection.ltr,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );
