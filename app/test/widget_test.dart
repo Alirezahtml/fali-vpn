@@ -539,7 +539,9 @@ void main() {
       () async => api,
       pollInterval: const Duration(hours: 1),
     );
-    await tester.pumpWidget(VpnApp(core: core, settings: AppSettings()));
+    // The phone home in Persian, the app's default language.
+    final settings = AppSettings()..language = 'fa';
+    await tester.pumpWidget(VpnApp(core: core, settings: settings));
     core.start();
     await tester.pumpAndSettle();
 
