@@ -222,28 +222,28 @@ class _ServersScreenState extends State<ServersScreen> {
           l.autoSection,
           trailing: _testButton(context),
         ),
-        Row(
+        // The two automatic choices, each on its own full-width card: side
+        // by side they squeezed their names into half a card and cut them
+        // off ("Reco…"); one per row, every name reads whole.
+        MotionStagger(
+          offset: const Offset(0, 10),
+          padBetween: 8,
           children: [
-            Expanded(
-              child: ChoiceTile(
-                icon: Icons.auto_awesome_rounded,
-                name: l.modeRecommended,
-                subtitle: l.modeRecommendedHint,
-                selected: chosen == '',
-                busy: _busy == '',
-                onTap: () => _choose(''),
-              ),
+            ChoiceTile(
+              icon: Icons.auto_awesome_rounded,
+              name: l.modeRecommended,
+              subtitle: l.modeRecommendedHint,
+              selected: chosen == '',
+              busy: _busy == '',
+              onTap: () => _choose(''),
             ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: ChoiceTile(
-                icon: Icons.bolt_rounded,
-                name: l.modeFastest,
-                subtitle: l.modeFastestHint,
-                selected: chosen == 'fastest',
-                busy: _busy == 'fastest',
-                onTap: () => _choose('fastest'),
-              ),
+            ChoiceTile(
+              icon: Icons.bolt_rounded,
+              name: l.modeFastest,
+              subtitle: l.modeFastestHint,
+              selected: chosen == 'fastest',
+              busy: _busy == 'fastest',
+              onTap: () => _choose('fastest'),
             ),
           ],
         ),

@@ -23,11 +23,11 @@ import 'widgets.dart';
 /// The phone's home, rebuilt after the approved sample: the brand and its
 /// tagline under the status bar, one big card that carries the protocol,
 /// the state, the stopwatch, the exit's location and the live readings,
-/// a sponsor's place in the quiet middle, and at the bottom the slide-to-
-/// connect pill, the connection mode, and the protocol's own tabs — the
-/// core's real transports (HTTP/1.1, HTTP/2, HTTP/3), which save into the
-/// core's config the way the settings page does. Nothing here links out:
-/// every control answers in the app.
+/// and at the bottom the slide-to-connect pill, the connection mode, and
+/// the protocol's own tabs — the core's real transports (HTTP/1.1,
+/// HTTP/2, HTTP/3), which save into the core's config the way the
+/// settings page does. Nothing here links out: every control answers in
+/// the app.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
@@ -308,7 +308,33 @@ class _HomeScreenState extends State<HomeScreen> {
       child: DecoratedBox(
         decoration: BoxDecoration(color: theme.scaffoldBackgroundColor),
         child: LayoutBuilder(
-          builder: (context, box) => SingleChildScrollView(
+          builder: (context, box) => Stack(
+            children: [
+              // The page's aurora: two soft lights that drift slowly behind
+              // everything, the blue at the top, the state's color near the
+              // switch. Quiet enough to read as air, not as an object.
+              if (repeatingEffectsOn(context)) ...[
+                PositionedDirectional(
+                  top: -80,
+                  end: -70,
+                  child: DriftingGlow(
+                    color: Dali.primary,
+                    size: 280,
+                    alpha: dark ? 0.10 : 0.06,
+                  ),
+                ),
+                PositionedDirectional(
+                  bottom: 60,
+                  start: -90,
+                  child: DriftingGlow(
+                    color: connected ? StatusColors.good : Dali.primary,
+                    size: 320,
+                    alpha: dark ? 0.08 : 0.04,
+                    period: const Duration(seconds: 14),
+                  ),
+                ),
+              ],
+              SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(minHeight: box.maxHeight),
               child: IntrinsicHeight(
@@ -363,11 +389,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       _updateBanner(context),
                       _coreNotices(context, status),
                       _lowQuota(context),
-                      // The quiet middle: the sponsor's place rests under
-                      // the readings, and the controls sit at the bottom,
-                      // where the thumb reaches them.
+                      // The controls sit at the bottom, where the thumb
+                      // reaches them.
                       const Spacer(),
-                      _sponsor(context),
                       const SizedBox(height: 12),
                       _SlidePill(
                         label: status.proxyOn
@@ -393,6 +417,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+          ),
+            ],
           ),
         ),
       ),
@@ -523,7 +549,8 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // The protocol's badge at the reading's start, the state's
-              // dot and words at the end.
+              // dot and words at the end. Neither side is ever cut off:
+              // each shrinks to its room instead of losing its tail.
               Row(
                 children: [
                   Flexible(
@@ -537,47 +564,55 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(999),
                         border: Border.all(color: Dali.hairline(context)),
                       ),
-                      child: Text(
-                        protocolText,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.labelMedium?.copyWith(
-                          color: Dali.primary,
-                          fontWeight: FontWeight.w800,
-                          fontFeatures: const [],
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          protocolText,
+                          maxLines: 1,
+                          style: theme.textTheme.labelMedium?.copyWith(
+                            color: Dali.primary,
+                            fontWeight: FontWeight.w800,
+                            fontFeatures: const [],
+                          ),
                         ),
                       ),
                     ),
                   ),
                   const Spacer(),
-                  SlideFadeSwitcher(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 9,
-                          height: 9,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: dotColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: dotColor.withValues(alpha: 0.5),
-                                blurRadius: 6,
+                  Flexible(
+                    child: SlideFadeSwitcher(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 9,
+                              height: 9,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: dotColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: dotColor.withValues(alpha: 0.5),
+                                    blurRadius: 6,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            const SizedBox(width: 7),
+                            Text(
+                              stateLabel,
+                              key: ValueKey(stateLabel),
+                              maxLines: 1,
+                              style: theme.textTheme.labelLarge?.copyWith(
+                                color: Dali.onVar(context),
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 7),
-                        Text(
-                          stateLabel,
-                          key: ValueKey(stateLabel),
-                          style: theme.textTheme.labelLarge?.copyWith(
-                            color: Dali.onVar(context),
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
@@ -602,7 +637,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Dali.onVar(context),
                         ),
                         child: traffic != null && connected
-                            ? _traffic(traffic)
+                            ? FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: _traffic(traffic),
+                              )
                             : Text(
                                 hint,
                                 key: ValueKey(hint),
@@ -649,10 +687,22 @@ class _HomeScreenState extends State<HomeScreen> {
       fontFeatures: const [FontFeature.tabularFigures()],
     );
     if (connected && at != null) {
-      return ConnectedTimer(startedAt: at, style: style);
+      return _fitStopwatch(
+        ConnectedTimer(startedAt: at, style: style),
+      );
     }
-    return Text(ltr(persian ? persianDigits('00:00:00') : '00:00:00'), style: style);
+    return _fitStopwatch(
+      Text(ltr(persian ? persianDigits('00:00:00') : '00:00:00'), style: style),
+    );
   }
+
+  /// The stopwatch never wraps, whatever the phone's text size: it shrinks
+  /// to its room instead, so the digits stay one clean line.
+  Widget _fitStopwatch(Widget child) => FittedBox(
+    fit: BoxFit.scaleDown,
+    alignment: AlignmentDirectional.centerStart,
+    child: child,
+  );
 
   /// The live traffic, under the stopwatch: down and up, each with its
   /// arrow, in one quiet line.
@@ -714,7 +764,21 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             DefaultTextStyle(
               style: const TextStyle(fontSize: 30),
-              child: CountryFlag(code: place.flag, width: 40),
+              // The flag swaps with a small pop when the country changes.
+              child: AnimatedSwitcher(
+                duration: Motion.normal,
+                switchInCurve: Motion.pop,
+                switchOutCurve: Motion.emphasizedAccelerate,
+                transitionBuilder: (child, animation) => FadeTransition(
+                  opacity: animation,
+                  child: ScaleTransition(scale: animation, child: child),
+                ),
+                child: CountryFlag(
+                  key: ValueKey(place.flag),
+                  code: place.flag,
+                  width: 40,
+                ),
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -842,13 +906,19 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(14),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: stat(l.ipVersion, switch (_ipVersion) {
-                  'dual' => l.ipVersionDual,
-                  'ipv6_first' => l.ipVersionV6First,
-                  'ipv4' => l.ipVersionV4,
-                  'ipv6' => l.ipVersionV6,
-                  _ => l.ipVersionAuto,
-                }),
+                child: stat(
+                  l.ipVersion,
+                  // The value shows its short name ("Auto"): the whole
+                  // sentence has no room in a third of the card, and the
+                  // short one never squeezes.
+                  _shortIpVersion(switch (_ipVersion) {
+                    'dual' => l.ipVersionDual,
+                    'ipv6_first' => l.ipVersionV6First,
+                    'ipv4' => l.ipVersionV4,
+                    'ipv6' => l.ipVersionV6,
+                    _ => l.ipVersionAuto,
+                  }),
+                ),
               ),
             ),
           ),
@@ -867,6 +937,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  /// The value of a reading that has a long and a short form: the part
+  /// before the parenthesis, so "Auto (IPv4, then IPv6)" reads "Auto" —
+  /// the whole sentence has no room in a third of a card, and the short
+  /// name never squeezes.
+  String _shortIpVersion(String value) {
+    final i = value.indexOf('(');
+    return i > 0 ? value.substring(0, i).trim() : value;
+  }
+
   /// Asks for the port and hands it to the core, as the problem card's
   /// own change-port does.
   Future<void> _changePort(BuildContext context) async {
@@ -877,65 +956,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (port != null && context.mounted) {
       await runShowingErrors(context, () => core.setProxyPort(port));
     }
-  }
-
-  /// The sponsor's place, where the sample keeps its quiet middle: the
-  /// card says whose name the space belongs to, and carries no link — the
-  /// app points nowhere but at itself.
-  Widget _sponsor(BuildContext context) {
-    final l = AppLocalizations.of(context);
-    final theme = Theme.of(context);
-    final dark = theme.brightness == Brightness.dark;
-    const indigo = Color(0xFF5856D3);
-    return Container(
-      padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 14, 12),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: Dali.hairline(context)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: indigo.withValues(alpha: dark ? 0.20 : 0.12),
-              borderRadius: BorderRadius.circular(13),
-            ),
-            child: const Icon(
-              Icons.volunteer_activism_rounded,
-              size: 21,
-              color: indigo,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l.sponsorTitle,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: 1),
-                Text(
-                  l.sponsorHint,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: Dali.onVar(context),
-                    height: 1.35,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   /// The tunnel's way, as the sample's toggle row: the icon tile, the
@@ -1393,12 +1413,44 @@ class _SlidePill extends StatefulWidget {
   State<_SlidePill> createState() => _SlidePillState();
 }
 
-class _SlidePillState extends State<_SlidePill> {
+class _SlidePillState extends State<_SlidePill>
+    with SingleTickerProviderStateMixin {
   /// The knob's travel, 0 at its resting end to 1 at the far end, while
   /// the finger holds it; settled back to 0 the moment the finger lifts.
   double _drag = 0;
   bool _dragging = false;
   bool _passed = false;
+
+  /// The arrival's rings, one play: they bloom out of the pill the moment
+  /// the tunnel comes up, and rest the rest of the time. One-shot, so a
+  /// still screen still costs no frames.
+  AnimationController? _bloom;
+
+  @override
+  void didUpdateWidget(_SlidePill old) {
+    super.didUpdateWidget(old);
+    if (widget.on != old.on && widget.on && !widget.busy) {
+      _bloom ??= AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 950),
+      )
+        ..addListener(() {
+          if (mounted) setState(() {});
+        })
+        ..addStatusListener((status) {
+          if (status == AnimationStatus.completed) {
+            if (mounted) setState(() {});
+          }
+        });
+      if (Motion.on(context)) _bloom!.forward(from: 0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _bloom?.dispose();
+    super.dispose();
+  }
 
   bool get _rtl => Directionality.of(context) == TextDirection.rtl;
 
@@ -1443,14 +1495,19 @@ class _SlidePillState extends State<_SlidePill> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // The connected pill's light, breathing under it.
-            PulseHalo(
-              color: color,
-              size: 150,
-              enabled: widget.on && !widget.busy,
-              rings: 1,
-              period: Motion.breathe,
-            ),
+            // The arrival's rings, played once when the tunnel comes up.
+            // No circle rests behind the pill after it: the pill's own
+            // light is enough.
+            if (_bloom != null && _bloom!.value > 0 && _bloom!.value < 1)
+              IgnorePointer(
+                child: CustomPaint(
+                  size: const Size.square(220),
+                  painter: _BloomPainter(
+                    color: color,
+                    progress: _bloom!.value,
+                  ),
+                ),
+              ),
             PressScale(
               onTap: widget.busy ? null : widget.onToggle,
               amount: 0.97,
@@ -1633,4 +1690,32 @@ class _SlidePillState extends State<_SlidePill> {
       ),
     );
   }
+}
+
+/// The rings the tunnel's arrival plays once: two thin circles that run
+/// outward from the pill, thinning and fading as they go. Painted over
+/// the page's cards for under a second, then gone.
+class _BloomPainter extends CustomPainter {
+  _BloomPainter({required this.color, required this.progress});
+
+  final Color color;
+  final double progress;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final base = size.shortestSide / 2;
+    final paint = Paint()..style = PaintingStyle.stroke;
+    for (var i = 0; i < 2; i++) {
+      final t = (progress * 1.15 - i * 0.18).clamp(0.0, 1.0);
+      final eased = Curves.easeOutCubic.transform(t);
+      paint.strokeWidth = 9 * (1 - eased);
+      paint.color = color.withValues(alpha: 0.45 * (1 - eased));
+      canvas.drawCircle(center, base * (0.62 + 0.55 * eased), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_BloomPainter old) =>
+      old.progress != progress || old.color != color;
 }

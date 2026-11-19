@@ -7,6 +7,7 @@ import 'app_settings.dart';
 import 'core/android_core.dart';
 import 'core/core_api.dart';
 import 'core/core_controller.dart';
+import 'core/notification_flags.dart';
 import 'core/updates.dart';
 import 'core/core_process.dart';
 import 'core/ports.dart';
@@ -83,6 +84,8 @@ Future<void> runAndroid() async {
     AndroidCore(dataDir).connect,
     turnOn: AndroidCore.setOn,
   )..start();
+  // The notification's flag follows the connection (CoreService.kt).
+  NotificationFlags.watch(core);
   AppLifecycleListener(
     onResume: core.retryNow,
     onShow: () => core.onScreen = true,

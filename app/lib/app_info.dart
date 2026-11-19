@@ -152,12 +152,64 @@ Future<String> releaseNotes(
     final j = jsonDecode(body);
     final notes = j is Map<String, Object?> ? j['body'] as String? : null;
     final trimmed = notes?.trim() ?? '';
-    return trimmed.isEmpty ? '' : trimmed;
+    if (trimmed.isEmpty) return '';
+    final words = _readableNotes(trimmed);
+    return words.length < 3 ? '' : words;
   } catch (_) {
     return '';
   } finally {
     client.close(force: true);
   }
+}
+
+/// The release page's own words, without its markup. A release body is
+/// written in Markdown and HTML — download tables, badges, links — and
+/// none of that is for people: shown as it comes, the dialog would read
+/// like code. Here every tag, image, badge, address and entity goes, and
+/// only the lines that carry words stay, one per line.
+String _readableNotes(String raw) {
+  final entities = <String, String>{
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#39;': "'",
+    '&nbsp;': ' ',
+  };
+  var text = raw
+      // Markdown images and badges, address and all.
+      .replaceAll(RegExp(r'!\[[^\]]*\]\([^)]*\)'), ' ')
+      // Links: the words stay, the address goes.
+      .replaceAllMapped(
+        RegExp(r'\[([^\]]*)\]\([^)]*\)'),
+        (m) => m.group(1) ?? '',
+      )
+      // HTML tags (the download table is written in them).
+      .replaceAll(RegExp(r'<[^>]*>'), ' ')
+      // Any address left in the text: the app points nowhere but at itself.
+      .replaceAll(RegExp(r'(?:https?://|www\.)\S+'), ' ')
+      // The entities, decoded.
+      .replaceAllMapped(
+        RegExp(r'&(?:#x?[0-9a-fA-F]+|[a-zA-Z]+);'),
+        (m) => entities[m.group(0)] ?? ' ',
+      );
+  final lines = <String>[];
+  for (final line in text.split('\n')) {
+    final l = line
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim()
+        // The heading marks and bold of Markdown.
+        .replaceFirst(RegExp(r'^#{1,6}\s*'), '')
+        .replaceAll('**', '')
+        .trim();
+    if (l.isEmpty) continue;
+    // Table fragments and stray words ("Android", "Downloads") carry no
+    // sentence; a real note is a phrase or a full line.
+    if (!l.contains(' ') && l.length < 12) continue;
+    lines.add(l);
+    if (lines.length >= 14) break;
+  }
+  return lines.join('\n');
 }
 
 /// The version that the [updatesFile] at [url] names for [os]; null when it

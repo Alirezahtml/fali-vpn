@@ -288,8 +288,9 @@ class StatChip extends StatelessWidget {
   }
 }
 
-/// The round search field of the servers page.
-class SearchField extends StatelessWidget {
+/// The round search field of the servers page. Under the finger's focus
+/// it lights: a soft blue halo breathes out of it while the user types.
+class SearchField extends StatefulWidget {
   const SearchField({
     super.key,
     required this.hint,
@@ -300,29 +301,67 @@ class SearchField extends StatelessWidget {
   final ValueChanged<String> onChanged;
 
   @override
+  State<SearchField> createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<SearchField> {
+  final _focus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focus.addListener(() {
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _focus.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return TextField(
-      onChanged: onChanged,
-      textInputAction: TextInputAction.done,
-      style: theme.textTheme.bodyMedium,
-      decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.search_rounded, size: 21),
-        hintText: hint,
-        isDense: true,
-        filled: true,
-        fillColor: Dali.surface2(context),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 13,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(999),
-          borderSide: const BorderSide(color: Dali.primary, width: 1.6),
+    return AnimatedContainer(
+      duration: Motion.fast,
+      curve: Motion.emphasized,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(999),
+        boxShadow: [
+          if (_focus.hasFocus)
+            BoxShadow(
+              color: Dali.primary.withValues(
+                alpha: theme.brightness == Brightness.dark ? 0.40 : 0.28,
+              ),
+              blurRadius: 20,
+            ),
+        ],
+      ),
+      child: TextField(
+        focusNode: _focus,
+        onChanged: widget.onChanged,
+        textInputAction: TextInputAction.done,
+        style: theme.textTheme.bodyMedium,
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.search_rounded, size: 21),
+          hintText: widget.hint,
+          isDense: true,
+          filled: true,
+          fillColor: Dali.surface2(context),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 18,
+            vertical: 13,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(999),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(999),
+            borderSide: const BorderSide(color: Dali.primary, width: 1.6),
+          ),
         ),
       ),
     );
@@ -442,16 +481,20 @@ class ServerTile extends StatelessWidget {
         child: Row(
           children: [
             leading,
-            const SizedBox(width: 12),
+            const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // The name may take two lines: a long country's name
+                  // wraps cleanly rather than losing its tail. The card
+                  // grows with it.
                   Text(
                     name,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.titleSmall?.copyWith(
+                      height: 1.25,
                       fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
                     ),
                   ),
@@ -459,9 +502,10 @@ class ServerTile extends StatelessWidget {
                     const SizedBox(height: 1),
                     Text(
                       subtitle!,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.labelSmall?.copyWith(
+                        height: 1.25,
                         color: Dali.onVar(context),
                       ),
                     ),
@@ -471,7 +515,7 @@ class ServerTile extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             PingChip(ms: ms, testing: testing, compact: true),
-            const SizedBox(width: 10),
+            const SizedBox(width: 8),
             ConnectPill(
               label: selected ? connectedLabel : connectLabel,
               selected: selected,
@@ -542,7 +586,7 @@ class ChoiceTile extends StatelessWidget {
                 color: dark ? const Color(0xFFD6E4FF) : const Color(0xFF0B3B78),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 10),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -558,9 +602,10 @@ class ChoiceTile extends StatelessWidget {
                   const SizedBox(height: 1),
                   Text(
                     subtitle,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: theme.textTheme.labelSmall?.copyWith(
+                      height: 1.25,
                       color: Dali.onVar(context),
                     ),
                   ),

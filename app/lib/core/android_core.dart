@@ -156,7 +156,9 @@ class AndroidCore {
   static bool isTv = false;
 
   /// Whether the notification shows the speed (CoreService.kt reads it).
-  static final showSpeed = ValueNotifier<bool>(false);
+  /// On unless turned off, as the notification itself; [loadMode] reads
+  /// the user's stored choice over this.
+  static final showSpeed = ValueNotifier<bool>(true);
 
   static Future<void> setShowSpeed(bool on) async {
     await _channel.invokeMethod<void>('setShowSpeed', {'on': on});
@@ -226,6 +228,15 @@ class AndroidCore {
   /// An app's icon as PNG.
   static Future<Uint8List?> appIcon(String package) =>
       _channel.invokeMethod<Uint8List>('appIcon', {'package': package});
+
+  /// Hands the notification's flag to the service (CoreService.kt wears it
+  /// as the notification's large icon): the country's code and the flag's
+  /// picture, rasterized here from its SVG, as a PNG bitmap.
+  static Future<void> setNotificationFlag(String code, Uint8List png) =>
+      _channel.invokeMethod<void>('setNotificationFlag', {
+        'code': code,
+        'png': png,
+      });
 
   /// Which apps use the VPN.
   static Future<AppRouting> appRouting() async {

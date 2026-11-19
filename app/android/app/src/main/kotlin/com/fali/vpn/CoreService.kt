@@ -9,6 +9,8 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -47,6 +49,13 @@ class CoreService : VpnService() {
 
     /** The speed the notification shows (the user's choice); "" for none. */
     private var shownSpeed = ""
+
+    /**
+     * When the traffic's exit country was last seen: the notification's
+     * timer runs from it (the system ticks it, so the service does not
+     * poll a second at a time). 0 while not connected.
+     */
+    private var connectedAt = 0L
 
     /** Android reported that no network is connected (no Wi-Fi, no mobile data). */
     @Volatile
@@ -92,6 +101,11 @@ class CoreService : VpnService() {
                 else -> ""
             }
             connected = on && code.length == 2
+            // The timer's anchor: set the first poll that sees a country,
+            // cleared the first that does not. A change of country does not
+            // restart it: the session keeps its age.
+            if (connected && connectedAt == 0L) connectedAt = System.currentTimeMillis()
+            if (!connected && connectedAt != 0L) connectedAt = 0L
             ConnectWidget.updateAll(this@CoreService)
             // Proxy mode names the address apps connect to; the VPN needs none.
             val proxy = if (usesVpn(this@CoreService) || !mobile.Mobile.running()) "" else mobile.Mobile.proxyAddress()
@@ -270,6 +284,7 @@ class CoreService : VpnService() {
         stopTunnel()
         on = false
         connected = false
+        connectedAt = 0L
         QuickTile.refresh(this)
         ConnectWidget.updateAll(this)
         super.onDestroy()
@@ -387,6 +402,7 @@ class CoreService : VpnService() {
         shownCountry = ""
         shownProxy = ""
         shownSpeed = ""
+        connectedAt = 0L
         val notification = notification("")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             startForeground(NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
@@ -396,14 +412,21 @@ class CoreService : VpnService() {
     }
 
     /**
-     * The VPN's notification: the flag and name (in the phone's language) of
-     * the country [code] the traffic leaves from, or "Connecting…" while it
-     * is unknown; a Stop action.
+     * The VPN's notification: the server's country (in the phone's
+     * language) as the title, its flag — the PNG the app drew from its
+     * SVG, never an emoji — as the large icon, the state's words under it
+     * with the speed beside them, the connection's age ticking in the
+     * header, and a Disconnect action. Every piece is the phone's to
+     * decline: a launcher that shows no large icon, or no timer, simply
+     * shows the standard notification, and nothing else changes.
      */
     private fun notification(code: String): Notification {
+        val country = if (code.length == 2) {
+            runCatching { Locale.Builder().setRegion(code).build().displayCountry }.getOrDefault("")
+        } else ""
         val state = when {
             code == NO_NETWORK -> getString(R.string.notification_no_network)
-            code.length == 2 -> "${flag(code)}  ${Locale.Builder().setRegion(code).build().displayCountry}"
+            country.isNotEmpty() -> country
             else -> getString(R.string.notification_connecting)
         }
         // The speed beside the place, on the line shown when collapsed; the
@@ -425,17 +448,40 @@ class CoreService : VpnService() {
             @Suppress("DEPRECATION")
             Notification.Builder(this)
         }
-        return builder
+        builder
             .setSmallIcon(R.drawable.ic_stat_logo)
-            .setContentTitle(getString(R.string.app_name))
+            .setColor(ACCENT)
+            .setContentTitle(if (country.isNotEmpty()) country else getString(R.string.app_name))
             .setContentText(text)
             .setStyle(Notification.BigTextStyle().bigText(text))
             .setContentIntent(open)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .addAction(Notification.Action.Builder(null, getString(R.string.notification_stop), stop).build())
-            .build()
+        flagIcon(code)?.let { builder.setLargeIcon(it) }
+        // The connection's age, ticking on its own; no timestamp beside it
+        // while the state is not "connected".
+        if (connectedAt > 0) {
+            builder.setShowWhen(true).setWhen(connectedAt).setUsesChronometer(true)
+        } else {
+            builder.setShowWhen(false)
+        }
+        return builder.build()
     }
+
+    /** The country's flag as a bitmap, from the PNG the app rendered; null without one. Kept, so a poll does not read the file again. */
+    private var flagCache: Pair<String, Bitmap>? = null
+
+    private fun flagIcon(code: String) =
+        if (code.length == 2) {
+            flagCache?.takeIf { it.first == code }?.second
+                ?: runCatching {
+                    BitmapFactory.decodeFile(
+                        File(filesDir, "flags/${code.uppercase(Locale.US)}.png").absolutePath,
+                    )
+                }.getOrNull()
+                    ?.also { flagCache = code to it }
+        } else null
 
     companion object {
         const val ACTION_STOP = "com.fali.vpn.STOP"
@@ -457,8 +503,8 @@ class CoreService : VpnService() {
 
         private const val SHOW_SPEED = "show_speed"
 
-        /** Whether the notification shows the speed (off unless chosen). */
-        fun showSpeed(context: Context) = prefs(context).getBoolean(SHOW_SPEED, false)
+        /** Whether the notification shows the speed (on unless turned off). */
+        fun showSpeed(context: Context) = prefs(context).getBoolean(SHOW_SPEED, true)
 
         fun setShowSpeed(context: Context, on: Boolean) {
             prefs(context).edit().putBoolean(SHOW_SPEED, on).apply()
@@ -581,14 +627,11 @@ class CoreService : VpnService() {
         private const val NOTIFICATION_ID = 1
         private const val TAG = "CoreService"
 
+        /** The app's blue, for the parts of the notification the phone tints. */
+        private const val ACCENT = 0xFF2D7DFF.toInt()
+
         private const val COUNTRY_POLL_MS = 3000L
         private const val SPEED_POLL_MS = 2000L
-
-        /** A country's flag emoji: its code in regional indicator letters. */
-        fun flag(code: String): String =
-            code.uppercase().filter { it in 'A'..'Z' }
-                .map { String(Character.toChars(0x1F1E6 + (it - 'A'))) }
-                .joinToString("")
 
         /** The VPN interface's MTU, which the tunnel gets too. */
         private const val MTU = 1500

@@ -30,6 +30,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.Result
 import java.io.File
+import java.util.Locale
 
 /**
  * The Flutter UI. Channel "app/android": dataDir, startCore (with the proxy
@@ -143,6 +144,23 @@ class MainActivity : FlutterActivity() {
                 "appIcon" -> {
                     val pkg = call.argument<String>("package") ?: ""
                     inBackground(result) { appIcon(pkg) }
+                }
+                // The notification's flag: the app renders the country's
+                // SVG into a small PNG and hands it over; CoreService wears
+                // it as the notification's large icon. Kept in the app's
+                // own folder, so the service finds it whatever is running.
+                "setNotificationFlag" -> {
+                    val code = call.argument<String>("code") ?: ""
+                    val png = call.argument<ByteArray>("png")
+                    if (code.length == 2 && png != null) {
+                        inBackground(result) {
+                            val dir = File(filesDir, "flags").apply { mkdirs() }
+                            File(dir, "${code.uppercase(Locale.US)}.png").writeBytes(png)
+                            true
+                        }
+                    } else {
+                        result.success(null)
+                    }
                 }
                 "appRouting" -> inBackground(result) {
                     // The page shows the region's apps installed since the
