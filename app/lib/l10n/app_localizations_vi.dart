@@ -1052,15 +1052,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get verboseLogs => 'Nhật ký chi tiết';
 
   @override
-  String get webDashboard => 'Bảng điều khiển web';
-
-  @override
-  String get webDashboardOpen => 'Mở';
-
-  @override
-  String get webDashboardHint => 'Cài đặt nâng cao và thêm công cụ';
-
-  @override
   String numberInvalid(int min, int max) {
     return 'Nhập một số từ $min đến $max';
   }
@@ -1113,7 +1104,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'Không thể kết nối tới GitHub. Hãy kiểm tra kết nối internet và thử lại.';
+      'Không thể kiểm tra cập nhật. Kiểm tra kết nối mạng và thử lại.';
 
   @override
   String get updateNow => 'Cập nhật';
@@ -1147,12 +1138,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String updateRolledBack(String version) {
     return 'Bản cập nhật lên phiên bản $version chưa hoàn tất nên ứng dụng đã quay về phiên bản trước.';
   }
-
-  @override
-  String get repoNotSet => 'Chưa thiết lập kho GitHub.';
-
-  @override
-  String get sourceCode => 'Mã nguồn';
 
   @override
   String get tapToConnect => 'Nhấp để kết nối';
@@ -1765,4 +1750,52 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => 'Phiên bản mới đã sẵn sàng';
+
+  @override
+  String get updateSizeLabel => 'Kích thước tệp';
+
+  @override
+  String get updateCurrentLabel => 'Phiên bản hiện tại';
+
+  @override
+  String updateWhatsNew(String version) {
+    return 'Có gì mới trong phiên bản $version';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'Cải tiến và sửa lỗi';
+
+  @override
+  String get updateDownloadInstall => 'Tải xuống và cài đặt';
+
+  @override
+  String get updateLater => 'Để sau';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received / $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'Cho phép cài đặt';
+
+  @override
+  String get updateAllowInstallHint =>
+      'Để cài đặt bản cập nhật, hãy cho phép ứng dụng này cài đặt ứng dụng.';
+
+  @override
+  String get updateDownloadFailed =>
+      'Không thể tải bản cập nhật. Kiểm tra kết nối mạng và thử lại.';
+
+  @override
+  String get paramMode => 'Chế độ';
+
+  @override
+  String get paramLocation => 'Lối ra';
+
+  @override
+  String get paramPort => 'Cổng';
 }

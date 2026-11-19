@@ -623,20 +623,32 @@ class PowerCapsule extends StatefulWidget {
 }
 
 class _PowerCapsuleState extends State<PowerCapsule>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   /// The chevrons' flow toward the knob, running only while connected.
   AnimationController? _flow;
+
+  /// The one-shot rings that bloom out of the capsule the moment the
+  /// tunnel is up: the arrival is worth a small celebration.
+  AnimationController? _cheer;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _syncFlow();
+    _syncCheer();
   }
 
   @override
   void didUpdateWidget(PowerCapsule old) {
     super.didUpdateWidget(old);
-    if (old.on != widget.on) _syncFlow();
+    if (old.on != widget.on) {
+      _syncFlow();
+      // Off to on, not while the switch is still working: the rings
+      // bloom when the arrival is certain.
+      if (widget.on && !widget.busy) {
+        _cheer?.forward(from: 0);
+      }
+    }
   }
 
   void _syncFlow() {
@@ -653,9 +665,17 @@ class _PowerCapsuleState extends State<PowerCapsule>
     }
   }
 
+  void _syncCheer() {
+    _cheer ??= AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 950),
+    );
+  }
+
   @override
   void dispose() {
     _flow?.dispose();
+    _cheer?.dispose();
     super.dispose();
   }
 
@@ -667,14 +687,34 @@ class _PowerCapsuleState extends State<PowerCapsule>
     return Stack(
       alignment: Alignment.center,
       children: [
-        // The rings only breathe while connected; at rest the switch
-        // keeps its edges to itself.
+        // The rings breathe while connected, and quicken while the
+        // switch is working, so waiting reads as happening.
         PulseHalo(
           color: color,
           size: 238,
-          enabled: widget.on && !widget.busy,
+          enabled: widget.on || widget.busy,
           rings: 2,
+          period: widget.busy
+              ? const Duration(milliseconds: 1500)
+              : Motion.breathe,
         ),
+        // The arrival's rings, one play.
+        if (_cheer != null)
+          IgnorePointer(
+            child: AnimatedBuilder(
+              animation: _cheer!,
+              builder: (context, _) {
+                if (_cheer!.value == 0) return const SizedBox.shrink();
+                return CustomPaint(
+                  size: const Size.square(238),
+                  painter: _CheerPainter(
+                    color: StatusColors.good,
+                    progress: _cheer!.value,
+                  ),
+                );
+              },
+            ),
+          ),
         Tooltip(
           message: widget.tooltip,
           child: FocusableActionDetector(
@@ -778,7 +818,13 @@ class _PowerCapsuleState extends State<PowerCapsule>
     return Directionality(
       // The knob's travel does not mirror: "on" is the far end everywhere.
       textDirection: TextDirection.ltr,
-      child: AnimatedContainer(
+      // While the switch works, a band of light sweeps across the pill,
+      // so the wait reads as motion, not as a freeze.
+      child: ShimmerSweep(
+        enabled: widget.busy,
+        color: Colors.white,
+        period: const Duration(milliseconds: 1300),
+        child: AnimatedContainer(
         duration: Motion.normal,
         curve: Motion.emphasized,
         width: 208,
@@ -820,9 +866,39 @@ class _PowerCapsuleState extends State<PowerCapsule>
             ),
           ],
         ),
+        ),
       ),
     );
   }
+}
+
+/// The rings that bloom out of the capsule once the tunnel is up: two
+/// circles run outward and fade, one after the other, and then the page
+/// rests still again.
+class _CheerPainter extends CustomPainter {
+  _CheerPainter({required this.color, required this.progress});
+
+  final Color color;
+  final double progress;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final base = size.shortestSide / 2;
+    final paint = Paint()..style = PaintingStyle.stroke;
+    for (var i = 0; i < 2; i++) {
+      final t = (progress - i * 0.22).clamp(0.0, 1.0);
+      if (t <= 0) continue;
+      final eased = Curves.easeOutCubic.transform(t);
+      paint.strokeWidth = 9 * (1 - eased) + 0.5;
+      paint.color = color.withValues(alpha: 0.45 * (1 - eased));
+      canvas.drawCircle(center, base * (1 + 0.5 * eased), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_CheerPainter old) =>
+      old.progress != progress || old.color != color;
 }
 
 /// The dotted arc dial of the details and the speed test: a track of

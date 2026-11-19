@@ -1055,15 +1055,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get verboseLogs => 'Detailed logs';
 
   @override
-  String get webDashboard => 'Web dashboard';
-
-  @override
-  String get webDashboardOpen => 'Open';
-
-  @override
-  String get webDashboardHint => 'Advanced settings and more tools';
-
-  @override
   String numberInvalid(int min, int max) {
     return 'Enter a number from $min to $max';
   }
@@ -1116,7 +1107,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'Could not reach GitHub. Check your internet connection and try again.';
+      'Could not check for updates. Check your internet connection and try again.';
 
   @override
   String get updateNow => 'Update';
@@ -1150,12 +1141,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String updateRolledBack(String version) {
     return 'The update to version $version didn\'t finish, so the app went back to the previous version.';
   }
-
-  @override
-  String get repoNotSet => 'The GitHub repository is not set yet.';
-
-  @override
-  String get sourceCode => 'Source code';
 
   @override
   String get tapToConnect => 'Click to connect';
@@ -1768,4 +1753,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => 'A new version is ready';
+
+  @override
+  String get updateSizeLabel => 'File size';
+
+  @override
+  String get updateCurrentLabel => 'Current version';
+
+  @override
+  String updateWhatsNew(String version) {
+    return 'What\'s new in $version';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'Improvements and fixes';
+
+  @override
+  String get updateDownloadInstall => 'Download and install';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received of $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'Allow installation';
+
+  @override
+  String get updateAllowInstallHint =>
+      'To install the update, allow this app to install apps. The install continues by itself.';
+
+  @override
+  String get updateDownloadFailed =>
+      'The update could not be downloaded. Check your internet and try again.';
+
+  @override
+  String get paramMode => 'Mode';
+
+  @override
+  String get paramLocation => 'Exit';
+
+  @override
+  String get paramPort => 'Port';
 }

@@ -1058,15 +1058,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get verboseLogs => 'سجلات مفصّلة';
 
   @override
-  String get webDashboard => 'لوحة التحكم عبر الويب';
-
-  @override
-  String get webDashboardOpen => 'فتح';
-
-  @override
-  String get webDashboardHint => 'إعدادات متقدمة وأدوات إضافية';
-
-  @override
   String numberInvalid(int min, int max) {
     return 'أدخل رقمًا من $min إلى $max';
   }
@@ -1119,7 +1110,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'تعذّر الوصول إلى GitHub. تحقّق من اتصالك بالإنترنت وحاول مرة أخرى.';
+      'تعذّر التحقق من التحديثات. تحقّق من اتصالك بالإنترنت وحاول مرة أخرى.';
 
   @override
   String get updateNow => 'تحديث';
@@ -1153,12 +1144,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String updateRolledBack(String version) {
     return 'لم يكتمل التحديث إلى الإصدار $version، فعاد التطبيق إلى الإصدار السابق.';
   }
-
-  @override
-  String get repoNotSet => 'لم يُحدَّد مستودع GitHub بعد.';
-
-  @override
-  String get sourceCode => 'الشيفرة المصدرية';
 
   @override
   String get tapToConnect => 'انقر للاتصال';
@@ -1774,4 +1759,52 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => 'إصدار جديد جاهز';
+
+  @override
+  String get updateSizeLabel => 'حجم الملف';
+
+  @override
+  String get updateCurrentLabel => 'الإصدار الحالي';
+
+  @override
+  String updateWhatsNew(String version) {
+    return 'جديد في الإصدار $version';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'تحسينات وإصلاحات';
+
+  @override
+  String get updateDownloadInstall => 'تنزيل وتثبيت';
+
+  @override
+  String get updateLater => 'لاحقًا';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received من $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'السماح بالتثبيت';
+
+  @override
+  String get updateAllowInstallHint =>
+      'لتثبيت التحديث، اسمح لهذا التطبيق بتثبيت التطبيقات.';
+
+  @override
+  String get updateDownloadFailed =>
+      'تعذّر تنزيل التحديث. تحقّق من اتصالك بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get paramMode => 'الوضع';
+
+  @override
+  String get paramLocation => 'الخروج';
+
+  @override
+  String get paramPort => 'المنفذ';
 }

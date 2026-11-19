@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The update's APK, downloaded into the app's own update folder: the
+     installer reads it through the FileProvider (the manifest's). -->
+<paths>
+    <files-path name="updates" path="update/" />
+</paths>

@@ -20,6 +20,8 @@ import android.net.Uri
 import android.net.VpnService
 import android.os.Build
 import android.provider.OpenableColumns
+import android.provider.Settings
+import androidx.core.content.FileProvider
 import androidx.webkit.ProxyConfig
 import androidx.webkit.ProxyController
 import androidx.webkit.WebViewFeature
@@ -27,6 +29,7 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.Result
+import java.io.File
 
 /**
  * The Flutter UI. Channel "app/android": dataDir, startCore (with the proxy
@@ -40,6 +43,9 @@ class MainActivity : FlutterActivity() {
     private var pendingSave: Pair<ByteArray, Result>? = null
     // A backup being picked to open.
     private var pendingOpen: Result? = null
+    // The update's APK that waits for the leave to install: the user's
+    // answer on Android's own page (INSTALL_REQUEST) starts the install.
+    private var pendingInstall: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         holdPhoneUpright(resources.configuration)
@@ -234,6 +240,35 @@ class MainActivity : FlutterActivity() {
                 // The phone's main processor type (arm64-v8a, armeabi-v7a, ...).
                 "abi" -> result.success(Build.SUPPORTED_ABIS.firstOrNull() ?: "")
                 "isTv" -> result.success(isTv(resources.configuration))
+                // The app's own private folder: the update's APK lands here.
+                "filesDir" -> result.success(filesDir.absolutePath)
+                // The update's APK, downloaded inside the app, goes to
+                // Android's installer. Android wants the user's leave to
+                // install from this app (once): its own page opens, and
+                // the answer starts the install by itself.
+                "installUpdateApk" -> {
+                    val path = call.argument<String>("path") ?: ""
+                    if (canInstallUpdates()) {
+                        try {
+                            startInstall(path)
+                            result.success("started")
+                        } catch (e: Exception) {
+                            result.error("install_failed", e.message, null)
+                        }
+                    } else {
+                        pendingInstall = path
+                        try {
+                            startActivityForResult(
+                                Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:$packageName")),
+                                INSTALL_REQUEST,
+                            )
+                            result.success("permission")
+                        } catch (e: ActivityNotFoundException) {
+                            pendingInstall = null
+                            result.error("no_settings", "this device has no install-permission page", null)
+                        }
+                    }
+                }
                 "openUrl" -> {
                     val url = call.argument<String>("url") ?: ""
                     val view = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -326,10 +361,37 @@ class MainActivity : FlutterActivity() {
             opened(resultCode, data?.data)
             return
         }
+        if (requestCode == INSTALL_REQUEST) {
+            val path = pendingInstall
+            pendingInstall = null
+            // The leave is given (or was already): the install starts by
+            // itself; a refusal just waits for the next ask.
+            if (canInstallUpdates() && path != null) {
+                try {
+                    startInstall(path)
+                } catch (_: Exception) {
+                }
+            }
+            return
+        }
         if (requestCode != VPN_REQUEST) return
         val result = pendingOn ?: return
         pendingOn = null
         if (resultCode == RESULT_OK) turnOn(result) else result.error("vpn_denied", "the VPN was not allowed", null)
+    }
+
+    /** Whether this app may hand an APK to the installer (Android 8+). */
+    private fun canInstallUpdates(): Boolean =
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.O ||
+            packageManager.canRequestPackageInstalls()
+
+    /** Opens the installer over [path]'s APK, read only by its receiver. */
+    private fun startInstall(path: String) {
+        val uri = FileProvider.getUriForFile(this, "$packageName.files", File(path))
+        val install = Intent(Intent.ACTION_VIEW)
+            .setDataAndType(uri, "application/vnd.android.package-archive")
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(install)
     }
 
     /** Writes the pending file to [uri], the place the user picked. */
@@ -398,6 +460,7 @@ class MainActivity : FlutterActivity() {
         private const val VPN_REQUEST = 7
         private const val SAVE_REQUEST = 8
         private const val OPEN_REQUEST = 9
+        private const val INSTALL_REQUEST = 10
         private const val MAX_OPEN_BYTES = 16 * 1024 * 1024
     }
 

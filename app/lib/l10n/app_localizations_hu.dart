@@ -1061,15 +1061,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get verboseLogs => 'Részletes naplók';
 
   @override
-  String get webDashboard => 'Webes vezérlőpult';
-
-  @override
-  String get webDashboardOpen => 'Megnyitás';
-
-  @override
-  String get webDashboardHint => 'Speciális beállítások és további eszközök';
-
-  @override
   String numberInvalid(int min, int max) {
     return 'Adjon meg egy számot $min és $max között';
   }
@@ -1122,7 +1113,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'A GitHub nem érhető el. Ellenőrizze az internetkapcsolatot, és próbálja újra.';
+      'A frissítések ellenőrzése nem sikerült. Ellenőrizze az internetkapcsolatot, és próbálja újra.';
 
   @override
   String get updateNow => 'Frissítés';
@@ -1156,12 +1147,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String updateRolledBack(String version) {
     return 'A(z) $version verzióra frissítés nem fejeződött be, ezért az alkalmazás visszaállt az előző verzióra.';
   }
-
-  @override
-  String get repoNotSet => 'A GitHub-tároló még nincs beállítva.';
-
-  @override
-  String get sourceCode => 'Forráskód';
 
   @override
   String get tapToConnect => 'Kattintson a csatlakozáshoz';
@@ -1779,4 +1764,52 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => 'Új verzió kész';
+
+  @override
+  String get updateSizeLabel => 'Fájlméret';
+
+  @override
+  String get updateCurrentLabel => 'Jelenlegi verzió';
+
+  @override
+  String updateWhatsNew(String version) {
+    return 'Újdonságok a(z) $version verzióban';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'Fejlesztések és javítások';
+
+  @override
+  String get updateDownloadInstall => 'Letöltés és telepítés';
+
+  @override
+  String get updateLater => 'Később';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received / $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'Telepítés engedélyezése';
+
+  @override
+  String get updateAllowInstallHint =>
+      'A frissítés telepítéséhez engedélyezze az alkalmazásnak az alkalmazások telepítését.';
+
+  @override
+  String get updateDownloadFailed =>
+      'A frissítés letöltése nem sikerült. Ellenőrizze az internetet, és próbálja újra.';
+
+  @override
+  String get paramMode => 'Mód';
+
+  @override
+  String get paramLocation => 'Kilépés';
+
+  @override
+  String get paramPort => 'Port';
 }

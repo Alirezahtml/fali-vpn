@@ -1056,15 +1056,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get verboseLogs => 'Logs detalhados';
 
   @override
-  String get webDashboard => 'Painel web';
-
-  @override
-  String get webDashboardOpen => 'Abrir';
-
-  @override
-  String get webDashboardHint => 'Configurações avançadas e mais ferramentas';
-
-  @override
   String numberInvalid(int min, int max) {
     return 'Digite um número de $min a $max';
   }
@@ -1117,7 +1108,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'Não foi possível acessar o GitHub. Verifique sua conexão com a internet e tente novamente.';
+      'Não foi possível verificar atualizações. Verifique sua internet e tente novamente.';
 
   @override
   String get updateNow => 'Atualizar';
@@ -1151,12 +1142,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String updateRolledBack(String version) {
     return 'A atualização para a versão $version não terminou, então o app voltou para a versão anterior.';
   }
-
-  @override
-  String get repoNotSet => 'O repositório do GitHub ainda não foi definido.';
-
-  @override
-  String get sourceCode => 'Código-fonte';
 
   @override
   String get tapToConnect => 'Clique para conectar';
@@ -1771,4 +1756,52 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => 'Uma nova versão está pronta';
+
+  @override
+  String get updateSizeLabel => 'Tamanho do arquivo';
+
+  @override
+  String get updateCurrentLabel => 'Versão atual';
+
+  @override
+  String updateWhatsNew(String version) {
+    return 'Novidades da versão $version';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'Melhorias e correções';
+
+  @override
+  String get updateDownloadInstall => 'Baixar e instalar';
+
+  @override
+  String get updateLater => 'Mais tarde';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received de $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'Permitir a instalação';
+
+  @override
+  String get updateAllowInstallHint =>
+      'Para instalar a atualização, permita que este aplicativo instale aplicativos.';
+
+  @override
+  String get updateDownloadFailed =>
+      'Não foi possível baixar a atualização. Verifique sua internet e tente novamente.';
+
+  @override
+  String get paramMode => 'Modo';
+
+  @override
+  String get paramLocation => 'Saída';
+
+  @override
+  String get paramPort => 'Porta';
 }

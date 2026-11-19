@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../app_settings.dart';
 import '../core/core_controller.dart';
+import '../core/updates.dart';
 import '../l10n/app_localizations.dart';
 import 'about_page.dart';
 import 'accounts_page.dart';
@@ -16,6 +17,7 @@ import 'motion.dart';
 import 'servers_screen.dart';
 import 'settings_page.dart';
 import 'speedtest_screen.dart';
+import 'update_dialog.dart';
 import 'widgets.dart';
 
 /// The phone layout, built from the approved design: four tabs — Home,
@@ -48,6 +50,44 @@ class MobileShell extends StatefulWidget {
 
 class _MobileShellState extends State<MobileShell> {
   int _tab = 0;
+
+  /// The versions the update dialog spoke of in this run: each is told
+  /// once, until a newer one is found.
+  static final _offeredUpdates = <String>{};
+
+  @override
+  void initState() {
+    super.initState();
+    // A newer version, found by the hourly look or kept from the last
+    // run: the phone hears of it in the update's dialog, in its own
+    // language, with the download inside the app. The computers keep
+    // their own way: their core downloads and installs by itself.
+    if (Platform.isAndroid) {
+      Updates.available.addListener(_maybeOfferUpdate);
+    }
+  }
+
+  @override
+  void dispose() {
+    if (Platform.isAndroid) {
+      Updates.available.removeListener(_maybeOfferUpdate);
+    }
+    super.dispose();
+  }
+
+  void _maybeOfferUpdate() {
+    final release = Updates.available.value;
+    final settings = widget.settings;
+    if (release == null || release.version == settings.dismissedUpdate) return;
+    if (!_offeredUpdates.add(release.version)) return;
+    if (!mounted) return;
+    showUpdateDialog(
+      context,
+      release: release,
+      core: widget.core,
+      settings: settings,
+    );
+  }
 
   /// Opens [page] under a top bar named [title]; it follows the core, and
   /// slides in from the reading direction's side. The title sits centered,
@@ -383,7 +423,10 @@ class _SettingsList extends StatelessWidget {
             Icons.info_rounded,
             Dali.amber,
             l.navAbout,
-            () => push(l.navAbout, () => AboutPage(core: core)),
+            () => push(
+              l.navAbout,
+              () => AboutPage(core: core, settings: settings),
+            ),
           ),
         ]),
       ],

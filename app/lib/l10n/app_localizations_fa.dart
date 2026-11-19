@@ -1046,15 +1046,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String get verboseLogs => 'لاگ کامل';
 
   @override
-  String get webDashboard => 'داشبورد وب';
-
-  @override
-  String get webDashboardOpen => 'باز کردن';
-
-  @override
-  String get webDashboardHint => 'تنظیمات پیشرفته و ابزارهای بیشتر';
-
-  @override
   String numberInvalid(int min, int max) {
     return 'عددی از $min تا $max وارد کنید';
   }
@@ -1107,7 +1098,7 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'اتصال به GitHub برقرار نشد. اتصال اینترنت را بررسی کنید و دوباره امتحان کنید.';
+      'بررسی به‌روزرسانی انجام نشد. اتصال اینترنت را بررسی کنید و دوباره تلاش کنید.';
 
   @override
   String get updateNow => 'به‌روزرسانی';
@@ -1141,12 +1132,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String updateRolledBack(String version) {
     return 'به‌روزرسانی به نسخه $version کامل نشد و برنامه به نسخه قبلی برگشت.';
   }
-
-  @override
-  String get repoNotSet => 'آدرس مخزن گیت‌هاب هنوز تنظیم نشده است.';
-
-  @override
-  String get sourceCode => 'کد منبع';
 
   @override
   String get tapToConnect => 'برای اتصال کلیک کنید';
@@ -1753,4 +1738,52 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get dataVolume => 'حجم داده';
+
+  @override
+  String get updateReadyTitle => 'نسخهٔ جدید آماده است';
+
+  @override
+  String get updateSizeLabel => 'حجم فایل';
+
+  @override
+  String get updateCurrentLabel => 'نسخهٔ فعلی';
+
+  @override
+  String updateWhatsNew(String version) {
+    return 'تغییرات نسخهٔ $version';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'بهبودها و رفع اشکال';
+
+  @override
+  String get updateDownloadInstall => 'دانلود و نصب';
+
+  @override
+  String get updateLater => 'بعداً';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received از $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'اجازهٔ نصب';
+
+  @override
+  String get updateAllowInstallHint =>
+      'برای نصب به‌روزرسانی، اجازهٔ نصب از این برنامه را بدهید؛ نصب خودش ادامه می‌یابد.';
+
+  @override
+  String get updateDownloadFailed =>
+      'دانلود به‌روزرسانی انجام نشد. اینترنت را بررسی کنید و دوباره تلاش کنید.';
+
+  @override
+  String get paramMode => 'حالت';
+
+  @override
+  String get paramLocation => 'خروج';
+
+  @override
+  String get paramPort => 'پورت';
 }

@@ -1053,15 +1053,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get verboseLogs => 'Log terperinci';
 
   @override
-  String get webDashboard => 'Dasbor web';
-
-  @override
-  String get webDashboardOpen => 'Buka';
-
-  @override
-  String get webDashboardHint => 'Pengaturan lanjutan dan alat lainnya';
-
-  @override
   String numberInvalid(int min, int max) {
     return 'Masukkan angka dari $min hingga $max';
   }
@@ -1114,7 +1105,7 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'Tidak dapat menghubungi GitHub. Periksa koneksi internet Anda lalu coba lagi.';
+      'Tidak dapat memeriksa pembaruan. Periksa koneksi internet Anda dan coba lagi.';
 
   @override
   String get updateNow => 'Perbarui';
@@ -1148,12 +1139,6 @@ class AppLocalizationsId extends AppLocalizations {
   String updateRolledBack(String version) {
     return 'Pembaruan ke versi $version tidak selesai, jadi aplikasi kembali ke versi sebelumnya.';
   }
-
-  @override
-  String get repoNotSet => 'Repositori GitHub belum diatur.';
-
-  @override
-  String get sourceCode => 'Kode sumber';
 
   @override
   String get tapToConnect => 'Klik untuk terhubung';
@@ -1765,4 +1750,52 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => 'Versi baru siap';
+
+  @override
+  String get updateSizeLabel => 'Ukuran file';
+
+  @override
+  String get updateCurrentLabel => 'Versi saat ini';
+
+  @override
+  String updateWhatsNew(String version) {
+    return 'Yang baru di versi $version';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'Penyempurnaan dan perbaikan';
+
+  @override
+  String get updateDownloadInstall => 'Unduh dan pasang';
+
+  @override
+  String get updateLater => 'Nanti';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received dari $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'Izinkan pemasangan';
+
+  @override
+  String get updateAllowInstallHint =>
+      'Untuk memasang pembaruan, izinkan aplikasi ini memasang aplikasi.';
+
+  @override
+  String get updateDownloadFailed =>
+      'Pembaruan tidak dapat diunduh. Periksa internet Anda dan coba lagi.';
+
+  @override
+  String get paramMode => 'Mode';
+
+  @override
+  String get paramLocation => 'Keluar';
+
+  @override
+  String get paramPort => 'Port';
 }

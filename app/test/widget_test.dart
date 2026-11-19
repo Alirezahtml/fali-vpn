@@ -553,9 +553,10 @@ void main() {
     expect(find.text('آپلود'), findsWidgets);
     // The capsule's power knob is what taps; its hint names the action.
     expect(find.byTooltip('برای قطع اتصال ضربه بزنید'), findsOneWidget);
-    // The map's server card names the country the traffic leaves through.
+    // The map's server card names the country the traffic leaves through;
+    // the parameters' Exit tile names it too.
     expect(find.text('سرور فعال'), findsOneWidget);
-    expect(find.textContaining('هلند'), findsOneWidget);
+    expect(find.textContaining('هلند'), findsNWidgets(2));
 
     await tester.pumpWidget(const SizedBox());
     core.dispose();
@@ -579,7 +580,10 @@ void main() {
     core.start();
     await tester.pumpAndSettle();
 
-    // The map's card opens the details while the VPN carries traffic.
+    // The map's card opens the details while the VPN carries traffic; the
+    // home grew, so it may sit below the fold.
+    await tester.ensureVisible(find.text('سرور فعال'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('سرور فعال'));
     await tester.pumpAndSettle();
 
@@ -2150,9 +2154,10 @@ void main() {
     expect(find.text('Listen on'), findsNothing);
     await tester.tap(find.text('Advanced'));
     await tester.pumpAndSettle();
-    // Only the computer's app port and web dashboard.
+    // Only the computer's app port now: no web dashboard, no site of
+    // any kind opens from the app.
     expect(find.text('App port'), findsOneWidget);
-    expect(find.text('Web dashboard'), findsOneWidget);
+    expect(find.text('Web dashboard'), findsNothing);
     expect(find.byType(Switch), findsNothing);
     await tester.sendKeyEvent(LogicalKeyboardKey.escape);
     await tester.pumpAndSettle();
@@ -2302,10 +2307,10 @@ void main() {
     // On, with no system proxy: connected, not "proxy only".
     expect(find.text('Connected'), findsOneWidget);
     // Connected through the recommended location: the exit's country,
-    // Belgium, on the map's server card, under "Active server", without
-    // the city.
+    // Belgium, on the map's server card and the Exit tile, under "Active
+    // server", without the city.
     expect(find.text('Active server'), findsOneWidget);
-    expect(find.text('Belgium'), findsOneWidget);
+    expect(find.text('Belgium'), findsNWidgets(2));
     expect(find.textContaining('Brussels'), findsNothing);
     // No public IP on the phone's home, and no email either.
     expect(find.textContaining('192.0.2.7'), findsNothing);
@@ -2319,9 +2324,10 @@ void main() {
     await tester.pumpAndSettle();
     expect(api.on, isFalse);
     expect(find.text('Disconnected'), findsOneWidget);
-    // Off: the chosen location, the recommended one by default.
+    // Off: the chosen location, the recommended one by default — on the
+    // map's card and the Exit tile alike.
     expect(find.text('Location'), findsOneWidget);
-    expect(find.text('Recommended location'), findsOneWidget);
+    expect(find.text('Recommended location'), findsNWidgets(2));
 
     await tester.tap(find.byTooltip('Tap to connect'));
     await tester.pumpAndSettle();

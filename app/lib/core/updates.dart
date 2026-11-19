@@ -91,6 +91,10 @@ abstract final class Updates {
   /// The newer release, once one was found.
   static final available = ValueNotifier<Release?>(null);
 
+  /// The release's notes ("What's new"), fetched once the version was
+  /// found, for the update dialog; '' until they arrive.
+  static final notes = ValueNotifier<String>('');
+
   /// The app installs a downloaded version at its start (automatic
   /// updates) and quits in a moment, so it does not connect first.
   static final installingAtStart = ValueNotifier<bool>(false);
@@ -148,6 +152,7 @@ abstract final class Updates {
     // A version found earlier, unless this app is already that one.
     if (newerVersion(settings.updateVersion, appVersion)) {
       available.value = Release(settings.updateVersion, settings.updateUrl);
+      unawaited(_fetchNotes(settings.updateVersion));
     }
     core.addListener(_onStatus);
     _first = Timer(const Duration(minutes: 1), _due);
@@ -165,6 +170,7 @@ abstract final class Updates {
     _startArgs = const [];
     _downloadsAsked.clear();
     available.value = null;
+    notes.value = '';
     installingAtStart.value = false;
     failure.value = null;
     resultSeen.value = false;
@@ -298,6 +304,24 @@ abstract final class Updates {
       updateVersion: release?.version ?? '',
       updateUrl: release?.url ?? '',
     );
+    if (release != null) unawaited(_fetchNotes(release.version));
     _downloadInBackground();
   }
+
+  /// The found version's notes, once per version; the dialog shows them
+  /// when they arrive, and speaks of them without naming their source.
+  static Future<void> _fetchNotes(String version) async {
+    if (_notesAsked.contains(version)) return;
+    _notesAsked.add(version);
+    final text = await releaseNotes(
+      version,
+      proxy: updateProxy(_core?.status),
+    );
+    if (available.value?.version == version && text.isNotEmpty) {
+      notes.value = text;
+    }
+  }
+
+  /// The versions whose notes were asked for this run.
+  static final _notesAsked = <String>{};
 }

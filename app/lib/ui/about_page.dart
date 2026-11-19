@@ -4,18 +4,23 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../app_info.dart';
+import '../app_settings.dart';
 import '../core/core_controller.dart';
 import '../core/updates.dart';
 import '../l10n/app_localizations.dart';
-import '../platform.dart';
 import 'motion.dart';
+import 'update_dialog.dart';
 import 'widgets.dart';
 
 /// The versions, the update check, and the data folder.
 class AboutPage extends StatefulWidget {
-  const AboutPage({super.key, required this.core});
+  const AboutPage({super.key, required this.core, this.settings});
 
   final CoreController core;
+
+  /// For the update dialog's "Later"; null where there is none (the
+  /// computer's About), where "Later" only closes.
+  final AppSettings? settings;
 
   @override
   State<AboutPage> createState() => _AboutPageState();
@@ -28,10 +33,6 @@ class _AboutPageState extends State<AboutPage> {
 
   Future<void> _check() async {
     final l = AppLocalizations.of(context);
-    if (githubRepo.isEmpty) {
-      setState(() => _result = l.repoNotSet);
-      return;
-    }
     setState(() {
       _checking = true;
       _result = null;
@@ -131,35 +132,10 @@ class _AboutPageState extends State<AboutPage> {
               ],
               if (_release case final release?) ...[
                 const SizedBox(height: 10),
-                _UpdateAction(core: widget.core, release: release),
-              ],
-              if (Platform.isAndroid) ...[
-                const Divider(height: 24),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            l.webDashboard,
-                            style: theme.textTheme.titleSmall,
-                          ),
-                          const SizedBox(height: 2),
-                          Text(l.webDashboardHint, style: muted),
-                        ],
-                      ),
-                    ),
-                    OutlinedButton.icon(
-                      onPressed: () => runShowingErrors(
-                        context,
-                        () async =>
-                            openUrl('${await widget.core.dashboardLink()}'),
-                      ),
-                      icon: const Icon(Icons.open_in_new_rounded, size: 18),
-                      label: Text(l.webDashboardOpen),
-                    ),
-                  ],
+                _UpdateAction(
+                  core: widget.core,
+                  settings: widget.settings,
+                  release: release,
                 ),
               ],
               // The data folder: not on a phone, where it is the app's
@@ -202,13 +178,18 @@ class _AboutPageState extends State<AboutPage> {
 }
 
 /// The found version's button: Update where the app installs it itself
-/// (Windows), with the download's progress, why it failed, and Try again;
-/// else Download.
+/// (the computers, with the download's progress), the update's dialog on
+/// the phone, with the download inside the app; else Download.
 class _UpdateAction extends StatelessWidget {
-  const _UpdateAction({required this.core, required this.release});
+  const _UpdateAction({
+    required this.core,
+    required this.release,
+    this.settings,
+  });
 
   final CoreController core;
   final Release release;
+  final AppSettings? settings;
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
@@ -228,13 +209,25 @@ class _UpdateAction extends StatelessWidget {
             ),
           );
       if (update == null) {
-        return release.url.isEmpty
-            ? const SizedBox.shrink()
-            : button(
-                l.download,
-                Icons.download_rounded,
-                () => openDownload(context, release),
-              );
+        if (release.url.isEmpty) return const SizedBox.shrink();
+        // The phone: the dialog, with the download inside the app.
+        if (settings != null && Platform.isAndroid) {
+          return button(
+            l.updateNow,
+            Icons.system_update_alt_rounded,
+            () => showUpdateDialog(
+              context,
+              release: release,
+              core: core,
+              settings: settings!,
+            ),
+          );
+        }
+        return button(
+          l.download,
+          Icons.download_rounded,
+          () => openDownload(context, release),
+        );
       }
       final mine = update.version == release.version;
       if (mine && (update.downloading || update.installing)) {

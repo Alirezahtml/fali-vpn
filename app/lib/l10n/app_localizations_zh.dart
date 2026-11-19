@@ -1022,15 +1022,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get verboseLogs => '详细日志';
 
   @override
-  String get webDashboard => '网页控制面板';
-
-  @override
-  String get webDashboardOpen => '打开';
-
-  @override
-  String get webDashboardHint => '高级设置和更多工具';
-
-  @override
   String numberInvalid(int min, int max) {
     return '请输入 $min 到 $max 之间的数字';
   }
@@ -1081,7 +1072,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get updateCheckNoNetwork => '无法连接到 GitHub。请检查网络连接后重试。';
+  String get updateCheckNoNetwork => '无法检查更新。请检查网络连接后重试。';
 
   @override
   String get updateNow => '更新';
@@ -1115,12 +1106,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String updateRolledBack(String version) {
     return '更新到版本 $version 未能完成，应用已恢复到之前的版本。';
   }
-
-  @override
-  String get repoNotSet => '尚未设置 GitHub 仓库。';
-
-  @override
-  String get sourceCode => '源代码';
 
   @override
   String get tapToConnect => '点击连接';
@@ -1701,6 +1686,52 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => '新版本已就绪';
+
+  @override
+  String get updateSizeLabel => '文件大小';
+
+  @override
+  String get updateCurrentLabel => '当前版本';
+
+  @override
+  String updateWhatsNew(String version) {
+    return '版本 $version 更新内容';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => '改进与修复';
+
+  @override
+  String get updateDownloadInstall => '下载并安装';
+
+  @override
+  String get updateLater => '稍后';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received / $total';
+  }
+
+  @override
+  String get updateAllowInstall => '允许安装';
+
+  @override
+  String get updateAllowInstallHint => '要安装更新，请允许本应用安装应用。';
+
+  @override
+  String get updateDownloadFailed => '无法下载更新。请检查网络后重试。';
+
+  @override
+  String get paramMode => '模式';
+
+  @override
+  String get paramLocation => '出口';
+
+  @override
+  String get paramPort => '端口';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -2718,15 +2749,6 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get verboseLogs => '詳細記錄';
 
   @override
-  String get webDashboard => '網頁控制台';
-
-  @override
-  String get webDashboardOpen => '開啟';
-
-  @override
-  String get webDashboardHint => '進階設定和更多工具';
-
-  @override
   String numberInvalid(int min, int max) {
     return '請輸入 $min 到 $max 之間的數字';
   }
@@ -2777,7 +2799,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   }
 
   @override
-  String get updateCheckNoNetwork => '無法連線到 GitHub。請檢查網路連線後再試一次。';
+  String get updateCheckNoNetwork => '無法檢查更新。請檢查網路連線後再試一次。';
 
   @override
   String get updateNow => '更新';
@@ -2811,12 +2833,6 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String updateRolledBack(String version) {
     return '更新至版本 $version 未能完成，應用程式已恢復為先前的版本。';
   }
-
-  @override
-  String get repoNotSet => '尚未設定 GitHub 儲存庫。';
-
-  @override
-  String get sourceCode => '原始碼';
 
   @override
   String get tapToConnect => '按一下以連線';
@@ -3287,4 +3303,50 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get connRouteFailed => '失敗';
+
+  @override
+  String get updateReadyTitle => '新版本已就緒';
+
+  @override
+  String get updateSizeLabel => '檔案大小';
+
+  @override
+  String get updateCurrentLabel => '目前版本';
+
+  @override
+  String updateWhatsNew(String version) {
+    return '版本 $version 更新內容';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => '改進與修正';
+
+  @override
+  String get updateDownloadInstall => '下載並安裝';
+
+  @override
+  String get updateLater => '稍後';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received / $total';
+  }
+
+  @override
+  String get updateAllowInstall => '允許安裝';
+
+  @override
+  String get updateAllowInstallHint => '要安裝更新，請允許本應用程式安裝應用程式。';
+
+  @override
+  String get updateDownloadFailed => '無法下載更新。請檢查網路後再試一次。';
+
+  @override
+  String get paramMode => '模式';
+
+  @override
+  String get paramLocation => '出口';
+
+  @override
+  String get paramPort => '連接埠';
 }

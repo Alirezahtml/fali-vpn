@@ -1057,15 +1057,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get verboseLogs => 'Подробные логи';
 
   @override
-  String get webDashboard => 'Веб-панель';
-
-  @override
-  String get webDashboardOpen => 'Открыть';
-
-  @override
-  String get webDashboardHint => 'Расширенные настройки и другие инструменты';
-
-  @override
   String numberInvalid(int min, int max) {
     return 'Введите число от $min до $max';
   }
@@ -1118,7 +1109,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'Не удалось связаться с GitHub. Проверьте подключение к интернету и попробуйте ещё раз.';
+      'Не удалось проверить обновления. Проверьте подключение к интернету и попробуйте снова.';
 
   @override
   String get updateNow => 'Обновить';
@@ -1152,12 +1143,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String updateRolledBack(String version) {
     return 'Обновление до версии $version не завершилось, поэтому приложение вернулось к предыдущей версии.';
   }
-
-  @override
-  String get repoNotSet => 'Репозиторий GitHub ещё не указан.';
-
-  @override
-  String get sourceCode => 'Исходный код';
 
   @override
   String get tapToConnect => 'Нажмите, чтобы подключиться';
@@ -1774,4 +1759,52 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => 'Новая версия готова';
+
+  @override
+  String get updateSizeLabel => 'Размер файла';
+
+  @override
+  String get updateCurrentLabel => 'Текущая версия';
+
+  @override
+  String updateWhatsNew(String version) {
+    return 'Что нового в $version';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'Улучшения и исправления';
+
+  @override
+  String get updateDownloadInstall => 'Скачать и установить';
+
+  @override
+  String get updateLater => 'Позже';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received из $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'Разрешить установку';
+
+  @override
+  String get updateAllowInstallHint =>
+      'Чтобы установить обновление, разрешите приложению устанавливать приложения.';
+
+  @override
+  String get updateDownloadFailed =>
+      'Не удалось скачать обновление. Проверьте интернет и попробуйте снова.';
+
+  @override
+  String get paramMode => 'Режим';
+
+  @override
+  String get paramLocation => 'Выход';
+
+  @override
+  String get paramPort => 'Порт';
 }

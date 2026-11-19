@@ -192,7 +192,11 @@
   "reasonQuotaThreshold": "Used {percent}% of its data, so the next account took over.",
   "@reasonQuotaThreshold": {
     "description": "An account set aside at the switch threshold (percent, the setting) while the next account is used.",
-    "placeholders": {"percent": {"type": "int"}}
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
   },
   "reasonQuotaExhausted": "This month's data is used up; it is used again after the monthly reset.",
   "reasonSignInRequired": "Sign in again to use this account.",
@@ -618,9 +622,6 @@
   "liveTraffic": "Live traffic",
   "totalTraffic": "Total traffic",
   "verboseLogs": "Detailed logs",
-  "webDashboard": "Web dashboard",
-  "webDashboardOpen": "Open",
-  "webDashboardHint": "Advanced settings and more tools",
   "numberInvalid": "Enter a number from {min} to {max}",
   "@numberInvalid": {
     "placeholders": {
@@ -666,9 +667,9 @@
       }
     }
   },
-  "updateCheckNoNetwork": "Could not reach GitHub. Check your internet connection and try again.",
+  "updateCheckNoNetwork": "Could not check for updates. Check your internet connection and try again.",
   "@updateCheckNoNetwork": {
-    "description": "The update check could not reach GitHub (no connection, a timeout, or a refused TLS handshake)."
+    "description": "The update check could not reach the update source (no connection, a timeout, or a refused TLS handshake)."
   },
   "updateNow": "Update",
   "updateDownloading": "Downloading version {version}…",
@@ -719,8 +720,6 @@
       }
     }
   },
-  "repoNotSet": "The GitHub repository is not set yet.",
-  "sourceCode": "Source code",
   "tapToConnect": "Click to connect",
   "tapToDisconnect": "Click to disconnect",
   "startOnBoot": "Start on boot",
@@ -1070,5 +1069,36 @@
   "measuredSoFar": "Measured so far",
   "lastTestLabel": "Last test",
   "megabitUnit": "Mbit/s",
-  "dataVolume": "Data moved"
+  "dataVolume": "Data moved",
+  "updateReadyTitle": "A new version is ready",
+  "updateSizeLabel": "File size",
+  "updateCurrentLabel": "Current version",
+  "updateWhatsNew": "What's new in {version}",
+  "@updateWhatsNew": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateWhatsNewGeneric": "Improvements and fixes",
+  "updateDownloadInstall": "Download and install",
+  "updateLater": "Later",
+  "updateProgressOf": "{received} of {total}",
+  "@updateProgressOf": {
+    "placeholders": {
+      "received": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "updateAllowInstall": "Allow installation",
+  "updateAllowInstallHint": "To install the update, allow this app to install apps. The install continues by itself.",
+  "updateDownloadFailed": "The update could not be downloaded. Check your internet and try again.",
+  "paramMode": "Mode",
+  "paramLocation": "Exit",
+  "paramPort": "Port"
 }

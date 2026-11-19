@@ -131,6 +131,35 @@ String? versionFor(Object? updates, String os) {
   return v is String && RegExp(r'^\d+\.\d+\.\d+$').hasMatch(v) ? v : null;
 }
 
+/// The release's notes ("What's new"), read from its page on the release
+/// server; shown by the update dialog in the app's language, and never
+/// naming where they came from. '' when there are none.
+Future<String> releaseNotes(
+  String version, {
+  String? proxy,
+  String repo = githubRepo,
+}) async {
+  final client = HttpClient()
+    ..connectionTimeout = const Duration(seconds: 15)
+    ..findProxy = (_) => proxy == null ? 'DIRECT' : 'PROXY $proxy; DIRECT';
+  try {
+    final (status, body) = await _get(
+      client,
+      'https://api.github.com/repos/$repo/releases/tags/v$version',
+      accept: 'application/vnd.github+json',
+    );
+    if (status != 200) return '';
+    final j = jsonDecode(body);
+    final notes = j is Map<String, Object?> ? j['body'] as String? : null;
+    final trimmed = notes?.trim() ?? '';
+    return trimmed.isEmpty ? '' : trimmed;
+  } catch (_) {
+    return '';
+  } finally {
+    client.close(force: true);
+  }
+}
+
 /// The version that the [updatesFile] at [url] names for [os]; null when it
 /// cannot be read, is not JSON, or does not name one, allowing the caller
 /// to try the next metadata source.

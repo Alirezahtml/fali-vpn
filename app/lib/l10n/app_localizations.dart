@@ -1947,24 +1947,6 @@ abstract class AppLocalizations {
   /// **'Detailed logs'**
   String get verboseLogs;
 
-  /// No description provided for @webDashboard.
-  ///
-  /// In en, this message translates to:
-  /// **'Web dashboard'**
-  String get webDashboard;
-
-  /// No description provided for @webDashboardOpen.
-  ///
-  /// In en, this message translates to:
-  /// **'Open'**
-  String get webDashboardOpen;
-
-  /// No description provided for @webDashboardHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Advanced settings and more tools'**
-  String get webDashboardHint;
-
   /// No description provided for @numberInvalid.
   ///
   /// In en, this message translates to:
@@ -2049,10 +2031,10 @@ abstract class AppLocalizations {
   /// **'Could not check for updates: {error}'**
   String updateCheckFailed(String error);
 
-  /// The update check could not reach GitHub (no connection, a timeout, or a refused TLS handshake).
+  /// The update check could not reach the update source (no connection, a timeout, or a refused TLS handshake).
   ///
   /// In en, this message translates to:
-  /// **'Could not reach GitHub. Check your internet connection and try again.'**
+  /// **'Could not check for updates. Check your internet connection and try again.'**
   String get updateCheckNoNetwork;
 
   /// No description provided for @updateNow.
@@ -2096,18 +2078,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The update to version {version} didn\'t finish, so the app went back to the previous version.'**
   String updateRolledBack(String version);
-
-  /// No description provided for @repoNotSet.
-  ///
-  /// In en, this message translates to:
-  /// **'The GitHub repository is not set yet.'**
-  String get repoNotSet;
-
-  /// No description provided for @sourceCode.
-  ///
-  /// In en, this message translates to:
-  /// **'Source code'**
-  String get sourceCode;
 
   /// No description provided for @tapToConnect.
   ///
@@ -3170,6 +3140,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Data moved'**
   String get dataVolume;
+
+  /// No description provided for @updateReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version is ready'**
+  String get updateReadyTitle;
+
+  /// No description provided for @updateSizeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'File size'**
+  String get updateSizeLabel;
+
+  /// No description provided for @updateCurrentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current version'**
+  String get updateCurrentLabel;
+
+  /// No description provided for @updateWhatsNew.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new in {version}'**
+  String updateWhatsNew(String version);
+
+  /// No description provided for @updateWhatsNewGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Improvements and fixes'**
+  String get updateWhatsNewGeneric;
+
+  /// No description provided for @updateDownloadInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'Download and install'**
+  String get updateDownloadInstall;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateLater;
+
+  /// No description provided for @updateProgressOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{received} of {total}'**
+  String updateProgressOf(String received, String total);
+
+  /// No description provided for @updateAllowInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow installation'**
+  String get updateAllowInstall;
+
+  /// No description provided for @updateAllowInstallHint.
+  ///
+  /// In en, this message translates to:
+  /// **'To install the update, allow this app to install apps. The install continues by itself.'**
+  String get updateAllowInstallHint;
+
+  /// No description provided for @updateDownloadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The update could not be downloaded. Check your internet and try again.'**
+  String get updateDownloadFailed;
+
+  /// No description provided for @paramMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Mode'**
+  String get paramMode;
+
+  /// No description provided for @paramLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get paramLocation;
+
+  /// No description provided for @paramPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Port'**
+  String get paramPort;
 }
 
 class _AppLocalizationsDelegate

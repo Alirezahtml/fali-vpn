@@ -1050,15 +1050,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String get verboseLogs => 'বিস্তারিত লগ';
 
   @override
-  String get webDashboard => 'ওয়েব ড্যাশবোর্ড';
-
-  @override
-  String get webDashboardOpen => 'খুলুন';
-
-  @override
-  String get webDashboardHint => 'উন্নত সেটিংস ও আরও টুল';
-
-  @override
   String numberInvalid(int min, int max) {
     return '$min থেকে $max-এর মধ্যে একটি সংখ্যা লিখুন';
   }
@@ -1111,7 +1102,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'GitHub-এ পৌঁছানো যায়নি। ইন্টারনেট সংযোগ দেখে আবার চেষ্টা করুন।';
+      'আপডেট পরীক্ষা করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।';
 
   @override
   String get updateNow => 'আপডেট করুন';
@@ -1145,12 +1136,6 @@ class AppLocalizationsBn extends AppLocalizations {
   String updateRolledBack(String version) {
     return 'সংস্করণ $version-এ আপডেট শেষ হয়নি, তাই অ্যাপটি আগের সংস্করণে ফিরে গেছে।';
   }
-
-  @override
-  String get repoNotSet => 'GitHub রিপোজিটরি এখনও সেট করা হয়নি।';
-
-  @override
-  String get sourceCode => 'সোর্স কোড';
 
   @override
   String get tapToConnect => 'সংযোগ করতে ক্লিক করুন';
@@ -1761,4 +1746,52 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => 'নতুন সংস্করণ প্রস্তুত';
+
+  @override
+  String get updateSizeLabel => 'ফাইলের আকার';
+
+  @override
+  String get updateCurrentLabel => 'বর্তমান সংস্করণ';
+
+  @override
+  String updateWhatsNew(String version) {
+    return '$version সংস্করণে নতুন কী আছে';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'উন্নতি ও সংশোধন';
+
+  @override
+  String get updateDownloadInstall => 'ডাউনলোড ও ইনস্টল';
+
+  @override
+  String get updateLater => 'পরে';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received / $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'ইনস্টলের অনুমতি দিন';
+
+  @override
+  String get updateAllowInstallHint =>
+      'আপডেট ইনস্টল করতে এই অ্যাপকে অ্যাপ ইনস্টল করার অনুমতি দিন।';
+
+  @override
+  String get updateDownloadFailed =>
+      'আপডেট ডাউনলোড করা যায়নি। ইন্টারনেট পরীক্ষা করে আবার চেষ্টা করুন।';
+
+  @override
+  String get paramMode => 'মোড';
+
+  @override
+  String get paramLocation => 'এক্সিট';
+
+  @override
+  String get paramPort => 'পোর্ট';
 }

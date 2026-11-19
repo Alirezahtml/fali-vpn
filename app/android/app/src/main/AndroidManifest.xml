@@ -4,6 +4,10 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- The update's APK, downloaded inside the app, is handed to
+         Android's installer; this permission (with the FileProvider
+         below) is what the installer reads the file through. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- The apps a user can route: also the system's, which have no icon
          (Google Play services, the download manager). The app is not on
          Google Play, whose rules limit this permission. -->
@@ -90,6 +94,18 @@
         <receiver
             android:name=".ConnectWidget$Toggle"
             android:exported="false" />
+        <!-- Reads the update's APK for the installer: the file sits in
+             the app's own update folder, and only the installer may
+             open it, for the moment of the install. -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.files"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

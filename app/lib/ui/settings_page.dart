@@ -12,7 +12,7 @@ import '../core/ports.dart';
 import '../core/tun_service.dart';
 import '../desktop/desktop_bridge.dart';
 import '../l10n/app_localizations.dart';
-import '../platform.dart';
+import '../platform.dart' show sharedWithLan;
 import 'bypass_apps_page.dart';
 import 'connection_mode.dart';
 import 'format.dart';
@@ -1342,7 +1342,6 @@ class _SettingsPageState extends State<SettingsPage> {
     final theme = Theme.of(context);
     final error = theme.colorScheme.error;
     final appListen = _str(['dashboard', 'listen']);
-    final dashboard = CoreLocator.listenUri(appListen).replace(path: '/app/');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -1355,17 +1354,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 label: l.appPort,
                 listen: appListen,
                 onChange: () => _changePort(appListen, _core.setAppPort),
-              ),
-              _Row(
-                icon: Icons.dashboard_rounded,
-                label: l.webDashboard,
-                // An address reads left to right in a right-to-left language.
-                value: ltr('$dashboard'),
-                child: const Icon(Icons.open_in_new_rounded, size: 20),
-                onTap: () => runShowingErrors(
-                  context,
-                  () async => openUrl('${await _core.dashboardLink()}'),
-                ),
               ),
             ],
           ),

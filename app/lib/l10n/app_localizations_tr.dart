@@ -1052,15 +1052,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get verboseLogs => 'Ayrıntılı günlükler';
 
   @override
-  String get webDashboard => 'Web paneli';
-
-  @override
-  String get webDashboardOpen => 'Aç';
-
-  @override
-  String get webDashboardHint => 'Gelişmiş ayarlar ve daha fazla araç';
-
-  @override
   String numberInvalid(int min, int max) {
     return '$min ile $max arasında bir sayı girin';
   }
@@ -1113,7 +1104,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get updateCheckNoNetwork =>
-      'GitHub\'a ulaşılamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.';
+      'Güncellemeler denetlenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.';
 
   @override
   String get updateNow => 'Güncelle';
@@ -1147,12 +1138,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String updateRolledBack(String version) {
     return '$version sürümüne güncelleme tamamlanmadı, bu yüzden uygulama önceki sürüme döndü.';
   }
-
-  @override
-  String get repoNotSet => 'GitHub deposu henüz ayarlanmadı.';
-
-  @override
-  String get sourceCode => 'Kaynak kodu';
 
   @override
   String get tapToConnect => 'Bağlanmak için tıklayın';
@@ -1766,4 +1751,52 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get dataVolume => 'Data moved';
+
+  @override
+  String get updateReadyTitle => 'Yeni sürüm hazır';
+
+  @override
+  String get updateSizeLabel => 'Dosya boyutu';
+
+  @override
+  String get updateCurrentLabel => 'Mevcut sürüm';
+
+  @override
+  String updateWhatsNew(String version) {
+    return '$version sürümündeki yenilikler';
+  }
+
+  @override
+  String get updateWhatsNewGeneric => 'İyileştirmeler ve düzeltmeler';
+
+  @override
+  String get updateDownloadInstall => 'İndir ve yükle';
+
+  @override
+  String get updateLater => 'Daha sonra';
+
+  @override
+  String updateProgressOf(String received, String total) {
+    return '$received / $total';
+  }
+
+  @override
+  String get updateAllowInstall => 'Yüklemeye izin ver';
+
+  @override
+  String get updateAllowInstallHint =>
+      'Güncellemeyi yüklemek için bu uygulamanın uygulama yüklemesine izin verin.';
+
+  @override
+  String get updateDownloadFailed =>
+      'Güncelleme indirilemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.';
+
+  @override
+  String get paramMode => 'Mod';
+
+  @override
+  String get paramLocation => 'Çıkış';
+
+  @override
+  String get paramPort => 'Port';
 }

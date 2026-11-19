@@ -90,6 +90,20 @@ class AndroidCore {
   static Future<String> dataDir() async =>
       await _channel.invokeMethod<String>('dataDir') ?? '';
 
+  /// The app's own private folder, where the update's APK lands.
+  static Future<String> filesDir() async =>
+      await _channel.invokeMethod<String>('filesDir') ?? '';
+
+  /// Hands the downloaded APK at [path] to Android's installer: "started"
+  /// when the installer opened, "permission" when Android wants the
+  /// user's leave to install from this app first (its own page opens,
+  /// and answering it starts the install by itself).
+  static Future<String> installUpdateApk(String path) async =>
+      await _channel.invokeMethod<String>('installUpdateApk', {
+        'path': path,
+      }) ??
+      'error';
+
   AndroidCore(this._dataDir);
 
   final String _dataDir;
