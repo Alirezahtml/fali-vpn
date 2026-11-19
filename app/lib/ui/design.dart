@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../l10n/app_localizations.dart';
+import 'effects.dart';
 import 'format.dart';
 import 'motion.dart';
 import 'widgets.dart' show StatusColors, delayColor;
@@ -64,7 +65,10 @@ abstract final class Dali {
 }
 
 /// The card every screen is built from: 26-pixel rounded corners, the
-/// theme's surface, and a hairline that only just shows.
+/// theme's surface under frosted glass — the pane the page's lights tint,
+/// with a rim that catches the light at its top edge. Lists carry it
+/// without the blur: the glass reads there too, and the scrolling keeps
+/// its smoothness.
 class DaliCard extends StatelessWidget {
   const DaliCard({
     super.key,
@@ -83,22 +87,12 @@ class DaliCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final box = DecoratedBox(
-      decoration: BoxDecoration(
-        color: color ?? Theme.of(context).colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(radius),
-        border: Border.all(color: Dali.hairline(context)),
-      ),
-      child: Padding(padding: padding, child: child),
-    );
-    if (onTap == null) return box;
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(radius),
-        child: box,
-      ),
+    return GlassCard(
+      padding: padding,
+      radius: radius,
+      color: color,
+      onTap: onTap,
+      child: child,
     );
   }
 }
@@ -392,35 +386,34 @@ class ConnectPill extends StatelessWidget {
     return PressScale(
       onTap: busy || onTap == null ? null : onTap,
       amount: 0.94,
-      child: AnimatedContainer(
-        duration: Motion.fast,
-        curve: Motion.emphasized,
-        height: 34,
-        padding: const EdgeInsets.symmetric(horizontal: 14),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected ? Dali.wash(StatusColors.good, dark) : color,
-          borderRadius: BorderRadius.circular(999),
-        ),
-        child: ScaleSwitcher(
-          duration: Motion.fast,
-          child: busy
-              ? SizedBox.square(
-                  key: const ValueKey('busy'),
-                  dimension: 15,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: selected ? StatusColors.good : Colors.white,
+      // Soft depth: the pill swells a little out of its row, and the face
+      // glides between the blue and the connected green.
+      child: SoftDepth(
+        color: selected ? Dali.wash(StatusColors.good, dark) : color,
+        child: Container(
+          height: 34,
+          padding: const EdgeInsets.symmetric(horizontal: 14),
+          alignment: Alignment.center,
+          child: ScaleSwitcher(
+            duration: Motion.fast,
+            child: busy
+                ? SizedBox.square(
+                    key: const ValueKey('busy'),
+                    dimension: 15,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: selected ? StatusColors.good : Colors.white,
+                    ),
+                  )
+                : Text(
+                    label,
+                    key: const ValueKey('label'),
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: selected ? StatusColors.good : Colors.white,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
-                )
-              : Text(
-                  label,
-                  key: const ValueKey('label'),
-                  style: theme.textTheme.labelMedium?.copyWith(
-                    color: selected ? StatusColors.good : Colors.white,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
+          ),
         ),
       ),
     );
@@ -472,9 +465,12 @@ class ServerTile extends StatelessWidget {
         curve: Motion.emphasized,
         padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 10, 10),
         decoration: BoxDecoration(
+          // The glass tint at rest — the page's lights pass through it —
+          // and the state's wash on the chosen one.
           color: selected
               ? Dali.wash(StatusColors.good, dark)
-              : theme.colorScheme.surfaceContainer,
+              : theme.colorScheme.surfaceContainer
+                    .withValues(alpha: GlassCard.fillAlpha(dark)),
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: edge),
         ),
@@ -563,7 +559,8 @@ class ChoiceTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected
               ? Dali.wash(Dali.primary, dark)
-              : theme.colorScheme.surfaceContainer,
+              : theme.colorScheme.surfaceContainer
+                    .withValues(alpha: GlassCard.fillAlpha(dark)),
           borderRadius: BorderRadius.circular(22),
           border: Border.all(
             color: selected

@@ -3,6 +3,7 @@ import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'effects.dart';
 import 'motion.dart';
 import 'widgets.dart' show StatusColors;
 
@@ -131,16 +132,17 @@ class _FloatingNavBarState extends State<FloatingNavBar> {
                                   heightFactor: 1,
                                   child: Padding(
                                     padding: const EdgeInsets.all(6),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          999,
-                                        ),
-                                        color:
-                                            theme.navigationBarTheme
-                                                .indicatorColor ??
-                                            scheme.primaryContainer,
-                                      ),
+                                    // The chosen tab rests on soft depth: the
+                                    // pill swells out of the capsule, and the
+                                    // capsule's own clip turns the glow into
+                                    // the inner shade that rounds it. The pill
+                                    // fills the slot it glides into.
+                                    child: SoftDepth(
+                                      color:
+                                          theme.navigationBarTheme
+                                              .indicatorColor ??
+                                          scheme.primaryContainer,
+                                      child: const SizedBox.expand(),
                                     ),
                                   ),
                                 ),

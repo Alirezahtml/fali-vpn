@@ -77,7 +77,10 @@ ThemeData _theme(Brightness brightness, Locale locale) {
     ),
     cardTheme: CardThemeData(
       elevation: 0,
-      color: scheme.surfaceContainer,
+      // The cards' frosted glass: the surface let through just enough that
+      // the page's lights tint it — every section, on every page, the
+      // same pane.
+      color: scheme.surfaceContainer.withValues(alpha: dark ? 0.86 : 0.82),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(26),
         side: BorderSide(

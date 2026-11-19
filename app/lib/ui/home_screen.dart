@@ -14,6 +14,7 @@ import '../core/updates.dart';
 import '../l10n/app_localizations.dart';
 import 'browser_signin.dart';
 import 'design.dart';
+import 'effects.dart';
 import 'format.dart';
 import 'motion.dart';
 import 'port_dialog.dart';
@@ -401,6 +402,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         on: status.proxyOn,
                         busy: core.switchingProxy,
                         autofocus: Platform.isAndroid && AndroidCore.isTv,
+                        downRate: traffic?.downRate ?? 0,
+                        upRate: traffic?.upRate ?? 0,
                         onToggle: status.totalAccounts == 0
                             ? _openAccounts
                             : () => runShowingErrors(
@@ -523,35 +526,41 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-        Container(
+        // The main card is the frosted pane: the page's lights blur under
+        // it, the rim catches them at its top edge, and the energy field
+        // breathes inside it while the tunnel is up.
+        GlassCard(
+          radius: 28,
+          blur: true,
+          color: card,
           padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.lerp(card, Colors.white, dark ? 0.03 : 0.0)!,
-                card,
-              ],
+          shadow: [
+            BoxShadow(
+              color: (dark ? Colors.black : const Color(0xFF0B3B78))
+                  .withValues(alpha: dark ? 0.5 : 0.08),
+              blurRadius: 22,
+              offset: const Offset(0, 10),
             ),
-            borderRadius: BorderRadius.circular(28),
-            border: Border.all(color: Dali.hairline(context)),
-            boxShadow: [
-              BoxShadow(
-                color: (dark ? Colors.black : const Color(0xFF0B3B78))
-                    .withValues(alpha: dark ? 0.5 : 0.08),
-                blurRadius: 22,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          ],
+          child: Stack(
             children: [
-              // The protocol's badge at the reading's start, the state's
-              // dot and words at the end. Neither side is ever cut off:
-              // each shrinks to its room instead of losing its tail.
-              Row(
+              // The energy field: the state's own light breathing under
+              // the glass, a calm wave the page rests on while the tunnel
+              // is up — and while the switch is working for it.
+              Positioned.fill(
+                child: EnergyWaveField(
+                  color: dotColor,
+                  enabled: connected || confirming,
+                  alpha: dark ? 0.10 : 0.07,
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // The protocol's badge at the reading's start, the state's
+                  // dot and words at the end. Neither side is ever cut off:
+                  // each shrinks to its room instead of losing its tail.
+                  Row(
                 children: [
                   Flexible(
                     child: Container(
@@ -664,6 +673,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 10),
               _readings(context, modeText: modeText),
+                ],
+              ),
             ],
           ),
         ),
@@ -748,6 +759,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
     return PressScale(
       onTap: connected
           ? widget.onOpenDetails
@@ -756,7 +768,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         padding: const EdgeInsetsDirectional.fromSTEB(12, 11, 8, 11),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainerHigh,
+          // The glass tint: the connection card's own light passes
+          // through the exit's card, so the two read as one pane.
+          color: theme.colorScheme.surfaceContainerHigh
+              .withValues(alpha: GlassCard.fillAlpha(dark)),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Dali.hairline(context)),
         ),
@@ -846,6 +861,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _readings(BuildContext context, {required String modeText}) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
     final status = widget.core.status!;
     // The port, while the core says which one it waits on (a blocked
     // port, or one it was moved to); nothing while the tunnel runs.
@@ -884,7 +900,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHigh,
+        color: theme.colorScheme.surfaceContainerHigh
+            .withValues(alpha: GlassCard.fillAlpha(dark)),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: Dali.hairline(context)),
       ),
@@ -967,13 +984,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return PressScale(
       onTap: widget.onOpenConnection ?? () {},
       amount: 0.985,
-      child: Container(
+      // Soft depth: the row swells out of the page, the light on its top
+      // edge and the shade gathered under it.
+      child: SoftDepth(
+        color: theme.colorScheme.surfaceContainer,
         padding: const EdgeInsetsDirectional.fromSTEB(14, 11, 10, 11),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainer,
-          borderRadius: BorderRadius.circular(999),
-          border: Border.all(color: Dali.hairline(context)),
-        ),
         child: Row(
           children: [
             IconTile(icon: Icons.vpn_lock_rounded, color: Dali.primary),
@@ -1345,46 +1360,46 @@ class _ProtocolTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return PressScale(
-      onTap: onTap,
-      amount: 0.94,
-      child: AnimatedContainer(
-        duration: Motion.normal,
-        curve: Motion.emphasized,
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: selected ? Dali.primary : Colors.transparent,
-          borderRadius: BorderRadius.circular(999),
-        ),
-        child: ScaleSwitcher(
-          duration: Motion.fast,
-          child: busy
-              ? SizedBox.square(
-                  key: const ValueKey('busy'),
-                  dimension: 16,
-                  child: const CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  ),
-                )
-              : Text(
-                  label,
-                  key: const ValueKey('label'),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.labelMedium?.copyWith(
-                    color: selected
-                        ? Colors.white
-                        : Dali.onVar(context),
-                    fontWeight: FontWeight.w800,
-                    fontFeatures: const [],
-                  ),
+    Widget tab = AnimatedContainer(
+      duration: Motion.normal,
+      curve: Motion.emphasized,
+      margin: const EdgeInsets.symmetric(horizontal: 2),
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(),
+      child: ScaleSwitcher(
+        duration: Motion.fast,
+        child: busy
+            ? SizedBox.square(
+                key: const ValueKey('busy'),
+                dimension: 16,
+                child: const CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
                 ),
-        ),
+              )
+            : Text(
+                label,
+                key: const ValueKey('label'),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: selected
+                      ? Colors.white
+                      : Dali.onVar(context),
+                  fontWeight: FontWeight.w800,
+                  fontFeatures: const [],
+                ),
+              ),
       ),
     );
+    // Soft depth: the chosen transport swells out of the bar, the light
+    // on its face and the shade pooled under it — the bar reads it as
+    // the one.
+    if (selected) {
+      tab = SoftDepth(color: Dali.primary, child: tab);
+    }
+    return PressScale(onTap: onTap, amount: 0.94, child: tab);
   }
 }
 
@@ -1399,6 +1414,8 @@ class _SlidePill extends StatefulWidget {
     required this.on,
     required this.busy,
     required this.onToggle,
+    required this.downRate,
+    required this.upRate,
     this.autofocus = false,
   });
 
@@ -1406,6 +1423,11 @@ class _SlidePill extends StatefulWidget {
   final String tooltip;
   final bool on;
   final bool busy;
+
+  /// The connection's real rates, in bytes a second: the data flow's
+  /// particles run by them, download in blue, upload in green.
+  final int downRate;
+  final int upRate;
   final VoidCallback onToggle;
   final bool autofocus;
 
@@ -1529,46 +1551,41 @@ class _SlidePillState extends State<_SlidePill>
                           _dragging = false;
                           _passed = false;
                         }),
-                  child: AnimatedContainer(
-                    duration: _dragging
-                        ? Duration.zero
-                        : Motion.normal,
-                    curve: Motion.emphasized,
-                    height: 62,
+                  // The pill itself is the frosted pane now: the page's
+                  // lights blur under it, and the tunnel's own wires — the
+                  // data flow — carry their light inside it while the
+                  // connection is up.
+                  child: GlassCard(
+                    radius: 999,
+                    blur: true,
+                    color: theme.colorScheme.surfaceContainer,
+                    shadow: [
+                      BoxShadow(
+                        color: (dark ? Colors.black : const Color(0xFF0B3B78))
+                            .withValues(alpha: dark ? 0.5 : 0.10),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                     padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color.lerp(
-                            theme.colorScheme.surfaceContainer,
-                            Colors.white,
-                            dark ? 0.03 : 0.0,
-                          )!,
-                          theme.colorScheme.surfaceContainer,
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(999),
-                      border: Border.all(
-                        color: widget.on
-                            ? StatusColors.good.withValues(
-                                alpha: dark ? 0.5 : 0.4,
-                              )
-                            : Dali.hairline(context),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: (dark ? Colors.black : const Color(0xFF0B3B78))
-                              .withValues(alpha: dark ? 0.5 : 0.10),
-                          blurRadius: 18,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
+                    child: SizedBox(
+                      height: 46,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // The data flow: download in blue arriving at
+                          // the user, upload in green leaving for the
+                          // world, each particle's pace the real rate's.
+                          Positioned.fill(
+                            child: DataFlowField(
+                              downRate: widget.downRate,
+                              upRate: widget.upRate,
+                              enabled: widget.on && !widget.busy,
+                              downColor: Dali.primary,
+                              upColor: StatusColors.good,
+                              rtl: _rtl,
+                            ),
+                          ),
                         // The words in the middle, the dots at the far
                         // end: the pill reads as a track, not a button.
                         Padding(
@@ -1680,6 +1697,7 @@ class _SlidePillState extends State<_SlidePill>
                           ),
                         ),
                       ],
+                    ),
                     ),
                   ),
                 ),
