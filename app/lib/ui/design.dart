@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../l10n/app_localizations.dart' show AppLocalizations;
 import 'format.dart';
 import 'motion.dart';
 import 'widgets.dart' show StatusColors, delayColor;
@@ -149,9 +148,7 @@ class PingChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final persian = l.localeName == 'fa';
     final color = testing ? Dali.onVar(context) : delayColor(ms ?? 1000);
     final text = testing
         ? ''

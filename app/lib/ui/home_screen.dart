@@ -225,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               label: l.pingLabel,
                               value: pingMs == null
                                   ? '—'
-                                  : persianDigits('${pingMs}'),
+                                  : persianDigits('$pingMs'),
                               unit: 'ms',
                             ),
                           ),
