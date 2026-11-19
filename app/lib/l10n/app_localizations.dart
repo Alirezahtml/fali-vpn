@@ -2948,6 +2948,228 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Failed'**
   String get connRouteFailed;
+
+  /// The speed test page's name, in the navigation.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed test'**
+  String get navSpeedTest;
+
+  /// Label over the stopwatch of the current connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected for'**
+  String get connectedFor;
+
+  /// No description provided for @downloadRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get downloadRate;
+
+  /// No description provided for @uploadRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload'**
+  String get uploadRate;
+
+  /// The page with the connection's map, gauge, and figures.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection details'**
+  String get detailsTitle;
+
+  /// No description provided for @exitIp.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit IP (VPN)'**
+  String get exitIp;
+
+  /// No description provided for @exitIp6.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit IPv6'**
+  String get exitIp6;
+
+  /// No description provided for @exitPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit country'**
+  String get exitPlace;
+
+  /// No description provided for @exitNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit network'**
+  String get exitNetwork;
+
+  /// No description provided for @protocol.
+  ///
+  /// In en, this message translates to:
+  /// **'Protocol'**
+  String get protocol;
+
+  /// The world map's strip while no server is set.
+  ///
+  /// In en, this message translates to:
+  /// **'The server shows here after it is chosen.'**
+  String get mapIdle;
+
+  /// No description provided for @searchServers.
+  ///
+  /// In en, this message translates to:
+  /// **'Search country or city…'**
+  String get searchServers;
+
+  /// No description provided for @noSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches the search.'**
+  String get noSearchResults;
+
+  /// No description provided for @speedRun.
+  ///
+  /// In en, this message translates to:
+  /// **'Run test'**
+  String get speedRun;
+
+  /// No description provided for @speedStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get speedStop;
+
+  /// A line over the speed test: without the VPN the numbers are the bare connection's.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn the VPN on first, so the test measures the VPN\'s own path.'**
+  String get speedHint;
+
+  /// No description provided for @speedFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The test did not finish; check the internet and try again.'**
+  String get speedFailed;
+
+  /// No description provided for @speedHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get speedHistory;
+
+  /// No description provided for @speedHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No test yet; run one and it lands here.'**
+  String get speedHistoryEmpty;
+
+  /// No description provided for @speedClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear history'**
+  String get speedClear;
+
+  /// No description provided for @connectionDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection details'**
+  String get connectionDetails;
+
+  /// No description provided for @vpnIp.
+  ///
+  /// In en, this message translates to:
+  /// **'VPN IP'**
+  String get vpnIp;
+
+  /// No description provided for @localIp.
+  ///
+  /// In en, this message translates to:
+  /// **'Local IP'**
+  String get localIp;
+
+  /// No description provided for @cityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get cityLabel;
+
+  /// No description provided for @pingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ping'**
+  String get pingLabel;
+
+  /// No description provided for @serverActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active server'**
+  String get serverActive;
+
+  /// No description provided for @quickPicks.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick picks'**
+  String get quickPicks;
+
+  /// No description provided for @recentServers.
+  ///
+  /// In en, this message translates to:
+  /// **'Recently connected'**
+  String get recentServers;
+
+  /// No description provided for @allCountries.
+  ///
+  /// In en, this message translates to:
+  /// **'All countries'**
+  String get allCountries;
+
+  /// No description provided for @connectAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get connectAction;
+
+  /// No description provided for @disconnectAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get disconnectAction;
+
+  /// No description provided for @encryptedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Your traffic flows through an encrypted layer'**
+  String get encryptedHint;
+
+  /// No description provided for @offHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap connect to go through the encrypted layer'**
+  String get offHint;
+
+  /// No description provided for @measuredSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'Measured so far'**
+  String get measuredSoFar;
+
+  /// No description provided for @lastTestLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Last test'**
+  String get lastTestLabel;
+
+  /// No description provided for @megabitUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'Mbit/s'**
+  String get megabitUnit;
+
+  /// No description provided for @dataVolume.
+  ///
+  /// In en, this message translates to:
+  /// **'Data moved'**
+  String get dataVolume;
 }
 
 class _AppLocalizationsDelegate

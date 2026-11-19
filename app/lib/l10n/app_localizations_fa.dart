@@ -1641,4 +1641,116 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get connRouteFailed => 'ناموفق';
+
+  @override
+  String get navSpeedTest => 'تست سرعت';
+
+  @override
+  String get connectedFor => 'مدت اتصال';
+
+  @override
+  String get downloadRate => 'دانلود';
+
+  @override
+  String get uploadRate => 'آپلود';
+
+  @override
+  String get detailsTitle => 'جزئیات اتصال';
+
+  @override
+  String get exitIp => 'آی‌پی خروجی (وی‌پی‌ان)';
+
+  @override
+  String get exitIp6 => 'آی‌پی خروجی IPv6';
+
+  @override
+  String get exitPlace => 'کشور خروجی';
+
+  @override
+  String get exitNetwork => 'شبکهٔ خروجی';
+
+  @override
+  String get protocol => 'پروتکل';
+
+  @override
+  String get mapIdle => 'بعد از انتخاب، سرور روی نقشه دیده می‌شود.';
+
+  @override
+  String get searchServers => 'جستجوی کشور یا شهر…';
+
+  @override
+  String get noSearchResults => 'نتیجه‌ای برای این جستجو نیست.';
+
+  @override
+  String get speedRun => 'شروع تست';
+
+  @override
+  String get speedStop => 'توقف';
+
+  @override
+  String get speedHint => 'برای سنجش مسیر واقعی، اول وی‌پی‌ان را روشن کنید.';
+
+  @override
+  String get speedFailed =>
+      'تست کامل نشد؛ اینترنت را بررسی و دوباره تلاش کنید.';
+
+  @override
+  String get speedHistory => 'تاریخچه';
+
+  @override
+  String get speedHistoryEmpty => 'هنوز تستی نیست؛ تست بگیرید تا اینجا بیاید.';
+
+  @override
+  String get speedClear => 'پاک کردن تاریخچه';
+
+  @override
+  String get connectionDetails => 'جزئیات اتصال';
+
+  @override
+  String get vpnIp => 'IP وی‌پی‌ان';
+
+  @override
+  String get localIp => 'IP محلی';
+
+  @override
+  String get cityLabel => 'شهر';
+
+  @override
+  String get pingLabel => 'پینگ';
+
+  @override
+  String get serverActive => 'سرور فعال';
+
+  @override
+  String get quickPicks => 'پیشنهاد سریع';
+
+  @override
+  String get recentServers => 'اخیراً متصل‌شده‌ها';
+
+  @override
+  String get allCountries => 'همه کشورها';
+
+  @override
+  String get connectAction => 'اتصال';
+
+  @override
+  String get disconnectAction => 'قطع';
+
+  @override
+  String get encryptedHint => 'ترافیک تو از لایه رمزگذاری می‌گذرد';
+
+  @override
+  String get offHint => 'برای عبور از لایه رمزگذاری، وصل شو';
+
+  @override
+  String get measuredSoFar => 'تا الان اندازه‌گیری شده';
+
+  @override
+  String get lastTestLabel => 'آخرین تست';
+
+  @override
+  String get megabitUnit => 'مگابیت بر ثانیه';
+
+  @override
+  String get dataVolume => 'حجم داده';
 }

@@ -1588,6 +1588,119 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get connRouteFailed => '失败';
+
+  @override
+  String get navSpeedTest => 'Speed test';
+
+  @override
+  String get connectedFor => 'Connected for';
+
+  @override
+  String get downloadRate => 'Download';
+
+  @override
+  String get uploadRate => 'Upload';
+
+  @override
+  String get detailsTitle => 'Connection details';
+
+  @override
+  String get exitIp => 'Exit IP (VPN)';
+
+  @override
+  String get exitIp6 => 'Exit IPv6';
+
+  @override
+  String get exitPlace => 'Exit country';
+
+  @override
+  String get exitNetwork => 'Exit network';
+
+  @override
+  String get protocol => 'Protocol';
+
+  @override
+  String get mapIdle => 'The server shows here after it is chosen.';
+
+  @override
+  String get searchServers => 'Search country or city…';
+
+  @override
+  String get noSearchResults => 'Nothing matches the search.';
+
+  @override
+  String get speedRun => 'Run test';
+
+  @override
+  String get speedStop => 'Stop';
+
+  @override
+  String get speedHint =>
+      'Turn the VPN on first, so the test measures the VPN\'s own path.';
+
+  @override
+  String get speedFailed =>
+      'The test did not finish; check the internet and try again.';
+
+  @override
+  String get speedHistory => 'History';
+
+  @override
+  String get speedHistoryEmpty => 'No test yet; run one and it lands here.';
+
+  @override
+  String get speedClear => 'Clear history';
+
+  @override
+  String get connectionDetails => 'Connection details';
+
+  @override
+  String get vpnIp => 'VPN IP';
+
+  @override
+  String get localIp => 'Local IP';
+
+  @override
+  String get cityLabel => 'City';
+
+  @override
+  String get pingLabel => 'Ping';
+
+  @override
+  String get serverActive => 'Active server';
+
+  @override
+  String get quickPicks => 'Quick picks';
+
+  @override
+  String get recentServers => 'Recently connected';
+
+  @override
+  String get allCountries => 'All countries';
+
+  @override
+  String get connectAction => 'Connect';
+
+  @override
+  String get disconnectAction => 'Disconnect';
+
+  @override
+  String get encryptedHint => 'Your traffic flows through an encrypted layer';
+
+  @override
+  String get offHint => 'Tap connect to go through the encrypted layer';
+
+  @override
+  String get measuredSoFar => 'Measured so far';
+
+  @override
+  String get lastTestLabel => 'Last test';
+
+  @override
+  String get megabitUnit => 'Mbit/s';
+
+  @override
+  String get dataVolume => 'Data moved';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).

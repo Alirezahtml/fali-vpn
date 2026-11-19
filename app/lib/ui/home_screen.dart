@@ -145,6 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
+    final persian = l.localeName == 'fa';
     final status = core.status!;
     final canSwitch = status.systemProxySupported;
     final proxy = status.proxy;
@@ -182,6 +183,8 @@ class _HomeScreenState extends State<HomeScreen> {
         : (tv ? l.tapToConnectTv : l.tapToConnectPhone);
     final traffic = status.traffic;
     final pingMs = connected && test?.ok == true ? test!.responseMs : null;
+    // The switch wears the state's color, and so does the light under it.
+    final powerColor = status.proxyOn ? StatusColors.good : Dali.primary;
     final city = connected &&
             proxy != null &&
             !isRecommendedPlace(proxy.countryCode)
@@ -209,12 +212,18 @@ class _HomeScreenState extends State<HomeScreen> {
               constraints: BoxConstraints(minHeight: box.maxHeight),
               child: IntrinsicHeight(
                 child: Padding(
-                  // Room at the bottom for the floating navigation.
-                  padding: const EdgeInsets.fromLTRB(18, 14, 18, 116),
+                  // The status bar's height, then the room to breathe; at
+                  // the bottom, room for the floating navigation.
+                  padding: EdgeInsets.fromLTRB(
+                    18,
+                    MediaQuery.paddingOf(context).top + 10,
+                    18,
+                    116,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _brand(context),
+                      Center(child: _brand(context)),
                       const SizedBox(height: 20),
                       Row(
                         children: [
@@ -225,7 +234,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               label: l.pingLabel,
                               value: pingMs == null
                                   ? '—'
-                                  : persianDigits('$pingMs'),
+                                  : (persian
+                                        ? persianDigits('$pingMs')
+                                        : '$pingMs'),
                               unit: 'ms',
                             ),
                           ),
@@ -315,24 +326,31 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(height: 24),
                       const SizedBox(height: 16),
                       Center(
-                        child: Tooltip(
-                          message: press,
-                          child: PowerCapsule(
-                            label: status.proxyOn
-                                ? l.disconnectAction
-                                : l.connectAction,
-                            on: status.proxyOn,
-                            busy: core.switchingProxy,
-                            autofocus: tv,
-                            // No account yet: the accounts page, which
-                            // explains them.
-                            onPressed: status.totalAccounts == 0
-                                ? _openAccounts
-                                : () => runShowingErrors(
-                                    context,
-                                    () => _toggle(status.proxyOn),
-                                  ),
-                          ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // A soft round light under the switch, so
+                            // the power reads as the page's hearth.
+                            DriftingGlow(
+                              color: powerColor,
+                              size: 240,
+                              alpha: dark ? 0.20 : 0.13,
+                            ),
+                            PowerCapsule(
+                              tooltip: press,
+                              on: status.proxyOn,
+                              busy: core.switchingProxy,
+                              autofocus: tv,
+                              // No account yet: the accounts page, which
+                              // explains them.
+                              onPressed: status.totalAccounts == 0
+                                  ? _openAccounts
+                                  : () => runShowingErrors(
+                                      context,
+                                      () => _toggle(status.proxyOn),
+                                    ),
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -375,36 +393,42 @@ class _HomeScreenState extends State<HomeScreen> {
     return page;
   }
 
-  /// The brand: the logo in its dark tile and the name beside it.
+  /// The brand: the logo in its tile and the name beside it, centered
+  /// under the status bar with room to breathe.
   Widget _brand(BuildContext context) {
     final theme = Theme.of(context);
-    return Center(
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? const Color(0xFF10151F)
-                  : Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Dali.hairline(context)),
-            ),
-            child: const Center(child: AppLogo(size: 22)),
+    final dark = theme.brightness == Brightness.dark;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 34,
+          height: 34,
+          decoration: BoxDecoration(
+            color: dark ? const Color(0xFF10151F) : Colors.white,
+            borderRadius: BorderRadius.circular(11),
+            border: Border.all(color: Dali.hairline(context)),
+            boxShadow: [
+              BoxShadow(
+                color: (dark ? Colors.black : const Color(0xFF0B3B78))
+                    .withValues(alpha: dark ? 0.4 : 0.10),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
-          const SizedBox(width: 10),
-          Text(
-            AppLocalizations.of(context).appTitle,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontSize: 17,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 0.2,
-            ),
+          child: const Center(child: AppLogo(size: 24)),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          AppLocalizations.of(context).appTitle,
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 0.2,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

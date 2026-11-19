@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../l10n/app_localizations.dart';
 import 'format.dart';
 import 'motion.dart';
 import 'widgets.dart' show StatusColors, delayColor;
@@ -133,6 +134,8 @@ class SectionLabel extends StatelessWidget {
 
 /// The delay as the design's pill: the number and "ms" in its color's
 /// wash. Grey while it is not known, and a spinner while it is measured.
+/// The digits follow the language: Persian numerals in Persian, Latin
+/// everywhere else, so the whole page reads in one hand.
 class PingChip extends StatelessWidget {
   const PingChip({
     super.key,
@@ -150,11 +153,13 @@ class PingChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = testing ? Dali.onVar(context) : delayColor(ms ?? 1000);
+    final persian = AppLocalizations.of(context).localeName == 'fa';
+    final number = ms == null ? null : '${ms!}';
     final text = testing
         ? ''
-        : ms == null
+        : number == null
         ? '—'
-        : '${persianDigits('${ms!}')}ms';
+        : '${persian ? persianDigits(number) : number}ms';
     final style = theme.textTheme.labelMedium?.copyWith(
       color: color,
       fontWeight: FontWeight.w700,
@@ -190,7 +195,9 @@ class PingChip extends StatelessWidget {
 }
 
 /// One of the three live chips on the home page: a colored icon tile, the
-/// name in the muted ink, and the reading in bold.
+/// reading in bold, and the name under it in the muted ink. The reading
+/// scales to its box instead of cutting off, so a narrow phone reads the
+/// whole of it.
 class StatChip extends StatelessWidget {
   const StatChip({
     super.key,
@@ -212,7 +219,7 @@ class StatChip extends StatelessWidget {
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+      padding: const EdgeInsetsDirectional.fromSTEB(9, 9, 7, 9),
       decoration: BoxDecoration(
         color: Dali.surface2(context),
         borderRadius: BorderRadius.circular(18),
@@ -221,19 +228,45 @@ class StatChip extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 26,
-            height: 26,
+            width: 25,
+            height: 25,
             decoration: BoxDecoration(
               color: Dali.wash(color, dark),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(icon, size: 15, color: color),
+            child: Icon(icon, size: 14, color: color),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 7),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // The reading: it shrinks to fit rather than cut off.
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Text.rich(
+                    TextSpan(
+                      text: value,
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w800,
+                        fontFeatures: const [],
+                      ),
+                      children: [
+                        if (unit != null)
+                          TextSpan(
+                            text: ' ${unit!}',
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: Dali.onVar(context),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                      ],
+                    ),
+                    maxLines: 1,
+                  ),
+                ),
+                const SizedBox(height: 1),
                 Text(
                   label,
                   maxLines: 1,
@@ -241,29 +274,8 @@ class StatChip extends StatelessWidget {
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: Dali.onVar(context),
                     fontWeight: FontWeight.w500,
+                    fontSize: 10.5,
                   ),
-                ),
-                const SizedBox(height: 1),
-                Text.rich(
-                  TextSpan(
-                    text: value,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w800,
-                      fontFeatures: const [],
-                    ),
-                    children: [
-                      if (unit != null)
-                        TextSpan(
-                          text: ' ${unit!}',
-                          style: theme.textTheme.labelSmall?.copyWith(
-                            color: Dali.onVar(context),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                    ],
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -579,20 +591,26 @@ class ChoiceTile extends StatelessWidget {
   }
 }
 
-/// The capsule power button: the wide pill with the power icon and the
-/// state's word, green while connected and blue while off, with the pulse
-/// rings breathing out of it while the VPN carries traffic.
-class PowerCapsule extends StatelessWidget {
+/// The capsule power switch of the approved design: a wide pill whose
+/// white knob carries the power mark and glides across as the VPN turns
+/// on and off, with three chevrons flowing toward the knob while the
+/// traffic runs. The pill's own color wears the state — the electric blue
+/// at rest, the green while connected — and a ring of light breathes out
+/// of the whole. The knob's travel is held left-to-right on purpose, so
+/// "on" always reads as the knob at the same end, in either reading
+/// direction.
+class PowerCapsule extends StatefulWidget {
   const PowerCapsule({
     super.key,
-    required this.label,
+    required this.tooltip,
     required this.on,
     required this.busy,
     required this.onPressed,
     this.autofocus = false,
   });
 
-  final String label;
+  /// What a long press, or the screen reader, calls the button.
+  final String tooltip;
 
   /// Green while on, the blue while off.
   final bool on;
@@ -601,70 +619,207 @@ class PowerCapsule extends StatelessWidget {
   final bool autofocus;
 
   @override
+  State<PowerCapsule> createState() => _PowerCapsuleState();
+}
+
+class _PowerCapsuleState extends State<PowerCapsule>
+    with SingleTickerProviderStateMixin {
+  /// The chevrons' flow toward the knob, running only while connected.
+  AnimationController? _flow;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _syncFlow();
+  }
+
+  @override
+  void didUpdateWidget(PowerCapsule old) {
+    super.didUpdateWidget(old);
+    if (old.on != widget.on) _syncFlow();
+  }
+
+  void _syncFlow() {
+    final running = widget.on && !widget.busy && repeatingEffectsOn(context);
+    if (running && _flow == null) {
+      final c = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 1250),
+      );
+      _flow = c..repeat();
+    } else if (!running && _flow != null) {
+      _flow!.dispose();
+      _flow = null;
+    }
+  }
+
+  @override
+  void dispose() {
+    _flow?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final color = on ? StatusColors.good : Dali.primary;
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    final color = widget.on ? StatusColors.good : Dali.primary;
     return Stack(
       alignment: Alignment.center,
       children: [
-        // The rings only breathe while connected; while off the button
-        // rests.
-        PulseHalo(color: color, size: 230, enabled: on && !busy, rings: 2),
-        PressScale(
-          onTap: onPressed,
-          amount: 0.96,
-          haptic: true,
-          child: _capsule(context, color),
+        // The rings only breathe while connected; at rest the switch
+        // keeps its edges to itself.
+        PulseHalo(
+          color: color,
+          size: 238,
+          enabled: widget.on && !widget.busy,
+          rings: 2,
+        ),
+        Tooltip(
+          message: widget.tooltip,
+          child: FocusableActionDetector(
+            autofocus: widget.autofocus,
+            mouseCursor: widget.onPressed == null
+                ? MouseCursor.defer
+                : SystemMouseCursors.click,
+            actions: {
+              ActivateIntent: CallbackAction<ActivateIntent>(
+                onInvoke: (_) => widget.onPressed?.call(),
+              ),
+            },
+            child: PressScale(
+              onTap: widget.onPressed,
+              amount: 0.965,
+              haptic: true,
+              child: _capsule(context, color, dark),
+            ),
+          ),
         ),
       ],
     );
   }
 
-  Widget _capsule(BuildContext context, Color color) {
-    final theme = Theme.of(context);
-    return FilledButton(
-      onPressed: onPressed,
-      autofocus: autofocus,
-      style: FilledButton.styleFrom(
-        backgroundColor: color,
-        foregroundColor: Colors.white,
-        elevation: 0,
-        shape: const StadiumBorder(),
-        minimumSize: const Size(190, 58),
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
-        shadowColor: color.withValues(
-          alpha: theme.brightness == Brightness.dark ? 0.5 : 0.4,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ScaleSwitcher(
-            duration: Motion.fast,
-            child: busy
-                ? const SizedBox.square(
-                    key: ValueKey('spin'),
-                    dimension: 18,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2.4,
-                      color: Colors.white,
-                    ),
-                  )
-                : Icon(
-                    on ? Icons.power_settings_new_rounded : Icons.bolt_rounded,
-                    key: const ValueKey('pow'),
-                    size: 22,
-                    color: Colors.white,
-                  ),
-          ),
-          const SizedBox(width: 10),
-          Text(
-            label,
-            style: theme.textTheme.titleMedium?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-            ),
+  /// The pill itself: the state's color, the flow's chevrons, and the
+  /// sliding knob with the power mark (a spinner while the switch runs).
+  Widget _capsule(BuildContext context, Color color, bool dark) {
+    final idle = dark ? const Color(0xFFB9C4D6) : const Color(0xFF5B6474);
+    final knob = Container(
+      width: 48,
+      height: 48,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: dark ? 0.5 : 0.22),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
           ),
         ],
+      ),
+      child: Center(
+        child: ScaleSwitcher(
+          duration: Motion.fast,
+          child: widget.busy
+              ? SizedBox.square(
+                  key: const ValueKey('spin'),
+                  dimension: 19,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.6,
+                    color: color,
+                  ),
+                )
+              : Icon(
+                  Icons.power_settings_new_rounded,
+                  key: const ValueKey('pow'),
+                  size: 26,
+                  color: widget.on ? StatusColors.good : idle,
+                ),
+        ),
+      ),
+    );
+
+    // Three chevrons whose light runs toward the knob, so the pill reads
+    // alive while the VPN carries traffic.
+    Widget flow() {
+      final c = _flow;
+      return AnimatedOpacity(
+        duration: Motion.normal,
+        curve: Motion.emphasized,
+        opacity: widget.on && !widget.busy ? 1 : 0,
+        child: AnimatedBuilder(
+          animation: c ?? kAlwaysCompleteAnimation,
+          builder: (context, _) {
+            final t = c?.value ?? 0;
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (var i = 0; i < 3; i++)
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    size: 22,
+                    color: Colors.white.withValues(
+                      alpha:
+                          0.25 +
+                          0.55 *
+                              math.max(
+                                0,
+                                math.sin((t * 2 - i * 0.33) * math.pi),
+                              ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      );
+    }
+
+    return Directionality(
+      // The knob's travel does not mirror: "on" is the far end everywhere.
+      textDirection: TextDirection.ltr,
+      child: AnimatedContainer(
+        duration: Motion.normal,
+        curve: Motion.emphasized,
+        width: 208,
+        height: 60,
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: BorderRadius.circular(999),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.lerp(color, Colors.white, 0.14)!,
+              color,
+              Color.lerp(color, Colors.black, dark ? 0.18 : 0.08)!,
+            ],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: color.withValues(alpha: dark ? 0.45 : 0.35),
+              blurRadius: 18,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // The flow's chevrons sit at the end the knob leaves.
+            Positioned(left: 12, child: flow()),
+            // The knob glides across with a small overshoot, the way a
+            // well-made switch settles.
+            AnimatedAlign(
+              duration: const Duration(milliseconds: 340),
+              curve: Motion.pop,
+              alignment: widget.on
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
+              child: Padding(padding: const EdgeInsets.all(6), child: knob),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -790,12 +945,22 @@ class _DialPainter extends CustomPainter {
       canvas.drawCircle(at(_start + _sweep * i / _dots), 2.1, paint);
     }
 
-    // The reading: the arc, then its green bead at the end.
+    // The reading: the arc drawn twice — a soft glow under a crisp
+    // stroke — then its green bead at the end.
     if (fraction > 0) {
+      final arc = Rect.fromCircle(center: center, radius: radius);
+      final sweep = _sweep * fraction;
+      final soft = Paint()
+        ..color = color.withValues(alpha: 0.35)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 9
+        ..strokeCap = StrokeCap.round
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
+      canvas.drawArc(arc, _start, sweep, false, soft);
       canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius),
+        arc,
         _start,
-        _sweep * fraction,
+        sweep,
         false,
         Paint()
           ..color = color
@@ -804,7 +969,7 @@ class _DialPainter extends CustomPainter {
           ..strokeCap = StrokeCap.round,
       );
       canvas.drawCircle(
-        at(_start + _sweep * fraction),
+        at(_start + sweep),
         3.6,
         Paint()..color = end,
       );
@@ -1046,10 +1211,13 @@ class ValueBox extends StatelessWidget {
 double mbpsFrom(int bytesPerSecond) => bytesPerSecond * 8 / 1e6;
 
 /// Grows a dial's top to [v]'s next kind round number, so the arc stays
-/// inside while the top keeps meaning something.
+/// inside while the top keeps meaning something. `math.pow` answers an
+/// int while both its arguments are ints, so the base goes in as a
+/// double — an `as double` on the int it returns would throw every time,
+/// and the page that called it would show as grey nothing.
 double niceCeil(double v) {
-  final e =
-      math.pow(10, (math.log(math.max(v, 1)) / math.ln10).floor()) as double;
+  final e = math.pow(10.0, (math.log(math.max(v, 1)) / math.ln10).floor())
+      .toDouble();
   for (final m in const [1, 1.5, 2, 3, 4, 5, 7.5, 10]) {
     if (m * e >= v) return m * e;
   }

@@ -551,11 +551,54 @@ void main() {
     expect(find.text('پینگ'), findsOneWidget);
     expect(find.text('دانلود'), findsWidgets);
     expect(find.text('آپلود'), findsWidgets);
-    // The capsule says disconnect while the VPN carries traffic.
-    expect(find.text('قطع'), findsOneWidget);
+    // The capsule's power knob is what taps; its hint names the action.
+    expect(find.byTooltip('برای قطع اتصال ضربه بزنید'), findsOneWidget);
     // The map's server card names the country the traffic leaves through.
     expect(find.text('سرور فعال'), findsOneWidget);
     expect(find.textContaining('هلند'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox());
+    core.dispose();
+  });
+
+  testWidgets("the connection's details open and read in the approved design", (
+    tester,
+  ) async {
+    stillMotion(tester);
+    tester.view.physicalSize = const Size(400, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    final api = FakeApi()..systemProxySupported = false;
+    final core = CoreController(
+      () async => api,
+      pollInterval: const Duration(hours: 1),
+    );
+    final settings = AppSettings()..language = 'fa';
+    await tester.pumpWidget(VpnApp(core: core, settings: settings));
+    core.start();
+    await tester.pumpAndSettle();
+
+    // The map's card opens the details while the VPN carries traffic.
+    await tester.tap(find.text('سرور فعال'));
+    await tester.pumpAndSettle();
+
+    // Nothing in the page may throw (a thrown build turns the body grey
+    // in a release app), and the design's cards are all there.
+    expect(tester.takeException(), isNull);
+    expect(find.text('جزئیات اتصال'), findsOneWidget);
+    expect(find.text('IP محلی'), findsOneWidget);
+    expect(find.text('IP وی\u200cپی\u200cان'), findsOneWidget);
+    expect(find.text('مگابیت بر ثانیه'), findsOneWidget);
+    expect(find.text('مدت اتصال'), findsOneWidget);
+    expect(find.text('شهر'), findsOneWidget);
+    expect(find.text('حجم داده'), findsOneWidget);
+
+    // The system's back button returns to the home page whole.
+    await tester.tap(find.byIcon(Icons.arrow_back));
+    await tester.pumpAndSettle();
+    expect(find.text('متصل'), findsOneWidget);
+    expect(tester.takeException(), isNull);
 
     await tester.pumpWidget(const SizedBox());
     core.dispose();

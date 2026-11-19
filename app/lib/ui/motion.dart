@@ -216,9 +216,20 @@ class _PressScaleState extends State<PressScale> {
 
   @override
   Widget build(BuildContext context) {
-    if (!Motion.on(context)) return widget.child;
+    // The system asked for less motion: no press animation, but the tap
+    // itself still has to answer — some controls (the power capsule, the
+    // servers' connect pills) carry no other handler of their own.
+    if (!Motion.on(context)) {
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: widget.onTap,
+        child: widget.child,
+      );
+    }
     return GestureDetector(
-      behavior: HitTestBehavior.deferToChild,
+      // Opaque: the whole control answers, not only its painted children
+      // (the power capsule's pill is mostly empty glass around the knob).
+      behavior: HitTestBehavior.opaque,
       onTapDown: widget.enabled ? (_) => _set(true) : null,
       onTapUp: widget.enabled ? (_) => _set(false) : null,
       onTapCancel: widget.enabled ? () => _set(false) : null,
@@ -716,7 +727,11 @@ class ScaleSwitcher extends StatelessWidget {
 }
 
 /// A page the shell pushes slides in from the reading direction's side,
-/// with the page behind easing back a little, Material's shared axis x.
+/// grows from a little smaller, and fades in, Material's shared axis x.
+/// Everything rides the page's own animation, so the page rests at full
+/// size and full opacity: a scale that followed the route below would
+/// leave it 96% wide for its whole life, the window's black showing
+/// around it on every side.
 class FaliRoute<T> extends PageRouteBuilder<T> {
   FaliRoute({required WidgetBuilder builder, super.settings})
     : super(
@@ -730,10 +745,6 @@ class FaliRoute<T> extends PageRouteBuilder<T> {
             parent: animation,
             curve: Motion.emphasizedDecelerate,
           );
-          final outCurve = CurvedAnimation(
-            parent: secondary,
-            curve: Motion.emphasized,
-          );
           return SlideTransition(
             position: Tween<Offset>(
               begin: Offset(sign * 0.16, 0),
@@ -742,7 +753,7 @@ class FaliRoute<T> extends PageRouteBuilder<T> {
             child: FadeTransition(
               opacity: inCurve,
               child: ScaleTransition(
-                scale: Tween(begin: 0.96, end: 1.0).animate(outCurve),
+                scale: Tween(begin: 0.96, end: 1.0).animate(inCurve),
                 child: child,
               ),
             ),

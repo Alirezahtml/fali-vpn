@@ -28,6 +28,11 @@ class SpeedTestScreen extends StatefulWidget {
   State<SpeedTestScreen> createState() => _SpeedTestScreenState();
 }
 
+/// The delay's number and unit, in the language's digits: Persian
+/// numerals in Persian, Latin everywhere else.
+String _ms(int ms, bool persian) =>
+    '${persian ? persianDigits('$ms') : '$ms'}ms';
+
 class _SpeedTestScreenState extends State<SpeedTestScreen> {
   static const _downUrl = 'https://speed.cloudflare.com/__down?bytes=31457280';
   static const _pingUrl = 'https://speed.cloudflare.com/__down?bytes=0';
@@ -277,11 +282,11 @@ class _SpeedTestScreenState extends State<SpeedTestScreen> {
       persian: persian,
     );
     final pingText = _running
-        ? (_ping > 0 ? '${persianDigits('$_ping')}ms' : '—')
+        ? (_ping > 0 ? _ms(_ping, persian) : '—')
         : last == null
         ? '—'
         : (((last['ping'] as num?)?.toInt() ?? 0) > 0
-              ? '${persianDigits('${(last['ping'] as num?)!.toInt()}')}ms'
+              ? _ms((last['ping'] as num?)!.toInt(), persian)
               : '—');
     final upText = _running
         ? SpeedGauge.speedText(_up, persian: persian)
@@ -470,7 +475,7 @@ class _HistoryRow extends StatelessWidget {
                 Text(
                   '${l.downloadRate} ${fig(entry['down'])} · '
                   '${l.uploadRate} ${fig(entry['up'])} · '
-                  '${l.pingLabel} ${ping > 0 ? '${persianDigits('$ping')}ms' : '—'}',
+                  '${l.pingLabel} ${ping > 0 ? _ms(ping, persian) : '—'}',
                   style: theme.textTheme.bodyMedium,
                 ),
               ],

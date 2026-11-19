@@ -50,14 +50,15 @@ class _MobileShellState extends State<MobileShell> {
   int _tab = 0;
 
   /// Opens [page] under a top bar named [title]; it follows the core, and
-  /// slides in from the reading direction's side.
+  /// slides in from the reading direction's side. The title sits centered,
+  /// as the approved design's pushed pages do.
   void _push(String title, Widget Function() page) {
     Navigator.of(context).push(
       FaliRoute<void>(
         builder: (context) => ListenableBuilder(
           listenable: widget.core,
           builder: (context, _) => Scaffold(
-            appBar: AppBar(title: Text(title)),
+            appBar: AppBar(title: Text(title), centerTitle: true),
             body: SafeArea(
               top: false,
               child: OwnTopBar(child: _readable(page())),

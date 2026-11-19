@@ -73,6 +73,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
     final city = proxy?.cityName.isNotEmpty ?? false
         ? proxy!.cityName
         : (status.exit?.city ?? '');
+    final vpnIp = connected
+        ? (status.exit?.ipv4.isNotEmpty ?? false
+              ? status.exit!.ipv4
+              : (status.exit?.ipv6 ?? ''))
+        : '';
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 28),
       children: [
@@ -80,25 +85,24 @@ class _DetailsScreenState extends State<DetailsScreen> {
           offset: const Offset(0, 14),
           padBetween: 12,
           children: [
-            // The two addresses: the phone's own, and the one the websites
-            // see (the server's), in the blue while connected.
-            Row(
-              children: [
-                Expanded(child: _ipCard(context, l.localIp, _localIp, false)),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _ipCard(
-                    context,
-                    l.vpnIp,
-                    connected
-                        ? (status.exit?.ipv4.isNotEmpty ?? false
-                              ? status.exit!.ipv4
-                              : (status.exit?.ipv6 ?? ''))
-                        : '',
-                    connected,
+            // The two addresses in one card, the way the design draws it:
+            // the phone's own, an arrow through a bright bead, and the one
+            // the websites see (the server's), in the blue while
+            // connected.
+            DaliCard(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 14,
+              ),
+              child: Row(
+                children: [
+                  Expanded(child: _ipCard(context, l.localIp, _localIp, false)),
+                  _hopArrow(context, connected),
+                  Expanded(
+                    child: _ipCard(context, l.vpnIp, vpnIp, connected),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             DaliCard(
               padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
@@ -303,7 +307,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ? (dark ? const Color(0xFF284E7E) : const Color(0xFFD6E4FF))
             : Dali.surface2(context),
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Dali.hairline(context)),
+        border: Border.all(
+          color: accent
+              ? Dali.primary.withValues(alpha: dark ? 0.55 : 0.35)
+              : Dali.hairline(context),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,6 +333,40 @@ class _DetailsScreenState extends State<DetailsScreen> {
             style: theme.textTheme.titleSmall?.copyWith(
               fontWeight: FontWeight.w800,
               fontFeatures: const [],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// The arrow between the two addresses: a little bead that brightens
+  /// while the VPN carries the traffic between them. It points from the
+  /// phone's card to the server's card, whichever side each sits on in
+  /// the page's reading direction.
+  Widget _hopArrow(BuildContext context, bool connected) {
+    final theme = Theme.of(context);
+    final rtl = Directionality.of(context) == TextDirection.rtl;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 26,
+            height: 26,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: connected
+                  ? Dali.wash(Dali.primary, theme.brightness == Brightness.dark)
+                  : Dali.surface3(context),
+            ),
+            child: Icon(
+              rtl
+                  ? Icons.arrow_back_rounded
+                  : Icons.arrow_forward_rounded,
+              size: 15,
+              color: connected ? Dali.primary : Dali.onVar(context),
             ),
           ),
         ],

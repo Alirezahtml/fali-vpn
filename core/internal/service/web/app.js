@@ -1292,14 +1292,8 @@ function renderSignIn(view) {
       // browser sign-in, moved over by its data folder.
       if (view.error_code === "blocked") {
         message.replaceChildren(
-          el("span", { text: "Tip: sign in with the browser in the Fali VPN app, then copy that device's data folder to this machine." }),
-          el("a", {
-            class: "btn primary",
-            style: "margin-top:10px; width:fit-content",
-            href: "https://github.com/Alirezahtml/fali-vpn/blob/main/docs/BROWSER-SIGNIN.md",
-            target: "_blank",
-            rel: "noreferrer",
-            text: "How to do it",
+          el("span", {
+            text: "Tip: sign in with the browser in the Fali VPN app (the Accounts page does this sign-in for you), then copy that device's data folder to this machine.",
           }),
         );
         message.style.display = "grid";

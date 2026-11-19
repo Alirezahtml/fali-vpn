@@ -76,11 +76,18 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.ltr,
-      child: AnimatedBuilder(
-        animation: _flow,
-        builder: (context, _) => CustomPaint(
-          size: Size.infinite,
-          painter: _WorldMapPainter(widget, _flow.value),
+      child: TweenAnimationBuilder<double>(
+        // The route draws itself out as the VPN connects, and pulls back
+        // in as it drops, so the map tells the connection's story too.
+        tween: Tween(end: widget.connected ? 1.0 : 0.0),
+        duration: Motion.slow,
+        curve: Motion.emphasized,
+        builder: (context, progress, _) => AnimatedBuilder(
+          animation: _flow,
+          builder: (context, _) => CustomPaint(
+            size: Size.infinite,
+            painter: _WorldMapPainter(widget, _flow.value, progress),
+          ),
         ),
       ),
     );
@@ -88,10 +95,13 @@ class _WorldMapState extends State<WorldMap> with SingleTickerProviderStateMixin
 }
 
 class _WorldMapPainter extends CustomPainter {
-  const _WorldMapPainter(this.w, this.t);
+  const _WorldMapPainter(this.w, this.t, this.routeProgress);
 
   final WorldMap w;
   final double t;
+
+  /// How much of the home-to-server route is drawn, 0 to 1.
+  final double routeProgress;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -120,7 +130,7 @@ class _WorldMapPainter extends CustomPainter {
     // The exit pin, the home pin, and the arc between them.
     final exit = pin(w.exitCode);
     final home = projectGeo(kHomePinGeo[0], kHomePinGeo[1]);
-    if (w.connected && exit != null) {
+    if (exit != null && routeProgress > 0 && w.connected) {
       final from = at(home.x, home.y);
       final to = at(projectGeo(exit[0], exit[1]).x, projectGeo(exit[0], exit[1]).y);
       final dist = (to - from).distance;
@@ -129,17 +139,19 @@ class _WorldMapPainter extends CustomPainter {
         ..moveTo(from.dx, from.dy)
         ..quadraticBezierTo(mid.dx, mid.dy, to.dx, to.dy);
 
-      // Dashes travel from home to the server.
+      // Dashes travel from home to the server, along as much of the
+      // route as has been drawn.
       final metric = arc.computeMetrics().first;
+      final shown = metric.length * routeProgress.clamp(0.0, 1.0);
       final unit = math.max(scale * 3.2, 3.0);
       final dash = unit, gap = unit * 1.15;
       final shift = (t * (dash + gap)) % (dash + gap);
       final dashed = Path();
-      for (double s = -shift; s < metric.length; s += dash + gap) {
+      for (double s = -shift; s < shown; s += dash + gap) {
         dashed.addPath(
           metric.extractPath(
             math.max(0, s),
-            math.min(metric.length, s + dash),
+            math.min(shown, s + dash),
           ),
           Offset.zero,
         );
@@ -153,22 +165,25 @@ class _WorldMapPainter extends CustomPainter {
           ..strokeCap = StrokeCap.round,
       );
 
-      // A ring breathing out of the server pin.
+      // A ring breathing out of the server pin, which lands with the
+      // route's end (a little pop as the last dash arrives).
       final breathe = (math.sin(t * math.pi * 2) + 1) / 2;
+      final landed = routeProgress.clamp(0.0, 1.0);
       canvas.drawCircle(
         to,
-        5 + breathe * 9,
-        Paint()..color = w.exitColor.withValues(alpha: 0.38 * (1 - breathe)),
+        (4 + landed * 1.4) + breathe * 9 * landed,
+        Paint()
+          ..color = w.exitColor.withValues(alpha: 0.38 * (1 - breathe) * landed),
       );
       canvas.drawCircle(
         to,
-        3.4,
+        3.4 * landed,
         Paint()
           ..color = w.exitColor
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.4,
       );
-      canvas.drawCircle(to, 2.1, Paint()..color = w.exitColor);
+      canvas.drawCircle(to, 2.1 * landed, Paint()..color = w.exitColor);
     } else if (exit != null && !w.connected) {
       // The chosen server waits, quietly, while the VPN is off.
       final to = at(projectGeo(exit[0], exit[1]).x, projectGeo(exit[0], exit[1]).y);
@@ -194,5 +209,5 @@ class _WorldMapPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_WorldMapPainter old) =>
-      old.t != t || old.w != w;
+      old.t != t || old.w != w || old.routeProgress != routeProgress;
 }

@@ -209,8 +209,11 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
 
   /// Grows the gauge's scale to the reading's next kind round number, so
   /// the needle stays inside while the top keeps meaning something.
+  /// `math.pow` answers an int while both its arguments are ints, so the
+  /// base goes in as a double.
   double _niceCeil(double v) {
-    final e = math.pow(10, (math.log(math.max(v, 1)) / math.ln10).floor()) as double;
+    final e = math.pow(10.0, (math.log(math.max(v, 1)) / math.ln10).floor())
+        .toDouble();
     for (final m in const [1, 1.5, 2, 3, 4, 5, 7.5, 10]) {
       if (m * e >= v) return m * e;
     }
