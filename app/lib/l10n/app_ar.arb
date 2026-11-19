@@ -1,6 +1,12 @@
 {
   "@@locale": "ar",
   "appTitle": "Fali VPN",
+  "sponsorHint": "هذه المساحة لاسم راعي المشروع",
+  "sponsorTitle": "الراعي",
+  "swipeToDisconnect": "اسحب لقطع الاتصال",
+  "swipeToConnect": "اسحب للاتصال",
+  "readyToConnect": "جاهز للاتصال",
+  "tagline": "نفق سريع وآمن وخاص",
   "navOverview": "نظرة عامة",
   "navAccounts": "الحسابات",
   "navSettings": "الإعدادات",

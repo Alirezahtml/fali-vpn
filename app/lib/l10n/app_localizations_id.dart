@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -11,6 +10,24 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get appTitle => 'Fali VPN';
+
+  @override
+  String get sponsorHint => 'Ruang ini milik sponsor proyek';
+
+  @override
+  String get sponsorTitle => 'Sponsor';
+
+  @override
+  String get swipeToDisconnect => 'Geser untuk memutus';
+
+  @override
+  String get swipeToConnect => 'Geser untuk tersambung';
+
+  @override
+  String get readyToConnect => 'Siap tersambung';
+
+  @override
+  String get tagline => 'Terowongan cepat, aman, dan pribadi';
 
   @override
   String get navOverview => 'Ringkasan';
@@ -31,12 +48,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get stateWaiting => 'Menunggu';
 
   @override
-  String get waitingForAccount =>
-      'Tambahkan Firefox Account di halaman Akun untuk terhubung.';
+  String get waitingForAccount => 'Tambahkan Firefox Account di halaman Akun untuk terhubung.';
 
   @override
-  String get waitingForEnabledAccount =>
-      'Semua akun dinonaktifkan. Aktifkan salah satu di halaman Akun.';
+  String get waitingForEnabledAccount => 'Semua akun dinonaktifkan. Aktifkan salah satu di halaman Akun.';
 
   @override
   String get stateError => 'Error';
@@ -169,15 +184,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get noAccountsHint => 'Tambahkan Firefox Account untuk terhubung.';
 
   @override
-  String get delayTestFailed =>
-      'Tidak dapat mengukur jeda server. Periksa internet Anda.';
+  String get delayTestFailed => 'Tidak dapat mengukur jeda server. Periksa internet Anda.';
 
   @override
   String get createAccountTitle => 'Belum punya Firefox Account?';
 
   @override
-  String get createAccountHint =>
-      'Buat gratis di accounts.firefox.com, lalu kembali dan tekan Tambah akun.';
+  String get createAccountHint => 'Buat gratis di accounts.firefox.com, lalu kembali dan tekan Tambah akun.';
 
   @override
   String get moveUp => 'Naikkan';
@@ -223,15 +236,13 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get reasonQuotaExhausted =>
-      'Kuota bulan ini habis; dipakai lagi setelah reset bulanan.';
+  String get reasonQuotaExhausted => 'Kuota bulan ini habis; dipakai lagi setelah reset bulanan.';
 
   @override
   String get reasonSignInRequired => 'Masuk lagi untuk memakai akun ini.';
 
   @override
-  String get reasonSignInConfirm =>
-      'Mozilla meminta konfirmasi masuk: tekan Masuk lagi (hanya perlu kode).';
+  String get reasonSignInConfirm => 'Mozilla meminta konfirmasi masuk: tekan Masuk lagi (hanya perlu kode).';
 
   @override
   String reasonSignInFailed(String detail) {
@@ -249,8 +260,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get reasonNotEntitled =>
-      'Mozilla menolak akun ini; akan dicoba lagi nanti.';
+  String get reasonNotEntitled => 'Mozilla menolak akun ini; akan dicoba lagi nanti.';
 
   @override
   String get more => 'Lainnya';
@@ -369,8 +379,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get signInNoAccount => 'Tidak ada Firefox Account dengan email ini.';
 
   @override
-  String get signInNoAccountHint =>
-      'Periksa emailnya, atau buat Firefox Account gratis dengan email ini di situs Mozilla, konfirmasi dari kotak masuk Anda, lalu tambahkan di sini.';
+  String get signInNoAccountHint => 'Periksa emailnya, atau buat Firefox Account gratis dengan email ini di situs Mozilla, konfirmasi dari kotak masuk Anda, lalu tambahkan di sini.';
 
   @override
   String get createAccountButton => 'Buat Firefox Account';
@@ -379,38 +388,31 @@ class AppLocalizationsId extends AppLocalizations {
   String get signInWrongPassword => 'Kata sandi salah.';
 
   @override
-  String get signInNoPassword =>
-      'Akun ini tidak punya kata sandi: dibuat dengan masuk lewat Google atau Apple. Atur kata sandi, lalu masuk di sini dengannya.';
+  String get signInNoPassword => 'Akun ini tidak punya kata sandi: dibuat dengan masuk lewat Google atau Apple. Atur kata sandi, lalu masuk di sini dengannya.';
 
   @override
   String get setPasswordButton => 'Atur kata sandi';
 
   @override
-  String get signInTooManyAttempts =>
-      'Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.';
+  String get signInTooManyAttempts => 'Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi.';
 
   @override
-  String get signInUnblockRejected =>
-      'Kode pembuka blokir tidak diterima. Gunakan kode dari email terbaru Mozilla.';
+  String get signInUnblockRejected => 'Kode pembuka blokir tidak diterima. Gunakan kode dari email terbaru Mozilla.';
 
   @override
-  String get signInWrongCode =>
-      'Kode salah atau kedaluwarsa. Gunakan kode dari email terbaru Mozilla; kode lama tidak berlaku lagi saat kode baru dikirim.';
+  String get signInWrongCode => 'Kode salah atau kedaluwarsa. Gunakan kode dari email terbaru Mozilla; kode lama tidak berlaku lagi saat kode baru dikirim.';
 
   @override
-  String get signInWrongTotp =>
-      'Kode salah. Masukkan kode yang ditampilkan aplikasi autentikator sekarang.';
+  String get signInWrongTotp => 'Kode salah. Masukkan kode yang ditampilkan aplikasi autentikator sekarang.';
 
   @override
-  String get signInTooManyCodes =>
-      'Terlalu banyak kode salah. Mulai masuk dari awal.';
+  String get signInTooManyCodes => 'Terlalu banyak kode salah. Mulai masuk dari awal.';
 
   @override
   String get signInTimedOut => 'Proses masuk terlalu lama. Mulai lagi.';
 
   @override
-  String get signInNetwork =>
-      'Mozilla tidak dapat dihubungi. Periksa internet Anda lalu coba lagi.';
+  String get signInNetwork => 'Mozilla tidak dapat dihubungi. Periksa internet Anda lalu coba lagi.';
 
   @override
   String get coreConnecting => 'Menghubungkan ke core…';
@@ -441,8 +443,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get errNotAnswering => 'Core tidak merespons.';
 
   @override
-  String get errRefused =>
-      'Core menolak aplikasi; mungkin core ini milik salinan aplikasi lain.';
+  String get errRefused => 'Core menolak aplikasi; mungkin core ini milik salinan aplikasi lain.';
 
   @override
   String get settingsTitle => 'Pengaturan';
@@ -496,8 +497,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get routingDirect => 'Koneksi langsung untuk situs lokal';
 
   @override
-  String get routingDirectHint =>
-      'Situs dan IP dari negara yang dipilih tidak lewat VPN, jadi lebih cepat dibuka dan hemat kuota.';
+  String get routingDirectHint => 'Situs dan IP dari negara yang dipilih tidak lewat VPN, jadi lebih cepat dibuka dan hemat kuota.';
 
   @override
   String get region => 'Negara';
@@ -536,15 +536,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get openFolder => 'Buka folder';
 
   @override
-  String get unofficialNote =>
-      'Klien tidak resmi. Tidak berafiliasi dengan Mozilla.';
+  String get unofficialNote => 'Klien tidak resmi. Tidak berafiliasi dengan Mozilla.';
 
   @override
   String get closeTitle => 'Tutup jendela?';
 
   @override
-  String get closeBody =>
-      'Saat di tray, VPN tetap terhubung. Keluar akan memutus VPN.';
+  String get closeBody => 'Saat di tray, VPN tetap terhubung. Keluar akan memutus VPN.';
 
   @override
   String get rememberChoice => 'Ingat pilihan saya';
@@ -589,8 +587,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get portChangeBody =>
-      'Aplikasi terhubung ke port ini. Pilih antara 1024 dan 65535.';
+  String get portChangeBody => 'Aplikasi terhubung ke port ini. Pilih antara 1024 dan 65535.';
 
   @override
   String get portLabel => 'Port';
@@ -617,8 +614,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get welcomeTitle => 'Selamat datang';
 
   @override
-  String get welcomeBody =>
-      'Pilih bahasa dan negara Anda. Situs dari negara Anda dibuka langsung tanpa VPN, jadi lebih cepat dan hemat kuota.';
+  String get welcomeBody => 'Pilih bahasa dan negara Anda. Situs dari negara Anda dibuka langsung tanpa VPN, jadi lebih cepat dan hemat kuota.';
 
   @override
   String get start => 'Mulai';
@@ -674,8 +670,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get modeRecommendedHint => 'Mozilla memilihkan lokasi untuk Anda.';
 
   @override
-  String get modeFastestHint =>
-      'Lokasi dengan ping terendah, dipilih di setiap koneksi.';
+  String get modeFastestHint => 'Lokasi dengan ping terendah, dipilih di setiap koneksi.';
 
   @override
   String get testDelay => 'Uji ping asli';
@@ -700,8 +695,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get noServers =>
-      'Belum ada server. Server akan muncul setelah core terhubung ke Mozilla.';
+  String get noServers => 'Belum ada server. Server akan muncul setelah core terhubung ke Mozilla.';
 
   @override
   String get levelAll => 'Semua';
@@ -731,8 +725,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get switchThreshold => 'Ganti akun pada';
 
   @override
-  String get switchThresholdHint =>
-      'Pindah ke akun berikutnya saat kuota sudah terpakai sebanyak ini.';
+  String get switchThresholdHint => 'Pindah ke akun berikutnya saat kuota sudah terpakai sebanyak ini.';
 
   @override
   String get signInMethod => 'Metode masuk';
@@ -747,8 +740,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get browserSignInBroken => 'Halaman masuk tidak dapat dibuka.';
 
   @override
-  String get browserSignInBlocked =>
-      'Mozilla tidak menyelesaikan langkah terakhir untuk menambahkan akun (HTTP 406).';
+  String get browserSignInBlocked => 'Mozilla tidak menyelesaikan langkah terakhir untuk menambahkan akun (HTTP 406).';
 
   @override
   String get browserSignInFallback => 'Masuk dengan email dan kata sandi';
@@ -768,8 +760,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get backupImportTitle => 'Tambahkan akun-akun ini?';
 
   @override
-  String get backupAccountExists =>
-      'Sudah ada; info masuknya diambil dari file';
+  String get backupAccountExists => 'Sudah ada; info masuknya diambil dari file';
 
   @override
   String get backupImportAction => 'Tambah';
@@ -800,8 +791,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get dnsCustom => 'Kustom';
 
   @override
-  String get dnsCustomHint =>
-      'Satu per baris: https://…/dns-query, tls://…, atau alamat IP.';
+  String get dnsCustomHint => 'Satu per baris: https://…/dns-query, tls://…, atau alamat IP.';
 
   @override
   String get dnsFallback => 'Gunakan DNS sistem sebagai cadangan';
@@ -837,8 +827,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get tunMtu => 'MTU';
 
   @override
-  String get tunMtuHint =>
-      'Ukuran paket antarmuka VPN, 1280 hingga 9000. Kosong: otomatis.';
+  String get tunMtuHint => 'Ukuran paket antarmuka VPN, 1280 hingga 9000. Kosong: otomatis.';
 
   @override
   String get tunMtuInvalid => 'Angka dari 1280 hingga 9000, atau kosong';
@@ -853,8 +842,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get directRules => 'Langsung';
 
   @override
-  String get directRulesHint =>
-      'Situs dan alamat dalam daftar ini dibuka tanpa VPN, langsung lewat internet Anda sendiri. Aturan negara yang dipilih sudah ada di sini: tambah, ubah, atau hapus baris. Memilih negara lain menggantinya dengan aturan negara itu.';
+  String get directRulesHint => 'Situs dan alamat dalam daftar ini dibuka tanpa VPN, langsung lewat internet Anda sendiri. Aturan negara yang dipilih sudah ada di sini: tambah, ubah, atau hapus baris. Memilih negara lain menggantinya dengan aturan negara itu.';
 
   @override
   String get restoreRegionRules => 'Pulihkan aturan negara';
@@ -863,8 +851,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get blockRules => 'Blokir';
 
   @override
-  String get blockRulesHint =>
-      'Situs dan alamat dalam daftar ini tidak bisa dibuka sama sekali, baik langsung maupun lewat VPN: untuk iklan atau situs yang tidak pernah ingin Anda buka.';
+  String get blockRulesHint => 'Situs dan alamat dalam daftar ini tidak bisa dibuka sama sekali, baik langsung maupun lewat VPN: untuk iklan atau situs yang tidak pernah ingin Anda buka.';
 
   @override
   String get rulesTitle => 'Aturan';
@@ -919,8 +906,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get portRefusedNote =>
-      'Proxy Mozilla tidak bisa terhubung ke port ini.';
+  String get portRefusedNote => 'Proxy Mozilla tidak bisa terhubung ke port ini.';
 
   @override
   String get sectionAdvanced => 'Lanjutan';
@@ -938,19 +924,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get tlsFragmentSni => 'Nama server (SNI)';
 
   @override
-  String get tlsFragmentFirstByteHint =>
-      'Memisahkan header TLS pada byte pertama (0x16)';
+  String get tlsFragmentFirstByteHint => 'Memisahkan header TLS pada byte pertama (0x16)';
 
   @override
-  String get tlsFragmentSniHint =>
-      'Membagi nama server (SNI) ke beberapa paket TCP';
+  String get tlsFragmentSniHint => 'Membagi nama server (SNI) ke beberapa paket TCP';
 
   @override
   String get tlsFragmentRecord => 'Rekaman TLS';
 
   @override
-  String get tlsFragmentRecordHint =>
-      'Membagi nama server (SNI) ke dua rekaman TLS';
+  String get tlsFragmentRecordHint => 'Membagi nama server (SNI) ke dua rekaman TLS';
 
   @override
   String get tlsFragmentOffHint => 'Koneksi TLS biasa';
@@ -965,8 +948,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get apiRelayUse => 'Gunakan server relay';
 
   @override
-  String get apiRelayHint =>
-      'Cloudflare Worker milik Anda, atau relay.php di hosting Anda sendiri.\nHanya dipakai saat Mozilla tidak menjawab langsung: proses masuk, akun, dan daftar server melewatinya, bukan lalu lintas VPN.';
+  String get apiRelayHint => 'Cloudflare Worker milik Anda, atau relay.php di hosting Anda sendiri.\nHanya dipakai saat Mozilla tidak menjawab langsung: proses masuk, akun, dan daftar server melewatinya, bukan lalu lintas VPN.';
 
   @override
   String get upstreamProxy => 'Proxy upstream';
@@ -981,19 +963,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get upstreamProxyPort => 'Port';
 
   @override
-  String get upstreamProxyHint =>
-      'Koneksi ke Mozilla melewati proxy ini, untuk jaringan yang memblokir atau memperlambat Mozilla.\nJika proxy berjalan di perangkat ini, keluarkan dari VPN.';
+  String get upstreamProxyHint => 'Koneksi ke Mozilla melewati proxy ini, untuk jaringan yang memblokir atau memperlambat Mozilla.\nJika proxy berjalan di perangkat ini, keluarkan dari VPN.';
 
   @override
-  String get upstreamProxyInvalid =>
-      'Masukkan alamat proxy, misalnya 127.0.0.1.';
+  String get upstreamProxyInvalid => 'Masukkan alamat proxy, misalnya 127.0.0.1.';
 
   @override
   String get upstreamProxyInvalidPort => 'Masukkan port dari 1 sampai 65535.';
 
   @override
-  String get upstreamProxyOwn =>
-      'Itu proxy milik aplikasi ini. Masukkan yang lain.';
+  String get upstreamProxyOwn => 'Itu proxy milik aplikasi ini. Masukkan yang lain.';
 
   @override
   String get apiRelayInvalid => 'Harus berupa alamat https://.';
@@ -1014,8 +993,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get proxyPassword => 'Kata sandi proxy';
 
   @override
-  String get proxyLoginHint =>
-      'Aplikasi harus login dengan data ini. Kosongkan keduanya jika tidak perlu login.';
+  String get proxyLoginHint => 'Aplikasi harus login dengan data ini. Kosongkan keduanya jika tidak perlu login.';
 
   @override
   String get loginBothOrNone => 'Isi keduanya, atau biarkan keduanya kosong.';
@@ -1069,8 +1047,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get notifySignInTitle => 'Perlu masuk';
 
   @override
-  String get notifySignInBody =>
-      'Sebuah akun harus masuk lagi di halaman Akun.';
+  String get notifySignInBody => 'Sebuah akun harus masuk lagi di halaman Akun.';
 
   @override
   String get navAbout => 'Tentang';
@@ -1104,8 +1081,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get updateCheckNoNetwork =>
-      'Tidak dapat memeriksa pembaruan. Periksa koneksi internet Anda dan coba lagi.';
+  String get updateCheckNoNetwork => 'Tidak dapat memeriksa pembaruan. Periksa koneksi internet Anda dan coba lagi.';
 
   @override
   String get updateNow => 'Perbarui';
@@ -1205,8 +1181,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get connectedTo => 'Terhubung ke';
 
   @override
-  String get vpnNotAllowed =>
-      'VPN memerlukan izin Anda. Ketuk tombol lagi dan izinkan.';
+  String get vpnNotAllowed => 'VPN memerlukan izin Anda. Ketuk tombol lagi dan izinkan.';
 
   @override
   String get dataUsedTitle => 'Data terpakai';
@@ -1218,24 +1193,19 @@ class AppLocalizationsId extends AppLocalizations {
   String get connectRetrying => 'Tidak dapat terhubung. Periksa internet Anda.';
 
   @override
-  String get failUnreachable =>
-      'Tidak dapat menjangkau server Mozilla. Coba koneksi internet lain.';
+  String get failUnreachable => 'Tidak dapat menjangkau server Mozilla. Coba koneksi internet lain.';
 
   @override
-  String get failUpstreamProxy =>
-      'Tidak dapat menjangkau Mozilla melalui proxy upstream. Pastikan proxy berjalan.';
+  String get failUpstreamProxy => 'Tidak dapat menjangkau Mozilla melalui proxy upstream. Pastikan proxy berjalan.';
 
   @override
-  String get failInsideVpn =>
-      'Internet ini sudah melewati VPN. Matikan VPN tersebut.';
+  String get failInsideVpn => 'Internet ini sudah melewati VPN. Matikan VPN tersebut.';
 
   @override
-  String get failRefused =>
-      'Server Mozilla menolak koneksi. Coba lagi dalam beberapa menit.';
+  String get failRefused => 'Server Mozilla menolak koneksi. Coba lagi dalam beberapa menit.';
 
   @override
-  String get failLocationRefused =>
-      'Negara ini tidak terbuka untuk akun Anda. Pilih negara lain.';
+  String get failLocationRefused => 'Negara ini tidak terbuka untuk akun Anda. Pilih negara lain.';
 
   @override
   String get useRecommendedLocation => 'Gunakan lokasi yang disarankan';
@@ -1246,37 +1216,31 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get failSignIn =>
-      'Sesi masuk akun ini sudah kedaluwarsa. Masuk lagi di halaman Akun.';
+  String get failSignIn => 'Sesi masuk akun ini sudah kedaluwarsa. Masuk lagi di halaman Akun.';
 
   @override
   String get failQuota => 'Kuota bulan ini habis. Tambahkan akun lain.';
 
   @override
-  String get failNotEntitled =>
-      'Mozilla tidak mengizinkan akun ini memakai VPN. Tambahkan akun lain.';
+  String get failNotEntitled => 'Mozilla tidak mengizinkan akun ini memakai VPN. Tambahkan akun lain.';
 
   @override
-  String get failRegion =>
-      'Mozilla tidak menyediakan layanannya di negara Anda.';
+  String get failRegion => 'Mozilla tidak menyediakan layanannya di negara Anda.';
 
   @override
-  String get failServer =>
-      'Layanan Mozilla sedang bermasalah sementara. Aplikasi akan mencoba lagi sendiri.';
+  String get failServer => 'Layanan Mozilla sedang bermasalah sementara. Aplikasi akan mencoba lagi sendiri.';
 
   @override
   String get failNoAccount => 'Tidak ada akun yang siap. Buka halaman Akun.';
 
   @override
-  String get failTestSite =>
-      'Terhubung ke server, tetapi situs tidak terbuka. Coba negara lain.';
+  String get failTestSite => 'Terhubung ke server, tetapi situs tidak terbuka. Coba negara lain.';
 
   @override
   String get failOther => 'Tidak dapat terhubung. Coba lagi.';
 
   @override
-  String get failNoInternet =>
-      'Tidak ada internet. Periksa Wi-Fi atau data seluler.';
+  String get failNoInternet => 'Tidak ada internet. Periksa Wi-Fi atau data seluler.';
 
   @override
   String get waitingForNetwork => 'Menunggu koneksi internet…';
@@ -1296,12 +1260,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get appModeInclude => 'Hanya aplikasi terpilih';
 
   @override
-  String get appModeExcludeHint =>
-      'Aplikasi terpilih terhubung langsung, tidak lewat VPN; misalnya aplikasi bank yang menolak IP luar negeri.';
+  String get appModeExcludeHint => 'Aplikasi terpilih terhubung langsung, tidak lewat VPN; misalnya aplikasi bank yang menolak IP luar negeri.';
 
   @override
-  String get appModeIncludeHint =>
-      'Hanya aplikasi terpilih yang lewat VPN; aplikasi lain terhubung langsung.';
+  String get appModeIncludeHint => 'Hanya aplikasi terpilih yang lewat VPN; aplikasi lain terhubung langsung.';
 
   @override
   String fromRegionList(String region) {
@@ -1315,16 +1277,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get connectionMode => 'Mode koneksi';
 
   @override
-  String get modeProxyHint =>
-      'Hanya aplikasi yang diatur memakai proxy yang lewat proxy.';
+  String get modeProxyHint => 'Hanya aplikasi yang diatur memakai proxy yang lewat proxy.';
 
   @override
-  String get modeSystemProxyHint =>
-      'Windows dan sebagian besar aplikasi lewat proxy.';
+  String get modeSystemProxyHint => 'Windows dan sebagian besar aplikasi lewat proxy.';
 
   @override
-  String get modeSystemProxyHintOther =>
-      'Browser dan sebagian besar aplikasi lewat proxy.';
+  String get modeSystemProxyHintOther => 'Browser dan sebagian besar aplikasi lewat proxy.';
 
   @override
   String get suggestedApps => 'Aplikasi yang disarankan';
@@ -1374,8 +1333,7 @@ class AppLocalizationsId extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other:
-          'DNS jaringan Anda menjawab $count nama dengan alamat pemblokiran. Aplikasi ini tidak memakai jawaban tersebut.',
+      other: 'DNS jaringan Anda menjawab $count nama dengan alamat pemblokiran. Aplikasi ini tidak memakai jawaban tersebut.',
       one: 'DNS jaringan Anda menjawab 1 nama dengan alamat pemblokiran. Aplikasi ini tidak memakai jawaban tersebut.',
     );
     return '$_temp0';
@@ -1418,8 +1376,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get modeProxyOnly => 'Hanya proxy';
 
   @override
-  String get noNetwork =>
-      'Tidak ada koneksi internet. Nyalakan Wi-Fi atau data seluler.';
+  String get noNetwork => 'Tidak ada koneksi internet. Nyalakan Wi-Fi atau data seluler.';
 
   @override
   String get blockAds => 'Blokir iklan';
@@ -1430,8 +1387,7 @@ class AppLocalizationsId extends AppLocalizations {
   }
 
   @override
-  String get systemProxyTakenOff =>
-      'Program lain mematikan proxy sistem, jadi lalu lintas tidak melewati VPN.';
+  String get systemProxyTakenOff => 'Program lain mematikan proxy sistem, jadi lalu lintas tidak melewati VPN.';
 
   @override
   String get setSystemProxyAgain => 'Atur lagi';
@@ -1457,8 +1413,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get tunInstallWaiting => 'Menunggu izin untuk memasang layanan TUN…';
 
   @override
-  String get tunInstallCancelled =>
-      'Mode TUN memerlukan izin administrator sekali. Izin tidak diberikan, jadi mode tidak berubah.';
+  String get tunInstallCancelled => 'Mode TUN memerlukan izin administrator sekali. Izin tidak diberikan, jadi mode tidak berubah.';
 
   @override
   String tunInstallFailed(String error) {
@@ -1481,19 +1436,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get tunMissing => 'Layanan TUN belum dipasang.';
 
   @override
-  String get tunOutdated =>
-      'Layanan TUN lebih lama dari aplikasi ini. Pasang lagi untuk memakai mode TUN.';
+  String get tunOutdated => 'Layanan TUN lebih lama dari aplikasi ini. Pasang lagi untuk memakai mode TUN.';
 
   @override
-  String get tunAppOutdated =>
-      'Layanan TUN lebih baru dari aplikasi ini. Perbarui aplikasi untuk memakai mode TUN.';
+  String get tunAppOutdated => 'Layanan TUN lebih baru dari aplikasi ini. Perbarui aplikasi untuk memakai mode TUN.';
 
   @override
   String get tunBusy => 'Salinan lain Fali VPN sedang memakai mode TUN.';
 
   @override
-  String get tunNoDriver =>
-      'Driver TUN sistem tidak tersedia. Mulai ulang komputer lalu coba lagi.';
+  String get tunNoDriver => 'Driver TUN sistem tidak tersedia. Mulai ulang komputer lalu coba lagi.';
 
   @override
   String get tunInstall => 'Pasang';
@@ -1508,15 +1460,13 @@ class AppLocalizationsId extends AppLocalizations {
   String get removeTunService => 'Hapus layanan TUN';
 
   @override
-  String get removeTunServiceHint =>
-      'Menghapus layanan sistem yang dipakai mode TUN. Memilih TUN lagi akan memasangnya kembali.';
+  String get removeTunServiceHint => 'Menghapus layanan sistem yang dipakai mode TUN. Memilih TUN lagi akan memasangnya kembali.';
 
   @override
   String get tunServiceRemoved => 'Layanan TUN telah dihapus.';
 
   @override
-  String get tunInstallPrompt =>
-      'Fali VPN ingin memasang layanan untuk mode TUN.';
+  String get tunInstallPrompt => 'Fali VPN ingin memasang layanan untuk mode TUN.';
 
   @override
   String get tunRemovePrompt => 'Fali VPN ingin menghapus layanan mode TUN.';
@@ -1533,8 +1483,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get tunPrograms => 'Program yang melewati VPN';
 
   @override
-  String get tunProgramsHint =>
-      'Terhubung langsung, tidak lewat Mozilla. Hanya untuk program yang berfungsi tanpa VPN.';
+  String get tunProgramsHint => 'Terhubung langsung, tidak lewat Mozilla. Hanya untuk program yang berfungsi tanpa VPN.';
 
   @override
   String get tunProgramsEmpty => 'Belum ada program.';
@@ -1555,8 +1504,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get tunProgramUdp => 'Hanya UDP';
 
   @override
-  String get tunProgramUdpHint =>
-      'Hanya UDP-nya yang terhubung langsung; sisanya lewat VPN.';
+  String get tunProgramUdpHint => 'Hanya UDP-nya yang terhubung langsung; sisanya lewat VPN.';
 
   @override
   String get udpNoticeSetting => 'Pemberitahuan UDP yang diblokir';
@@ -1579,8 +1527,7 @@ class AppLocalizationsId extends AppLocalizations {
   String get addProgramName => 'Ketik nama…';
 
   @override
-  String get programNameHint =>
-      'Nama file program, misalnya steam.exe; * berarti teks apa saja (steam* adalah semua program Steam).';
+  String get programNameHint => 'Nama file program, misalnya steam.exe; * berarti teks apa saja (steam* adalah semua program Steam).';
 
   @override
   String get runningProgramsEmpty => 'Tidak ada program lain yang berjalan.';
@@ -1684,12 +1631,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get speedStop => 'Stop';
 
   @override
-  String get speedHint =>
-      'Turn the VPN on first, so the test measures the VPN\'s own path.';
+  String get speedHint => 'Turn the VPN on first, so the test measures the VPN\'s own path.';
 
   @override
-  String get speedFailed =>
-      'The test did not finish; check the internet and try again.';
+  String get speedFailed => 'The test did not finish; check the internet and try again.';
 
   @override
   String get speedHistory => 'History';
@@ -1783,12 +1728,10 @@ class AppLocalizationsId extends AppLocalizations {
   String get updateAllowInstall => 'Izinkan pemasangan';
 
   @override
-  String get updateAllowInstallHint =>
-      'Untuk memasang pembaruan, izinkan aplikasi ini memasang aplikasi.';
+  String get updateAllowInstallHint => 'Untuk memasang pembaruan, izinkan aplikasi ini memasang aplikasi.';
 
   @override
-  String get updateDownloadFailed =>
-      'Pembaruan tidak dapat diunduh. Periksa internet Anda dan coba lagi.';
+  String get updateDownloadFailed => 'Pembaruan tidak dapat diunduh. Periksa internet Anda dan coba lagi.';
 
   @override
   String get paramMode => 'Mode';

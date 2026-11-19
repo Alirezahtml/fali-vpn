@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -11,6 +10,24 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get appTitle => 'Fali VPN';
+
+  @override
+  String get sponsorHint => 'এই স্থানটি প্রকল্পের স্পনসরের নামের জন্য';
+
+  @override
+  String get sponsorTitle => 'স্পনসর';
+
+  @override
+  String get swipeToDisconnect => 'বিচ্ছিন্ন করতে স্লাইড করুন';
+
+  @override
+  String get swipeToConnect => 'সংযোগের জন্য স্লাইড করুন';
+
+  @override
+  String get readyToConnect => 'সংযোগের জন্য প্রস্তুত';
+
+  @override
+  String get tagline => 'দ্রুত, নিরাপদ ও ব্যক্তিগত টানেল';
 
   @override
   String get navOverview => 'সারসংক্ষেপ';
@@ -31,12 +48,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get stateWaiting => 'অপেক্ষা করছে';
 
   @override
-  String get waitingForAccount =>
-      'সংযোগ করতে অ্যাকাউন্ট পাতায় একটি Firefox Account যোগ করুন।';
+  String get waitingForAccount => 'সংযোগ করতে অ্যাকাউন্ট পাতায় একটি Firefox Account যোগ করুন।';
 
   @override
-  String get waitingForEnabledAccount =>
-      'সব অ্যাকাউন্ট বন্ধ আছে। অ্যাকাউন্ট পাতা থেকে একটি চালু করুন।';
+  String get waitingForEnabledAccount => 'সব অ্যাকাউন্ট বন্ধ আছে। অ্যাকাউন্ট পাতা থেকে একটি চালু করুন।';
 
   @override
   String get stateError => 'ত্রুটি';
@@ -169,15 +184,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get noAccountsHint => 'সংযোগ করতে একটি Firefox Account যোগ করুন।';
 
   @override
-  String get delayTestFailed =>
-      'সার্ভারগুলোর বিলম্ব মাপা যায়নি। ইন্টারনেট পরীক্ষা করুন।';
+  String get delayTestFailed => 'সার্ভারগুলোর বিলম্ব মাপা যায়নি। ইন্টারনেট পরীক্ষা করুন।';
 
   @override
   String get createAccountTitle => 'Firefox Account নেই?';
 
   @override
-  String get createAccountHint =>
-      'accounts.firefox.com-এ বিনামূল্যে একটি তৈরি করুন, তারপর এখানে ফিরে “অ্যাকাউন্ট যোগ করুন” চাপুন।';
+  String get createAccountHint => 'accounts.firefox.com-এ বিনামূল্যে একটি তৈরি করুন, তারপর এখানে ফিরে “অ্যাকাউন্ট যোগ করুন” চাপুন।';
 
   @override
   String get moveUp => 'উপরে সরান';
@@ -223,16 +236,13 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get reasonQuotaExhausted =>
-      'এই মাসের ডেটা শেষ; মাসিক রিসেটের পর আবার ব্যবহার হবে।';
+  String get reasonQuotaExhausted => 'এই মাসের ডেটা শেষ; মাসিক রিসেটের পর আবার ব্যবহার হবে।';
 
   @override
-  String get reasonSignInRequired =>
-      'এই অ্যাকাউন্ট ব্যবহার করতে আবার সাইন ইন করুন।';
+  String get reasonSignInRequired => 'এই অ্যাকাউন্ট ব্যবহার করতে আবার সাইন ইন করুন।';
 
   @override
-  String get reasonSignInConfirm =>
-      'Mozilla সাইন-ইন নিশ্চিত করতে বলছে: «আবার সাইন ইন করুন» চাপুন (শুধু কোড লাগবে)।';
+  String get reasonSignInConfirm => 'Mozilla সাইন-ইন নিশ্চিত করতে বলছে: «আবার সাইন ইন করুন» চাপুন (শুধু কোড লাগবে)।';
 
   @override
   String reasonSignInFailed(String detail) {
@@ -250,8 +260,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get reasonNotEntitled =>
-      'Mozilla এই অ্যাকাউন্টটি গ্রহণ করেনি; পরে আবার চেষ্টা হবে।';
+  String get reasonNotEntitled => 'Mozilla এই অ্যাকাউন্টটি গ্রহণ করেনি; পরে আবার চেষ্টা হবে।';
 
   @override
   String get more => 'আরও';
@@ -370,8 +379,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get signInNoAccount => 'এই ইমেইলে কোনো Firefox Account নেই।';
 
   @override
-  String get signInNoAccountHint =>
-      'ইমেইলটি দেখুন, অথবা এই ইমেইল দিয়ে Mozilla-র সাইটে একটি বিনামূল্যের Firefox Account তৈরি করুন, ইনবক্স থেকে নিশ্চিত করুন, তারপর এখানে যোগ করুন।';
+  String get signInNoAccountHint => 'ইমেইলটি দেখুন, অথবা এই ইমেইল দিয়ে Mozilla-র সাইটে একটি বিনামূল্যের Firefox Account তৈরি করুন, ইনবক্স থেকে নিশ্চিত করুন, তারপর এখানে যোগ করুন।';
 
   @override
   String get createAccountButton => 'Firefox Account তৈরি করুন';
@@ -380,38 +388,31 @@ class AppLocalizationsBn extends AppLocalizations {
   String get signInWrongPassword => 'পাসওয়ার্ড ভুল।';
 
   @override
-  String get signInNoPassword =>
-      'এই অ্যাকাউন্টের কোনো পাসওয়ার্ড নেই: এটি Google বা Apple দিয়ে সাইন ইন করে তৈরি। একটি পাসওয়ার্ড সেট করুন, তারপর সেটি দিয়ে এখানে সাইন ইন করুন।';
+  String get signInNoPassword => 'এই অ্যাকাউন্টের কোনো পাসওয়ার্ড নেই: এটি Google বা Apple দিয়ে সাইন ইন করে তৈরি। একটি পাসওয়ার্ড সেট করুন, তারপর সেটি দিয়ে এখানে সাইন ইন করুন।';
 
   @override
   String get setPasswordButton => 'পাসওয়ার্ড সেট করুন';
 
   @override
-  String get signInTooManyAttempts =>
-      'অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ অপেক্ষা করে আবার চেষ্টা করুন।';
+  String get signInTooManyAttempts => 'অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ অপেক্ষা করে আবার চেষ্টা করুন।';
 
   @override
-  String get signInUnblockRejected =>
-      'আনব্লক কোড গৃহীত হয়নি। Mozilla-র সর্বশেষ ইমেইলের কোডটি ব্যবহার করুন।';
+  String get signInUnblockRejected => 'আনব্লক কোড গৃহীত হয়নি। Mozilla-র সর্বশেষ ইমেইলের কোডটি ব্যবহার করুন।';
 
   @override
-  String get signInWrongCode =>
-      'কোড ভুল বা মেয়াদোত্তীর্ণ। Mozilla-র সর্বশেষ ইমেইলের কোডটি ব্যবহার করুন; নতুন কোড পাঠালে পুরোনোটি আর কাজ করে না।';
+  String get signInWrongCode => 'কোড ভুল বা মেয়াদোত্তীর্ণ। Mozilla-র সর্বশেষ ইমেইলের কোডটি ব্যবহার করুন; নতুন কোড পাঠালে পুরোনোটি আর কাজ করে না।';
 
   @override
-  String get signInWrongTotp =>
-      'কোড ভুল। অথেনটিকেটর অ্যাপ এখন যে কোড দেখাচ্ছে সেটি লিখুন।';
+  String get signInWrongTotp => 'কোড ভুল। অথেনটিকেটর অ্যাপ এখন যে কোড দেখাচ্ছে সেটি লিখুন।';
 
   @override
-  String get signInTooManyCodes =>
-      'অনেকগুলো ভুল কোড। আবার শুরু থেকে সাইন ইন করুন।';
+  String get signInTooManyCodes => 'অনেকগুলো ভুল কোড। আবার শুরু থেকে সাইন ইন করুন।';
 
   @override
   String get signInTimedOut => 'সাইন ইনে অনেক সময় লেগেছে। আবার শুরু করুন।';
 
   @override
-  String get signInNetwork =>
-      'Mozilla-তে পৌঁছানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।';
+  String get signInNetwork => 'Mozilla-তে পৌঁছানো যায়নি। ইন্টারনেট দেখে আবার চেষ্টা করুন।';
 
   @override
   String get coreConnecting => 'কোরের সাথে সংযোগ হচ্ছে…';
@@ -442,8 +443,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get errNotAnswering => 'কোর সাড়া দিচ্ছে না।';
 
   @override
-  String get errRefused =>
-      'কোর এই অ্যাপকে সংযোগ করতে দিচ্ছে না; সম্ভবত এটি অ্যাপের অন্য কোনো কপির কোর।';
+  String get errRefused => 'কোর এই অ্যাপকে সংযোগ করতে দিচ্ছে না; সম্ভবত এটি অ্যাপের অন্য কোনো কপির কোর।';
 
   @override
   String get settingsTitle => 'সেটিংস';
@@ -497,8 +497,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get routingDirect => 'দেশি সাইটে সরাসরি সংযোগ';
 
   @override
-  String get routingDirectHint =>
-      'নির্বাচিত দেশের সাইট ও IP VPN ছাড়া সরাসরি খোলে, তাই দ্রুত লোড হয় এবং ডেটা বাঁচে।';
+  String get routingDirectHint => 'নির্বাচিত দেশের সাইট ও IP VPN ছাড়া সরাসরি খোলে, তাই দ্রুত লোড হয় এবং ডেটা বাঁচে।';
 
   @override
   String get region => 'দেশ';
@@ -537,15 +536,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get openFolder => 'ফোল্ডার খুলুন';
 
   @override
-  String get unofficialNote =>
-      'এটি অফিসিয়াল ক্লায়েন্ট নয়। Mozilla-র সাথে এর কোনো সম্পর্ক নেই।';
+  String get unofficialNote => 'এটি অফিসিয়াল ক্লায়েন্ট নয়। Mozilla-র সাথে এর কোনো সম্পর্ক নেই।';
 
   @override
   String get closeTitle => 'উইন্ডো বন্ধ করবেন?';
 
   @override
-  String get closeBody =>
-      'ট্রে-তে থাকলে VPN চালু থাকে। অ্যাপ বন্ধ করলে VPN-ও বন্ধ হয়ে যাবে।';
+  String get closeBody => 'ট্রে-তে থাকলে VPN চালু থাকে। অ্যাপ বন্ধ করলে VPN-ও বন্ধ হয়ে যাবে।';
 
   @override
   String get rememberChoice => 'আমার পছন্দ মনে রাখুন';
@@ -590,8 +587,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get portChangeBody =>
-      'অ্যাপগুলো এই পোর্টে সংযোগ করে। 1024 থেকে 65535-এর মধ্যে একটি বেছে নিন।';
+  String get portChangeBody => 'অ্যাপগুলো এই পোর্টে সংযোগ করে। 1024 থেকে 65535-এর মধ্যে একটি বেছে নিন।';
 
   @override
   String get portLabel => 'পোর্ট';
@@ -618,8 +614,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get welcomeTitle => 'স্বাগতম';
 
   @override
-  String get welcomeBody =>
-      'আপনার ভাষা ও দেশ বেছে নিন। আপনার দেশের সাইটগুলো VPN ছাড়া সরাসরি খুলবে, তাই দ্রুত লোড হবে এবং ডেটা বাঁচবে।';
+  String get welcomeBody => 'আপনার ভাষা ও দেশ বেছে নিন। আপনার দেশের সাইটগুলো VPN ছাড়া সরাসরি খুলবে, তাই দ্রুত লোড হবে এবং ডেটা বাঁচবে।';
 
   @override
   String get start => 'শুরু';
@@ -675,8 +670,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get modeRecommendedHint => 'Mozilla আপনার জন্য লোকেশন বেছে নেয়।';
 
   @override
-  String get modeFastestHint =>
-      'প্রতিবার সংযোগের সময় সবচেয়ে কম ডিলের লোকেশন।';
+  String get modeFastestHint => 'প্রতিবার সংযোগের সময় সবচেয়ে কম ডিলের লোকেশন।';
 
   @override
   String get testDelay => 'আসল ডিলে পরীক্ষা করুন';
@@ -701,8 +695,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get noServers =>
-      'এখনও কোনো সার্ভার নেই। কোর Mozilla-র সাথে সংযুক্ত হলে এখানে দেখা যাবে।';
+  String get noServers => 'এখনও কোনো সার্ভার নেই। কোর Mozilla-র সাথে সংযুক্ত হলে এখানে দেখা যাবে।';
 
   @override
   String get levelAll => 'সব';
@@ -732,8 +725,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get switchThreshold => 'অ্যাকাউন্ট বদলের সীমা';
 
   @override
-  String get switchThresholdHint =>
-      'ডেটার এই অংশ খরচ হলে পরের অ্যাকাউন্টে চলে যায়।';
+  String get switchThresholdHint => 'ডেটার এই অংশ খরচ হলে পরের অ্যাকাউন্টে চলে যায়।';
 
   @override
   String get signInMethod => 'সাইন-ইন পদ্ধতি';
@@ -748,8 +740,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get browserSignInBroken => 'সাইন-ইন পৃষ্ঠা খোলা যায়নি।';
 
   @override
-  String get browserSignInBlocked =>
-      'Mozilla অ্যাকাউন্ট যোগ করার শেষ ধাপটি সম্পন্ন করেনি (HTTP 406)।';
+  String get browserSignInBlocked => 'Mozilla অ্যাকাউন্ট যোগ করার শেষ ধাপটি সম্পন্ন করেনি (HTTP 406)।';
 
   @override
   String get browserSignInFallback => 'ইমেল ও পাসওয়ার্ড দিয়ে সাইন ইন';
@@ -800,8 +791,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get dnsCustom => 'কাস্টম';
 
   @override
-  String get dnsCustomHint =>
-      'প্রতি লাইনে একটি: https://…/dns-query, tls://…, অথবা একটি IP ঠিকানা।';
+  String get dnsCustomHint => 'প্রতি লাইনে একটি: https://…/dns-query, tls://…, অথবা একটি IP ঠিকানা।';
 
   @override
   String get dnsFallback => 'প্রয়োজনে সিস্টেম DNS ব্যবহার করুন';
@@ -837,8 +827,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get tunMtu => 'MTU';
 
   @override
-  String get tunMtuHint =>
-      'VPN ইন্টারফেসের প্যাকেটের আকার, 1280 থেকে 9000। খালি: স্বয়ংক্রিয়।';
+  String get tunMtuHint => 'VPN ইন্টারফেসের প্যাকেটের আকার, 1280 থেকে 9000। খালি: স্বয়ংক্রিয়।';
 
   @override
   String get tunMtuInvalid => '1280 থেকে 9000-এর মধ্যে একটি সংখ্যা, বা খালি';
@@ -853,8 +842,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get directRules => 'সরাসরি';
 
   @override
-  String get directRulesHint =>
-      'এই তালিকার সাইট ও ঠিকানাগুলো VPN ছাড়া, সরাসরি আপনার নিজের ইন্টারনেটে খোলে। বেছে নেওয়া দেশের নিয়মগুলো আগে থেকেই এখানে আছে: লাইন যোগ, বদল বা মুছতে পারেন। অন্য দেশ বেছে নিলে সেগুলো সেই দেশের নিয়মে বদলে যায়।';
+  String get directRulesHint => 'এই তালিকার সাইট ও ঠিকানাগুলো VPN ছাড়া, সরাসরি আপনার নিজের ইন্টারনেটে খোলে। বেছে নেওয়া দেশের নিয়মগুলো আগে থেকেই এখানে আছে: লাইন যোগ, বদল বা মুছতে পারেন। অন্য দেশ বেছে নিলে সেগুলো সেই দেশের নিয়মে বদলে যায়।';
 
   @override
   String get restoreRegionRules => 'দেশের নিয়ম ফিরিয়ে আনুন';
@@ -863,8 +851,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get blockRules => 'ব্লক';
 
   @override
-  String get blockRulesHint =>
-      'এই তালিকার সাইট ও ঠিকানাগুলো একেবারেই খোলে না, সরাসরিও না, VPN দিয়েও না: বিজ্ঞাপন বা যেসব সাইট কখনো খুলতে চান না সেগুলোর জন্য।';
+  String get blockRulesHint => 'এই তালিকার সাইট ও ঠিকানাগুলো একেবারেই খোলে না, সরাসরিও না, VPN দিয়েও না: বিজ্ঞাপন বা যেসব সাইট কখনো খুলতে চান না সেগুলোর জন্য।';
 
   @override
   String get rulesTitle => 'নিয়ম';
@@ -940,15 +927,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get tlsFragmentFirstByteHint => 'প্রথম বাইটে TLS হেডার ভাগ করে (0x16)';
 
   @override
-  String get tlsFragmentSniHint =>
-      'সার্ভারের নাম (SNI) কয়েকটি TCP প্যাকেটে ভাগ করে';
+  String get tlsFragmentSniHint => 'সার্ভারের নাম (SNI) কয়েকটি TCP প্যাকেটে ভাগ করে';
 
   @override
   String get tlsFragmentRecord => 'TLS রেকর্ড';
 
   @override
-  String get tlsFragmentRecordHint =>
-      'সার্ভারের নাম (SNI) দুটি TLS রেকর্ডে ভাগ করে';
+  String get tlsFragmentRecordHint => 'সার্ভারের নাম (SNI) দুটি TLS রেকর্ডে ভাগ করে';
 
   @override
   String get tlsFragmentOffHint => 'সাধারণ TLS সংযোগ';
@@ -963,8 +948,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get apiRelayUse => 'রিলে সার্ভার ব্যবহার করুন';
 
   @override
-  String get apiRelayHint =>
-      'আপনার নিজের Cloudflare Worker, অথবা আপনার হোস্টে relay.php।\nশুধু Mozilla সরাসরি উত্তর না দিলে ব্যবহৃত হয়: সাইন-ইন, অ্যাকাউন্ট ও সার্ভার তালিকা এর মধ্য দিয়ে যায়, VPN ট্রাফিক নয়।';
+  String get apiRelayHint => 'আপনার নিজের Cloudflare Worker, অথবা আপনার হোস্টে relay.php।\nশুধু Mozilla সরাসরি উত্তর না দিলে ব্যবহৃত হয়: সাইন-ইন, অ্যাকাউন্ট ও সার্ভার তালিকা এর মধ্য দিয়ে যায়, VPN ট্রাফিক নয়।';
 
   @override
   String get upstreamProxy => 'আপস্ট্রিম প্রক্সি';
@@ -979,15 +963,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get upstreamProxyPort => 'পোর্ট';
 
   @override
-  String get upstreamProxyHint =>
-      'Mozilla-র সংযোগ এই প্রক্সির মধ্য দিয়ে যায়; যেসব নেটওয়ার্ক Mozilla অবরুদ্ধ বা ধীর করে তাদের জন্য।\nপ্রক্সি এই ডিভাইসে চললে সেটিকে VPN-এর বাইরে রাখুন।';
+  String get upstreamProxyHint => 'Mozilla-র সংযোগ এই প্রক্সির মধ্য দিয়ে যায়; যেসব নেটওয়ার্ক Mozilla অবরুদ্ধ বা ধীর করে তাদের জন্য।\nপ্রক্সি এই ডিভাইসে চললে সেটিকে VPN-এর বাইরে রাখুন।';
 
   @override
   String get upstreamProxyInvalid => 'প্রক্সির ঠিকানা লিখুন, যেমন 127.0.0.1।';
 
   @override
-  String get upstreamProxyInvalidPort =>
-      '1 থেকে 65535-এর মধ্যে একটি পোর্ট লিখুন।';
+  String get upstreamProxyInvalidPort => '1 থেকে 65535-এর মধ্যে একটি পোর্ট লিখুন।';
 
   @override
   String get upstreamProxyOwn => 'এটি এই অ্যাপেরই প্রক্সি। অন্য একটি লিখুন।';
@@ -1011,8 +993,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get proxyPassword => 'প্রক্সি পাসওয়ার্ড';
 
   @override
-  String get proxyLoginHint =>
-      'প্রক্সি ব্যবহার করতে অ্যাপগুলোকে এই ইউজারনেম ও পাসওয়ার্ড দিতে হবে। পাসওয়ার্ড ছাড়া চালাতে দুটোই খালি রাখুন।';
+  String get proxyLoginHint => 'প্রক্সি ব্যবহার করতে অ্যাপগুলোকে এই ইউজারনেম ও পাসওয়ার্ড দিতে হবে। পাসওয়ার্ড ছাড়া চালাতে দুটোই খালি রাখুন।';
 
   @override
   String get loginBothOrNone => 'দুটোই পূরণ করুন, অথবা দুটোই খালি রাখুন।';
@@ -1066,8 +1047,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifySignInTitle => 'সাইন-ইন দরকার';
 
   @override
-  String get notifySignInBody =>
-      'একটি অ্যাকাউন্টে আবার সাইন ইন করা দরকার। অ্যাকাউন্ট পাতায় যান।';
+  String get notifySignInBody => 'একটি অ্যাকাউন্টে আবার সাইন ইন করা দরকার। অ্যাকাউন্ট পাতায় যান।';
 
   @override
   String get navAbout => 'সম্পর্কে';
@@ -1101,8 +1081,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get updateCheckNoNetwork =>
-      'আপডেট পরীক্ষা করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।';
+  String get updateCheckNoNetwork => 'আপডেট পরীক্ষা করা যায়নি। ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।';
 
   @override
   String get updateNow => 'আপডেট করুন';
@@ -1202,8 +1181,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get connectedTo => 'সংযুক্ত:';
 
   @override
-  String get vpnNotAllowed =>
-      'VPN-এর জন্য আপনার অনুমতি দরকার। বোতামটি আবার ট্যাপ করে অনুমতি দিন।';
+  String get vpnNotAllowed => 'VPN-এর জন্য আপনার অনুমতি দরকার। বোতামটি আবার ট্যাপ করে অনুমতি দিন।';
 
   @override
   String get dataUsedTitle => 'ব্যবহৃত ডেটা';
@@ -1215,24 +1193,19 @@ class AppLocalizationsBn extends AppLocalizations {
   String get connectRetrying => 'সংযোগ করা যায়নি। ইন্টারনেট পরীক্ষা করুন।';
 
   @override
-  String get failUnreachable =>
-      'Mozilla-র সার্ভারে পৌঁছানো যায়নি। অন্য ইন্টারনেট সংযোগ ব্যবহার করে দেখুন।';
+  String get failUnreachable => 'Mozilla-র সার্ভারে পৌঁছানো যায়নি। অন্য ইন্টারনেট সংযোগ ব্যবহার করে দেখুন।';
 
   @override
-  String get failUpstreamProxy =>
-      'আপস্ট্রিম প্রক্সির মাধ্যমে Mozilla-য় পৌঁছানো যায়নি। প্রক্সিটি চালু আছে কি না দেখুন।';
+  String get failUpstreamProxy => 'আপস্ট্রিম প্রক্সির মাধ্যমে Mozilla-য় পৌঁছানো যায়নি। প্রক্সিটি চালু আছে কি না দেখুন।';
 
   @override
-  String get failInsideVpn =>
-      'এই ইন্টারনেট আগে থেকেই একটি VPN দিয়ে যায়। সেটি বন্ধ করুন।';
+  String get failInsideVpn => 'এই ইন্টারনেট আগে থেকেই একটি VPN দিয়ে যায়। সেটি বন্ধ করুন।';
 
   @override
-  String get failRefused =>
-      'Mozilla-র সার্ভার সংযোগ প্রত্যাখ্যান করেছে। কয়েক মিনিট পরে আবার চেষ্টা করুন।';
+  String get failRefused => 'Mozilla-র সার্ভার সংযোগ প্রত্যাখ্যান করেছে। কয়েক মিনিট পরে আবার চেষ্টা করুন।';
 
   @override
-  String get failLocationRefused =>
-      'এই দেশটি আপনার অ্যাকাউন্টের জন্য খোলা নয়। অন্য দেশ বেছে নিন।';
+  String get failLocationRefused => 'এই দেশটি আপনার অ্যাকাউন্টের জন্য খোলা নয়। অন্য দেশ বেছে নিন।';
 
   @override
   String get useRecommendedLocation => 'প্রস্তাবিত লোকেশন ব্যবহার করুন';
@@ -1243,37 +1216,31 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get failSignIn =>
-      'এই অ্যাকাউন্টের সাইন-ইনের মেয়াদ শেষ। অ্যাকাউন্ট পাতা থেকে আবার সাইন ইন করুন।';
+  String get failSignIn => 'এই অ্যাকাউন্টের সাইন-ইনের মেয়াদ শেষ। অ্যাকাউন্ট পাতা থেকে আবার সাইন ইন করুন।';
 
   @override
   String get failQuota => 'এই মাসের ডেটা শেষ। আরেকটি অ্যাকাউন্ট যোগ করুন।';
 
   @override
-  String get failNotEntitled =>
-      'Mozilla এই অ্যাকাউন্টকে VPN ব্যবহার করতে দেয় না। আরেকটি অ্যাকাউন্ট যোগ করুন।';
+  String get failNotEntitled => 'Mozilla এই অ্যাকাউন্টকে VPN ব্যবহার করতে দেয় না। আরেকটি অ্যাকাউন্ট যোগ করুন।';
 
   @override
   String get failRegion => 'আপনার দেশে Mozilla তার পরিষেবা দেয় না।';
 
   @override
-  String get failServer =>
-      'Mozilla-র পরিষেবায় সাময়িক সমস্যা হয়েছে। অ্যাপ নিজেই আবার চেষ্টা করবে।';
+  String get failServer => 'Mozilla-র পরিষেবায় সাময়িক সমস্যা হয়েছে। অ্যাপ নিজেই আবার চেষ্টা করবে।';
 
   @override
-  String get failNoAccount =>
-      'কোনো অ্যাকাউন্ট প্রস্তুত নেই। অ্যাকাউন্ট পাতা খুলুন।';
+  String get failNoAccount => 'কোনো অ্যাকাউন্ট প্রস্তুত নেই। অ্যাকাউন্ট পাতা খুলুন।';
 
   @override
-  String get failTestSite =>
-      'সার্ভারে সংযুক্ত হয়েছে, কিন্তু সাইট খুলছে না। অন্য দেশ চেষ্টা করুন।';
+  String get failTestSite => 'সার্ভারে সংযুক্ত হয়েছে, কিন্তু সাইট খুলছে না। অন্য দেশ চেষ্টা করুন।';
 
   @override
   String get failOther => 'সংযোগ করা যায়নি। আবার চেষ্টা করুন।';
 
   @override
-  String get failNoInternet =>
-      'ইন্টারনেট নেই। Wi-Fi বা মোবাইল ডেটা পরীক্ষা করুন।';
+  String get failNoInternet => 'ইন্টারনেট নেই। Wi-Fi বা মোবাইল ডেটা পরীক্ষা করুন।';
 
   @override
   String get waitingForNetwork => 'ইন্টারনেট সংযোগের অপেক্ষায়…';
@@ -1293,12 +1260,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get appModeInclude => 'শুধু নির্বাচিত অ্যাপ VPN-এ';
 
   @override
-  String get appModeExcludeHint =>
-      'নির্বাচিত অ্যাপগুলো VPN ছাড়া সরাসরি সংযোগ করে: যেমন বিদেশি ঠিকানা প্রত্যাখ্যান করে এমন ব্যাংকিং অ্যাপ।';
+  String get appModeExcludeHint => 'নির্বাচিত অ্যাপগুলো VPN ছাড়া সরাসরি সংযোগ করে: যেমন বিদেশি ঠিকানা প্রত্যাখ্যান করে এমন ব্যাংকিং অ্যাপ।';
 
   @override
-  String get appModeIncludeHint =>
-      'শুধু নির্বাচিত অ্যাপগুলো VPN দিয়ে যায়; বাকিগুলো সরাসরি সংযোগ করে।';
+  String get appModeIncludeHint => 'শুধু নির্বাচিত অ্যাপগুলো VPN দিয়ে যায়; বাকিগুলো সরাসরি সংযোগ করে।';
 
   @override
   String fromRegionList(String region) {
@@ -1312,16 +1277,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get connectionMode => 'সংযোগ মোড';
 
   @override
-  String get modeProxyHint =>
-      'শুধু যেসব অ্যাপে প্রক্সি সেট করা আছে সেগুলোই এর মধ্য দিয়ে যায়।';
+  String get modeProxyHint => 'শুধু যেসব অ্যাপে প্রক্সি সেট করা আছে সেগুলোই এর মধ্য দিয়ে যায়।';
 
   @override
-  String get modeSystemProxyHint =>
-      'Windows ও বেশিরভাগ অ্যাপ প্রক্সি দিয়ে যায়।';
+  String get modeSystemProxyHint => 'Windows ও বেশিরভাগ অ্যাপ প্রক্সি দিয়ে যায়।';
 
   @override
-  String get modeSystemProxyHintOther =>
-      'ব্রাউজার ও বেশিরভাগ অ্যাপ প্রক্সি দিয়ে যায়।';
+  String get modeSystemProxyHintOther => 'ব্রাউজার ও বেশিরভাগ অ্যাপ প্রক্সি দিয়ে যায়।';
 
   @override
   String get suggestedApps => 'প্রস্তাবিত অ্যাপ';
@@ -1371,8 +1333,7 @@ class AppLocalizationsBn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other:
-          'আপনার নেটওয়ার্কের DNS $countটি নামের জন্য একটি ফিল্টারিং ঠিকানা দিয়েছে। এই অ্যাপ সেই উত্তরগুলো ব্যবহার করে না।',
+      other: 'আপনার নেটওয়ার্কের DNS $countটি নামের জন্য একটি ফিল্টারিং ঠিকানা দিয়েছে। এই অ্যাপ সেই উত্তরগুলো ব্যবহার করে না।',
       one: 'আপনার নেটওয়ার্কের DNS 1টি নামের জন্য একটি ফিল্টারিং ঠিকানা দিয়েছে। এই অ্যাপ সেই উত্তর ব্যবহার করে না।',
     );
     return '$_temp0';
@@ -1415,8 +1376,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get modeProxyOnly => 'শুধু প্রক্সি';
 
   @override
-  String get noNetwork =>
-      'ইন্টারনেট সংযোগ নেই। Wi-Fi বা মোবাইল ডেটা চালু করুন।';
+  String get noNetwork => 'ইন্টারনেট সংযোগ নেই। Wi-Fi বা মোবাইল ডেটা চালু করুন।';
 
   @override
   String get blockAds => 'বিজ্ঞাপন ব্লক করুন';
@@ -1427,8 +1387,7 @@ class AppLocalizationsBn extends AppLocalizations {
   }
 
   @override
-  String get systemProxyTakenOff =>
-      'অন্য একটি প্রোগ্রাম সিস্টেম প্রক্সি বন্ধ করে দিয়েছে, তাই ট্রাফিক VPN দিয়ে যাচ্ছে না।';
+  String get systemProxyTakenOff => 'অন্য একটি প্রোগ্রাম সিস্টেম প্রক্সি বন্ধ করে দিয়েছে, তাই ট্রাফিক VPN দিয়ে যাচ্ছে না।';
 
   @override
   String get setSystemProxyAgain => 'আবার সেট করুন';
@@ -1454,8 +1413,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get tunInstallWaiting => 'TUN সার্ভিস ইনস্টল করার অনুমতির অপেক্ষা…';
 
   @override
-  String get tunInstallCancelled =>
-      'TUN মোডের জন্য একবার অ্যাডমিনিস্ট্রেটর অনুমতি লাগে। অনুমতি দেওয়া হয়নি, তাই মোড বদলায়নি।';
+  String get tunInstallCancelled => 'TUN মোডের জন্য একবার অ্যাডমিনিস্ট্রেটর অনুমতি লাগে। অনুমতি দেওয়া হয়নি, তাই মোড বদলায়নি।';
 
   @override
   String tunInstallFailed(String error) {
@@ -1478,19 +1436,16 @@ class AppLocalizationsBn extends AppLocalizations {
   String get tunMissing => 'TUN সার্ভিস ইনস্টল করা নেই।';
 
   @override
-  String get tunOutdated =>
-      'TUN সার্ভিস এই অ্যাপের চেয়ে পুরোনো। TUN মোড ব্যবহার করতে এটি আবার ইনস্টল করুন।';
+  String get tunOutdated => 'TUN সার্ভিস এই অ্যাপের চেয়ে পুরোনো। TUN মোড ব্যবহার করতে এটি আবার ইনস্টল করুন।';
 
   @override
-  String get tunAppOutdated =>
-      'TUN সার্ভিস এই অ্যাপের চেয়ে নতুন। TUN মোড ব্যবহার করতে অ্যাপটি আপডেট করুন।';
+  String get tunAppOutdated => 'TUN সার্ভিস এই অ্যাপের চেয়ে নতুন। TUN মোড ব্যবহার করতে অ্যাপটি আপডেট করুন।';
 
   @override
   String get tunBusy => 'Fali VPN-এর অন্য একটি কপি TUN মোড ব্যবহার করছে।';
 
   @override
-  String get tunNoDriver =>
-      'সিস্টেমের TUN ড্রাইভার পাওয়া যাচ্ছে না। কম্পিউটার রিস্টার্ট করে আবার চেষ্টা করুন।';
+  String get tunNoDriver => 'সিস্টেমের TUN ড্রাইভার পাওয়া যাচ্ছে না। কম্পিউটার রিস্টার্ট করে আবার চেষ্টা করুন।';
 
   @override
   String get tunInstall => 'ইনস্টল করুন';
@@ -1505,15 +1460,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get removeTunService => 'TUN সার্ভিস সরান';
 
   @override
-  String get removeTunServiceHint =>
-      'TUN মোড যে সিস্টেম সার্ভিস ব্যবহার করে তা সরিয়ে দেয়। আবার TUN বেছে নিলে এটি আবার ইনস্টল হয়।';
+  String get removeTunServiceHint => 'TUN মোড যে সিস্টেম সার্ভিস ব্যবহার করে তা সরিয়ে দেয়। আবার TUN বেছে নিলে এটি আবার ইনস্টল হয়।';
 
   @override
   String get tunServiceRemoved => 'TUN সার্ভিস সরানো হয়েছে।';
 
   @override
-  String get tunInstallPrompt =>
-      'Fali VPN TUN মোডের জন্য সার্ভিসটি ইনস্টল করতে চায়।';
+  String get tunInstallPrompt => 'Fali VPN TUN মোডের জন্য সার্ভিসটি ইনস্টল করতে চায়।';
 
   @override
   String get tunRemovePrompt => 'Fali VPN TUN মোডের সার্ভিসটি সরাতে চায়।';
@@ -1530,8 +1483,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get tunPrograms => 'VPN এড়িয়ে চলা প্রোগ্রাম';
 
   @override
-  String get tunProgramsHint =>
-      'এগুলো Mozilla দিয়ে নয়, সরাসরি সংযোগ করে। শুধু VPN ছাড়া চলে এমন প্রোগ্রামের জন্য।';
+  String get tunProgramsHint => 'এগুলো Mozilla দিয়ে নয়, সরাসরি সংযোগ করে। শুধু VPN ছাড়া চলে এমন প্রোগ্রামের জন্য।';
 
   @override
   String get tunProgramsEmpty => 'এখনও কোনো প্রোগ্রাম নেই।';
@@ -1575,8 +1527,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get addProgramName => 'নাম লিখুন…';
 
   @override
-  String get programNameHint =>
-      'প্রোগ্রামের ফাইলের নাম, যেমন steam.exe; * মানে যেকোনো লেখা (steam* মানে Steam-এর সব প্রোগ্রাম)।';
+  String get programNameHint => 'প্রোগ্রামের ফাইলের নাম, যেমন steam.exe; * মানে যেকোনো লেখা (steam* মানে Steam-এর সব প্রোগ্রাম)।';
 
   @override
   String get runningProgramsEmpty => 'আর কোনো প্রোগ্রাম চলছে না।';
@@ -1680,12 +1631,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get speedStop => 'Stop';
 
   @override
-  String get speedHint =>
-      'Turn the VPN on first, so the test measures the VPN\'s own path.';
+  String get speedHint => 'Turn the VPN on first, so the test measures the VPN\'s own path.';
 
   @override
-  String get speedFailed =>
-      'The test did not finish; check the internet and try again.';
+  String get speedFailed => 'The test did not finish; check the internet and try again.';
 
   @override
   String get speedHistory => 'History';
@@ -1779,12 +1728,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get updateAllowInstall => 'ইনস্টলের অনুমতি দিন';
 
   @override
-  String get updateAllowInstallHint =>
-      'আপডেট ইনস্টল করতে এই অ্যাপকে অ্যাপ ইনস্টল করার অনুমতি দিন।';
+  String get updateAllowInstallHint => 'আপডেট ইনস্টল করতে এই অ্যাপকে অ্যাপ ইনস্টল করার অনুমতি দিন।';
 
   @override
-  String get updateDownloadFailed =>
-      'আপডেট ডাউনলোড করা যায়নি। ইন্টারনেট পরীক্ষা করে আবার চেষ্টা করুন।';
+  String get updateDownloadFailed => 'আপডেট ডাউনলোড করা যায়নি। ইন্টারনেট পরীক্ষা করে আবার চেষ্টা করুন।';
 
   @override
   String get paramMode => 'মোড';

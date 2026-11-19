@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -11,6 +10,24 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get appTitle => 'Fali VPN';
+
+  @override
+  String get sponsorHint => 'Это место имени спонсора проекта';
+
+  @override
+  String get sponsorTitle => 'Спонсор';
+
+  @override
+  String get swipeToDisconnect => 'Потяните, чтобы отключить';
+
+  @override
+  String get swipeToConnect => 'Потяните, чтобы подключить';
+
+  @override
+  String get readyToConnect => 'Готов к подключению';
+
+  @override
+  String get tagline => 'Быстрый, безопасный и личный туннель';
 
   @override
   String get navOverview => 'Обзор';
@@ -31,12 +48,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get stateWaiting => 'Ожидание';
 
   @override
-  String get waitingForAccount =>
-      'Добавьте аккаунт Firefox на странице «Аккаунты», чтобы подключиться.';
+  String get waitingForAccount => 'Добавьте аккаунт Firefox на странице «Аккаунты», чтобы подключиться.';
 
   @override
-  String get waitingForEnabledAccount =>
-      'Все аккаунты выключены. Включите один на странице «Аккаунты».';
+  String get waitingForEnabledAccount => 'Все аккаунты выключены. Включите один на странице «Аккаунты».';
 
   @override
   String get stateError => 'Ошибка';
@@ -171,15 +186,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noAccountsHint => 'Добавьте аккаунт Firefox, чтобы подключиться.';
 
   @override
-  String get delayTestFailed =>
-      'Не удалось измерить задержку серверов. Проверьте интернет.';
+  String get delayTestFailed => 'Не удалось измерить задержку серверов. Проверьте интернет.';
 
   @override
   String get createAccountTitle => 'Нет Firefox Account?';
 
   @override
-  String get createAccountHint =>
-      'Создайте его бесплатно на accounts.firefox.com, затем вернитесь и нажмите «Добавить аккаунт».';
+  String get createAccountHint => 'Создайте его бесплатно на accounts.firefox.com, затем вернитесь и нажмите «Добавить аккаунт».';
 
   @override
   String get moveUp => 'Вверх';
@@ -225,16 +238,13 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get reasonQuotaExhausted =>
-      'Трафик на этот месяц закончился; аккаунт снова используется после обнуления.';
+  String get reasonQuotaExhausted => 'Трафик на этот месяц закончился; аккаунт снова используется после обнуления.';
 
   @override
-  String get reasonSignInRequired =>
-      'Войдите снова, чтобы использовать этот аккаунт.';
+  String get reasonSignInRequired => 'Войдите снова, чтобы использовать этот аккаунт.';
 
   @override
-  String get reasonSignInConfirm =>
-      'Mozilla просит подтвердить вход: нажмите «Войти снова» (нужен только код).';
+  String get reasonSignInConfirm => 'Mozilla просит подтвердить вход: нажмите «Войти снова» (нужен только код).';
 
   @override
   String reasonSignInFailed(String detail) {
@@ -252,8 +262,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get reasonNotEntitled =>
-      'Mozilla отклонила этот аккаунт; повторим позже.';
+  String get reasonNotEntitled => 'Mozilla отклонила этот аккаунт; повторим позже.';
 
   @override
   String get more => 'Ещё';
@@ -372,8 +381,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get signInNoAccount => 'Firefox Account с этой почтой не существует.';
 
   @override
-  String get signInNoAccountHint =>
-      'Проверьте адрес или создайте с ним бесплатный Firefox Account на сайте Mozilla, подтвердите его из письма, а затем добавьте здесь.';
+  String get signInNoAccountHint => 'Проверьте адрес или создайте с ним бесплатный Firefox Account на сайте Mozilla, подтвердите его из письма, а затем добавьте здесь.';
 
   @override
   String get createAccountButton => 'Создать Firefox Account';
@@ -382,39 +390,31 @@ class AppLocalizationsRu extends AppLocalizations {
   String get signInWrongPassword => 'Неверный пароль.';
 
   @override
-  String get signInNoPassword =>
-      'У этого аккаунта нет пароля: он создан через вход с Google или Apple. Задайте пароль, а затем войдите с ним здесь.';
+  String get signInNoPassword => 'У этого аккаунта нет пароля: он создан через вход с Google или Apple. Задайте пароль, а затем войдите с ним здесь.';
 
   @override
   String get setPasswordButton => 'Задать пароль';
 
   @override
-  String get signInTooManyAttempts =>
-      'Слишком много попыток. Подождите немного и попробуйте снова.';
+  String get signInTooManyAttempts => 'Слишком много попыток. Подождите немного и попробуйте снова.';
 
   @override
-  String get signInUnblockRejected =>
-      'Код разблокировки не принят. Используйте код из последнего письма Mozilla.';
+  String get signInUnblockRejected => 'Код разблокировки не принят. Используйте код из последнего письма Mozilla.';
 
   @override
-  String get signInWrongCode =>
-      'Неверный или просроченный код. Используйте код из последнего письма Mozilla; старый код перестаёт работать, когда приходит новый.';
+  String get signInWrongCode => 'Неверный или просроченный код. Используйте код из последнего письма Mozilla; старый код перестаёт работать, когда приходит новый.';
 
   @override
-  String get signInWrongTotp =>
-      'Неверный код. Введите код, который сейчас показывает приложение-аутентификатор.';
+  String get signInWrongTotp => 'Неверный код. Введите код, который сейчас показывает приложение-аутентификатор.';
 
   @override
-  String get signInTooManyCodes =>
-      'Слишком много неверных кодов. Начните вход заново.';
+  String get signInTooManyCodes => 'Слишком много неверных кодов. Начните вход заново.';
 
   @override
-  String get signInTimedOut =>
-      'Вход занял слишком много времени. Начните заново.';
+  String get signInTimedOut => 'Вход занял слишком много времени. Начните заново.';
 
   @override
-  String get signInNetwork =>
-      'Не удалось связаться с Mozilla. Проверьте интернет и попробуйте снова.';
+  String get signInNetwork => 'Не удалось связаться с Mozilla. Проверьте интернет и попробуйте снова.';
 
   @override
   String get coreConnecting => 'Подключение к ядру…';
@@ -445,8 +445,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get errNotAnswering => 'Ядро не отвечает.';
 
   @override
-  String get errRefused =>
-      'Ядро отклонило подключение приложения: возможно, оно принадлежит другой копии.';
+  String get errRefused => 'Ядро отклонило подключение приложения: возможно, оно принадлежит другой копии.';
 
   @override
   String get settingsTitle => 'Настройки';
@@ -500,8 +499,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get routingDirect => 'Прямое подключение к местным сайтам';
 
   @override
-  String get routingDirectHint =>
-      'Сайты и IP выбранной страны открываются напрямую, мимо VPN: быстрее и без расхода трафика.';
+  String get routingDirectHint => 'Сайты и IP выбранной страны открываются напрямую, мимо VPN: быстрее и без расхода трафика.';
 
   @override
   String get region => 'Страна';
@@ -546,8 +544,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get closeTitle => 'Закрыть окно?';
 
   @override
-  String get closeBody =>
-      'Если свернуть окно в трей, VPN останется включённым. При выходе он отключится.';
+  String get closeBody => 'Если свернуть окно в трей, VPN останется включённым. При выходе он отключится.';
 
   @override
   String get rememberChoice => 'Запомнить выбор';
@@ -592,8 +589,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get portChangeBody =>
-      'Приложения подключаются к этому порту. Выберите порт от 1024 до 65535.';
+  String get portChangeBody => 'Приложения подключаются к этому порту. Выберите порт от 1024 до 65535.';
 
   @override
   String get portLabel => 'Порт';
@@ -620,8 +616,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get welcomeTitle => 'Добро пожаловать';
 
   @override
-  String get welcomeBody =>
-      'Выберите язык и страну. Сайты вашей страны будут открываться напрямую, без VPN: так быстрее и не расходуется трафик.';
+  String get welcomeBody => 'Выберите язык и страну. Сайты вашей страны будут открываться напрямую, без VPN: так быстрее и не расходуется трафик.';
 
   @override
   String get start => 'Начать';
@@ -677,8 +672,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get modeRecommendedHint => 'Mozilla выбирает локацию за вас.';
 
   @override
-  String get modeFastestHint =>
-      'При каждом подключении выбирается локация с наименьшей задержкой.';
+  String get modeFastestHint => 'При каждом подключении выбирается локация с наименьшей задержкой.';
 
   @override
   String get testDelay => 'Проверить задержку';
@@ -703,8 +697,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get noServers =>
-      'Серверов пока нет. Они появятся, когда ядро свяжется с Mozilla.';
+  String get noServers => 'Серверов пока нет. Они появятся, когда ядро свяжется с Mozilla.';
 
   @override
   String get levelAll => 'Все';
@@ -734,8 +727,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get switchThreshold => 'Менять аккаунт при';
 
   @override
-  String get switchThresholdHint =>
-      'Когда израсходована эта доля трафика, включается следующий аккаунт.';
+  String get switchThresholdHint => 'Когда израсходована эта доля трафика, включается следующий аккаунт.';
 
   @override
   String get signInMethod => 'Способ входа';
@@ -750,8 +742,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get browserSignInBroken => 'Не удалось открыть страницу входа.';
 
   @override
-  String get browserSignInBlocked =>
-      'Mozilla не завершила последний шаг добавления аккаунта (HTTP 406).';
+  String get browserSignInBlocked => 'Mozilla не завершила последний шаг добавления аккаунта (HTTP 406).';
 
   @override
   String get browserSignInFallback => 'Вход с почтой и паролем';
@@ -805,8 +796,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get dnsCustom => 'Свои';
 
   @override
-  String get dnsCustomHint =>
-      'По одному на строку: https://…/dns-query, tls://… или IP-адрес.';
+  String get dnsCustomHint => 'По одному на строку: https://…/dns-query, tls://… или IP-адрес.';
 
   @override
   String get dnsFallback => 'Системный DNS как запасной';
@@ -842,8 +832,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tunMtu => 'MTU';
 
   @override
-  String get tunMtuHint =>
-      'Размер пакета интерфейса VPN, от 1280 до 9000. Пусто: автоматически.';
+  String get tunMtuHint => 'Размер пакета интерфейса VPN, от 1280 до 9000. Пусто: автоматически.';
 
   @override
   String get tunMtuInvalid => 'Число от 1280 до 9000 или пусто';
@@ -858,8 +847,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get directRules => 'Напрямую';
 
   @override
-  String get directRulesHint =>
-      'Сайты и адреса из этого списка открываются без VPN, напрямую через ваш интернет. Правила выбранной страны уже здесь: добавляйте, меняйте или удаляйте строки. Выбор другой страны заменит их её правилами.';
+  String get directRulesHint => 'Сайты и адреса из этого списка открываются без VPN, напрямую через ваш интернет. Правила выбранной страны уже здесь: добавляйте, меняйте или удаляйте строки. Выбор другой страны заменит их её правилами.';
 
   @override
   String get restoreRegionRules => 'Вернуть правила страны';
@@ -868,8 +856,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get blockRules => 'Блокировать';
 
   @override
-  String get blockRulesHint =>
-      'Сайты и адреса из этого списка не открываются вообще — ни напрямую, ни через VPN: для рекламы или сайтов, которые не должны открываться никогда.';
+  String get blockRulesHint => 'Сайты и адреса из этого списка не открываются вообще — ни напрямую, ни через VPN: для рекламы или сайтов, которые не должны открываться никогда.';
 
   @override
   String get rulesTitle => 'Правила';
@@ -942,19 +929,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tlsFragmentSni => 'Имя сервера (SNI)';
 
   @override
-  String get tlsFragmentFirstByteHint =>
-      'Разделяет заголовок TLS на первом байте (0x16)';
+  String get tlsFragmentFirstByteHint => 'Разделяет заголовок TLS на первом байте (0x16)';
 
   @override
-  String get tlsFragmentSniHint =>
-      'Разбивает имя сервера (SNI) на несколько TCP-пакетов';
+  String get tlsFragmentSniHint => 'Разбивает имя сервера (SNI) на несколько TCP-пакетов';
 
   @override
   String get tlsFragmentRecord => 'Запись TLS';
 
   @override
-  String get tlsFragmentRecordHint =>
-      'Разбивает имя сервера (SNI) на две записи TLS';
+  String get tlsFragmentRecordHint => 'Разбивает имя сервера (SNI) на две записи TLS';
 
   @override
   String get tlsFragmentOffHint => 'Обычное подключение TLS';
@@ -969,8 +953,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get apiRelayUse => 'Использовать сервер-ретранслятор';
 
   @override
-  String get apiRelayHint =>
-      'Ваш собственный Cloudflare Worker или relay.php на вашем хостинге.\nИспользуется, только когда Mozilla не отвечает напрямую: через него идут вход, аккаунты и список серверов, а не трафик VPN.';
+  String get apiRelayHint => 'Ваш собственный Cloudflare Worker или relay.php на вашем хостинге.\nИспользуется, только когда Mozilla не отвечает напрямую: через него идут вход, аккаунты и список серверов, а не трафик VPN.';
 
   @override
   String get upstreamProxy => 'Вышестоящий прокси';
@@ -985,19 +968,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get upstreamProxyPort => 'Порт';
 
   @override
-  String get upstreamProxyHint =>
-      'Подключение к Mozilla идёт через этот прокси: для сетей, которые блокируют или замедляют Mozilla.\nЕсли прокси работает на этом устройстве, исключите его из VPN.';
+  String get upstreamProxyHint => 'Подключение к Mozilla идёт через этот прокси: для сетей, которые блокируют или замедляют Mozilla.\nЕсли прокси работает на этом устройстве, исключите его из VPN.';
 
   @override
-  String get upstreamProxyInvalid =>
-      'Введите адрес прокси, например 127.0.0.1.';
+  String get upstreamProxyInvalid => 'Введите адрес прокси, например 127.0.0.1.';
 
   @override
   String get upstreamProxyInvalidPort => 'Введите порт от 1 до 65535.';
 
   @override
-  String get upstreamProxyOwn =>
-      'Это прокси самого приложения. Введите другой.';
+  String get upstreamProxyOwn => 'Это прокси самого приложения. Введите другой.';
 
   @override
   String get apiRelayInvalid => 'Должен быть адрес https://.';
@@ -1018,8 +998,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proxyPassword => 'Пароль прокси';
 
   @override
-  String get proxyLoginHint =>
-      'Приложениям нужно будет указать эти данные. Оставьте оба поля пустыми, чтобы прокси работал без пароля.';
+  String get proxyLoginHint => 'Приложениям нужно будет указать эти данные. Оставьте оба поля пустыми, чтобы прокси работал без пароля.';
 
   @override
   String get loginBothOrNone => 'Заполните оба поля или оставьте оба пустыми.';
@@ -1073,8 +1052,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get notifySignInTitle => 'Нужен вход';
 
   @override
-  String get notifySignInBody =>
-      'Войдите снова в один из аккаунтов на странице «Аккаунты».';
+  String get notifySignInBody => 'Войдите снова в один из аккаунтов на странице «Аккаунты».';
 
   @override
   String get navAbout => 'О программе';
@@ -1108,8 +1086,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get updateCheckNoNetwork =>
-      'Не удалось проверить обновления. Проверьте подключение к интернету и попробуйте снова.';
+  String get updateCheckNoNetwork => 'Не удалось проверить обновления. Проверьте подключение к интернету и попробуйте снова.';
 
   @override
   String get updateNow => 'Обновить';
@@ -1209,8 +1186,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get connectedTo => 'Подключено к';
 
   @override
-  String get vpnNotAllowed =>
-      'Для VPN нужно ваше разрешение. Нажмите кнопку ещё раз и разрешите подключение.';
+  String get vpnNotAllowed => 'Для VPN нужно ваше разрешение. Нажмите кнопку ещё раз и разрешите подключение.';
 
   @override
   String get dataUsedTitle => 'Использовано';
@@ -1222,24 +1198,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get connectRetrying => 'Не удалось подключиться. Проверьте интернет.';
 
   @override
-  String get failUnreachable =>
-      'Не удалось связаться с серверами Mozilla. Попробуйте другое подключение к интернету.';
+  String get failUnreachable => 'Не удалось связаться с серверами Mozilla. Попробуйте другое подключение к интернету.';
 
   @override
-  String get failUpstreamProxy =>
-      'Не удалось связаться с Mozilla через вышестоящий прокси. Проверьте, что он работает.';
+  String get failUpstreamProxy => 'Не удалось связаться с Mozilla через вышестоящий прокси. Проверьте, что он работает.';
 
   @override
-  String get failInsideVpn =>
-      'Этот интернет уже идёт через VPN. Отключите его.';
+  String get failInsideVpn => 'Этот интернет уже идёт через VPN. Отключите его.';
 
   @override
-  String get failRefused =>
-      'Сервер Mozilla отклонил подключение. Попробуйте снова через несколько минут.';
+  String get failRefused => 'Сервер Mozilla отклонил подключение. Попробуйте снова через несколько минут.';
 
   @override
-  String get failLocationRefused =>
-      'Эта страна недоступна для вашего аккаунта. Выберите другую страну.';
+  String get failLocationRefused => 'Эта страна недоступна для вашего аккаунта. Выберите другую страну.';
 
   @override
   String get useRecommendedLocation => 'Использовать рекомендуемую локацию';
@@ -1250,38 +1221,31 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get failSignIn =>
-      'Сеанс этого аккаунта истёк. Войдите снова на странице «Аккаунты».';
+  String get failSignIn => 'Сеанс этого аккаунта истёк. Войдите снова на странице «Аккаунты».';
 
   @override
-  String get failQuota =>
-      'Трафик этого месяца исчерпан. Добавьте другой аккаунт.';
+  String get failQuota => 'Трафик этого месяца исчерпан. Добавьте другой аккаунт.';
 
   @override
-  String get failNotEntitled =>
-      'Mozilla не разрешает этому аккаунту пользоваться VPN. Добавьте другой аккаунт.';
+  String get failNotEntitled => 'Mozilla не разрешает этому аккаунту пользоваться VPN. Добавьте другой аккаунт.';
 
   @override
   String get failRegion => 'Mozilla не предоставляет сервис в вашей стране.';
 
   @override
-  String get failServer =>
-      'Временная проблема в сервисе Mozilla. Приложение само попробует снова.';
+  String get failServer => 'Временная проблема в сервисе Mozilla. Приложение само попробует снова.';
 
   @override
-  String get failNoAccount =>
-      'Нет готового аккаунта. Откройте страницу «Аккаунты».';
+  String get failNoAccount => 'Нет готового аккаунта. Откройте страницу «Аккаунты».';
 
   @override
-  String get failTestSite =>
-      'Подключено к серверу, но сайты не открываются. Попробуйте другую страну.';
+  String get failTestSite => 'Подключено к серверу, но сайты не открываются. Попробуйте другую страну.';
 
   @override
   String get failOther => 'Не удалось подключиться. Попробуйте снова.';
 
   @override
-  String get failNoInternet =>
-      'Нет интернета. Проверьте Wi-Fi или мобильный интернет.';
+  String get failNoInternet => 'Нет интернета. Проверьте Wi-Fi или мобильный интернет.';
 
   @override
   String get waitingForNetwork => 'Ожидание подключения к интернету…';
@@ -1301,12 +1265,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get appModeInclude => 'Только выбранные — через VPN';
 
   @override
-  String get appModeExcludeHint =>
-      'Выбранные приложения подключаются напрямую, не через VPN: например, банковские, которые не пускают с зарубежных IP.';
+  String get appModeExcludeHint => 'Выбранные приложения подключаются напрямую, не через VPN: например, банковские, которые не пускают с зарубежных IP.';
 
   @override
-  String get appModeIncludeHint =>
-      'Через VPN идут только выбранные приложения; остальные подключаются напрямую.';
+  String get appModeIncludeHint => 'Через VPN идут только выбранные приложения; остальные подключаются напрямую.';
 
   @override
   String fromRegionList(String region) {
@@ -1320,16 +1282,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get connectionMode => 'Режим подключения';
 
   @override
-  String get modeProxyHint =>
-      'Через прокси идут только приложения, в которых он настроен.';
+  String get modeProxyHint => 'Через прокси идут только приложения, в которых он настроен.';
 
   @override
-  String get modeSystemProxyHint =>
-      'Через прокси идут Windows и большинство приложений.';
+  String get modeSystemProxyHint => 'Через прокси идут Windows и большинство приложений.';
 
   @override
-  String get modeSystemProxyHintOther =>
-      'Через прокси идут браузеры и большинство приложений.';
+  String get modeSystemProxyHintOther => 'Через прокси идут браузеры и большинство приложений.';
 
   @override
   String get suggestedApps => 'Рекомендуемые приложения';
@@ -1381,10 +1340,8 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other:
-          'DNS вашей сети вернул адрес фильтра для $count имён. Приложение такие ответы не использует.',
-      one:
-          'DNS вашей сети вернул адрес фильтра для $count имени. Приложение такие ответы не использует.',
+      other: 'DNS вашей сети вернул адрес фильтра для $count имён. Приложение такие ответы не использует.',
+      one: 'DNS вашей сети вернул адрес фильтра для $count имени. Приложение такие ответы не использует.',
     );
     return '$_temp0';
   }
@@ -1426,8 +1383,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get modeProxyOnly => 'Только прокси';
 
   @override
-  String get noNetwork =>
-      'Нет подключения к интернету. Включите Wi-Fi или мобильные данные.';
+  String get noNetwork => 'Нет подключения к интернету. Включите Wi-Fi или мобильные данные.';
 
   @override
   String get blockAds => 'Блокировать рекламу';
@@ -1438,8 +1394,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get systemProxyTakenOff =>
-      'Другая программа выключила системный прокси, поэтому трафик идёт не через VPN.';
+  String get systemProxyTakenOff => 'Другая программа выключила системный прокси, поэтому трафик идёт не через VPN.';
 
   @override
   String get setSystemProxyAgain => 'Настроить снова';
@@ -1462,12 +1417,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get osMacos => 'macOS';
 
   @override
-  String get tunInstallWaiting =>
-      'Ожидание разрешения на установку службы TUN…';
+  String get tunInstallWaiting => 'Ожидание разрешения на установку службы TUN…';
 
   @override
-  String get tunInstallCancelled =>
-      'Режиму TUN один раз нужно разрешение администратора. Оно не было дано, поэтому режим не изменился.';
+  String get tunInstallCancelled => 'Режиму TUN один раз нужно разрешение администратора. Оно не было дано, поэтому режим не изменился.';
 
   @override
   String tunInstallFailed(String error) {
@@ -1490,19 +1443,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tunMissing => 'Служба TUN не установлена.';
 
   @override
-  String get tunOutdated =>
-      'Служба TUN старше этого приложения. Установите её снова, чтобы пользоваться режимом TUN.';
+  String get tunOutdated => 'Служба TUN старше этого приложения. Установите её снова, чтобы пользоваться режимом TUN.';
 
   @override
-  String get tunAppOutdated =>
-      'Служба TUN новее этого приложения. Обновите приложение, чтобы пользоваться режимом TUN.';
+  String get tunAppOutdated => 'Служба TUN новее этого приложения. Обновите приложение, чтобы пользоваться режимом TUN.';
 
   @override
   String get tunBusy => 'Режимом TUN пользуется другая копия Fali VPN.';
 
   @override
-  String get tunNoDriver =>
-      'Драйвер TUN в системе недоступен. Перезагрузите компьютер и повторите попытку.';
+  String get tunNoDriver => 'Драйвер TUN в системе недоступен. Перезагрузите компьютер и повторите попытку.';
 
   @override
   String get tunInstall => 'Установить';
@@ -1517,15 +1467,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get removeTunService => 'Удалить службу TUN';
 
   @override
-  String get removeTunServiceHint =>
-      'Удаляет системную службу, которую использует режим TUN. Если снова выбрать TUN, она установится заново.';
+  String get removeTunServiceHint => 'Удаляет системную службу, которую использует режим TUN. Если снова выбрать TUN, она установится заново.';
 
   @override
   String get tunServiceRemoved => 'Служба TUN удалена.';
 
   @override
-  String get tunInstallPrompt =>
-      'Fali VPN хочет установить службу для режима TUN.';
+  String get tunInstallPrompt => 'Fali VPN хочет установить службу для режима TUN.';
 
   @override
   String get tunRemovePrompt => 'Fali VPN хочет удалить службу режима TUN.';
@@ -1542,8 +1490,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tunPrograms => 'Программы в обход VPN';
 
   @override
-  String get tunProgramsHint =>
-      'Подключаются напрямую, не через Mozilla. Только для программ, которые работают без VPN.';
+  String get tunProgramsHint => 'Подключаются напрямую, не через Mozilla. Только для программ, которые работают без VPN.';
 
   @override
   String get tunProgramsEmpty => 'Программ пока нет.';
@@ -1564,8 +1511,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tunProgramUdp => 'Только UDP';
 
   @override
-  String get tunProgramUdpHint =>
-      'Напрямую идёт только её UDP; остальное — через VPN.';
+  String get tunProgramUdpHint => 'Напрямую идёт только её UDP; остальное — через VPN.';
 
   @override
   String get udpNoticeSetting => 'Уведомление о заблокированном UDP';
@@ -1588,8 +1534,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get addProgramName => 'Ввести имя…';
 
   @override
-  String get programNameHint =>
-      'Имя файла программы, например steam.exe; * означает любой текст (steam* — все программы Steam).';
+  String get programNameHint => 'Имя файла программы, например steam.exe; * означает любой текст (steam* — все программы Steam).';
 
   @override
   String get runningProgramsEmpty => 'Других запущенных программ нет.';
@@ -1693,12 +1638,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get speedStop => 'Stop';
 
   @override
-  String get speedHint =>
-      'Turn the VPN on first, so the test measures the VPN\'s own path.';
+  String get speedHint => 'Turn the VPN on first, so the test measures the VPN\'s own path.';
 
   @override
-  String get speedFailed =>
-      'The test did not finish; check the internet and try again.';
+  String get speedFailed => 'The test did not finish; check the internet and try again.';
 
   @override
   String get speedHistory => 'History';
@@ -1792,12 +1735,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get updateAllowInstall => 'Разрешить установку';
 
   @override
-  String get updateAllowInstallHint =>
-      'Чтобы установить обновление, разрешите приложению устанавливать приложения.';
+  String get updateAllowInstallHint => 'Чтобы установить обновление, разрешите приложению устанавливать приложения.';
 
   @override
-  String get updateDownloadFailed =>
-      'Не удалось скачать обновление. Проверьте интернет и попробуйте снова.';
+  String get updateDownloadFailed => 'Не удалось скачать обновление. Проверьте интернет и попробуйте снова.';
 
   @override
   String get paramMode => 'Режим';

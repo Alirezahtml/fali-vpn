@@ -1,6 +1,12 @@
 {
   "@@locale": "zh_Hant",
   "appTitle": "Fali VPN",
+  "sponsorHint": "此處展示項目贊助商",
+  "sponsorTitle": "贊助商",
+  "swipeToDisconnect": "滑動以斷開",
+  "swipeToConnect": "滑動以連接",
+  "readyToConnect": "準備連接",
+  "tagline": "快速、安全的私人隧道",
   "navOverview": "總覽",
   "navAccounts": "帳號",
   "navSettings": "設定",

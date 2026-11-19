@@ -1,6 +1,12 @@
 {
   "@@locale": "hu",
   "appTitle": "Fali VPN",
+  "sponsorHint": "Ez a hely a projekt szponzoráé",
+  "sponsorTitle": "Szponzor",
+  "swipeToDisconnect": "Csúsztassa a bontáshoz",
+  "swipeToConnect": "Csúsztassa a csatlakozáshoz",
+  "readyToConnect": "Készen áll a csatlakozásra",
+  "tagline": "Gyors, biztonságos és privát alagút",
   "navOverview": "Áttekintés",
   "navAccounts": "Fiókok",
   "navSettings": "Beállítások",

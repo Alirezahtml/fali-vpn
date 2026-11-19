@@ -1,6 +1,12 @@
 {
   "@@locale": "ru",
   "appTitle": "Fali VPN",
+  "sponsorHint": "Это место имени спонсора проекта",
+  "sponsorTitle": "Спонсор",
+  "swipeToDisconnect": "Потяните, чтобы отключить",
+  "swipeToConnect": "Потяните, чтобы подключить",
+  "readyToConnect": "Готов к подключению",
+  "tagline": "Быстрый, безопасный и личный туннель",
   "navOverview": "Обзор",
   "navAccounts": "Аккаунты",
   "navSettings": "Настройки",

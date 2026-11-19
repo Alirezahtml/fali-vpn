@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../app_info.dart';
 import '../app_settings.dart';
 import '../core/android_core.dart';
 import '../core/core_controller.dart';
@@ -19,13 +19,15 @@ import 'motion.dart';
 import 'port_dialog.dart';
 import 'update_dialog.dart';
 import 'widgets.dart';
-import 'world_map.dart';
 
-/// The phone's home, built from the approved design: the brand on top,
-/// the three live chips (ping, upload, download), the state and the
-/// stopwatch, the wide capsule power button, and the world map with the
-/// active server's card at the bottom. The map opens the connection's
-/// details; its flag opens the servers.
+/// The phone's home, rebuilt after the approved sample: the brand and its
+/// tagline under the status bar, one big card that carries the protocol,
+/// the state, the stopwatch, the exit's location and the live readings,
+/// a sponsor's place in the quiet middle, and at the bottom the slide-to-
+/// connect pill, the connection mode, and the protocol's own tabs — the
+/// core's real transports (HTTP/1.1, HTTP/2, HTTP/3), which save into the
+/// core's config the way the settings page does. Nothing here links out:
+/// every control answers in the app.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
@@ -51,8 +53,75 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  /// The core handles the initial connection while an explicit attempt is
-  /// pending.
+  /// The core's config, read once the page opens and after the page saves
+  /// into it; the protocol's tabs read the transport from it.
+  Map<String, Object?>? _config;
+
+  /// The transport being saved right now ('h1', 'h2', 'h3'), so its tab
+  /// wears a spinner until the core answers.
+  String? _savingTransport;
+
+  @override
+  void initState() {
+    super.initState();
+    _readConfig();
+  }
+
+  Future<void> _readConfig() async {
+    try {
+      final config = await widget.core.settings();
+      if (mounted) setState(() => _config = config);
+    } catch (_) {
+      // The page reads it again the next time it opens.
+    }
+  }
+
+  /// Saves the protocol into the core's config, as the settings page does;
+  /// then reads the config back, so the tabs wear what the core keeps.
+  /// Errors reach the caller, which shows them.
+  Future<void> _setTransport(String value) async {
+    if (_savingTransport != null) return;
+    setState(() => _savingTransport = value);
+    try {
+      await widget.core.editSettings((config) {
+        final proxy =
+            (config['proxy'] as Map<String, Object?>?) ??
+            <String, Object?>{};
+        proxy['transport'] = value;
+        config['proxy'] = proxy;
+      });
+      if (mounted) _readConfig();
+    } finally {
+      if (mounted) setState(() => _savingTransport = null);
+    }
+  }
+
+  /// The transport the config keeps: 'h1', 'h2' (the default) or 'h3'.
+  String get _transport => switch (_str(_config?['proxy'], 'transport')) {
+    'h1' => 'h1',
+    'h3' => 'h3',
+    _ => 'h2',
+  };
+
+  /// The IP version the config keeps, for the parameters' row.
+  String get _ipVersion => switch (_str(_config?['proxy'], 'ip_version')) {
+    'dual' => 'dual',
+    'ipv6_first' => 'ipv6_first',
+    'ipv4' => 'ipv4',
+    'ipv6' => 'ipv6',
+    _ => 'auto',
+  };
+
+  static String _str(Object? node, String key) {
+    if (node is Map<String, Object?>) {
+      final v = node[key];
+      if (v is String) return v;
+    }
+    return '';
+  }
+
+  /// Turns the tunnel on or off; the core handles the phone's VPN and the
+  /// computer's system proxy each its own way.
   Future<void> _toggle(bool on) async {
     final core = widget.core;
     final status = core.status;
@@ -146,7 +215,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
-    final persian = l.localeName == 'fa';
     final status = core.status!;
     final canSwitch = status.systemProxySupported;
     final proxy = status.proxy;
@@ -175,43 +243,70 @@ class _HomeScreenState extends State<HomeScreen> {
         (status.computerUsesVpn || !canSwitch) &&
         !confirming;
     final look = PhaseLook.of(l, status);
-    final label = confirming ? l.stateConnecting : look.label;
-    final place = homeLocation(l, status, connected: connected);
-    final mismatch = exitMismatchText(l, status);
-    final tv = Platform.isAndroid && AndroidCore.isTv;
+    // The state's words at the card's top: connected, connecting, waiting,
+    // an error — or, resting, "ready to connect", the way the sample says it.
+    final stateLabel = connected
+        ? l.stateConnected
+        : confirming
+        ? l.stateConnecting
+        : status.state.phase == Phase.error
+        ? l.stateError
+        : status.state.phase == Phase.waiting
+        ? l.stateWaiting
+        : l.readyToConnect;
     final press = status.proxyOn
-        ? (tv ? l.tapToDisconnectTv : l.tapToDisconnectPhone)
-        : (tv ? l.tapToConnectTv : l.tapToConnectPhone);
+        ? (AndroidCore.isTv ? l.tapToDisconnectTv : l.tapToDisconnectPhone)
+        : (AndroidCore.isTv ? l.tapToConnectTv : l.tapToConnectPhone);
     final traffic = status.traffic;
     final pingMs = connected && test?.ok == true ? test!.responseMs : null;
-    // The switch wears the state's color, and so does the light under it.
-    final powerColor = status.proxyOn ? StatusColors.good : Dali.primary;
+    final dotColor = connected
+        ? StatusColors.good
+        : confirming
+        ? StatusColors.busy
+        : status.state.phase == Phase.error
+        ? StatusColors.bad
+        : Dali.onVar(context);
+    // The exit's country and city, in the language.
+    final place = homeLocation(l, status, connected: connected);
     final city = connected &&
             proxy != null &&
             !isRecommendedPlace(proxy.countryCode)
         ? (proxy.cityName.isNotEmpty ? proxy.cityName : (status.exit?.city ?? ''))
         : '';
-    // The tunnel's way, in the parameter tile: the VPN carries every app,
-    // or the proxy serves the ones set up for it.
+    final title = city.isNotEmpty && city != place.name
+        ? '${place.name}${l.localeName == 'fa' ? '، ' : ', '}$city'
+        : place.name;
+    // The public address under the location, only when the user asked for
+    // it (the Show public IP setting): the home keeps the address to
+    // itself otherwise, as the phone's home always has.
+    final address = widget.settings.showPublicIp &&
+            connected &&
+            (status.exit?.ipv4.isNotEmpty ?? false)
+        ? status.exit!.ipv4
+        : '';
+    // The tunnel's way: every app (VPN), or the apps set up for it.
     final modeText = status.proxyOn
         ? (status.computerUsesVpn || !canSwitch ? l.modeVpn : l.modeProxy)
-        : (AndroidCore.mode.value == 'vpn' ? l.modeVpn : l.modeProxy);
+        : (Platform.isAndroid && AndroidCore.mode.value == 'proxy'
+        ? l.modeProxy
+        : l.modeVpn);
+    // The protocol the connection wears: the live one from the proxy, or
+    // what the config keeps.
+    final protocolText = (proxy?.transport.isNotEmpty ?? false)
+        ? proxy!.transport
+        : switch (_transport) {
+            'h1' => l.transportH1,
+            'h3' => l.transportH3,
+            _ => l.transportH2,
+          };
 
-    final page = AnnotatedRegion<SystemUiOverlayStyle>(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
       value: (dark
               ? SystemUiOverlayStyle.light
               : SystemUiOverlayStyle.dark)
           .copyWith(statusBarColor: Colors.transparent),
       child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: dark
-                ? const [Dali.bgDark, Color(0xFF0B111C)]
-                : const [Dali.bgLight, Color(0xFFF0F5FE)],
-          ),
-        ),
+        decoration: BoxDecoration(color: theme.scaffoldBackgroundColor),
         child: LayoutBuilder(
           builder: (context, box) => SingleChildScrollView(
             child: ConstrainedBox(
@@ -229,105 +324,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Center(child: _brand(context)),
-                      const SizedBox(height: 16),
-                      // The tunnel's state, as the sample's top card: the
-                      // state with its dot, the way (VPN or proxy) at one
-                      // end, the stopwatch's digits, and a word under
-                      // them.
-                      _statusCard(
-                        context,
-                        label: label,
-                        hint: connected
-                            ? l.encryptedHint
-                            : look.hint.isNotEmpty
-                            ? look.hint
-                            : press,
-                        connected: connected,
-                        confirming: confirming,
-                        connectedAt: proxy?.startedAt,
-                        error: status.state.phase == Phase.error,
-                        modeText: modeText,
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: StatChip(
-                              icon: Icons.bolt_rounded,
-                              color: Dali.amber,
-                              label: l.pingLabel,
-                              value: pingMs == null
-                                  ? '—'
-                                  : (persian
-                                        ? persianDigits('$pingMs')
-                                        : '$pingMs'),
-                              unit: 'ms',
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: StatChip(
-                              icon: Icons.arrow_upward_rounded,
-                              color: StatusColors.good,
-                              label: l.uploadRate,
-                              value: formatRate(traffic?.upRate ?? 0),
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: StatChip(
-                              icon: Icons.arrow_downward_rounded,
-                              color: Dali.primary,
-                              label: l.downloadRate,
-                              value: formatRate(traffic?.downRate ?? 0),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      const SizedBox(height: 16),
-                      Center(
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // A soft round light under the switch, so
-                            // the power reads as the page's hearth; it
-                            // quickens while the tunnel is coming up.
-                            DriftingGlow(
-                              color: powerColor,
-                              size: 240,
-                              alpha: dark ? 0.20 : 0.13,
-                              period: confirming || core.switchingProxy
-                                  ? const Duration(seconds: 6)
-                                  : const Duration(seconds: 11),
-                            ),
-                            PowerCapsule(
-                              tooltip: press,
-                              on: status.proxyOn,
-                              busy: core.switchingProxy,
-                              autofocus: tv,
-                              // No account yet: the accounts page, which
-                              // explains them.
-                              onPressed: status.totalAccounts == 0
-                                  ? _openAccounts
-                                  : () => runShowingErrors(
-                                      context,
-                                      () => _toggle(status.proxyOn),
-                                    ),
-                            ),
-                          ],
+                      _header(context),
+                      const SizedBox(height: 18),
+                      MotionEntrance(
+                        offset: const Offset(0, 14),
+                        duration: Motion.slow,
+                        child: _connectionCard(
+                          context,
+                          protocolText: protocolText,
+                          stateLabel: stateLabel,
+                          dotColor: dotColor,
+                          connected: connected,
+                          confirming: confirming,
+                          connectedAt: proxy?.startedAt,
+                          hint: connected
+                              ? (traffic != null
+                                    ? ''
+                                    : l.encryptedHint)
+                              : (look.hint.isNotEmpty ? look.hint : press),
+                          traffic: traffic,
+                          place: place,
+                          title: title,
+                          address: address,
+                          pingMs: pingMs,
+                          modeText: modeText,
                         ),
-                      ),
-                      const SizedBox(height: 14),
-                      // The three parameters, as the sample's row: the
-                      // tunnel's way, the exit's location, the local
-                      // port — each opens its own page.
-                      _params(
-                        context,
-                        modeText: modeText,
-                        place: place,
-                        port: '${portOf(status.state.address) ?? ''}',
                       ),
                       const SizedBox(height: 12),
                       _problems(
@@ -336,27 +357,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         failure: failure,
                         noNetwork: noNetwork,
                         gaveUp: gaveUp,
-                        mismatch: mismatch,
+                        mismatch: exitMismatchText(l, status),
                         connected: connected,
                       ),
-                      const Spacer(),
-                      const SizedBox(height: 12),
                       _updateBanner(context),
                       _coreNotices(context, status),
                       _lowQuota(context),
-                      const SizedBox(height: 14),
-                      _mapCard(
-                        context,
-                        place: place,
-                        connected: connected,
-                        city: city,
-                        pingMs: pingMs,
-                        exitCode: status.exit?.countryCode.length == 2
-                            ? status.exit!.countryCode
-                            : place.flag.length == 2
-                            ? place.flag
-                            : '',
+                      // The quiet middle: the sponsor's place rests under
+                      // the readings, and the controls sit at the bottom,
+                      // where the thumb reaches them.
+                      const Spacer(),
+                      _sponsor(context),
+                      const SizedBox(height: 12),
+                      _SlidePill(
+                        label: status.proxyOn
+                            ? l.swipeToDisconnect
+                            : l.swipeToConnect,
+                        tooltip: press,
+                        on: status.proxyOn,
+                        busy: core.switchingProxy,
+                        autofocus: Platform.isAndroid && AndroidCore.isTv,
+                        onToggle: status.totalAccounts == 0
+                            ? _openAccounts
+                            : () => runShowingErrors(
+                                context,
+                                () => _toggle(status.proxyOn),
+                              ),
                       ),
+                      const SizedBox(height: 10),
+                      _modeRow(context, modeText: modeText),
+                      const SizedBox(height: 10),
+                      _protocolBar(context),
                     ],
                   ),
                 ),
@@ -366,129 +397,375 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-    return page;
   }
 
-  /// The tunnel's state, as the sample's top card: the state with its
-  /// dot at one end and the tunnel's way at the other, the stopwatch's
-  /// digits under them (still at 00:00:00 while off, as the sample
-  /// keeps them), and a word of what the state means.
-  Widget _statusCard(
+  /// The header, as the sample wears it: the brand in its own words —
+  /// "Fali VPN" stays Latin in every language — the tagline under it in
+  /// the user's words, and the version in its chip at the far end.
+  Widget _header(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final version = appVersion == '0.0.0'
+        ? null
+        : Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surfaceContainerHigh,
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: Dali.hairline(context)),
+            ),
+            child: Text(
+              ltr('v$appVersion'),
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: Dali.onVar(context),
+                fontWeight: FontWeight.w700,
+                fontFeatures: const [],
+                letterSpacing: 0.3,
+              ),
+            ),
+          );
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // The brand: never translated, never rewritten.
+              Text(
+                l.appTitle,
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontSize: 27,
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 0.2,
+                  height: 1.15,
+                ),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                l.tagline,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: Dali.onVar(context),
+                  height: 1.3,
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (version != null) ...[const SizedBox(width: 12), version],
+      ],
+    );
+  }
+
+  /// The big card: the protocol's badge and the state at one line, the
+  /// stopwatch under them, the exit's location in its own inner card, and
+  /// the three live readings at the feet. Nothing here is fixed in height:
+  /// every card grows with its words.
+  Widget _connectionCard(
     BuildContext context, {
-    required String label,
-    required String hint,
+    required String protocolText,
+    required String stateLabel,
+    required Color dotColor,
     required bool connected,
     required bool confirming,
     required DateTime? connectedAt,
-    required bool error,
+    required String hint,
+    required Traffic? traffic,
+    required HomePlace place,
+    required String title,
+    required String address,
+    required int? pingMs,
     required String modeText,
+  }) {
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    final card = theme.colorScheme.surfaceContainer;
+    return Stack(
+      children: [
+        // A soft light under the card while the tunnel is up: the state's
+        // color breathes out of the page.
+        if (connected || confirming)
+          Positioned.fill(
+            child: IgnorePointer(
+              child: DriftingGlow(
+                color: connected ? StatusColors.good : StatusColors.busy,
+                size: 320,
+                alpha: dark ? 0.14 : 0.08,
+                period: confirming
+                    ? const Duration(seconds: 6)
+                    : const Duration(seconds: 11),
+              ),
+            ),
+          ),
+        Container(
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.lerp(card, Colors.white, dark ? 0.03 : 0.0)!,
+                card,
+              ],
+            ),
+            borderRadius: BorderRadius.circular(28),
+            border: Border.all(color: Dali.hairline(context)),
+            boxShadow: [
+              BoxShadow(
+                color: (dark ? Colors.black : const Color(0xFF0B3B78))
+                    .withValues(alpha: dark ? 0.5 : 0.08),
+                blurRadius: 22,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // The protocol's badge at the reading's start, the state's
+              // dot and words at the end.
+              Row(
+                children: [
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(999),
+                        border: Border.all(color: Dali.hairline(context)),
+                      ),
+                      child: Text(
+                        protocolText,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.labelMedium?.copyWith(
+                          color: Dali.primary,
+                          fontWeight: FontWeight.w800,
+                          fontFeatures: const [],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  SlideFadeSwitcher(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 9,
+                          height: 9,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: dotColor,
+                            boxShadow: [
+                              BoxShadow(
+                                color: dotColor.withValues(alpha: 0.5),
+                                blurRadius: 6,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 7),
+                        Text(
+                          stateLabel,
+                          key: ValueKey(stateLabel),
+                          style: theme.textTheme.labelLarge?.copyWith(
+                            color: Dali.onVar(context),
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              // The stopwatch at the reading's start; the state's word (or
+              // the live traffic) rests at the other end, on its baseline.
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: _stopwatch(context, connected, connectedAt),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: SlideFadeSwitcher(
+                      child: DefaultTextStyle(
+                        style: theme.textTheme.bodySmall!.copyWith(
+                          color: Dali.onVar(context),
+                        ),
+                        child: traffic != null && connected
+                            ? _traffic(traffic)
+                            : Text(
+                                hint,
+                                key: ValueKey(hint),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.end,
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 14),
+              _serverCard(
+                context,
+                place: place,
+                title: title,
+                address: address,
+                pingMs: pingMs,
+                connected: connected,
+              ),
+              const SizedBox(height: 10),
+              _readings(context, modeText: modeText),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// The stopwatch: still at 00:00:00 while the tunnel is off, running the
+  /// moment it is up — the digits in their own language.
+  Widget _stopwatch(BuildContext context, bool connected, DateTime? at) {
+    final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
+    final persian = l.localeName == 'fa';
+    final style = theme.textTheme.headlineMedium?.copyWith(
+      fontSize: 44,
+      fontWeight: FontWeight.w800,
+      height: 1.1,
+      color: connected
+          ? theme.colorScheme.onSurface
+          : theme.colorScheme.onSurface.withValues(alpha: 0.72),
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+    if (connected && at != null) {
+      return ConnectedTimer(startedAt: at, style: style);
+    }
+    return Text(ltr(persian ? persianDigits('00:00:00') : '00:00:00'), style: style);
+  }
+
+  /// The live traffic, under the stopwatch: down and up, each with its
+  /// arrow, in one quiet line.
+  Widget _traffic(Traffic traffic) {
+    final theme = Theme.of(context);
+    Widget line(IconData icon, Color color, int value) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 13, color: color),
+        const SizedBox(width: 3),
+        Text(
+          formatRate(value),
+          style: theme.textTheme.labelMedium?.copyWith(
+            color: Dali.onVar(context),
+            fontWeight: FontWeight.w700,
+            fontFeatures: const [FontFeature.tabularFigures()],
+          ),
+        ),
+      ],
+    );
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        line(Icons.arrow_downward_rounded, Dali.primary, traffic.downRate),
+        const SizedBox(width: 10),
+        line(Icons.arrow_upward_rounded, StatusColors.good, traffic.upRate),
+      ],
+    );
+  }
+
+  /// The exit's location in its own inner card: the flag, how the location
+  /// was chosen, its name (and city), the address under it, the delay in
+  /// its pill, and the button that measures again. A tap opens the
+  /// connection's details while connected, the servers otherwise; the
+  /// refresh measures the delay again.
+  Widget _serverCard(
+    BuildContext context, {
+    required HomePlace place,
+    required String title,
+    required String address,
+    required int? pingMs,
+    required bool connected,
   }) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final dark = theme.brightness == Brightness.dark;
-    final dotColor = connected
-        ? StatusColors.good
-        : confirming
-        ? Dali.amber
-        : error
-        ? StatusColors.bad
-        : Dali.onVar(context);
-    final persian = l.localeName == 'fa';
-    return MotionEntrance(
-      offset: const Offset(0, 14),
-      duration: Motion.slow,
+    return PressScale(
+      onTap: connected
+          ? widget.onOpenDetails
+          : (widget.onOpenServers ?? () {}),
+      amount: 0.985,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
+        padding: const EdgeInsetsDirectional.fromSTEB(12, 11, 8, 11),
         decoration: BoxDecoration(
-          color: theme.colorScheme.surfaceContainer,
-          borderRadius: BorderRadius.circular(26),
+          color: theme.colorScheme.surfaceContainerHigh,
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Dali.hairline(context)),
         ),
-        child: Column(
+        child: Row(
           children: [
-            Row(
-              children: [
-                SlideFadeSwitcher(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 9,
-                        height: 9,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: dotColor,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        label,
-                        key: ValueKey(label),
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Spacer(),
-                // The tunnel's way, in the state's wash.
-                AnimatedContainer(
-                  duration: Motion.normal,
-                  curve: Motion.emphasized,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Dali.wash(
-                      connected ? StatusColors.good : Dali.primary,
-                      dark,
-                    ),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    modeText,
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: connected ? StatusColors.good : Dali.primary,
-                    ),
-                  ),
-                ),
-              ],
+            DefaultTextStyle(
+              style: const TextStyle(fontSize: 30),
+              child: CountryFlag(code: place.flag, width: 40),
             ),
-            const SizedBox(height: 6),
-            // The stopwatch: still at 00:00:00 while the tunnel is off,
-            // running the moment it is up.
-            if (connected && connectedAt != null)
-              ConnectedTimer(
-                startedAt: connectedAt,
-                style: theme.textTheme.headlineMedium?.copyWith(
-                  fontSize: 40,
-                  fontWeight: FontWeight.w800,
-                  height: 1.2,
-                  color: dark ? Midnight.on : theme.colorScheme.onSurface,
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                ),
-              )
-            else
-              Text(
-                ltr(persian ? persianDigits('00:00:00') : '00:00:00'),
-                style: theme.textTheme.headlineMedium?.copyWith(
-                  fontSize: 40,
-                  fontWeight: FontWeight.w800,
-                  height: 1.2,
-                  color: Dali.onVar(context).withValues(alpha: 0.55),
-                  fontFeatures: const [FontFeature.tabularFigures()],
-                ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    place.caption,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: Dali.onVar(context),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 1),
+                  Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      height: 1.2,
+                    ),
+                  ),
+                  if (address.isNotEmpty) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      ltr(address),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: Dali.onVar(context),
+                        fontFeatures: const [FontFeature.tabularFigures()],
+                      ),
+                    ),
+                  ],
+                ],
               ),
-            const SizedBox(height: 2),
-            Text(
-              hint,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodySmall?.copyWith(
+            ),
+            const SizedBox(width: 6),
+            // The delay in its pill; a dash while it is not known.
+            PingChip(ms: pingMs, compact: true),
+            IconButton(
+              tooltip: l.testConnection,
+              visualDensity: VisualDensity.compact,
+              onPressed: () =>
+                  unawaited(widget.core.runTest().catchError((Object _) {})),
+              icon: Icon(
+                Icons.refresh_rounded,
+                size: 21,
                 color: Dali.onVar(context),
               ),
             ),
@@ -498,104 +775,95 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /// The three parameters, as the sample's row: the tunnel's way, the
-  /// exit's location, and the local port, each a tile that opens its
-  /// own page.
-  Widget _params(
-    BuildContext context, {
-    required String modeText,
-    required HomePlace place,
-    required String port,
-  }) {
+  /// The three readings, as the sample's row of parameters, each real:
+  /// the tunnel's way (VPN or proxy), the IP version the config keeps, and
+  /// the local port. The first two open the connection's settings; the
+  /// port asks for its new number itself.
+  Widget _readings(BuildContext context, {required String modeText}) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final dark = theme.brightness == Brightness.dark;
-    Widget tile(
-      IconData icon,
-      Color color,
-      String label,
-      String value,
-      VoidCallback? onTap,
-    ) => Expanded(
-      child: Material(
-        color: Dali.surface2(context),
-        borderRadius: BorderRadius.circular(18),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(18),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: Dali.hairline(context)),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 25,
-                  height: 25,
-                  decoration: BoxDecoration(
-                    color: Dali.wash(color, dark),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(icon, size: 14, color: color),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.labelSmall?.copyWith(
-                          color: Dali.onVar(context),
-                        ),
-                      ),
-                      Text(
-                        value,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+    final status = widget.core.status!;
+    // The port, while the core says which one it waits on (a blocked
+    // port, or one it was moved to); nothing while the tunnel runs.
+    final port = '${portOf(status.state.address) ?? ''}';
+
+    Widget stat(String label, String value) => Column(
+      children: [
+        Text(
+          label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: Dali.onVar(context),
+              fontSize: 10.5,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0.5,
             ),
           ),
-        ),
-      ),
-    );
-    return Row(
-      children: [
-        tile(
-          Icons.route_rounded,
-          Dali.primary,
-          l.paramMode,
-          modeText,
-          widget.onOpenConnection,
-        ),
-        const SizedBox(width: 8),
-        tile(
-          Icons.public_rounded,
-          Dali.amber,
-          l.paramLocation,
-          place.name,
-          widget.onOpenServers,
-        ),
-        const SizedBox(width: 8),
-        tile(
-          Icons.settings_ethernet_rounded,
-          StatusColors.good,
-          l.paramPort,
-          port.isEmpty ? '—' : ltr(port),
-          port.isEmpty ? null : () => _changePort(context),
-        ),
+          const SizedBox(height: 3),
+          // The value shrinks to its box instead of being cut off, so the
+          // longest translation reads whole.
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              maxLines: 1,
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w800,
+                fontFeatures: const [],
+              ),
+            ),
+          ),
       ],
+    );
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Dali.hairline(context)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: InkWell(
+              onTap: widget.onOpenConnection,
+              borderRadius: BorderRadius.circular(14),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: stat(l.paramMode, modeText),
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: widget.onOpenConnection,
+              borderRadius: BorderRadius.circular(14),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: stat(l.ipVersion, switch (_ipVersion) {
+                  'dual' => l.ipVersionDual,
+                  'ipv6_first' => l.ipVersionV6First,
+                  'ipv4' => l.ipVersionV4,
+                  'ipv6' => l.ipVersionV6,
+                  _ => l.ipVersionAuto,
+                }),
+              ),
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: port.isEmpty ? null : () => _changePort(context),
+              borderRadius: BorderRadius.circular(14),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: stat(l.paramPort, port.isEmpty ? '—' : ltr(port)),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -611,42 +879,158 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  /// The brand: the logo in its tile and the name beside it, centered
-  /// under the status bar with room to breathe.
-  Widget _brand(BuildContext context) {
+  /// The sponsor's place, where the sample keeps its quiet middle: the
+  /// card says whose name the space belongs to, and carries no link — the
+  /// app points nowhere but at itself.
+  Widget _sponsor(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 34,
-          height: 34,
-          decoration: BoxDecoration(
-            color: dark ? const Color(0xFF10151F) : Colors.white,
-            borderRadius: BorderRadius.circular(11),
-            border: Border.all(color: Dali.hairline(context)),
-            boxShadow: [
-              BoxShadow(
-                color: (dark ? Colors.black : const Color(0xFF0B3B78))
-                    .withValues(alpha: dark ? 0.4 : 0.10),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
+    const indigo = Color(0xFF5856D3);
+    return Container(
+      padding: const EdgeInsetsDirectional.fromSTEB(14, 12, 14, 12),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: Dali.hairline(context)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: indigo.withValues(alpha: dark ? 0.20 : 0.12),
+              borderRadius: BorderRadius.circular(13),
+            ),
+            child: const Icon(
+              Icons.volunteer_activism_rounded,
+              size: 21,
+              color: indigo,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l.sponsorTitle,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 1),
+                Text(
+                  l.sponsorHint,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: Dali.onVar(context),
+                    height: 1.35,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// The tunnel's way, as the sample's toggle row: the icon tile, the
+  /// mode's name and its value, and the chevron; a tap opens the
+  /// connection's settings, where the way is really chosen.
+  Widget _modeRow(BuildContext context, {required String modeText}) {
+    final l = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return PressScale(
+      onTap: widget.onOpenConnection ?? () {},
+      amount: 0.985,
+      child: Container(
+        padding: const EdgeInsetsDirectional.fromSTEB(14, 11, 10, 11),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surfaceContainer,
+          borderRadius: BorderRadius.circular(999),
+          border: Border.all(color: Dali.hairline(context)),
+        ),
+        child: Row(
+          children: [
+            IconTile(icon: Icons.vpn_lock_rounded, color: Dali.primary),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                l.connectionMode,
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ],
-          ),
-          child: const Center(child: AppLogo(size: 24)),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Dali.wash(Dali.primary, theme.brightness == Brightness.dark),
+                borderRadius: BorderRadius.circular(999),
+              ),
+              child: Text(
+                modeText,
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: Dali.primary,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+            const SizedBox(width: 4),
+            Icon(
+              Icons.chevron_right_rounded,
+              size: 22,
+              color: Dali.onVar(context),
+            ),
+          ],
         ),
-        const SizedBox(width: 10),
-        Text(
-          AppLocalizations.of(context).appTitle,
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 0.2,
-          ),
-        ),
-      ],
+      ),
+    );
+  }
+
+  /// The protocol's tabs, as the sample's bar, but with the core's own
+  /// transports — HTTP/1.1, HTTP/2, HTTP/3 — each saving into the core's
+  /// config, exactly as the settings page saves it. The chosen one wears
+  /// the blue; the one being saved wears a spinner.
+  Widget _protocolBar(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final current = _transport;
+    final options = [
+      ('h1', l.transportH1),
+      ('h2', l.transportH2),
+      ('h3', l.transportH3),
+    ];
+    return Container(
+      height: 56,
+      padding: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: Dali.hairline(context)),
+      ),
+      child: Row(
+        children: [
+          for (final (value, label) in options)
+            Expanded(
+              child: _ProtocolTab(
+                label: label,
+                selected: value == current,
+                busy: _savingTransport == value,
+                onTap: _savingTransport == null
+                    ? () => runShowingErrors(
+                        context,
+                        () => _setTransport(value),
+                      )
+                    : null,
+              ),
+            ),
+        ],
+      ),
     );
   }
 
@@ -782,8 +1166,9 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         for (final (i, card) in cards.indexed) ...[
           if (i > 0) const SizedBox(height: 10),
-          card,
+          Padding(padding: const EdgeInsets.only(bottom: 2), child: card),
         ],
+        const SizedBox(height: 8),
       ],
     );
   }
@@ -803,7 +1188,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         final failure = Updates.failure.value;
         return Padding(
-          padding: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(top: 10),
           child: ProblemCard(
             text: failure != null
                 ? l.updateFailed(release.version)
@@ -837,8 +1222,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  /// The core's notes (a port the apps' traffic was refused, a command it
-  /// ran), in amber cards with a close each.
+  /// The core's notes (a command it ran), in amber cards with a close each.
   Widget _coreNotices(BuildContext context, CoreStatus status) {
     final shown = [
       for (final n in homeNotices(status.notices))
@@ -853,7 +1237,7 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         for (final n in shown)
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(top: 10),
             child: ProblemCard(
               text: n.kind == 'port'
                   ? l.noticePort(n.detail)
@@ -897,7 +1281,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final usage = widget.core.status!.activeAccount!.usage!;
     String rounded(int bytes) => formatBytes(bytes).replaceAll('.0 ', ' ');
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(top: 10),
       child: ProblemCard(
         text: l.lowQuotaNotice(rounded(usage.limitBytes)),
         color: Dali.amber,
@@ -921,136 +1305,330 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
 
-  /// The world: the dotted map with the path from home to the server, and
-  /// the server's glass card at its feet. A tap opens the details while
-  /// connected, the servers otherwise.
-  Widget _mapCard(
-    BuildContext context, {
-    required HomePlace place,
-    required bool connected,
-    required String city,
-    required int? pingMs,
-    required String exitCode,
-  }) {
-    final l = AppLocalizations.of(context);
+/// One tab of the protocol's bar: the transport's name, the blue pill
+/// while it is the one, a spinner while its choice saves.
+class _ProtocolTab extends StatelessWidget {
+  const _ProtocolTab({
+    required this.label,
+    required this.selected,
+    required this.busy,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final bool busy;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return PressScale(
+      onTap: onTap,
+      amount: 0.94,
+      child: AnimatedContainer(
+        duration: Motion.normal,
+        curve: Motion.emphasized,
+        margin: const EdgeInsets.symmetric(horizontal: 2),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: selected ? Dali.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(999),
+        ),
+        child: ScaleSwitcher(
+          duration: Motion.fast,
+          child: busy
+              ? SizedBox.square(
+                  key: const ValueKey('busy'),
+                  dimension: 16,
+                  child: const CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
+                )
+              : Text(
+                  label,
+                  key: const ValueKey('label'),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: selected
+                        ? Colors.white
+                        : Dali.onVar(context),
+                    fontWeight: FontWeight.w800,
+                    fontFeatures: const [],
+                  ),
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The slide-to-connect pill, after the sample: a white circle that slides
+/// along the capsule — with the finger, or by a tap — and turns the tunnel
+/// over as it passes the middle. While the tunnel is up the pill wears the
+/// state's green, and its light breathes out of it.
+class _SlidePill extends StatefulWidget {
+  const _SlidePill({
+    required this.label,
+    required this.tooltip,
+    required this.on,
+    required this.busy,
+    required this.onToggle,
+    this.autofocus = false,
+  });
+
+  final String label;
+  final String tooltip;
+  final bool on;
+  final bool busy;
+  final VoidCallback onToggle;
+  final bool autofocus;
+
+  @override
+  State<_SlidePill> createState() => _SlidePillState();
+}
+
+class _SlidePillState extends State<_SlidePill> {
+  /// The knob's travel, 0 at its resting end to 1 at the far end, while
+  /// the finger holds it; settled back to 0 the moment the finger lifts.
+  double _drag = 0;
+  bool _dragging = false;
+  bool _passed = false;
+
+  bool get _rtl => Directionality.of(context) == TextDirection.rtl;
+
+  void _move(DragUpdateDetails d) {
+    final box = context.findRenderObject() as RenderBox;
+    final room = (box.size.width - 84).clamp(60.0, 400.0);
+    final dx = d.primaryDelta! * (_rtl ? -1 : 1);
+    setState(() => _drag = ((_drag + dx / room)).clamp(0.0, 1.0));
+    // The moment the halfway is crossed, the finger hears it: past it,
+    // letting go turns the tunnel over.
+    if (_drag > 0.45 != _passed) {
+      _passed = _drag > 0.45;
+      if (Motion.on(context)) HapticFeedback.selectionClick();
+    }
+  }
+
+  void _end(DragEndDetails d) {
+    final velocity = d.velocity.pixelsPerSecond.dx * (_rtl ? -1 : 1);
+    final go = _drag > 0.45 || velocity > 700;
+    setState(() {
+      _drag = 0;
+      _dragging = false;
+      _passed = false;
+    });
+    if (go && !widget.busy) widget.onToggle();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final dark = theme.brightness == Brightness.dark;
-    final title = city.isNotEmpty && city != place.name
-        ? '${place.name}${l.localeName == 'fa' ? '، ' : ', '}$city'
-        : place.name;
-    return MotionEntrance(
-      offset: const Offset(0, 16),
-      duration: Motion.slow,
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: connected ? widget.onOpenDetails : widget.onOpenServers,
-          borderRadius: BorderRadius.circular(26),
-          child: Container(
-            height: 172,
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surfaceContainer,
-              borderRadius: BorderRadius.circular(26),
-              border: Border.all(color: Dali.hairline(context)),
+    final color = widget.on ? StatusColors.good : Dali.primary;
+    return Tooltip(
+      message: widget.tooltip,
+      child: FocusableActionDetector(
+        autofocus: widget.autofocus,
+        actions: {
+          ActivateIntent: CallbackAction<ActivateIntent>(
+            onInvoke: (_) => widget.onToggle(),
+          ),
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // The connected pill's light, breathing under it.
+            PulseHalo(
+              color: color,
+              size: 150,
+              enabled: widget.on && !widget.busy,
+              rings: 1,
+              period: Motion.breathe,
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(14, 10, 14, 46),
-                      child: WorldMap(
-                        dotColor: Dali.onVar(context).withValues(
-                          alpha: dark ? 0.55 : 0.5,
-                        ),
-                        homeColor: Dali.primary,
-                        exitColor: connected
-                            ? StatusColors.good
-                            : Dali.primary,
-                        exitCode: exitCode,
-                        connected: connected,
+            PressScale(
+              onTap: widget.busy ? null : widget.onToggle,
+              amount: 0.97,
+              haptic: true,
+              child: ShimmerSweep(
+                enabled: widget.busy,
+                color: Colors.white,
+                period: const Duration(milliseconds: 1300),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onHorizontalDragStart:
+                      widget.busy ? null : (_) => setState(() => _dragging = true),
+                  onHorizontalDragUpdate: widget.busy ? null : _move,
+                  onHorizontalDragEnd: widget.busy ? null : _end,
+                  onHorizontalDragCancel: widget.busy
+                      ? null
+                      : () => setState(() {
+                          _drag = 0;
+                          _dragging = false;
+                          _passed = false;
+                        }),
+                  child: AnimatedContainer(
+                    duration: _dragging
+                        ? Duration.zero
+                        : Motion.normal,
+                    curve: Motion.emphasized,
+                    height: 62,
+                    padding: const EdgeInsets.all(7),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.lerp(
+                            theme.colorScheme.surfaceContainer,
+                            Colors.white,
+                            dark ? 0.03 : 0.0,
+                          )!,
+                          theme.colorScheme.surfaceContainer,
+                        ],
                       ),
+                      borderRadius: BorderRadius.circular(999),
+                      border: Border.all(
+                        color: widget.on
+                            ? StatusColors.good.withValues(
+                                alpha: dark ? 0.5 : 0.4,
+                              )
+                            : Dali.hairline(context),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: (dark ? Colors.black : const Color(0xFF0B3B78))
+                              .withValues(alpha: dark ? 0.5 : 0.10),
+                          blurRadius: 18,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
                     ),
-                  ),
-                  Positioned(
-                    left: 10,
-                    right: 10,
-                    bottom: 10,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 9,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // The words in the middle, the dots at the far
+                        // end: the pill reads as a track, not a button.
+                        Padding(
+                          padding: const EdgeInsetsDirectional.symmetric(
+                            horizontal: 64,
                           ),
-                          decoration: BoxDecoration(
-                            color: (dark
-                                    ? Dali.surface2Dark
-                                    : Colors.white)
-                                .withValues(alpha: dark ? 0.72 : 0.78),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: Dali.hairline(context)),
-                          ),
-                          child: Row(
-                            children: [
-                              DefaultTextStyle(
-                                style: const TextStyle(fontSize: 26),
-                                child: CountryFlag(
-                                  code: place.flag,
-                                  width: 34,
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      connected
-                                          ? l.serverActive
-                                          : place.caption,
-                                      style: theme.textTheme.labelSmall
-                                          ?.copyWith(
-                                            color: Dali.onVar(context),
-                                          ),
-                                    ),
-                                    const SizedBox(height: 1),
-                                    Text(
-                                      title,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: theme.textTheme.titleSmall
-                                          ?.copyWith(
-                                            fontWeight: FontWeight.w800,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              if (pingMs != null)
-                                PingChip(ms: pingMs, compact: true),
-                              const SizedBox(width: 4),
-                              Icon(
-                                Icons.chevron_left_rounded,
-                                size: 22,
-                                color: Dali.onVar(context),
-                              ),
-                            ],
+                          child: Text(
+                            widget.label,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w800,
+                              color: widget.on
+                                  ? StatusColors.good
+                                  : theme.colorScheme.onSurface,
+                            ),
                           ),
                         ),
-                      ),
+                        Align(
+                          alignment: AlignmentDirectional.centerEnd,
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.symmetric(
+                              horizontal: 14,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (var i = 0; i < 3; i++)
+                                  Container(
+                                    width: 7,
+                                    height: 7,
+                                    margin: const EdgeInsetsDirectional.symmetric(
+                                      horizontal: 2.5,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: widget.on
+                                          ? StatusColors.good.withValues(
+                                              alpha: 0.45 + 0.18 * i,
+                                            )
+                                          : (i == 0 || _drag > (i + 1) / 3.2
+                                          ? Dali.primary
+                                          : Dali.onVar(context).withValues(
+                                              alpha: 0.4,
+                                            )),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // The knob: the white circle with its arrow, sliding
+                        // with the finger and settling back when let go.
+                        AnimatedAlign(
+                          duration: _dragging
+                              ? Duration.zero
+                              : Motion.normal,
+                          curve: Motion.pop,
+                          alignment: AlignmentDirectional(
+                            -1 + 2 * _drag,
+                            0,
+                          ),
+                          child: AnimatedScale(
+                            scale: _dragging ? 1.06 : 1,
+                            duration: Motion.fast,
+                            curve: Motion.pop,
+                            child: Container(
+                              width: 48,
+                              height: 48,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: color.withValues(
+                                      alpha: dark ? 0.45 : 0.35,
+                                    ),
+                                    blurRadius: 14,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: ScaleSwitcher(
+                                  duration: Motion.fast,
+                                  child: widget.busy
+                                      ? SizedBox.square(
+                                          key: const ValueKey('spin'),
+                                          dimension: 19,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2.6,
+                                            color: color,
+                                          ),
+                                        )
+                                      : Icon(
+                                          widget.on
+                                              ? Icons.lock_rounded
+                                              : (_rtl
+                                              ? Icons.arrow_back_rounded
+                                              : Icons.arrow_forward_rounded),
+                                          key: ValueKey(widget.on ? 'on' : 'off'),
+                                          size: 22,
+                                          color: color,
+                                        ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

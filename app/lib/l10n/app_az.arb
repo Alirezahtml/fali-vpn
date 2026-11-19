@@ -1,6 +1,12 @@
 {
   "@@locale": "az",
   "appTitle": "Fali VPN",
+  "sponsorHint": "Bu sahə layihənin sponsoruna məxsusdur",
+  "sponsorTitle": "Sponsor",
+  "swipeToDisconnect": "Ayırmaq üçün sürüşə",
+  "swipeToConnect": "Qoşulmaq üçün sürüşə",
+  "readyToConnect": "Qoşulmağa hazır",
+  "tagline": "Sürətli, təhlükəsiz və şəxsi tunel",
   "navOverview": "İcmal",
   "navAccounts": "Hesablar",
   "navSettings": "Ayarlar",

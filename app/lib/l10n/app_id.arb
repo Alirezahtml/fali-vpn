@@ -1,6 +1,12 @@
 {
   "@@locale": "id",
   "appTitle": "Fali VPN",
+  "sponsorHint": "Ruang ini milik sponsor proyek",
+  "sponsorTitle": "Sponsor",
+  "swipeToDisconnect": "Geser untuk memutus",
+  "swipeToConnect": "Geser untuk tersambung",
+  "readyToConnect": "Siap tersambung",
+  "tagline": "Terowongan cepat, aman, dan pribadi",
   "navOverview": "Ringkasan",
   "navAccounts": "Akun",
   "navSettings": "Pengaturan",

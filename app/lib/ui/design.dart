@@ -8,20 +8,22 @@ import 'motion.dart';
 import 'widgets.dart' show StatusColors, delayColor;
 
 /// The Fali design language, built once and used by every screen: the
-/// Pixel surfaces and the electric blue, the 26-pixel rounded cards, the
-/// pill chips, the capsule power button, and the dotted arc dial. Every
-/// color asks the app's theme, so light and dark come free.
+/// pure black night with its neutral gray cards, the electric blue, the
+/// 26-pixel rounded cards, the pill chips, the capsule power button, and
+/// the dotted arc dial. Every color asks the app's theme, so light and
+/// dark come free.
 
 /// The surfaces the approved design named, behind the theme's tokens.
 abstract final class Dali {
-  // Dark.
-  static const bgDark = Color(0xFF0E1420);
-  static const surfaceDark = Color(0xFF171E2C);
-  static const surface2Dark = Color(0xFF1D2534);
-  static const surface3Dark = Color(0xFF242E40);
-  static const navDark = Color(0xFF121926);
-  static const onDark = Color(0xFFE6ECF6);
-  static const onVarDark = Color(0xFF9AA6BC);
+  // Dark: the night is pure black, the cards neutral grays — no blue
+  // under it, the way the approved sample wears it.
+  static const bgDark = Color(0xFF000000);
+  static const surfaceDark = Color(0xFF1C1C1E);
+  static const surface2Dark = Color(0xFF2C2C2E);
+  static const surface3Dark = Color(0xFF3A3A3C);
+  static const navDark = Color(0xFF0E0E10);
+  static const onDark = Color(0xFFF2F2F7);
+  static const onVarDark = Color(0xFF8E8E93);
 
   // Light.
   static const bgLight = Color(0xFFF5F8FE);
@@ -742,7 +744,7 @@ class _PowerCapsuleState extends State<PowerCapsule>
   /// The pill itself: the state's color, the flow's chevrons, and the
   /// sliding knob with the power mark (a spinner while the switch runs).
   Widget _capsule(BuildContext context, Color color, bool dark) {
-    final idle = dark ? const Color(0xFFB9C4D6) : const Color(0xFF5B6474);
+    final idle = dark ? const Color(0xFFC7C7CC) : const Color(0xFF5B6474);
     final knob = Container(
       width: 48,
       height: 48,

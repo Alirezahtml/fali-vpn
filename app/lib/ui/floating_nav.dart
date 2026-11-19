@@ -95,8 +95,8 @@ class _FloatingNavBarState extends State<FloatingNavBar> {
                   height: 66,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(999),
-                    color: (dark ? const Color(0xFF171E2C) : Colors.white)
-                        .withValues(alpha: dark ? 0.78 : 0.82),
+                    color: (dark ? const Color(0xFF1C1C1E) : Colors.white)
+                        .withValues(alpha: dark ? 0.82 : 0.82),
                   ),
                   foregroundDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(999),

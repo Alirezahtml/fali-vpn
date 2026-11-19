@@ -253,25 +253,26 @@ String locationName(AppLocalizations l, String code, String name) =>
     ? l.recommendedLocation
     : countryName(l, code, name);
 
-/// The phone home's colors at night: the Pixel dark surfaces and the
+/// The phone home's colors at night: pure black, the cards neutral grays
+/// (no blue beneath them, the way the sample wears the dark), and the
 /// state's color in Google's palette.
 abstract final class Midnight {
-  static const top = Color(0xFF0E1420);
-  static const bottom = Color(0xFF0B111C);
-  static const surface = Color(0xFF171E2C);
-  static const surface2 = Color(0xFF1D2534);
-  static const surface3 = Color(0xFF242E40);
-  static const nav = Color(0xFF121926);
-  static const on = Color(0xFFE6ECF6);
+  static const top = Color(0xFF000000);
+  static const bottom = Color(0xFF000000);
+  static const surface = Color(0xFF1C1C1E);
+  static const surface2 = Color(0xFF2C2C2E);
+  static const surface3 = Color(0xFF3A3A3C);
+  static const nav = Color(0xFF0E0E10);
+  static const on = Color(0xFFF2F2F7);
   static const connected = Color(0xFF34A853);
   static const busy = Color(0xFFFBBC04);
   static const error = Color(0xFFEA4335);
-  static const idle = Color(0xFF8FA0BC);
-  static const muted = Color(0xFF93A0B8);
+  static const idle = Color(0xFF8E8E93);
+  static const muted = Color(0xFF8E8E93);
 }
 
 /// A dark theme for the phone's home and its navigation bar, with the
-/// app's fonts: the Pixel dark surfaces and the blue pill the Navigation
+/// app's fonts: the black night surfaces and the blue pill the Navigation
 /// Bar draws around the chosen tab.
 ThemeData midnightTheme(ThemeData base) {
   final scheme =

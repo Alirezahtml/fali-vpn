@@ -1,6 +1,12 @@
 {
   "@@locale": "bn",
   "appTitle": "Fali VPN",
+  "sponsorHint": "এই স্থানটি প্রকল্পের স্পনসরের নামের জন্য",
+  "sponsorTitle": "স্পনসর",
+  "swipeToDisconnect": "বিচ্ছিন্ন করতে স্লাইড করুন",
+  "swipeToConnect": "সংযোগের জন্য স্লাইড করুন",
+  "readyToConnect": "সংযোগের জন্য প্রস্তুত",
+  "tagline": "দ্রুত, নিরাপদ ও ব্যক্তিগত টানেল",
   "navOverview": "সারসংক্ষেপ",
   "navAccounts": "অ্যাকাউন্ট",
   "navSettings": "সেটিংস",

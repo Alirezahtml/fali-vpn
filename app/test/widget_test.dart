@@ -525,7 +525,7 @@ void main() {
     core.dispose();
   });
 
-  testWidgets('the phone home wears the approved design: chips, capsule, map card', (
+  testWidgets('the phone home wears the approved design: card, pill, tabs', (
     tester,
   ) async {
     stillMotion(tester);
@@ -545,18 +545,18 @@ void main() {
     core.start();
     await tester.pumpAndSettle();
 
-    // The brand, the connected state, and the three live chips.
+    // The brand, the connected state, the protocol's badge, the mode.
     expect(find.text('Fali VPN'), findsOneWidget);
     expect(find.text('متصل'), findsOneWidget);
-    expect(find.text('پینگ'), findsOneWidget);
-    expect(find.text('دانلود'), findsWidgets);
-    expect(find.text('آپلود'), findsWidgets);
-    // The capsule's power knob is what taps; its hint names the action.
+    expect(find.text('HTTP/3'), findsOneWidget);
+    // The mode, in the readings and the row under the pill.
+    expect(find.text('VPN'), findsWidgets);
+    // The exit's delay in its pill.
+    expect(find.textContaining('ms'), findsWidgets);
+    // The pill's tooltip names the action.
     expect(find.byTooltip('برای قطع اتصال ضربه بزنید'), findsOneWidget);
-    // The map's server card names the country the traffic leaves through;
-    // the parameters' Exit tile names it too.
-    expect(find.text('سرور فعال'), findsOneWidget);
-    expect(find.textContaining('هلند'), findsNWidgets(2));
+    // The server card names the country the traffic leaves through.
+    expect(find.textContaining('هلند'), findsNWidgets(1));
 
     await tester.pumpWidget(const SizedBox());
     core.dispose();
@@ -580,11 +580,11 @@ void main() {
     core.start();
     await tester.pumpAndSettle();
 
-    // The map's card opens the details while the VPN carries traffic; the
-    // home grew, so it may sit below the fold.
-    await tester.ensureVisible(find.text('سرور فعال'));
+    // The server card opens the details while the VPN carries traffic; it
+    // may sit below the fold.
+    await tester.ensureVisible(find.textContaining('هلند'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('سرور فعال'));
+    await tester.tap(find.textContaining('هلند'));
     await tester.pumpAndSettle();
 
     // Nothing in the page may throw (a thrown build turns the body grey
@@ -2307,10 +2307,10 @@ void main() {
     // On, with no system proxy: connected, not "proxy only".
     expect(find.text('Connected'), findsOneWidget);
     // Connected through the recommended location: the exit's country,
-    // Belgium, on the map's server card and the Exit tile, under "Active
-    // server", without the city.
-    expect(find.text('Active server'), findsOneWidget);
-    expect(find.text('Belgium'), findsNWidgets(2));
+    // Belgium, on the server card, under "Recommended location", without
+    // the city.
+    expect(find.text('Recommended location'), findsOneWidget);
+    expect(find.text('Belgium'), findsOneWidget);
     expect(find.textContaining('Brussels'), findsNothing);
     // No public IP on the phone's home, and no email either.
     expect(find.textContaining('192.0.2.7'), findsNothing);
@@ -2323,11 +2323,12 @@ void main() {
     await tester.tap(find.byTooltip('Tap to disconnect'));
     await tester.pumpAndSettle();
     expect(api.on, isFalse);
-    expect(find.text('Disconnected'), findsOneWidget);
-    // Off: the chosen location, the recommended one by default — on the
-    // map's card and the Exit tile alike.
+    // The resting state reads "Ready to connect", as the sample says it.
+    expect(find.text('Ready to connect'), findsOneWidget);
+    // Off: the chosen location, the recommended one by default, on the
+    // server card — its caption "Location", its name the recommendation.
     expect(find.text('Location'), findsOneWidget);
-    expect(find.text('Recommended location'), findsNWidgets(2));
+    expect(find.text('Recommended location'), findsOneWidget);
 
     await tester.tap(find.byTooltip('Tap to connect'));
     await tester.pumpAndSettle();
@@ -2445,7 +2446,12 @@ void main() {
         ..connectFailure = Failure.noNetwork;
       await core.refresh();
       await tester.pumpAndSettle();
-      expect(find.text(l.stateOff), findsOneWidget);
+      // The resting state: "Ready to connect" on the phone, as the sample
+      // says it; the desktop home keeps its own word for it.
+      expect(
+        find.text(desktop ? l.stateOff : l.readyToConnect),
+        findsOneWidget,
+      );
       expect(find.text(l.failNoInternet), findsOneWidget);
       expect(find.text(l.failUnreachable), findsNothing);
       expect(api.tests, 0);

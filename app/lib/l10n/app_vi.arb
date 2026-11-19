@@ -1,6 +1,12 @@
 {
   "@@locale": "vi",
   "appTitle": "Fali VPN",
+  "sponsorHint": "Không gian này dành cho nhà tài trợ dự án",
+  "sponsorTitle": "Nhà tài trợ",
+  "swipeToDisconnect": "Trượt để ngắt kết nối",
+  "swipeToConnect": "Trượt để kết nối",
+  "readyToConnect": "Sẵn sàng kết nối",
+  "tagline": "Đường hầm nhanh, an toàn và riêng tư",
   "navOverview": "Tổng quan",
   "navAccounts": "Tài khoản",
   "navSettings": "Cài đặt",

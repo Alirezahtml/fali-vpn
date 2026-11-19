@@ -26,10 +26,11 @@ import 'widgets.dart';
 
 /// The app's theme, built to read like Google Pixel's Material You: the
 /// electric blue accent over near-white blue-tinted surfaces by day and
-/// deep navy ones at night, big 26-pixel rounded cards, pill buttons, and
-/// the state colors of Google's palette. Vazirmatn for Persian and Arabic;
-/// the system font (Segoe UI, Roboto) otherwise. Styles set here name the
-/// font too, or they would fall back to the system font.
+/// pure black with neutral gray cards at night, big 26-pixel rounded
+/// cards, pill buttons, and the state colors of Google's palette.
+/// Vazirmatn for Persian and Arabic; the system font (Segoe UI, Roboto)
+/// otherwise. Styles set here name the font too, or they would fall back
+/// to the system font.
 ThemeData _theme(Brightness brightness, Locale locale) {
   final dark = brightness == Brightness.dark;
   final font = languageFont(locale.languageCode);
@@ -37,16 +38,17 @@ ThemeData _theme(Brightness brightness, Locale locale) {
     seedColor: PixelAccent.blue,
     brightness: brightness,
   ).copyWith(
-          // The Pixel surfaces: near-white with a breath of blue by day,
-          // deep navy at night.
-          surface: dark ? const Color(0xFF0E1420) : const Color(0xFFF5F8FE),
-          surfaceContainerLowest: dark ? const Color(0xFF0B111C) : Colors.white,
-          surfaceContainerLow: dark ? const Color(0xFF121926) : const Color(0xFFF8FAFF),
-          surfaceContainer: dark ? const Color(0xFF171E2C) : Colors.white,
-          surfaceContainerHigh: dark ? const Color(0xFF1D2534) : const Color(0xFFEDF2FC),
-          surfaceContainerHighest: dark ? const Color(0xFF242E40) : const Color(0xFFE2EAF8),
-          onSurface: dark ? const Color(0xFFE6ECF6) : const Color(0xFF1A1D24),
-          onSurfaceVariant: dark ? const Color(0xFF9AA6BC) : const Color(0xFF5B6474),
+          // The Pixel surfaces: near-white with a breath of blue by day;
+          // pure black with neutral gray cards at night — the night
+          // carries no blue tint, the way the approved sample wears it.
+          surface: dark ? const Color(0xFF000000) : const Color(0xFFF5F8FE),
+          surfaceContainerLowest: dark ? const Color(0xFF060607) : Colors.white,
+          surfaceContainerLow: dark ? const Color(0xFF0E0E10) : const Color(0xFFF8FAFF),
+          surfaceContainer: dark ? const Color(0xFF1C1C1E) : Colors.white,
+          surfaceContainerHigh: dark ? const Color(0xFF2C2C2E) : const Color(0xFFEDF2FC),
+          surfaceContainerHighest: dark ? const Color(0xFF3A3A3C) : const Color(0xFFE2EAF8),
+          onSurface: dark ? const Color(0xFFF2F2F7) : const Color(0xFF1A1D24),
+          onSurfaceVariant: dark ? const Color(0xFF8E8E93) : const Color(0xFF5B6474),
           primaryContainer: dark
               ? PixelAccent.darkContainer
               : PixelAccent.lightContainer,
@@ -129,7 +131,7 @@ ThemeData _theme(Brightness brightness, Locale locale) {
       },
     ),
     navigationRailTheme: NavigationRailThemeData(
-      backgroundColor: dark ? const Color(0xFF10161F) : const Color(0xFFEFF3FB),
+      backgroundColor: dark ? const Color(0xFF0A0A0B) : const Color(0xFFEFF3FB),
       indicatorColor: dark
           ? PixelAccent.darkContainer
           : PixelAccent.lightContainer,
@@ -225,7 +227,7 @@ ThemeData _theme(Brightness brightness, Locale locale) {
     ),
     dialogTheme: DialogThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-      backgroundColor: dark ? const Color(0xFF1A2130) : Colors.white,
+      backgroundColor: dark ? const Color(0xFF232325) : Colors.white,
     ),
     snackBarTheme: SnackBarThemeData(
       behavior: SnackBarBehavior.floating,

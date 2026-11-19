@@ -1,6 +1,12 @@
 {
   "@@locale": "en",
   "appTitle": "Fali VPN",
+  "sponsorHint": "This space belongs to the project's sponsor",
+  "sponsorTitle": "Sponsor",
+  "swipeToDisconnect": "Slide to disconnect",
+  "swipeToConnect": "Slide to connect",
+  "readyToConnect": "Ready to connect",
+  "tagline": "A fast, secure and private tunnel",
   "navOverview": "Overview",
   "navAccounts": "Accounts",
   "navSettings": "Settings",

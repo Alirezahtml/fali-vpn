@@ -1,6 +1,12 @@
 {
   "@@locale": "fa",
   "appTitle": "Fali VPN",
+  "sponsorHint": "این فضا جای نام حامی پروژه است",
+  "sponsorTitle": "حامی مالی",
+  "swipeToDisconnect": "بکش تا قطع شی",
+  "swipeToConnect": "بکش تا وصل شی",
+  "readyToConnect": "آماده اتصال",
+  "tagline": "تونلی امن، سریع و شخصی",
   "navOverview": "نمای کلی",
   "navAccounts": "حساب‌ها",
   "navSettings": "تنظیمات",
