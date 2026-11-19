@@ -445,13 +445,24 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     } else if (failure != null) {
+      // Mozilla refused the chosen location: the recommended one works,
+      // on the same card, so the reason is not said twice.
+      final refused = isLocationRefused(failure.code);
       cards.add(
         ProblemCard(
           text: failure.text,
-          color: StatusColors.bad,
-          icon: Icons.error_outline_rounded,
+          color: refused ? Dali.amber : StatusColors.bad,
+          icon: refused
+              ? Icons.travel_explore_rounded
+              : Icons.error_outline_rounded,
           tooltip: failure.detail,
           actions: [
+            if (refused)
+              TextButton(
+                onPressed: () =>
+                    runShowingErrors(context, () => core.setLocation('')),
+                child: Text(l.recommendedLocation),
+              ),
             if (failure.code == Failure.unreachable &&
                 widget.onOpenConnection != null)
               TextButton(
@@ -468,28 +479,23 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     } else if (gaveUp) {
+      // The last connect was given up: why, with the recommended place's
+      // answer when the location was the reason.
+      final refused = isLocationRefused(status.connectFailure);
       cards.add(
         ProblemCard(
           text: failureCodeText(l, status.connectFailure),
-          color: StatusColors.bad,
-          icon: Icons.error_outline_rounded,
-        ),
-      );
-    }
-    // Mozilla refused the chosen location: the recommended one works.
-    if (isLocationRefused(failure?.code ?? '') ||
-        (gaveUp && isLocationRefused(status.connectFailure))) {
-      cards.add(
-        ProblemCard(
-          text: failureCodeText(l, Failure.locationRefused),
-          color: Dali.amber,
-          icon: Icons.travel_explore_rounded,
+          color: refused ? Dali.amber : StatusColors.bad,
+          icon: refused
+              ? Icons.travel_explore_rounded
+              : Icons.error_outline_rounded,
           actions: [
-            TextButton(
-              onPressed: () =>
-                  runShowingErrors(context, () => core.setLocation('')),
-              child: Text(l.recommendedLocation),
-            ),
+            if (refused)
+              TextButton(
+                onPressed: () =>
+                    runShowingErrors(context, () => core.setLocation('')),
+                child: Text(l.recommendedLocation),
+              ),
           ],
         ),
       );
