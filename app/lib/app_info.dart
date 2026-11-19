@@ -132,8 +132,9 @@ String? versionFor(Object? updates, String os) {
 }
 
 /// The release's notes ("What's new"), read from its page on the release
-/// server; shown by the update dialog in the app's language, and never
-/// naming where they came from. '' when there are none.
+/// server, cleaned of the web's HTML by [plainReleaseNotes]; shown by the
+/// update dialog in the app's language, and never naming where they came
+/// from. '' when there are none.
 Future<String> releaseNotes(
   String version, {
   String? proxy,
@@ -152,12 +153,87 @@ Future<String> releaseNotes(
     final j = jsonDecode(body);
     final notes = j is Map<String, Object?> ? j['body'] as String? : null;
     final trimmed = notes?.trim() ?? '';
-    return trimmed.isEmpty ? '' : trimmed;
+    return trimmed.isEmpty ? '' : plainReleaseNotes(trimmed);
   } catch (_) {
     return '';
   } finally {
     client.close(force: true);
   }
+}
+
+/// The release's body, as the update dialog shows it: the words only, with
+/// the web's HTML gone — tags stripped, the tables' cells read as lines,
+/// every badge and every address (they point at the release's files and
+/// its page, which the app never shows) dropped. The "What's new" words
+/// alone when the body carries them; a body that is only the download
+/// table says nothing, and '' comes back, so the dialog speaks its own
+/// quiet line instead.
+String plainReleaseNotes(String raw) {
+  var body = raw.trim();
+  if (body.isEmpty) return '';
+  // The "What's new" words alone, when the body names them: everything up
+  // to the next heading of its own.
+  final heading = RegExp(
+    r'^#{1,6}\s*what.?s new\b[^\n]*$',
+    multiLine: true,
+    caseSensitive: false,
+  ).firstMatch(body);
+  if (heading != null) {
+    body = body.substring(heading.end);
+    final next = RegExp(r'^#{1,6}\s', multiLine: true).firstMatch(body);
+    if (next != null) body = body.substring(0, next.start);
+  } else if (RegExp(r'<table\b', caseSensitive: false).hasMatch(body)) {
+    // An older body that is only the download table: nothing in it speaks
+    // the version's words.
+    return '';
+  }
+  // The badges go whole; a link keeps only its words.
+  body = body.replaceAll(RegExp(r'<img\b[^>]*>', caseSensitive: false), '');
+  body = body.replaceAllMapped(
+    RegExp(r'<a\b[^>]*>(.*?)</a>', caseSensitive: false, dotAll: true),
+    (m) => m.group(1) ?? '',
+  );
+  // A table's cells read as one line's words; the rows, the breaks and the
+  // lists become lines.
+  body = body
+      .replaceAll(
+        RegExp(r'</t[dh]>\s*<t[dh][^>]*>', caseSensitive: false),
+        ' — ',
+      )
+      .replaceAll(RegExp(r'</tr>\s*', caseSensitive: false), '\n')
+      .replaceAll(
+        RegExp(
+          r'<br\s*/?>|</p>|</div>|</h[1-6]>|<(li|ul|ol|p|div)\b[^>]*>',
+          caseSensitive: false,
+        ),
+        '\n',
+      );
+  // Whatever tag is left stands aside; the words remain.
+  body = body.replaceAll(RegExp(r'<[^>]*>'), '');
+  // The HTML's escaped words stand for themselves.
+  body = body
+      .replaceAll('&amp;', '&')
+      .replaceAll('&lt;', '<')
+      .replaceAll('&gt;', '>')
+      .replaceAll('&quot;', '"')
+      .replaceAll('&apos;', "'")
+      .replaceAll('&#39;', "'")
+      .replaceAll('&nbsp;', ' ');
+  // No address of anywhere is ever shown, whatever line hid it in.
+  body = body.replaceAll(RegExp(r'\bhttps?://\S+'), '');
+  // One space between the words; the lines that only carried structure,
+  // and the empty cells' repeated dashes, go.
+  final lines = <String>[];
+  for (var line in body.split('\n')) {
+    line = line
+        .replaceAll(RegExp(r'[ \t]+'), ' ')
+        .replaceAll(RegExp(r'(?:—\s*)+'), '— ')
+        .trim();
+    line = line.replaceAll(RegExp(r'^[—·\s]+'), '').trim();
+    line = line.replaceAll(RegExp(r'[—\s]+$'), '').trim();
+    if (line.isNotEmpty) lines.add(line);
+  }
+  return lines.join('\n');
 }
 
 /// The version that the [updatesFile] at [url] names for [os]; null when it

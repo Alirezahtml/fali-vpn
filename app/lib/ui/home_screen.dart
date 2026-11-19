@@ -290,15 +290,22 @@ class _HomeScreenState extends State<HomeScreen> {
         : (Platform.isAndroid && AndroidCore.mode.value == 'proxy'
         ? l.modeProxy
         : l.modeVpn);
-    // The protocol the connection wears: the live one from the proxy, or
-    // what the config keeps.
-    final protocolText = (proxy?.transport.isNotEmpty ?? false)
-        ? proxy!.transport
-        : switch (_transport) {
-            'h1' => l.transportH1,
-            'h3' => l.transportH3,
-            _ => l.transportH2,
-          };
+    // The protocol the connection wears: the live one from the proxy,
+    // named in the app's words exactly as the tabs name it, or what the
+    // config keeps when none runs yet.
+    final liveTransport = proxy?.transport ?? '';
+    final protocolText = switch (liveTransport) {
+      'h1' => l.transportH1,
+      'h2' => l.transportH2,
+      'h3' => l.transportH3,
+      _ => liveTransport.isNotEmpty
+          ? liveTransport
+          : switch (_transport) {
+              'h1' => l.transportH1,
+              'h3' => l.transportH3,
+              _ => l.transportH2,
+            },
+    };
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: (dark
@@ -583,37 +590,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               const SizedBox(height: 10),
-              // The stopwatch at the reading's start; the state's word (or
-              // the live traffic) rests at the other end, on its baseline.
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: _stopwatch(context, connected, connectedAt),
+              // The stopwatch alone on its line: the digits never wrap,
+              // squeeze, or lean on the words beside them, however long
+              // those are.
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: _stopwatch(context, connected, connectedAt),
+              ),
+              const SizedBox(height: 8),
+              // The live traffic (or the quiet hint) rests under it, at
+              // the line's end, in the room its own words take.
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: SlideFadeSwitcher(
+                  child: DefaultTextStyle(
+                    style: theme.textTheme.bodySmall!.copyWith(
+                      color: Dali.onVar(context),
                     ),
+                    child: traffic != null && connected
+                        ? _traffic(traffic)
+                        : Text(
+                            hint,
+                            key: ValueKey(hint),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.end,
+                          ),
                   ),
-                  const SizedBox(width: 12),
-                  Flexible(
-                    child: SlideFadeSwitcher(
-                      child: DefaultTextStyle(
-                        style: theme.textTheme.bodySmall!.copyWith(
-                          color: Dali.onVar(context),
-                        ),
-                        child: traffic != null && connected
-                            ? _traffic(traffic)
-                            : Text(
-                                hint,
-                                key: ValueKey(hint),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.end,
-                              ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
               const SizedBox(height: 14),
               _serverCard(
@@ -648,10 +652,22 @@ class _HomeScreenState extends State<HomeScreen> {
           : theme.colorScheme.onSurface.withValues(alpha: 0.72),
       fontFeatures: const [FontFeature.tabularFigures()],
     );
+    // The digits shrink to the room they have instead of wrapping to a
+    // second line: the stopwatch reads as one line, whatever the screen.
     if (connected && at != null) {
-      return ConnectedTimer(startedAt: at, style: style);
+      return FittedBox(
+        fit: BoxFit.scaleDown,
+        child: ConnectedTimer(startedAt: at, style: style),
+      );
     }
-    return Text(ltr(persian ? persianDigits('00:00:00') : '00:00:00'), style: style);
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Text(
+        ltr(persian ? persianDigits('00:00:00') : '00:00:00'),
+        maxLines: 1,
+        style: style,
+      ),
+    );
   }
 
   /// The live traffic, under the stopwatch: down and up, each with its
@@ -787,33 +803,65 @@ class _HomeScreenState extends State<HomeScreen> {
     // port, or one it was moved to); nothing while the tunnel runs.
     final port = '${portOf(status.state.address) ?? ''}';
 
-    Widget stat(String label, String value) => Column(
+    // The IP version's words: the way before its brackets, and the
+    // brackets' detail on its own quiet line under it ("Auto" over
+    // "IPv4, then IPv6"), so no column ever squeezes its words to fit.
+    final ipRaw = switch (_ipVersion) {
+      'dual' => l.ipVersionDual,
+      'ipv6_first' => l.ipVersionV6First,
+      'ipv4' => l.ipVersionV4,
+      'ipv6' => l.ipVersionV6,
+      _ => l.ipVersionAuto,
+    };
+    final bracket = RegExp(r'^([^()]+)\(([^()]*)\)\s*$').firstMatch(ipRaw);
+    final ipValue = bracket != null ? bracket.group(1)!.trim() : ipRaw;
+    final ipDetail = bracket?.group(2)?.trim();
+
+    Widget stat(String label, String value, {String? detail}) => Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           label,
-            maxLines: 1,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.labelSmall?.copyWith(
+            color: Dali.onVar(context),
+            fontSize: 10.5,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 4),
+        // The value at its own size, whole — never shrunk into a smaller
+        // box than its words take.
+        Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.w800,
+            fontFeatures: const [],
+          ),
+        ),
+        // The value's second words ("IPv4, then IPv6") on their own quiet
+        // line — two lines if the language asks, never squeezed or cut
+        // short. The columns stand on one baseline: the row lines them up
+        // by their top, and the detail hangs under its own value only.
+        if (detail != null) ...[
+          const SizedBox(height: 2),
+          Text(
+            detail,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: theme.textTheme.labelSmall?.copyWith(
               color: Dali.onVar(context),
-              fontSize: 10.5,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0.5,
+              fontSize: 10,
+              height: 1.25,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 3),
-          // The value shrinks to its box instead of being cut off, so the
-          // longest translation reads whole.
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              value,
-              maxLines: 1,
-              style: theme.textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w800,
-                fontFeatures: const [],
-              ),
-            ),
-          ),
+        ],
       ],
     );
 
@@ -825,6 +873,7 @@ class _HomeScreenState extends State<HomeScreen> {
         border: Border.all(color: Dali.hairline(context)),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: InkWell(
@@ -842,13 +891,7 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(14),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: stat(l.ipVersion, switch (_ipVersion) {
-                  'dual' => l.ipVersionDual,
-                  'ipv6_first' => l.ipVersionV6First,
-                  'ipv4' => l.ipVersionV4,
-                  'ipv6' => l.ipVersionV6,
-                  _ => l.ipVersionAuto,
-                }),
+                child: stat(l.ipVersion, ipValue, detail: ipDetail),
               ),
             ),
           ),
@@ -1006,28 +1049,31 @@ class _HomeScreenState extends State<HomeScreen> {
       ('h3', l.transportH3),
     ];
     return Container(
-      height: 56,
       padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         color: theme.colorScheme.surfaceContainer,
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(26),
         border: Border.all(color: Dali.hairline(context)),
       ),
-      child: Row(
+      // Each tab takes the room its own words need, and wraps to a second
+      // line when a language's words ask for it — the bar never squeezes
+      // or cuts a transport's name.
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 6,
+        runSpacing: 4,
         children: [
           for (final (value, label) in options)
-            Expanded(
-              child: _ProtocolTab(
-                label: label,
-                selected: value == current,
-                busy: _savingTransport == value,
-                onTap: _savingTransport == null
-                    ? () => runShowingErrors(
-                        context,
-                        () => _setTransport(value),
-                      )
-                    : null,
-              ),
+            _ProtocolTab(
+              label: label,
+              selected: value == current,
+              busy: _savingTransport == value,
+              onTap: _savingTransport == null
+                  ? () => runShowingErrors(
+                      context,
+                      () => _setTransport(value),
+                    )
+                  : null,
             ),
         ],
       ),
@@ -1332,6 +1378,7 @@ class _ProtocolTab extends StatelessWidget {
         duration: Motion.normal,
         curve: Motion.emphasized,
         margin: const EdgeInsets.symmetric(horizontal: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: selected ? Dali.primary : Colors.transparent,
@@ -1442,14 +1489,39 @@ class _SlidePillState extends State<_SlidePill> {
         },
         child: Stack(
           alignment: Alignment.center,
+          clipBehavior: Clip.none,
           children: [
-            // The connected pill's light, breathing under it.
-            PulseHalo(
-              color: color,
-              size: 150,
-              enabled: widget.on && !widget.busy,
-              rings: 1,
-              period: Motion.breathe,
+            // The waves are the original capsule's own, at its very size:
+            // a 238 circle around the control — two rings breathing out of
+            // the whole pill while the tunnel is up, quicker while the
+            // switch works, and the arrival's own rings bloom once the
+            // moment it comes. They paint beyond the pill without taking
+            // room in the page.
+            Positioned(
+              left: -60,
+              right: -60,
+              top: -88,
+              bottom: -88,
+              child: PulseHalo(
+                color: color,
+                size: 238,
+                enabled: widget.on || widget.busy,
+                rings: 2,
+                period: widget.busy
+                    ? const Duration(milliseconds: 1500)
+                    : Motion.breathe,
+              ),
+            ),
+            Positioned(
+              left: -60,
+              right: -60,
+              top: -88,
+              bottom: -88,
+              child: ArrivalBloom(
+                color: StatusColors.good,
+                size: 238,
+                arrived: widget.on && !widget.busy,
+              ),
             ),
             PressScale(
               onTap: widget.busy ? null : widget.onToggle,
@@ -1585,13 +1657,17 @@ class _SlidePillState extends State<_SlidePill> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.white,
+                                // The knob's own shadow, as the original
+                                // capsule's was: a quiet dark edge, and no
+                                // light of the state's color around it —
+                                // the state's light lives in the waves.
                                 boxShadow: [
                                   BoxShadow(
-                                    color: color.withValues(
-                                      alpha: dark ? 0.45 : 0.35,
+                                    color: Colors.black.withValues(
+                                      alpha: dark ? 0.5 : 0.22,
                                     ),
-                                    blurRadius: 14,
-                                    offset: const Offset(0, 4),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
                               ),
@@ -1627,9 +1703,9 @@ class _SlidePillState extends State<_SlidePill> {
                   ),
                 ),
               ),
+                ),
+              ],
             ),
-          ],
-        ),
       ),
     );
   }

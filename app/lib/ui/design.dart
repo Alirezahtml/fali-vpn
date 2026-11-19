@@ -903,6 +903,67 @@ class _CheerPainter extends CustomPainter {
       old.progress != progress || old.color != color;
 }
 
+/// The rings that bloom out of the switch the moment the tunnel is up:
+/// two circles run outward and fade, one after the other, and then the
+/// page rests still again — the same arrival's celebration the power
+/// capsule plays, sized for whichever control carries it.
+class ArrivalBloom extends StatefulWidget {
+  const ArrivalBloom({
+    super.key,
+    required this.color,
+    required this.size,
+    required this.arrived,
+  });
+
+  final Color color;
+  final double size;
+
+  /// True while the tunnel is up: the rings bloom on the false→true turn,
+  /// once, and not again until the tunnel drops and comes back.
+  final bool arrived;
+
+  @override
+  State<ArrivalBloom> createState() => _ArrivalBloomState();
+}
+
+class _ArrivalBloomState extends State<ArrivalBloom>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 950),
+  );
+
+  @override
+  void didUpdateWidget(ArrivalBloom old) {
+    super.didUpdateWidget(old);
+    if (widget.arrived && !old.arrived && Motion.on(context)) {
+      _c.forward(from: 0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: AnimatedBuilder(
+        animation: _c,
+        builder: (context, _) {
+          if (_c.value == 0) return const SizedBox.shrink();
+          return CustomPaint(
+            size: Size.square(widget.size),
+            painter: _CheerPainter(color: widget.color, progress: _c.value),
+          );
+        },
+      ),
+    );
+  }
+}
+
 /// The dotted arc dial of the details and the speed test: a track of
 /// round points from the lower left over the top to the lower right, the
 /// reading's blue arc over it, a green bead where it ends, and the number

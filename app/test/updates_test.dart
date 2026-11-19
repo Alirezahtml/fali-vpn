@@ -266,4 +266,44 @@ void main() {
       expect(versionFor(['1.2.3'], 'linux'), isNull);
     });
   });
+
+  group('the release notes, as the dialog shows them', () {
+    test('a body that is only the download table says nothing', () {
+      const body = '## Download\n\n'
+          '<table><tr><td>Android</td><td><a href="https://github.com/o/r/'
+          'releases/download/v1.8.0/Fali-VPN-1.8.0-Android-universal.apk">'
+          '<img src="https://img.shields.io/badge/APK-Universal"></a></td>'
+          '</tr></table>';
+      expect(plainReleaseNotes(body), '');
+    });
+
+    test('the "What\'s new" words alone, whole, and no web in them', () {
+      const body = "## What's new\n\n"
+          '<p>The stopwatch <b>never wraps</b>, the readings stand on one '
+          'baseline &amp; the tabs take the room their words need.</p>\n'
+          '<ul><li>Two rings breathe out of the pill again</li>'
+          '<li>The arrival\u2019s rings bloom once</li></ul>\n\n'
+          '## Download\n\n<table><tr><td>x</td></tr></table>';
+      expect(
+        plainReleaseNotes(body),
+        'The stopwatch never wraps, the readings stand on one baseline '
+        '& the tabs take the room their words need.\n'
+        'Two rings breathe out of the pill again\n'
+        'The arrival\u2019s rings bloom once',
+      );
+    });
+
+    test('no address of anywhere, however the body hid it', () {
+      expect(
+        plainReleaseNotes('Fixed the crash. Details at '
+            'https://github.com/o/r/releases/tag/v1.8.1 and more.'),
+        'Fixed the crash. Details at and more.',
+      );
+    });
+
+    test('plain words pass as they came', () {
+      expect(plainReleaseNotes('Faster connects, fewer restarts.'), 'Faster connects, fewer restarts.');
+      expect(plainReleaseNotes('  '), '');
+    });
+  });
 }
