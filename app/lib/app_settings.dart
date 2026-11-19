@@ -64,6 +64,10 @@ class AppSettings extends ChangeNotifier {
   /// protocol. Kept in this file.
   Set<String> hiddenConnectionColumns = {'inbound', 'traffic', 'duration'};
 
+  /// The country codes the user connected through, newest first, for the
+  /// servers page's "Recently connected"; at most six are kept.
+  List<String> recentServers = [];
+
   /// The app's languages, in the order the language menus list them.
   /// 'zh' is Simplified and 'zh_Hant' Traditional Chinese.
   static const supportedLanguages = [
@@ -187,6 +191,9 @@ class AppSettings extends ChangeNotifier {
         if (j['hidden_connection_columns'] case final List<Object?> v) {
           s.hiddenConnectionColumns = {...v.whereType<String>()};
         }
+        if (j['recent_servers'] case final List<Object?> v) {
+          s.recentServers = [...v.whereType<String>()];
+        }
       }
     } on FileSystemException {
       // First run: defaults, and the welcome page.
@@ -213,9 +220,11 @@ class AppSettings extends ChangeNotifier {
     bool? autoConnect,
     bool? udpNotice,
     Set<String>? hiddenConnectionColumns,
+    List<String>? recentServers,
   }) {
     this.hiddenConnectionColumns =
         hiddenConnectionColumns ?? this.hiddenConnectionColumns;
+    this.recentServers = recentServers ?? this.recentServers;
     this.udpNotice = udpNotice ?? this.udpNotice;
     this.autostart = autostart ?? this.autostart;
     this.autoConnect = autoConnect ?? this.autoConnect;
@@ -256,6 +265,7 @@ class AppSettings extends ChangeNotifier {
           'auto_connect': autoConnect,
           'udp_notice': udpNotice,
           'hidden_connection_columns': hiddenConnectionColumns.toList(),
+          'recent_servers': recentServers,
         }),
       );
     } on FileSystemException {

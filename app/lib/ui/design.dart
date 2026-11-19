@@ -1,0 +1,1060 @@
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+
+import '../l10n/app_localizations.dart' show AppLocalizations;
+import 'format.dart';
+import 'motion.dart';
+import 'widgets.dart' show StatusColors, delayColor;
+
+/// The Fali design language, built once and used by every screen: the
+/// Pixel surfaces and the electric blue, the 26-pixel rounded cards, the
+/// pill chips, the capsule power button, and the dotted arc dial. Every
+/// color asks the app's theme, so light and dark come free.
+
+/// The surfaces the approved design named, behind the theme's tokens.
+abstract final class Dali {
+  // Dark.
+  static const bgDark = Color(0xFF0E1420);
+  static const surfaceDark = Color(0xFF171E2C);
+  static const surface2Dark = Color(0xFF1D2534);
+  static const surface3Dark = Color(0xFF242E40);
+  static const navDark = Color(0xFF121926);
+  static const onDark = Color(0xFFE6ECF6);
+  static const onVarDark = Color(0xFF9AA6BC);
+
+  // Light.
+  static const bgLight = Color(0xFFF5F8FE);
+  static const surfaceLight = Color(0xFFFFFFFF);
+  static const surface2Light = Color(0xFFEDF2FC);
+  static const surface3Light = Color(0xFFE2EAF8);
+  static const onLight = Color(0xFF1A1D24);
+  static const onVarLight = Color(0xFF5B6474);
+
+  // The accents.
+  static const primary = Color(0xFF2D7DFF);
+  static const onPrimary = Color(0xFFFFFFFF);
+  static const good = Color(0xFF34A853);
+  static const bad = Color(0xFFEA4335);
+  static const amber = Color(0xFFFBBC04);
+
+  /// The page's second surface, where chips and search fields sit.
+  static Color surface2(BuildContext context) =>
+      Theme.of(context).colorScheme.surfaceContainerHigh;
+
+  /// The third surface, for a control resting on [surface2].
+  static Color surface3(BuildContext context) =>
+      Theme.of(context).colorScheme.surfaceContainerHighest;
+
+  /// The ink that stands back (labels, captions).
+  static Color onVar(BuildContext context) =>
+      Theme.of(context).colorScheme.onSurfaceVariant;
+
+  /// The card's hairline, inside and out.
+  static Color hairline(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.dark
+      ? Colors.white.withValues(alpha: 0.08)
+      : const Color(0xFF0B3B78).withValues(alpha: 0.07);
+
+  /// A color's wash, the way the design tints chips and tiles.
+  static Color wash(Color c, bool dark) =>
+      c.withValues(alpha: dark ? 0.16 : 0.11);
+}
+
+/// The card every screen is built from: 26-pixel rounded corners, the
+/// theme's surface, and a hairline that only just shows.
+class DaliCard extends StatelessWidget {
+  const DaliCard({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.all(16),
+    this.color,
+    this.radius = 26,
+    this.onTap,
+  });
+
+  final Widget child;
+  final EdgeInsetsGeometry padding;
+  final Color? color;
+  final double radius;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final box = DecoratedBox(
+      decoration: BoxDecoration(
+        color: color ?? Theme.of(context).colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(radius),
+        border: Border.all(color: Dali.hairline(context)),
+      ),
+      child: Padding(padding: padding, child: child),
+    );
+    if (onTap == null) return box;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(radius),
+        child: box,
+      ),
+    );
+  }
+}
+
+/// A small label above a section ("Recently connected"), in the muted ink.
+class SectionLabel extends StatelessWidget {
+  const SectionLabel(this.text, {super.key, this.trailing});
+
+  final String text;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(6, 2, 6, 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              text,
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: Dali.onVar(context),
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0.2,
+              ),
+            ),
+          ),
+          ?trailing,
+        ],
+      ),
+    );
+  }
+}
+
+/// The delay as the design's pill: the number and "ms" in its color's
+/// wash. Grey while it is not known, and a spinner while it is measured.
+class PingChip extends StatelessWidget {
+  const PingChip({
+    super.key,
+    required this.ms,
+    this.testing = false,
+    this.compact = false,
+  });
+
+  /// The delay in milliseconds; null for "not measured".
+  final int? ms;
+  final bool testing;
+  final bool compact;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final persian = l.localeName == 'fa';
+    final color = testing ? Dali.onVar(context) : delayColor(ms ?? 1000);
+    final text = testing
+        ? ''
+        : ms == null
+        ? '—'
+        : '${persianDigits('${ms!}')}ms';
+    final style = theme.textTheme.labelMedium?.copyWith(
+      color: color,
+      fontWeight: FontWeight.w700,
+      fontFeatures: const [],
+    );
+    return AnimatedContainer(
+      duration: Motion.normal,
+      curve: Motion.emphasized,
+      padding: EdgeInsets.symmetric(
+        horizontal: compact ? 7 : 9,
+        vertical: compact ? 2 : 3.5,
+      ),
+      decoration: BoxDecoration(
+        color: color.withValues(
+          alpha: theme.brightness == Brightness.dark ? 0.16 : 0.10,
+        ),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: ScaleSwitcher(
+        child: testing
+            ? SizedBox.square(
+                key: const ValueKey('t'),
+                dimension: 12,
+                child: CircularProgressIndicator(
+                  strokeWidth: 1.6,
+                  color: Dali.onVar(context),
+                ),
+              )
+            : Text(text, key: ValueKey(text), style: style),
+      ),
+    );
+  }
+}
+
+/// One of the three live chips on the home page: a colored icon tile, the
+/// name in the muted ink, and the reading in bold.
+class StatChip extends StatelessWidget {
+  const StatChip({
+    super.key,
+    required this.icon,
+    required this.color,
+    required this.label,
+    required this.value,
+    this.unit,
+  });
+
+  final IconData icon;
+  final Color color;
+  final String label;
+  final String value;
+  final String? unit;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+      decoration: BoxDecoration(
+        color: Dali.surface2(context),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Dali.hairline(context)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 26,
+            height: 26,
+            decoration: BoxDecoration(
+              color: Dali.wash(color, dark),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(icon, size: 15, color: color),
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: Dali.onVar(context),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 1),
+                Text.rich(
+                  TextSpan(
+                    text: value,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                      fontFeatures: const [],
+                    ),
+                    children: [
+                      if (unit != null)
+                        TextSpan(
+                          text: ' ${unit!}',
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: Dali.onVar(context),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                    ],
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The round search field of the servers page.
+class SearchField extends StatelessWidget {
+  const SearchField({
+    super.key,
+    required this.hint,
+    required this.onChanged,
+  });
+
+  final String hint;
+  final ValueChanged<String> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return TextField(
+      onChanged: onChanged,
+      textInputAction: TextInputAction.done,
+      style: theme.textTheme.bodyMedium,
+      decoration: InputDecoration(
+        prefixIcon: const Icon(Icons.search_rounded, size: 21),
+        hintText: hint,
+        isDense: true,
+        filled: true,
+        fillColor: Dali.surface2(context),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 18,
+          vertical: 13,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(999),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(999),
+          borderSide: const BorderSide(color: Dali.primary, width: 1.6),
+        ),
+      ),
+    );
+  }
+}
+
+/// The connect pill of a server row: "اتصال" while it waits, a spinner
+/// while the choice saves, and the green word on the chosen one.
+class ConnectPill extends StatelessWidget {
+  const ConnectPill({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.busy,
+    this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final bool busy;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    final color = selected ? StatusColors.good : Dali.primary;
+    return PressScale(
+      onTap: busy || onTap == null ? null : onTap,
+      amount: 0.94,
+      child: AnimatedContainer(
+        duration: Motion.fast,
+        curve: Motion.emphasized,
+        height: 34,
+        padding: const EdgeInsets.symmetric(horizontal: 14),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: selected ? Dali.wash(StatusColors.good, dark) : color,
+          borderRadius: BorderRadius.circular(999),
+        ),
+        child: ScaleSwitcher(
+          duration: Motion.fast,
+          child: busy
+              ? SizedBox.square(
+                  key: const ValueKey('busy'),
+                  dimension: 15,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: selected ? StatusColors.good : Colors.white,
+                  ),
+                )
+              : Text(
+                  label,
+                  key: const ValueKey('label'),
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: selected ? StatusColors.good : Colors.white,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+/// One server in the lists of the servers page: the flag, the name and
+/// its city, the delay, and the connect pill. The chosen one wears green.
+class ServerTile extends StatelessWidget {
+  const ServerTile({
+    super.key,
+    required this.leading,
+    required this.name,
+    this.subtitle,
+    required this.ms,
+    this.testing = false,
+    required this.selected,
+    required this.busy,
+    required this.connectLabel,
+    required this.connectedLabel,
+    required this.onTap,
+  });
+
+  /// Something before the name: the country's flag, or an icon for a
+  /// choice that is not a country.
+  final Widget leading;
+  final String name;
+  final String? subtitle;
+  final int? ms;
+  final bool testing;
+  final bool selected;
+  final bool busy;
+  final String connectLabel;
+  final String connectedLabel;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    final edge = selected
+        ? StatusColors.good.withValues(alpha: dark ? 0.55 : 0.45)
+        : Dali.hairline(context);
+    return PressScale(
+      onTap: onTap,
+      amount: 0.985,
+      child: AnimatedContainer(
+        duration: Motion.normal,
+        curve: Motion.emphasized,
+        padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 10, 10),
+        decoration: BoxDecoration(
+          color: selected
+              ? Dali.wash(StatusColors.good, dark)
+              : theme.colorScheme.surfaceContainer,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: edge),
+        ),
+        child: Row(
+          children: [
+            leading,
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: selected ? FontWeight.w800 : FontWeight.w600,
+                    ),
+                  ),
+                  if (subtitle != null && subtitle!.isNotEmpty) ...[
+                    const SizedBox(height: 1),
+                    Text(
+                      subtitle!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: Dali.onVar(context),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            PingChip(ms: ms, testing: testing, compact: true),
+            const SizedBox(width: 10),
+            ConnectPill(
+              label: selected ? connectedLabel : connectLabel,
+              selected: selected,
+              busy: busy,
+              onTap: onTap,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A choice that is not a country (recommended, fastest): an icon tile
+/// instead of the flag, and a check instead of the pill.
+class ChoiceTile extends StatelessWidget {
+  const ChoiceTile({
+    super.key,
+    required this.icon,
+    required this.name,
+    required this.subtitle,
+    required this.selected,
+    required this.busy,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String name;
+  final String subtitle;
+  final bool selected;
+  final bool busy;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    return PressScale(
+      onTap: onTap,
+      amount: 0.985,
+      child: AnimatedContainer(
+        duration: Motion.normal,
+        curve: Motion.emphasized,
+        padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 12, 10),
+        decoration: BoxDecoration(
+          color: selected
+              ? Dali.wash(Dali.primary, dark)
+              : theme.colorScheme.surfaceContainer,
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(
+            color: selected
+                ? Dali.primary.withValues(alpha: dark ? 0.55 : 0.45)
+                : Dali.hairline(context),
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 30,
+              decoration: BoxDecoration(
+                color: Dali.wash(Dali.primary, dark),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Icon(
+                icon,
+                size: 17,
+                color: dark ? const Color(0xFFD6E4FF) : const Color(0xFF0B3B78),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 1),
+                  Text(
+                    subtitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: theme.textTheme.labelSmall?.copyWith(
+                      color: Dali.onVar(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            ScaleSwitcher(
+              child: busy
+                  ? const SizedBox.square(
+                      key: ValueKey('b'),
+                      dimension: 16,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Icon(
+                      selected
+                          ? Icons.check_circle_rounded
+                          : Icons.radio_button_unchecked_rounded,
+                      key: const ValueKey('s'),
+                      size: 20,
+                      color: selected
+                          ? Dali.primary
+                          : theme.colorScheme.outline,
+                    ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// The capsule power button: the wide pill with the power icon and the
+/// state's word, green while connected and blue while off, with the pulse
+/// rings breathing out of it while the VPN carries traffic.
+class PowerCapsule extends StatelessWidget {
+  const PowerCapsule({
+    super.key,
+    required this.label,
+    required this.on,
+    required this.busy,
+    required this.onPressed,
+    this.autofocus = false,
+  });
+
+  final String label;
+
+  /// Green while on, the blue while off.
+  final bool on;
+  final bool busy;
+  final VoidCallback? onPressed;
+  final bool autofocus;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = on ? StatusColors.good : Dali.primary;
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // The rings only breathe while connected; while off the button
+        // rests.
+        PulseHalo(color: color, size: 230, enabled: on && !busy, rings: 2),
+        PressScale(
+          onTap: onPressed,
+          amount: 0.96,
+          haptic: true,
+          child: _capsule(context, color),
+        ),
+      ],
+    );
+  }
+
+  Widget _capsule(BuildContext context, Color color) {
+    final theme = Theme.of(context);
+    return FilledButton(
+      onPressed: onPressed,
+      autofocus: autofocus,
+      style: FilledButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        shape: const StadiumBorder(),
+        minimumSize: const Size(190, 58),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+        shadowColor: color.withValues(
+          alpha: theme.brightness == Brightness.dark ? 0.5 : 0.4,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ScaleSwitcher(
+            duration: Motion.fast,
+            child: busy
+                ? const SizedBox.square(
+                    key: ValueKey('spin'),
+                    dimension: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.4,
+                      color: Colors.white,
+                    ),
+                  )
+                : Icon(
+                    on ? Icons.power_settings_new_rounded : Icons.bolt_rounded,
+                    key: const ValueKey('pow'),
+                    size: 22,
+                    color: Colors.white,
+                  ),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            label,
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The dotted arc dial of the details and the speed test: a track of
+/// round points from the lower left over the top to the lower right, the
+/// reading's blue arc over it, a green bead where it ends, and the number
+/// in the middle.
+class ArcDial extends StatelessWidget {
+  const ArcDial({
+    super.key,
+    required this.fraction,
+    required this.valueText,
+    required this.unitText,
+    this.caption,
+    this.size = const Size(252, 172),
+    this.color,
+  });
+
+  /// The reading, 0 to 1 of the arc.
+  final double fraction;
+  final String valueText;
+  final String unitText;
+
+  /// A word under the unit ("measured so far").
+  final String? caption;
+  final Size size;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final shown = fraction.clamp(0.0, 1.0);
+    return SizedBox(
+      width: size.width,
+      height: size.height,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned.fill(
+            child: TweenAnimationBuilder<double>(
+              tween: Tween(end: shown),
+              duration: Motion.slow,
+              curve: Motion.emphasized,
+              builder: (context, v, _) => CustomPaint(
+                painter: _DialPainter(
+                  fraction: v,
+                  color: color ?? Dali.primary,
+                  track: Dali.onVar(context).withValues(
+                    alpha: theme.brightness == Brightness.dark ? 0.55 : 0.45,
+                  ),
+                  end: StatusColors.good,
+                ),
+              ),
+            ),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                valueText,
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w900,
+                  fontFeatures: const [],
+                ),
+              ),
+              Text(
+                unitText,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: Dali.onVar(context),
+                ),
+              ),
+              if (caption != null) ...[
+                const SizedBox(height: 2),
+                Text(
+                  caption!,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: Dali.onVar(context),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DialPainter extends CustomPainter {
+  _DialPainter({
+    required this.fraction,
+    required this.color,
+    required this.track,
+    required this.end,
+  });
+
+  final double fraction;
+  final Color color;
+  final Color track;
+  final Color end;
+
+  /// The arc opens at the bottom: from the lower left, over the top, to
+  /// the lower right, with the gap the number sits in.
+  static const _start = 140 * math.pi / 180;
+  static const _sweep = 260 * math.pi / 180;
+  static const _dots = 30;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height * 0.62);
+    final radius = math.min(size.width, size.height) / 2 - 8;
+    Offset at(double a) => center + Offset(math.cos(a), math.sin(a)) * radius;
+
+    // The track: round points, evenly spread.
+    final paint = Paint()
+      ..color = track
+      ..strokeWidth = 4.4
+      ..strokeCap = StrokeCap.round;
+    for (var i = 0; i <= _dots; i++) {
+      canvas.drawCircle(at(_start + _sweep * i / _dots), 2.1, paint);
+    }
+
+    // The reading: the arc, then its green bead at the end.
+    if (fraction > 0) {
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        _start,
+        _sweep * fraction,
+        false,
+        Paint()
+          ..color = color
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 5.4
+          ..strokeCap = StrokeCap.round,
+      );
+      canvas.drawCircle(
+        at(_start + _sweep * fraction),
+        3.6,
+        Paint()..color = end,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_DialPainter old) =>
+      old.fraction != fraction || old.color != color || old.track != track;
+}
+
+/// One line of the details card: the name in the muted ink and the value
+/// in bold, as the design's rows.
+class InfoRow extends StatelessWidget {
+  const InfoRow({super.key, required this.label, required this.value});
+
+  final String label;
+  final Widget value;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: Dali.onVar(context),
+            ),
+          ),
+          const Spacer(),
+          value,
+        ],
+      ),
+    );
+  }
+}
+
+/// The bar of the details card ("data moved"): its fill glides between
+/// readings, the label and the number above it.
+class LoadBar extends StatelessWidget {
+  const LoadBar({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.fraction,
+    this.color = StatusColors.good,
+  });
+
+  final String label;
+  final String value;
+  final double fraction;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: Dali.onVar(context),
+                ),
+              ),
+            ),
+            Text(
+              value,
+              style: theme.textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.w800,
+                fontFeatures: const [],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 7),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(999),
+          child: TweenAnimationBuilder<double>(
+            tween: Tween(end: fraction.clamp(0.0, 1.0)),
+            duration: Motion.slow,
+            curve: Motion.emphasized,
+            builder: (context, v, _) => LinearProgressIndicator(
+              value: v,
+              minHeight: 7,
+              backgroundColor: Dali.surface3(context),
+              valueColor: AlwaysStoppedAnimation(color),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// A home problem in its own tinted card: red for an error, amber for a
+/// warning, with a word for what to do and, when it helps, buttons.
+class ProblemCard extends StatelessWidget {
+  const ProblemCard({
+    super.key,
+    required this.text,
+    required this.color,
+    required this.icon,
+    this.actions = const <Widget>[],
+    this.tooltip = '',
+  });
+
+  final String text;
+  final Color color;
+  final IconData icon;
+  final List<Widget> actions;
+  final String tooltip;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final dark = theme.brightness == Brightness.dark;
+    return Tooltip(
+      message: tooltip,
+      child: Container(
+        padding: const EdgeInsetsDirectional.fromSTEB(14, 10, 8, 8),
+        decoration: BoxDecoration(
+          color: Dali.wash(color, dark),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: color.withValues(alpha: 0.4)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Icon(icon, size: 18, color: color),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    text,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if (actions.isNotEmpty)
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: Wrap(children: actions),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A small tinted tile with an icon, as the settings hub's leading mark.
+class IconTile extends StatelessWidget {
+  const IconTile({
+    super.key,
+    required this.icon,
+    required this.color,
+    this.size = 36,
+  });
+
+  final IconData icon;
+  final Color color;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Dali.wash(color, dark),
+        borderRadius: BorderRadius.circular(size * 0.3),
+      ),
+      child: Icon(icon, size: size * 0.58, color: color),
+    );
+  }
+}
+
+/// A value box of the "last test" card: the name in the muted ink, the
+/// number under it in bold.
+class ValueBox extends StatelessWidget {
+  const ValueBox({super.key, required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 9),
+      decoration: BoxDecoration(
+        color: Dali.surface2(context),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(
+        children: [
+          Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: Dali.onVar(context),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: theme.textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w800,
+              fontFeatures: const [],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The rate in megabits a second from bytes a second, for the dials.
+double mbpsFrom(int bytesPerSecond) => bytesPerSecond * 8 / 1e6;
+
+/// Grows a dial's top to [v]'s next kind round number, so the arc stays
+/// inside while the top keeps meaning something.
+double niceCeil(double v) {
+  final e =
+      math.pow(10, (math.log(math.max(v, 1)) / math.ln10).floor()) as double;
+  for (final m in const [1, 1.5, 2, 3, 4, 5, 7.5, 10]) {
+    if (m * e >= v) return m * e;
+  }
+  return 10 * e;
+}

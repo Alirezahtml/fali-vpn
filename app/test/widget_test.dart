@@ -525,6 +525,40 @@ void main() {
     core.dispose();
   });
 
+  testWidgets('the phone home wears the approved design: chips, capsule, map card', (
+    tester,
+  ) async {
+    stillMotion(tester);
+    // A phone's window: the mobile shell, with its four tabs.
+    tester.view.physicalSize = const Size(400, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    final api = FakeApi()..systemProxySupported = false;
+    final core = CoreController(
+      () async => api,
+      pollInterval: const Duration(hours: 1),
+    );
+    await tester.pumpWidget(VpnApp(core: core, settings: AppSettings()));
+    core.start();
+    await tester.pumpAndSettle();
+
+    // The brand, the connected state, and the three live chips.
+    expect(find.text('Fali VPN'), findsOneWidget);
+    expect(find.text('متصل'), findsOneWidget);
+    expect(find.text('پینگ'), findsOneWidget);
+    expect(find.text('دانلود'), findsWidgets);
+    expect(find.text('آپلود'), findsWidgets);
+    // The capsule says disconnect while the VPN carries traffic.
+    expect(find.text('قطع'), findsOneWidget);
+    // The map's server card names the country the traffic leaves through.
+    expect(find.text('سرور فعال'), findsOneWidget);
+    expect(find.textContaining('هلند'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox());
+    core.dispose();
+  });
+
   testWidgets('the sign-in form is one a password manager fills and saves', (
     tester,
   ) async {

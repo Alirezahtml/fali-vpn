@@ -1053,5 +1053,22 @@
   "speedFailed": "The test did not finish; check the internet and try again.",
   "speedHistory": "History",
   "speedHistoryEmpty": "No test yet; run one and it lands here.",
-  "speedClear": "Clear history"
+  "speedClear": "Clear history",
+  "connectionDetails": "Connection details",
+  "vpnIp": "VPN IP",
+  "localIp": "Local IP",
+  "cityLabel": "City",
+  "pingLabel": "Ping",
+  "serverActive": "Active server",
+  "quickPicks": "Quick picks",
+  "recentServers": "Recently connected",
+  "allCountries": "All countries",
+  "connectAction": "Connect",
+  "disconnectAction": "Disconnect",
+  "encryptedHint": "Your traffic flows through an encrypted layer",
+  "offHint": "Tap connect to go through the encrypted layer",
+  "measuredSoFar": "Measured so far",
+  "lastTestLabel": "Last test",
+  "megabitUnit": "Mbit/s",
+  "dataVolume": "Data moved"
 }

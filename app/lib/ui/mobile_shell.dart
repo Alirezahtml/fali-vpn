@@ -7,20 +7,23 @@ import '../core/core_controller.dart';
 import '../l10n/app_localizations.dart';
 import 'about_page.dart';
 import 'accounts_page.dart';
+import 'design.dart';
+import 'details_screen.dart';
 import 'floating_nav.dart';
+import 'home_screen.dart';
 import 'logs_page.dart';
 import 'motion.dart';
-import 'overview_page.dart';
-import 'servers_page.dart';
+import 'servers_screen.dart';
 import 'settings_page.dart';
-import 'speed_test_page.dart';
+import 'speedtest_screen.dart';
 import 'widgets.dart';
 
-/// The phone layout: four tabs — Home, Servers, Speed test, and Settings —
-/// as phone apps have. The rest (accounts, each group of settings, logs,
-/// about) opens as a page of its own with the system's back button. The
-/// tabs sit in a capsule that floats above the bottom edge, and every
-/// change of page slides, fades and settles.
+/// The phone layout, built from the approved design: four tabs — Home,
+/// Servers, Speed test, and Settings. The rest (accounts, each group of
+/// settings, the logs, about, the connection's details) opens as a page
+/// of its own with the system's back button. The tabs sit in a capsule
+/// that floats above the bottom edge, and every change of page slides,
+/// fades and settles.
 class MobileShell extends StatefulWidget {
   const MobileShell({
     super.key,
@@ -79,8 +82,6 @@ class _MobileShellState extends State<MobileShell> {
     final l = AppLocalizations.of(context);
     final core = widget.core;
     final settings = widget.settings;
-    void openServers() =>
-        _push(l.navServers, () => ServersPage(core: core, settings: settings));
     void openAccounts() => _push(
       l.navAccounts,
       () => AccountsPage(core: core, settings: settings),
@@ -101,28 +102,30 @@ class _MobileShellState extends State<MobileShell> {
         section: SettingsSection.upstreamProxy,
       ),
     );
+    void openDetails() =>
+        _push(l.connectionDetails, () => DetailsScreen(core: core));
     final page =
         widget.noCore ??
         (_tab == 0
-            ? OverviewPage(
+            ? HomeScreen(
                 core: core,
                 settings: settings,
-                onOpenServers: openServers,
+                onOpenDetails: openDetails,
+                onOpenServers: () => setState(() => _tab = 1),
                 onOpenAccounts: openAccounts,
                 onOpenConnection: openConnection,
                 onOpenUpstreamProxy: openUpstreamProxy,
-                phone: true,
               )
             : _readable(
                 switch (_tab) {
-                  1 => ServersPage(core: core, settings: settings),
-                  2 => SpeedTestPage(core: core),
+                  1 => ServersScreen(core: core, settings: settings),
+                  2 => SpeedTestScreen(core: core),
                   _ => _SettingsList(
-                      onOpenServers: openServers,
-                      onOpenAccounts: openAccounts,
-                      push: _push,
                       core: core,
                       settings: settings,
+                      openAccounts: openAccounts,
+                      openServers: () => setState(() => _tab = 1),
+                      push: _push,
                     ),
                 },
               ));
@@ -138,10 +141,7 @@ class _MobileShellState extends State<MobileShell> {
           child: Column(
             children: [
               if (widget.banner != null)
-                DropInBanner(
-                  visible: true,
-                  child: widget.banner!,
-                ),
+                DropInBanner(visible: true, child: widget.banner!),
               Expanded(
                 child: SlideFadeSwitcher(
                   child: KeyedSubtree(
@@ -202,113 +202,252 @@ class _MobileShellState extends State<MobileShell> {
       : child;
 }
 
-/// The Settings tab: what the app manages, the groups of settings, and the
-/// app's own pages, each group arriving a beat after the one before it.
+/// The Settings tab, in the design language: the groups as cards, each
+/// row with its icon tile, its name, and the chevron; every row opens its
+/// own page.
 class _SettingsList extends StatelessWidget {
   const _SettingsList({
-    required this.onOpenServers,
-    required this.onOpenAccounts,
-    required this.push,
     required this.core,
     required this.settings,
+    required this.openAccounts,
+    required this.openServers,
+    required this.push,
   });
 
-  final VoidCallback onOpenServers;
-  final VoidCallback onOpenAccounts;
-  final void Function(String title, Widget Function() page) push;
   final CoreController core;
   final AppSettings settings;
+  final VoidCallback openAccounts;
+  final VoidCallback openServers;
+  final void Function(String title, Widget Function() page) push;
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
-    Widget group(String title, List<Widget> tiles) =>
-        SettingsGroup(title: title, tiles: tiles);
-    Widget tile(IconData icon, String title, VoidCallback onTap) => ListTile(
-      leading: IconBadge(icon, color: scheme.primary),
-      title: Text(title),
-      // Mirrors itself in right-to-left languages.
-      trailing: const Icon(Icons.chevron_right_rounded),
-      onTap: onTap,
-    );
-    Widget section(SettingsSection section, IconData icon, String name) => tile(
-      icon,
-      name,
-      () => push(
-        name,
-        () => SettingsPage(core: core, settings: settings, section: section),
-      ),
-    );
     return ListView(
-      padding: pagePadding(context),
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 116),
       children: [
-        MotionStagger(
-          offset: const Offset(0, 16),
-          children: [
-            PageTitle(l.settingsTitle),
-            // Language and theme first, what someone looks for before
-            // anything else, with which country and account; then how the
-            // traffic goes, what helps when Mozilla is blocked, and the
-            // app itself.
-            group(l.sectionGeneral, [
-              section(
-                SettingsSection.general,
-                Icons.tune_rounded,
-                l.sectionGeneral,
+        PageTitle(l.settingsTitle),
+        const SizedBox(height: 6),
+        // Language and theme first, what someone looks for before anything
+        // else, with which country and account; then how the traffic goes,
+        // what helps when Mozilla is blocked, and the app itself.
+        _group(context, l.sectionGeneral, [
+          _row(
+            context,
+            Icons.tune_rounded,
+            Dali.primary,
+            l.sectionGeneral,
+            () => push(
+              l.sectionGeneral,
+              () => SettingsPage(
+                core: core,
+                settings: settings,
+                section: SettingsSection.general,
               ),
-              tile(Icons.public_rounded, l.navServers, onOpenServers),
-              tile(Icons.people_rounded, l.navAccounts, onOpenAccounts),
-            ]),
-            group(l.groupNetwork, [
-              section(
-                SettingsSection.connection,
-                Icons.vpn_lock_rounded,
-                l.sectionConnection,
+            ),
+          ),
+          _row(
+            context,
+            Icons.public_rounded,
+            StatusColors.good,
+            l.navServers,
+            openServers,
+          ),
+          _row(
+            context,
+            Icons.people_rounded,
+            Dali.amber,
+            l.navAccounts,
+            openAccounts,
+          ),
+        ]),
+        const SizedBox(height: 16),
+        _group(context, l.groupNetwork, [
+          _row(
+            context,
+            Icons.vpn_lock_rounded,
+            Dali.primary,
+            l.sectionConnection,
+            () => push(
+              l.sectionConnection,
+              () => SettingsPage(
+                core: core,
+                settings: settings,
+                section: SettingsSection.connection,
               ),
-              section(
-                SettingsSection.routing,
-                Icons.alt_route_rounded,
-                l.sectionRouting,
+            ),
+          ),
+          _row(
+            context,
+            Icons.alt_route_rounded,
+            StatusColors.good,
+            l.sectionRouting,
+            () => push(
+              l.sectionRouting,
+              () => SettingsPage(
+                core: core,
+                settings: settings,
+                section: SettingsSection.routing,
               ),
-              section(SettingsSection.dns, Icons.dns_rounded, l.sectionDns),
-            ]),
-            group(l.sectionBypass, [
-              section(SettingsSection.relay, Icons.cloud_rounded, l.apiRelay),
-              section(
-                SettingsSection.fragment,
-                Icons.content_cut_rounded,
-                l.tlsFragment,
+            ),
+          ),
+          _row(
+            context,
+            Icons.dns_rounded,
+            Dali.amber,
+            l.sectionDns,
+            () => push(
+              l.sectionDns,
+              () => SettingsPage(
+                core: core,
+                settings: settings,
+                section: SettingsSection.dns,
               ),
-              section(
-                SettingsSection.upstreamProxy,
-                Icons.lan_rounded,
-                l.upstreamProxy,
+            ),
+          ),
+        ]),
+        const SizedBox(height: 16),
+        _group(context, l.sectionBypass, [
+          _row(
+            context,
+            Icons.cloud_rounded,
+            Dali.primary,
+            l.apiRelay,
+            () => push(
+              l.apiRelay,
+              () => SettingsPage(
+                core: core,
+                settings: settings,
+                section: SettingsSection.relay,
               ),
-            ]),
-            group(l.groupApp, [
-              // The app's port and the web dashboard: computers only (a
-              // narrow window shows this layout too).
-              if (!Platform.isAndroid)
-                section(
-                  SettingsSection.advanced,
-                  Icons.build_rounded,
-                  l.sectionAdvanced,
+            ),
+          ),
+          _row(
+            context,
+            Icons.content_cut_rounded,
+            StatusColors.good,
+            l.tlsFragment,
+            () => push(
+              l.tlsFragment,
+              () => SettingsPage(
+                core: core,
+                settings: settings,
+                section: SettingsSection.fragment,
+              ),
+            ),
+          ),
+          _row(
+            context,
+            Icons.lan_rounded,
+            Dali.amber,
+            l.upstreamProxy,
+            () => push(
+              l.upstreamProxy,
+              () => SettingsPage(
+                core: core,
+                settings: settings,
+                section: SettingsSection.upstreamProxy,
+              ),
+            ),
+          ),
+        ]),
+        const SizedBox(height: 16),
+        _group(context, l.groupApp, [
+          // The app's port and the web dashboard: computers only (a narrow
+          // window shows this layout too).
+          if (!Platform.isAndroid)
+            _row(
+              context,
+              Icons.build_rounded,
+              Dali.primary,
+              l.sectionAdvanced,
+              () => push(
+                l.sectionAdvanced,
+                () => SettingsPage(
+                  core: core,
+                  settings: settings,
+                  section: SettingsSection.advanced,
                 ),
-              tile(
-                Icons.receipt_long_rounded,
-                l.navLogs,
-                () => push(l.navLogs, () => LogsPage(core: core)),
               ),
-              tile(
-                Icons.info_rounded,
-                l.navAbout,
-                () => push(l.navAbout, () => AboutPage(core: core)),
-              ),
-            ]),
-          ],
+            ),
+          _row(
+            context,
+            Icons.receipt_long_rounded,
+            StatusColors.good,
+            l.navLogs,
+            () => push(l.navLogs, () => LogsPage(core: core)),
+          ),
+          _row(
+            context,
+            Icons.info_rounded,
+            Dali.amber,
+            l.navAbout,
+            () => push(l.navAbout, () => AboutPage(core: core)),
+          ),
+        ]),
+      ],
+    );
+  }
+
+  /// One titled card of rows, divided by thin lines.
+  Widget _group(BuildContext context, String title, List<Widget> rows) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SectionLabel(title),
+        DaliCard(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: Column(
+            children: [
+              for (var i = 0; i < rows.length; i++) ...[
+                if (i > 0) const Divider(height: 1, indent: 16, endIndent: 16),
+                rows[i],
+              ],
+            ],
+          ),
         ),
       ],
+    );
+  }
+
+  /// One row: the icon in its tinted tile, the name, and the chevron that
+  /// mirrors itself in right-to-left languages.
+  Widget _row(
+    BuildContext context,
+    IconData icon,
+    Color color,
+    String title,
+    VoidCallback onTap,
+  ) {
+    final theme = Theme.of(context);
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(22),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              IconTile(icon: icon, color: color),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Text(
+                  title,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              Icon(
+                Icons.chevron_right_rounded,
+                size: 22,
+                color: Dali.onVar(context),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

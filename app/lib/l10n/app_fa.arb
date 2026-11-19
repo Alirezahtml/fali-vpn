@@ -490,5 +490,22 @@
   "speedFailed": "تست کامل نشد؛ اینترنت را بررسی و دوباره تلاش کنید.",
   "speedHistory": "تاریخچه",
   "speedHistoryEmpty": "هنوز تستی نیست؛ تست بگیرید تا اینجا بیاید.",
-  "speedClear": "پاک کردن تاریخچه"
+  "speedClear": "پاک کردن تاریخچه",
+  "connectionDetails": "جزئیات اتصال",
+  "vpnIp": "IP وی‌پی‌ان",
+  "localIp": "IP محلی",
+  "cityLabel": "شهر",
+  "pingLabel": "پینگ",
+  "serverActive": "سرور فعال",
+  "quickPicks": "پیشنهاد سریع",
+  "recentServers": "اخیراً متصل‌شده‌ها",
+  "allCountries": "همه کشورها",
+  "connectAction": "اتصال",
+  "disconnectAction": "قطع",
+  "encryptedHint": "ترافیک تو از لایه رمزگذاری می‌گذرد",
+  "offHint": "برای عبور از لایه رمزگذاری، وصل شو",
+  "measuredSoFar": "تا الان اندازه‌گیری شده",
+  "lastTestLabel": "آخرین تست",
+  "megabitUnit": "مگابیت بر ثانیه",
+  "dataVolume": "حجم داده"
 }
