@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -48,10 +49,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get stateWaiting => 'Beklemede';
 
   @override
-  String get waitingForAccount => 'Bağlanmak için Hesaplar sayfasından bir Firefox Account ekleyin.';
+  String get waitingForAccount =>
+      'Bağlanmak için Hesaplar sayfasından bir Firefox Account ekleyin.';
 
   @override
-  String get waitingForEnabledAccount => 'Tüm hesaplar kapalı. Hesaplar sayfasından birini açın.';
+  String get waitingForEnabledAccount =>
+      'Tüm hesaplar kapalı. Hesaplar sayfasından birini açın.';
 
   @override
   String get stateError => 'Hata';
@@ -184,13 +187,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get noAccountsHint => 'Bağlanmak için bir Firefox Account ekleyin.';
 
   @override
-  String get delayTestFailed => 'Sunucuların gecikmesi ölçülemedi. İnternetinizi kontrol edin.';
+  String get delayTestFailed =>
+      'Sunucuların gecikmesi ölçülemedi. İnternetinizi kontrol edin.';
 
   @override
   String get createAccountTitle => 'Firefox Account\'unuz yok mu?';
 
   @override
-  String get createAccountHint => 'accounts.firefox.com adresinden ücretsiz bir hesap oluşturun, ardından buraya dönüp Hesap ekle\'ye basın.';
+  String get createAccountHint =>
+      'accounts.firefox.com adresinden ücretsiz bir hesap oluşturun, ardından buraya dönüp Hesap ekle\'ye basın.';
 
   @override
   String get moveUp => 'Yukarı taşı';
@@ -236,13 +241,16 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get reasonQuotaExhausted => 'Bu ayın kotası bitti; aylık sıfırlamadan sonra yeniden kullanılır.';
+  String get reasonQuotaExhausted =>
+      'Bu ayın kotası bitti; aylık sıfırlamadan sonra yeniden kullanılır.';
 
   @override
-  String get reasonSignInRequired => 'Bu hesabı kullanmak için yeniden giriş yapın.';
+  String get reasonSignInRequired =>
+      'Bu hesabı kullanmak için yeniden giriş yapın.';
 
   @override
-  String get reasonSignInConfirm => 'Mozilla girişin onaylanmasını istiyor: «Yeniden oturum aç» düğmesine basın (yalnızca kod gerekir).';
+  String get reasonSignInConfirm =>
+      'Mozilla girişin onaylanmasını istiyor: «Yeniden oturum aç» düğmesine basın (yalnızca kod gerekir).';
 
   @override
   String reasonSignInFailed(String detail) {
@@ -260,7 +268,8 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get reasonNotEntitled => 'Mozilla bu hesabı reddetti; daha sonra yeniden denenecek.';
+  String get reasonNotEntitled =>
+      'Mozilla bu hesabı reddetti; daha sonra yeniden denenecek.';
 
   @override
   String get more => 'Daha fazla';
@@ -322,7 +331,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get noBrowserTitle => 'Bu cihazda tarayıcı yok';
 
   @override
-  String get noBrowserText => 'Bu adresi telefonunuzda veya bilgisayarınızda açın:';
+  String get noBrowserText =>
+      'Bu adresi telefonunuzda veya bilgisayarınızda açın:';
 
   @override
   String get cancel => 'İptal';
@@ -379,7 +389,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get signInNoAccount => 'Bu e-postayla bir Firefox Account yok.';
 
   @override
-  String get signInNoAccountHint => 'E-postayı kontrol edin ya da bu e-postayla Mozilla\'nın sitesinde ücretsiz bir Firefox Account oluşturun, gelen kutunuzdan onaylayın ve buraya ekleyin.';
+  String get signInNoAccountHint =>
+      'E-postayı kontrol edin ya da bu e-postayla Mozilla\'nın sitesinde ücretsiz bir Firefox Account oluşturun, gelen kutunuzdan onaylayın ve buraya ekleyin.';
 
   @override
   String get createAccountButton => 'Firefox Account oluştur';
@@ -388,31 +399,38 @@ class AppLocalizationsTr extends AppLocalizations {
   String get signInWrongPassword => 'Parola yanlış.';
 
   @override
-  String get signInNoPassword => 'Bu hesabın parolası yok: Google veya Apple ile oturum açılarak oluşturulmuş. Bir parola belirleyin, ardından onunla burada oturum açın.';
+  String get signInNoPassword =>
+      'Bu hesabın parolası yok: Google veya Apple ile oturum açılarak oluşturulmuş. Bir parola belirleyin, ardından onunla burada oturum açın.';
 
   @override
   String get setPasswordButton => 'Parola belirle';
 
   @override
-  String get signInTooManyAttempts => 'Çok fazla deneme yapıldı. Biraz bekleyip yeniden deneyin.';
+  String get signInTooManyAttempts =>
+      'Çok fazla deneme yapıldı. Biraz bekleyip yeniden deneyin.';
 
   @override
-  String get signInUnblockRejected => 'Engel kaldırma kodu kabul edilmedi. Mozilla\'nın son e-postasındaki kodu kullanın.';
+  String get signInUnblockRejected =>
+      'Engel kaldırma kodu kabul edilmedi. Mozilla\'nın son e-postasındaki kodu kullanın.';
 
   @override
-  String get signInWrongCode => 'Kod yanlış veya süresi dolmuş. Mozilla\'nın son e-postasındaki kodu kullanın; yeni kod gönderilince eskisi çalışmaz.';
+  String get signInWrongCode =>
+      'Kod yanlış veya süresi dolmuş. Mozilla\'nın son e-postasındaki kodu kullanın; yeni kod gönderilince eskisi çalışmaz.';
 
   @override
-  String get signInWrongTotp => 'Kod yanlış. Kimlik doğrulama uygulamasının şu an gösterdiği kodu girin.';
+  String get signInWrongTotp =>
+      'Kod yanlış. Kimlik doğrulama uygulamasının şu an gösterdiği kodu girin.';
 
   @override
-  String get signInTooManyCodes => 'Çok fazla yanlış kod girildi. Oturum açmaya baştan başlayın.';
+  String get signInTooManyCodes =>
+      'Çok fazla yanlış kod girildi. Oturum açmaya baştan başlayın.';
 
   @override
   String get signInTimedOut => 'Oturum açma çok uzun sürdü. Yeniden başlayın.';
 
   @override
-  String get signInNetwork => 'Mozilla\'ya ulaşılamadı. İnternetinizi kontrol edip yeniden deneyin.';
+  String get signInNetwork =>
+      'Mozilla\'ya ulaşılamadı. İnternetinizi kontrol edip yeniden deneyin.';
 
   @override
   String get coreConnecting => 'Çekirdeğe bağlanılıyor…';
@@ -443,7 +461,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get errNotAnswering => 'Çekirdek yanıt vermiyor.';
 
   @override
-  String get errRefused => 'Çekirdek uygulamayı reddetti; başka bir kopyaya ait olabilir.';
+  String get errRefused =>
+      'Çekirdek uygulamayı reddetti; başka bir kopyaya ait olabilir.';
 
   @override
   String get settingsTitle => 'Ayarlar';
@@ -497,7 +516,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get routingDirect => 'Yerel siteler için doğrudan bağlantı';
 
   @override
-  String get routingDirectHint => 'Seçilen ülkenin siteleri ve IP\'leri VPN kullanmadan açılır: daha hızlı yüklenir ve kotanızı harcamaz.';
+  String get routingDirectHint =>
+      'Seçilen ülkenin siteleri ve IP\'leri VPN kullanmadan açılır: daha hızlı yüklenir ve kotanızı harcamaz.';
 
   @override
   String get region => 'Ülke';
@@ -536,13 +556,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get openFolder => 'Klasörü aç';
 
   @override
-  String get unofficialNote => 'Resmî olmayan istemci. Mozilla ile bir ilişkisi yoktur.';
+  String get unofficialNote =>
+      'Resmî olmayan istemci. Mozilla ile bir ilişkisi yoktur.';
 
   @override
   String get closeTitle => 'Pencere kapatılsın mı?';
 
   @override
-  String get closeBody => 'Tepsiye küçültülünce VPN bağlı kalır. Çıkarsanız bağlantı kesilir.';
+  String get closeBody =>
+      'Tepsiye küçültülünce VPN bağlı kalır. Çıkarsanız bağlantı kesilir.';
 
   @override
   String get rememberChoice => 'Seçimimi hatırla';
@@ -587,7 +609,8 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get portChangeBody => 'Uygulamalar bu porta bağlanır. 1024 ile 65535 arasında bir port seçin.';
+  String get portChangeBody =>
+      'Uygulamalar bu porta bağlanır. 1024 ile 65535 arasında bir port seçin.';
 
   @override
   String get portLabel => 'Port';
@@ -614,7 +637,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get welcomeTitle => 'Hoş geldiniz';
 
   @override
-  String get welcomeBody => 'Dilinizi ve ülkenizi seçin. Ülkenizin siteleri VPN olmadan doğrudan açılır; böylece daha hızlı yüklenir ve kotanızı harcamaz.';
+  String get welcomeBody =>
+      'Dilinizi ve ülkenizi seçin. Ülkenizin siteleri VPN olmadan doğrudan açılır; böylece daha hızlı yüklenir ve kotanızı harcamaz.';
 
   @override
   String get start => 'Başla';
@@ -695,7 +719,8 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get noServers => 'Henüz sunucu yok. Çekirdek Mozilla\'ya ulaşınca burada görünür.';
+  String get noServers =>
+      'Henüz sunucu yok. Çekirdek Mozilla\'ya ulaşınca burada görünür.';
 
   @override
   String get levelAll => 'Tümü';
@@ -725,7 +750,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get switchThreshold => 'Hesap değiştirme eşiği';
 
   @override
-  String get switchThresholdHint => 'Kotanın bu kadarı dolunca sıradaki hesaba geçilir.';
+  String get switchThresholdHint =>
+      'Kotanın bu kadarı dolunca sıradaki hesaba geçilir.';
 
   @override
   String get signInMethod => 'Giriş yöntemi';
@@ -740,7 +766,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get browserSignInBroken => 'Giriş sayfası açılamadı.';
 
   @override
-  String get browserSignInBlocked => 'Mozilla, hesabı eklemenin son adımını tamamlamadı (HTTP 406).';
+  String get browserSignInBlocked =>
+      'Mozilla, hesabı eklemenin son adımını tamamlamadı (HTTP 406).';
 
   @override
   String get browserSignInFallback => 'E-posta ve parola ile giriş';
@@ -791,7 +818,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get dnsCustom => 'Özel';
 
   @override
-  String get dnsCustomHint => 'Her satıra bir tane: https://…/dns-query, tls://… veya bir IP adresi.';
+  String get dnsCustomHint =>
+      'Her satıra bir tane: https://…/dns-query, tls://… veya bir IP adresi.';
 
   @override
   String get dnsFallback => 'Gerekirse sistem DNS\'ine geri dön';
@@ -827,7 +855,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tunMtu => 'MTU';
 
   @override
-  String get tunMtuHint => 'VPN arayüzünün paket boyutu, 1280 ile 9000 arası. Boş: otomatik.';
+  String get tunMtuHint =>
+      'VPN arayüzünün paket boyutu, 1280 ile 9000 arası. Boş: otomatik.';
 
   @override
   String get tunMtuInvalid => '1280 ile 9000 arası bir sayı ya da boş';
@@ -842,7 +871,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get directRules => 'Doğrudan';
 
   @override
-  String get directRulesHint => 'Bu listedeki siteler ve adresler VPN olmadan, doğrudan kendi internetinizle açılır. Seçilen ülkenin kuralları zaten burada: satır ekleyebilir, değiştirebilir veya silebilirsiniz. Başka bir ülke seçmek bunları o ülkenin kurallarıyla değiştirir.';
+  String get directRulesHint =>
+      'Bu listedeki siteler ve adresler VPN olmadan, doğrudan kendi internetinizle açılır. Seçilen ülkenin kuralları zaten burada: satır ekleyebilir, değiştirebilir veya silebilirsiniz. Başka bir ülke seçmek bunları o ülkenin kurallarıyla değiştirir.';
 
   @override
   String get restoreRegionRules => 'Ülke kurallarını geri yükle';
@@ -851,7 +881,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get blockRules => 'Engelle';
 
   @override
-  String get blockRulesHint => 'Bu listedeki siteler ve adresler hiç açılmaz; ne doğrudan ne de VPN üzerinden: reklamlar veya asla açılmasını istemediğiniz siteler için.';
+  String get blockRulesHint =>
+      'Bu listedeki siteler ve adresler hiç açılmaz; ne doğrudan ne de VPN üzerinden: reklamlar veya asla açılmasını istemediğiniz siteler için.';
 
   @override
   String get rulesTitle => 'Kurallar';
@@ -924,16 +955,19 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tlsFragmentSni => 'Sunucu adı (SNI)';
 
   @override
-  String get tlsFragmentFirstByteHint => 'TLS başlığını ilk baytta böler (0x16)';
+  String get tlsFragmentFirstByteHint =>
+      'TLS başlığını ilk baytta böler (0x16)';
 
   @override
-  String get tlsFragmentSniHint => 'Sunucu adını (SNI) birkaç TCP paketine böler';
+  String get tlsFragmentSniHint =>
+      'Sunucu adını (SNI) birkaç TCP paketine böler';
 
   @override
   String get tlsFragmentRecord => 'TLS kaydı';
 
   @override
-  String get tlsFragmentRecordHint => 'Sunucu adını (SNI) iki TLS kaydına böler';
+  String get tlsFragmentRecordHint =>
+      'Sunucu adını (SNI) iki TLS kaydına böler';
 
   @override
   String get tlsFragmentOffHint => 'Normal TLS bağlantısı';
@@ -948,7 +982,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get apiRelayUse => 'Aktarma sunucusunu kullan';
 
   @override
-  String get apiRelayHint => 'Kendi Cloudflare Worker\'ınız veya kendi barındırmanızdaki relay.php.\nYalnızca Mozilla doğrudan yanıt vermediğinde kullanılır: ondan giriş, hesaplar ve sunucu listesi geçer, VPN trafiği geçmez.';
+  String get apiRelayHint =>
+      'Kendi Cloudflare Worker\'ınız veya kendi barındırmanızdaki relay.php.\nYalnızca Mozilla doğrudan yanıt vermediğinde kullanılır: ondan giriş, hesaplar ve sunucu listesi geçer, VPN trafiği geçmez.';
 
   @override
   String get upstreamProxy => 'Üst proxy';
@@ -963,7 +998,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get upstreamProxyPort => 'Port';
 
   @override
-  String get upstreamProxyHint => 'Mozilla bağlantısı bu proxy üzerinden geçer; Mozilla\'yı engelleyen veya yavaşlatan ağlar için.\nProxy bu cihazda çalışıyorsa onu VPN dışında bırakın.';
+  String get upstreamProxyHint =>
+      'Mozilla bağlantısı bu proxy üzerinden geçer; Mozilla\'yı engelleyen veya yavaşlatan ağlar için.\nProxy bu cihazda çalışıyorsa onu VPN dışında bırakın.';
 
   @override
   String get upstreamProxyInvalid => 'Proxy adresini girin, örneğin 127.0.0.1.';
@@ -972,7 +1008,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get upstreamProxyInvalidPort => '1 ile 65535 arasında bir port girin.';
 
   @override
-  String get upstreamProxyOwn => 'Bu, uygulamanın kendi proxy\'si. Başka bir tane girin.';
+  String get upstreamProxyOwn =>
+      'Bu, uygulamanın kendi proxy\'si. Başka bir tane girin.';
 
   @override
   String get apiRelayInvalid => 'https:// adresi olmalıdır.';
@@ -993,10 +1030,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get proxyPassword => 'Proxy parolası';
 
   @override
-  String get proxyLoginHint => 'Uygulamalar bu bilgilerle bağlanmalıdır. Parolasız kullanım için ikisini de boş bırakın.';
+  String get proxyLoginHint =>
+      'Uygulamalar bu bilgilerle bağlanmalıdır. Parolasız kullanım için ikisini de boş bırakın.';
 
   @override
-  String get loginBothOrNone => 'İkisini de doldurun ya da ikisini de boş bırakın.';
+  String get loginBothOrNone =>
+      'İkisini de doldurun ya da ikisini de boş bırakın.';
 
   @override
   String get proxyLogin => 'Proxy kullanıcı adı ve parolası';
@@ -1047,7 +1086,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get notifySignInTitle => 'Oturum açmanız gerekiyor';
 
   @override
-  String get notifySignInBody => 'Hesaplar sayfasından bir hesapta yeniden oturum açın.';
+  String get notifySignInBody =>
+      'Hesaplar sayfasından bir hesapta yeniden oturum açın.';
 
   @override
   String get navAbout => 'Hakkında';
@@ -1081,7 +1121,8 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get updateCheckNoNetwork => 'Güncellemeler denetlenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.';
+  String get updateCheckNoNetwork =>
+      'Güncellemeler denetlenemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.';
 
   @override
   String get updateNow => 'Güncelle';
@@ -1181,7 +1222,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get connectedTo => 'Bağlı konum';
 
   @override
-  String get vpnNotAllowed => 'VPN için izniniz gerekiyor. Düğmeye tekrar dokunun ve izin verin.';
+  String get vpnNotAllowed =>
+      'VPN için izniniz gerekiyor. Düğmeye tekrar dokunun ve izin verin.';
 
   @override
   String get dataUsedTitle => 'Kullanılan veri';
@@ -1193,19 +1235,24 @@ class AppLocalizationsTr extends AppLocalizations {
   String get connectRetrying => 'Bağlanılamadı. İnternetinizi kontrol edin.';
 
   @override
-  String get failUnreachable => 'Mozilla sunucularına ulaşılamadı. Başka bir internet bağlantısı deneyin.';
+  String get failUnreachable =>
+      'Mozilla sunucularına ulaşılamadı. Başka bir internet bağlantısı deneyin.';
 
   @override
-  String get failUpstreamProxy => 'Üst proxy üzerinden Mozilla\'ya ulaşılamadı. Proxy\'nin çalıştığını kontrol edin.';
+  String get failUpstreamProxy =>
+      'Üst proxy üzerinden Mozilla\'ya ulaşılamadı. Proxy\'nin çalıştığını kontrol edin.';
 
   @override
-  String get failInsideVpn => 'Bu internet zaten bir VPN üzerinden geçiyor. Onu kapatın.';
+  String get failInsideVpn =>
+      'Bu internet zaten bir VPN üzerinden geçiyor. Onu kapatın.';
 
   @override
-  String get failRefused => 'Mozilla sunucusu bağlantıyı reddetti. Birkaç dakika sonra tekrar deneyin.';
+  String get failRefused =>
+      'Mozilla sunucusu bağlantıyı reddetti. Birkaç dakika sonra tekrar deneyin.';
 
   @override
-  String get failLocationRefused => 'Bu ülke hesabınıza açık değil. Başka bir ülke seçin.';
+  String get failLocationRefused =>
+      'Bu ülke hesabınıza açık değil. Başka bir ülke seçin.';
 
   @override
   String get useRecommendedLocation => 'Önerilen konumu kullan';
@@ -1216,31 +1263,36 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get failSignIn => 'Bu hesabın oturumu sona erdi. Hesaplar sayfasından yeniden giriş yapın.';
+  String get failSignIn =>
+      'Bu hesabın oturumu sona erdi. Hesaplar sayfasından yeniden giriş yapın.';
 
   @override
   String get failQuota => 'Bu ayın verisi bitti. Başka bir hesap ekleyin.';
 
   @override
-  String get failNotEntitled => 'Mozilla bu hesabın VPN kullanmasına izin vermiyor. Başka bir hesap ekleyin.';
+  String get failNotEntitled =>
+      'Mozilla bu hesabın VPN kullanmasına izin vermiyor. Başka bir hesap ekleyin.';
 
   @override
   String get failRegion => 'Mozilla ülkenizde hizmet vermiyor.';
 
   @override
-  String get failServer => 'Mozilla hizmetinde geçici bir sorun var. Uygulama kendisi tekrar deneyecek.';
+  String get failServer =>
+      'Mozilla hizmetinde geçici bir sorun var. Uygulama kendisi tekrar deneyecek.';
 
   @override
   String get failNoAccount => 'Hazır hesap yok. Hesaplar sayfasını açın.';
 
   @override
-  String get failTestSite => 'Sunucuya bağlandı ama siteler açılmıyor. Başka bir ülke deneyin.';
+  String get failTestSite =>
+      'Sunucuya bağlandı ama siteler açılmıyor. Başka bir ülke deneyin.';
 
   @override
   String get failOther => 'Bağlanılamadı. Tekrar deneyin.';
 
   @override
-  String get failNoInternet => 'İnternet yok. Wi-Fi\'yi veya mobil veriyi kontrol edin.';
+  String get failNoInternet =>
+      'İnternet yok. Wi-Fi\'yi veya mobil veriyi kontrol edin.';
 
   @override
   String get waitingForNetwork => 'İnternet bağlantısı bekleniyor…';
@@ -1260,10 +1312,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get appModeInclude => 'Yalnızca seçili uygulamalar';
 
   @override
-  String get appModeExcludeHint => 'Seçili uygulamalar VPN yerine doğrudan bağlanır: örneğin yabancı adresleri reddeden bankacılık uygulamaları.';
+  String get appModeExcludeHint =>
+      'Seçili uygulamalar VPN yerine doğrudan bağlanır: örneğin yabancı adresleri reddeden bankacılık uygulamaları.';
 
   @override
-  String get appModeIncludeHint => 'Yalnızca seçili uygulamalar VPN üzerinden gider; diğerleri doğrudan bağlanır.';
+  String get appModeIncludeHint =>
+      'Yalnızca seçili uygulamalar VPN üzerinden gider; diğerleri doğrudan bağlanır.';
 
   @override
   String fromRegionList(String region) {
@@ -1277,13 +1331,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get connectionMode => 'Bağlantı modu';
 
   @override
-  String get modeProxyHint => 'Yalnızca proxy ayarı yapılmış uygulamalar proxy\'den geçer.';
+  String get modeProxyHint =>
+      'Yalnızca proxy ayarı yapılmış uygulamalar proxy\'den geçer.';
 
   @override
-  String get modeSystemProxyHint => 'Windows ve çoğu uygulama proxy üzerinden geçer.';
+  String get modeSystemProxyHint =>
+      'Windows ve çoğu uygulama proxy üzerinden geçer.';
 
   @override
-  String get modeSystemProxyHintOther => 'Tarayıcılar ve çoğu uygulama proxy üzerinden geçer.';
+  String get modeSystemProxyHintOther =>
+      'Tarayıcılar ve çoğu uygulama proxy üzerinden geçer.';
 
   @override
   String get suggestedApps => 'Önerilen uygulamalar';
@@ -1333,7 +1390,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Ağınızın DNS\'i $count alan adı için filtreleme adresi döndürdü. Bu uygulama bu yanıtları kullanmaz.',
+      other:
+          'Ağınızın DNS\'i $count alan adı için filtreleme adresi döndürdü. Bu uygulama bu yanıtları kullanmaz.',
       one: 'Ağınızın DNS\'i 1 alan adı için filtreleme adresi döndürdü. Bu uygulama o yanıtı kullanmaz.',
     );
     return '$_temp0';
@@ -1376,7 +1434,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get modeProxyOnly => 'Yalnızca proxy';
 
   @override
-  String get noNetwork => 'İnternet bağlantısı yok. Wi-Fi\'yi veya mobil veriyi açın.';
+  String get noNetwork =>
+      'İnternet bağlantısı yok. Wi-Fi\'yi veya mobil veriyi açın.';
 
   @override
   String get blockAds => 'Reklamları engelle';
@@ -1387,7 +1446,8 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get systemProxyTakenOff => 'Başka bir program sistem proxy\'sini kapattı, bu yüzden trafik VPN\'den geçmiyor.';
+  String get systemProxyTakenOff =>
+      'Başka bir program sistem proxy\'sini kapattı, bu yüzden trafik VPN\'den geçmiyor.';
 
   @override
   String get setSystemProxyAgain => 'Yeniden ayarla';
@@ -1410,10 +1470,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get osMacos => 'macOS';
 
   @override
-  String get tunInstallWaiting => 'TUN hizmetini yüklemek için izin bekleniyor…';
+  String get tunInstallWaiting =>
+      'TUN hizmetini yüklemek için izin bekleniyor…';
 
   @override
-  String get tunInstallCancelled => 'TUN modu bir kez yönetici izni gerektirir. İzin verilmedi, bu yüzden mod değişmedi.';
+  String get tunInstallCancelled =>
+      'TUN modu bir kez yönetici izni gerektirir. İzin verilmedi, bu yüzden mod değişmedi.';
 
   @override
   String tunInstallFailed(String error) {
@@ -1427,7 +1489,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tunFailed => 'TUN modu açılamadı. Yeniden deneniyor…';
 
   @override
-  String get tunLost => 'TUN modu beklenmedik şekilde kapandı. Yeniden deneniyor…';
+  String get tunLost =>
+      'TUN modu beklenmedik şekilde kapandı. Yeniden deneniyor…';
 
   @override
   String get tunNotRunning => 'TUN hizmeti çalışmıyor. Yeniden deneniyor…';
@@ -1436,16 +1499,19 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tunMissing => 'TUN hizmeti yüklü değil.';
 
   @override
-  String get tunOutdated => 'TUN hizmeti bu uygulamadan eski. TUN modunu kullanmak için yeniden yükleyin.';
+  String get tunOutdated =>
+      'TUN hizmeti bu uygulamadan eski. TUN modunu kullanmak için yeniden yükleyin.';
 
   @override
-  String get tunAppOutdated => 'TUN hizmeti bu uygulamadan yeni. TUN modunu kullanmak için uygulamayı güncelleyin.';
+  String get tunAppOutdated =>
+      'TUN hizmeti bu uygulamadan yeni. TUN modunu kullanmak için uygulamayı güncelleyin.';
 
   @override
   String get tunBusy => 'Fali VPN\'in başka bir kopyası TUN modunu kullanıyor.';
 
   @override
-  String get tunNoDriver => 'Sistemin TUN sürücüsü kullanılamıyor. Bilgisayarı yeniden başlatıp tekrar deneyin.';
+  String get tunNoDriver =>
+      'Sistemin TUN sürücüsü kullanılamıyor. Bilgisayarı yeniden başlatıp tekrar deneyin.';
 
   @override
   String get tunInstall => 'Yükle';
@@ -1460,16 +1526,19 @@ class AppLocalizationsTr extends AppLocalizations {
   String get removeTunService => 'TUN hizmetini kaldır';
 
   @override
-  String get removeTunServiceHint => 'TUN modunun kullandığı sistem hizmetini kaldırır. TUN yeniden seçildiğinde yeniden yüklenir.';
+  String get removeTunServiceHint =>
+      'TUN modunun kullandığı sistem hizmetini kaldırır. TUN yeniden seçildiğinde yeniden yüklenir.';
 
   @override
   String get tunServiceRemoved => 'TUN hizmeti kaldırıldı.';
 
   @override
-  String get tunInstallPrompt => 'Fali VPN, TUN modu için hizmeti yüklemek istiyor.';
+  String get tunInstallPrompt =>
+      'Fali VPN, TUN modu için hizmeti yüklemek istiyor.';
 
   @override
-  String get tunRemovePrompt => 'Fali VPN, TUN modunun hizmetini kaldırmak istiyor.';
+  String get tunRemovePrompt =>
+      'Fali VPN, TUN modunun hizmetini kaldırmak istiyor.';
 
   @override
   String tunRemoveFailed(String error) {
@@ -1483,7 +1552,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tunPrograms => 'VPN\'i atlayan programlar';
 
   @override
-  String get tunProgramsHint => 'Mozilla üzerinden değil, doğrudan bağlanırlar. Yalnızca VPN olmadan çalışan programlar için.';
+  String get tunProgramsHint =>
+      'Mozilla üzerinden değil, doğrudan bağlanırlar. Yalnızca VPN olmadan çalışan programlar için.';
 
   @override
   String get tunProgramsEmpty => 'Henüz program yok.';
@@ -1504,7 +1574,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tunProgramUdp => 'Yalnızca UDP';
 
   @override
-  String get tunProgramUdpHint => 'Yalnızca UDP\'si doğrudan bağlanır; geri kalanı VPN\'den geçer.';
+  String get tunProgramUdpHint =>
+      'Yalnızca UDP\'si doğrudan bağlanır; geri kalanı VPN\'den geçer.';
 
   @override
   String get udpNoticeSetting => 'Engellenen UDP bildirimi';
@@ -1527,7 +1598,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get addProgramName => 'Ad yaz…';
 
   @override
-  String get programNameHint => 'Programın dosya adı, ör. steam.exe; * herhangi bir metin demektir (steam*, Steam\'in tüm programlarıdır).';
+  String get programNameHint =>
+      'Programın dosya adı, ör. steam.exe; * herhangi bir metin demektir (steam*, Steam\'in tüm programlarıdır).';
 
   @override
   String get runningProgramsEmpty => 'Çalışan başka program yok.';
@@ -1631,10 +1703,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get speedStop => 'Stop';
 
   @override
-  String get speedHint => 'Turn the VPN on first, so the test measures the VPN\'s own path.';
+  String get speedHint =>
+      'Turn the VPN on first, so the test measures the VPN\'s own path.';
 
   @override
-  String get speedFailed => 'The test did not finish; check the internet and try again.';
+  String get speedFailed =>
+      'The test did not finish; check the internet and try again.';
 
   @override
   String get speedHistory => 'History';
@@ -1728,10 +1802,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get updateAllowInstall => 'Yüklemeye izin ver';
 
   @override
-  String get updateAllowInstallHint => 'Güncellemeyi yüklemek için bu uygulamanın uygulama yüklemesine izin verin.';
+  String get updateAllowInstallHint =>
+      'Güncellemeyi yüklemek için bu uygulamanın uygulama yüklemesine izin verin.';
 
   @override
-  String get updateDownloadFailed => 'Güncelleme indirilemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.';
+  String get updateDownloadFailed =>
+      'Güncelleme indirilemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.';
 
   @override
   String get paramMode => 'Mod';

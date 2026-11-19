@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -48,10 +49,12 @@ class AppLocalizationsHu extends AppLocalizations {
   String get stateWaiting => 'Várakozás';
 
   @override
-  String get waitingForAccount => 'A csatlakozáshoz adjon hozzá egy Firefox Accountot a Fiókok oldalon.';
+  String get waitingForAccount =>
+      'A csatlakozáshoz adjon hozzá egy Firefox Accountot a Fiókok oldalon.';
 
   @override
-  String get waitingForEnabledAccount => 'Minden fiók ki van kapcsolva. Kapcsoljon be egyet a Fiókok oldalon.';
+  String get waitingForEnabledAccount =>
+      'Minden fiók ki van kapcsolva. Kapcsoljon be egyet a Fiókok oldalon.';
 
   @override
   String get stateError => 'Hiba';
@@ -181,16 +184,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get noAccounts => 'Még nincs fiók';
 
   @override
-  String get noAccountsHint => 'A csatlakozáshoz adjon hozzá egy Firefox Accountot.';
+  String get noAccountsHint =>
+      'A csatlakozáshoz adjon hozzá egy Firefox Accountot.';
 
   @override
-  String get delayTestFailed => 'Nem sikerült megmérni a szerverek késleltetését. Ellenőrizze az internetet.';
+  String get delayTestFailed =>
+      'Nem sikerült megmérni a szerverek késleltetését. Ellenőrizze az internetet.';
 
   @override
   String get createAccountTitle => 'Nincs Firefox Accountja?';
 
   @override
-  String get createAccountHint => 'Hozzon létre egyet ingyen az accounts.firefox.com oldalon, majd térjen vissza, és nyomja meg a Fiók hozzáadása gombot.';
+  String get createAccountHint =>
+      'Hozzon létre egyet ingyen az accounts.firefox.com oldalon, majd térjen vissza, és nyomja meg a Fiók hozzáadása gombot.';
 
   @override
   String get moveUp => 'Feljebb';
@@ -236,13 +242,16 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get reasonQuotaExhausted => 'Elfogyott a havi adatkeret; a havi nullázás után újra használatba kerül.';
+  String get reasonQuotaExhausted =>
+      'Elfogyott a havi adatkeret; a havi nullázás után újra használatba kerül.';
 
   @override
-  String get reasonSignInRequired => 'Jelentkezzen be újra a fiók használatához.';
+  String get reasonSignInRequired =>
+      'Jelentkezzen be újra a fiók használatához.';
 
   @override
-  String get reasonSignInConfirm => 'A Mozilla a bejelentkezés megerősítését kéri: nyomja meg az „Újbóli bejelentkezés” gombot (csak a kód kell).';
+  String get reasonSignInConfirm =>
+      'A Mozilla a bejelentkezés megerősítését kéri: nyomja meg az „Újbóli bejelentkezés” gombot (csak a kód kell).';
 
   @override
   String reasonSignInFailed(String detail) {
@@ -260,7 +269,8 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get reasonNotEntitled => 'A Mozilla elutasította ezt a fiókot; később újrapróbálkozunk.';
+  String get reasonNotEntitled =>
+      'A Mozilla elutasította ezt a fiókot; később újrapróbálkozunk.';
 
   @override
   String get more => 'Továbbiak';
@@ -322,7 +332,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get noBrowserTitle => 'Ezen az eszközön nincs böngésző';
 
   @override
-  String get noBrowserText => 'Nyissa meg ezt a címet a telefonján vagy a számítógépén:';
+  String get noBrowserText =>
+      'Nyissa meg ezt a címet a telefonján vagy a számítógépén:';
 
   @override
   String get cancel => 'Mégse';
@@ -376,10 +387,12 @@ class AppLocalizationsHu extends AppLocalizations {
   String get signInCancelled => 'A bejelentkezés megszakítva.';
 
   @override
-  String get signInNoAccount => 'Ehhez az e-mail-címhez nem tartozik Firefox Account.';
+  String get signInNoAccount =>
+      'Ehhez az e-mail-címhez nem tartozik Firefox Account.';
 
   @override
-  String get signInNoAccountHint => 'Ellenőrizze a címet, vagy hozzon létre vele ingyenes Firefox Accountot a Mozilla oldalán, erősítse meg a postafiókjából, majd adja hozzá itt.';
+  String get signInNoAccountHint =>
+      'Ellenőrizze a címet, vagy hozzon létre vele ingyenes Firefox Accountot a Mozilla oldalán, erősítse meg a postafiókjából, majd adja hozzá itt.';
 
   @override
   String get createAccountButton => 'Firefox Account létrehozása';
@@ -388,37 +401,46 @@ class AppLocalizationsHu extends AppLocalizations {
   String get signInWrongPassword => 'Hibás jelszó.';
 
   @override
-  String get signInNoPassword => 'Ennek a fióknak nincs jelszava: Google- vagy Apple-bejelentkezéssel jött létre. Állítson be jelszót, majd jelentkezzen be vele itt.';
+  String get signInNoPassword =>
+      'Ennek a fióknak nincs jelszava: Google- vagy Apple-bejelentkezéssel jött létre. Állítson be jelszót, majd jelentkezzen be vele itt.';
 
   @override
   String get setPasswordButton => 'Jelszó beállítása';
 
   @override
-  String get signInTooManyAttempts => 'Túl sok próbálkozás. Várjon egy kicsit, majd próbálja újra.';
+  String get signInTooManyAttempts =>
+      'Túl sok próbálkozás. Várjon egy kicsit, majd próbálja újra.';
 
   @override
-  String get signInUnblockRejected => 'A feloldókódot nem fogadta el. Használja a Mozilla legutóbbi e-mailjében lévő kódot.';
+  String get signInUnblockRejected =>
+      'A feloldókódot nem fogadta el. Használja a Mozilla legutóbbi e-mailjében lévő kódot.';
 
   @override
-  String get signInWrongCode => 'Hibás vagy lejárt kód. Használja a Mozilla legutóbbi e-mailjében lévő kódot; egy új kód küldésekor a régi már nem működik.';
+  String get signInWrongCode =>
+      'Hibás vagy lejárt kód. Használja a Mozilla legutóbbi e-mailjében lévő kódot; egy új kód küldésekor a régi már nem működik.';
 
   @override
-  String get signInWrongTotp => 'Hibás kód. Írja be a hitelesítő alkalmazásban most látható kódot.';
+  String get signInWrongTotp =>
+      'Hibás kód. Írja be a hitelesítő alkalmazásban most látható kódot.';
 
   @override
-  String get signInTooManyCodes => 'Túl sok hibás kód. Kezdje elölről a bejelentkezést.';
+  String get signInTooManyCodes =>
+      'Túl sok hibás kód. Kezdje elölről a bejelentkezést.';
 
   @override
-  String get signInTimedOut => 'A bejelentkezés túl sokáig tartott. Kezdje újra.';
+  String get signInTimedOut =>
+      'A bejelentkezés túl sokáig tartott. Kezdje újra.';
 
   @override
-  String get signInNetwork => 'A Mozilla nem érhető el. Ellenőrizze az internetet, és próbálja újra.';
+  String get signInNetwork =>
+      'A Mozilla nem érhető el. Ellenőrizze az internetet, és próbálja újra.';
 
   @override
   String get coreConnecting => 'Csatlakozás a magprogramhoz…';
 
   @override
-  String get coreLost => 'Megszakadt a kapcsolat a magprogrammal. Újrapróbálás…';
+  String get coreLost =>
+      'Megszakadt a kapcsolat a magprogrammal. Újrapróbálás…';
 
   @override
   String get cantReachCore => 'A magprogram nem érhető el';
@@ -443,7 +465,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get errNotAnswering => 'A magprogram nem válaszol.';
 
   @override
-  String get errRefused => 'A magprogram elutasította az alkalmazást; lehet, hogy egy másik példányhoz tartozik.';
+  String get errRefused =>
+      'A magprogram elutasította az alkalmazást; lehet, hogy egy másik példányhoz tartozik.';
 
   @override
   String get settingsTitle => 'Beállítások';
@@ -497,7 +520,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get routingDirect => 'Közvetlen kapcsolat a helyi oldalakhoz';
 
   @override
-  String get routingDirectHint => 'A kiválasztott ország oldalai és IP-címei a VPN-t megkerülve, közvetlenül nyílnak meg: így gyorsabbak, és nem fogyasztják az adatkeretet.';
+  String get routingDirectHint =>
+      'A kiválasztott ország oldalai és IP-címei a VPN-t megkerülve, közvetlenül nyílnak meg: így gyorsabbak, és nem fogyasztják az adatkeretet.';
 
   @override
   String get region => 'Ország';
@@ -536,13 +560,15 @@ class AppLocalizationsHu extends AppLocalizations {
   String get openFolder => 'Mappa megnyitása';
 
   @override
-  String get unofficialNote => 'Nem hivatalos kliens. Nem áll kapcsolatban a Mozillával.';
+  String get unofficialNote =>
+      'Nem hivatalos kliens. Nem áll kapcsolatban a Mozillával.';
 
   @override
   String get closeTitle => 'Bezárja az ablakot?';
 
   @override
-  String get closeBody => 'A rendszertálcára rejtve a VPN csatlakozva marad. Kilépéskor a kapcsolat megszakad.';
+  String get closeBody =>
+      'A rendszertálcára rejtve a VPN csatlakozva marad. Kilépéskor a kapcsolat megszakad.';
 
   @override
   String get rememberChoice => 'Választás megjegyzése';
@@ -587,7 +613,8 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get portChangeBody => 'Az alkalmazások ehhez a porthoz csatlakoznak. Válasszon egyet 1024 és 65535 között.';
+  String get portChangeBody =>
+      'Az alkalmazások ehhez a porthoz csatlakoznak. Válasszon egyet 1024 és 65535 között.';
 
   @override
   String get portLabel => 'Port';
@@ -614,7 +641,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get welcomeTitle => 'Üdvözöljük';
 
   @override
-  String get welcomeBody => 'Válassza ki a nyelvet és az országát. Az országa oldalai közvetlenül, VPN nélkül nyílnak meg: így gyorsabbak, és nem fogyasztják az adatkeretet.';
+  String get welcomeBody =>
+      'Válassza ki a nyelvet és az országát. Az országa oldalai közvetlenül, VPN nélkül nyílnak meg: így gyorsabbak, és nem fogyasztják az adatkeretet.';
 
   @override
   String get start => 'Kezdés';
@@ -670,7 +698,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get modeRecommendedHint => 'A Mozilla választja ki a helyszínt.';
 
   @override
-  String get modeFastestHint => 'A legkisebb késleltetésű helyszín minden csatlakozáskor.';
+  String get modeFastestHint =>
+      'A legkisebb késleltetésű helyszín minden csatlakozáskor.';
 
   @override
   String get testDelay => 'Valós késleltetés mérése';
@@ -695,7 +724,8 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get noServers => 'Még nincsenek szerverek. Akkor jelennek meg, amikor a magprogram eléri a Mozillát.';
+  String get noServers =>
+      'Még nincsenek szerverek. Akkor jelennek meg, amikor a magprogram eléri a Mozillát.';
 
   @override
   String get levelAll => 'Összes';
@@ -725,7 +755,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get switchThreshold => 'Váltási küszöb';
 
   @override
-  String get switchThresholdHint => 'A következő fiók akkor veszi át, amikor az adatkeret ekkora része elfogyott.';
+  String get switchThresholdHint =>
+      'A következő fiók akkor veszi át, amikor az adatkeret ekkora része elfogyott.';
 
   @override
   String get signInMethod => 'Bejelentkezési mód';
@@ -740,7 +771,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get browserSignInBroken => 'A bejelentkezési oldal nem nyitható meg.';
 
   @override
-  String get browserSignInBlocked => 'A Mozilla nem fejezte be a fiók hozzáadásának utolsó lépését (HTTP 406).';
+  String get browserSignInBlocked =>
+      'A Mozilla nem fejezte be a fiók hozzáadásának utolsó lépését (HTTP 406).';
 
   @override
   String get browserSignInFallback => 'Bejelentkezés e-maillel és jelszóval';
@@ -760,7 +792,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get backupImportTitle => 'Hozzáadja ezeket a fiókokat?';
 
   @override
-  String get backupAccountExists => 'Már hozzá van adva; a bejelentkezést a fájlból kapja';
+  String get backupAccountExists =>
+      'Már hozzá van adva; a bejelentkezést a fájlból kapja';
 
   @override
   String get backupImportAction => 'Hozzáadás';
@@ -791,7 +824,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get dnsCustom => 'Egyéni';
 
   @override
-  String get dnsCustomHint => 'Soronként egy: https://…/dns-query, tls://… vagy egy IP-cím.';
+  String get dnsCustomHint =>
+      'Soronként egy: https://…/dns-query, tls://… vagy egy IP-cím.';
 
   @override
   String get dnsFallback => 'Rendszer-DNS használata tartalékként';
@@ -827,7 +861,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get tunMtu => 'MTU';
 
   @override
-  String get tunMtuHint => 'A VPN-interfész csomagmérete, 1280 és 9000 között. Üres: automatikus.';
+  String get tunMtuHint =>
+      'A VPN-interfész csomagmérete, 1280 és 9000 között. Üres: automatikus.';
 
   @override
   String get tunMtuInvalid => 'Egy szám 1280 és 9000 között, vagy üres';
@@ -842,7 +877,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get directRules => 'Közvetlen';
 
   @override
-  String get directRulesHint => 'A lista webhelyei és címei VPN nélkül, közvetlenül a saját internetkapcsolatán nyílnak meg. A választott ország szabályai már itt vannak: sorokat adhat hozzá, módosíthat vagy törölhet. Másik ország választása lecseréli őket annak szabályaira.';
+  String get directRulesHint =>
+      'A lista webhelyei és címei VPN nélkül, közvetlenül a saját internetkapcsolatán nyílnak meg. A választott ország szabályai már itt vannak: sorokat adhat hozzá, módosíthat vagy törölhet. Másik ország választása lecseréli őket annak szabályaira.';
 
   @override
   String get restoreRegionRules => 'Az ország szabályainak visszaállítása';
@@ -851,7 +887,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get blockRules => 'Tiltás';
 
   @override
-  String get blockRulesHint => 'A lista webhelyei és címei egyáltalán nem nyílnak meg, sem közvetlenül, sem VPN-en keresztül: hirdetésekhez vagy olyan oldalakhoz, amelyeket soha nem akar elérni.';
+  String get blockRulesHint =>
+      'A lista webhelyei és címei egyáltalán nem nyílnak meg, sem közvetlenül, sem VPN-en keresztül: hirdetésekhez vagy olyan oldalakhoz, amelyeket soha nem akar elérni.';
 
   @override
   String get rulesTitle => 'Szabályok';
@@ -906,7 +943,8 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get portRefusedNote => 'A Mozilla proxyja nem csatlakozik ehhez a porthoz.';
+  String get portRefusedNote =>
+      'A Mozilla proxyja nem csatlakozik ehhez a porthoz.';
 
   @override
   String get sectionAdvanced => 'Speciális';
@@ -924,16 +962,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get tlsFragmentSni => 'Kiszolgálónév (SNI)';
 
   @override
-  String get tlsFragmentFirstByteHint => 'Az első bájtnál osztja ketté a TLS-fejlécet (0x16)';
+  String get tlsFragmentFirstByteHint =>
+      'Az első bájtnál osztja ketté a TLS-fejlécet (0x16)';
 
   @override
-  String get tlsFragmentSniHint => 'Több TCP-csomagra osztja a kiszolgálónevet (SNI)';
+  String get tlsFragmentSniHint =>
+      'Több TCP-csomagra osztja a kiszolgálónevet (SNI)';
 
   @override
   String get tlsFragmentRecord => 'TLS-rekord';
 
   @override
-  String get tlsFragmentRecordHint => 'Két TLS-rekordra osztja a kiszolgálónevet (SNI)';
+  String get tlsFragmentRecordHint =>
+      'Két TLS-rekordra osztja a kiszolgálónevet (SNI)';
 
   @override
   String get tlsFragmentOffHint => 'Normál TLS-kapcsolat';
@@ -948,7 +989,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get apiRelayUse => 'A továbbítószerver használata';
 
   @override
-  String get apiRelayHint => 'Saját Cloudflare Worker, vagy relay.php a saját tárhelyén.\nCsak akkor használatos, ha a Mozilla közvetlenül nem válaszol: a bejelentkezés, a fiókok és a szerverlista megy rajta keresztül, a VPN-forgalom nem.';
+  String get apiRelayHint =>
+      'Saját Cloudflare Worker, vagy relay.php a saját tárhelyén.\nCsak akkor használatos, ha a Mozilla közvetlenül nem válaszol: a bejelentkezés, a fiókok és a szerverlista megy rajta keresztül, a VPN-forgalom nem.';
 
   @override
   String get upstreamProxy => 'Felsőbb szintű proxy';
@@ -963,16 +1005,20 @@ class AppLocalizationsHu extends AppLocalizations {
   String get upstreamProxyPort => 'Port';
 
   @override
-  String get upstreamProxyHint => 'A Mozillához vezető kapcsolat ezen a proxyn megy át, azokhoz a hálózatokhoz, amelyek letiltják vagy lassítják a Mozillát.\nHa a proxy ezen az eszközön fut, hagyja ki a VPN-ből.';
+  String get upstreamProxyHint =>
+      'A Mozillához vezető kapcsolat ezen a proxyn megy át, azokhoz a hálózatokhoz, amelyek letiltják vagy lassítják a Mozillát.\nHa a proxy ezen az eszközön fut, hagyja ki a VPN-ből.';
 
   @override
-  String get upstreamProxyInvalid => 'Adja meg a proxy címét, például 127.0.0.1.';
+  String get upstreamProxyInvalid =>
+      'Adja meg a proxy címét, például 127.0.0.1.';
 
   @override
-  String get upstreamProxyInvalidPort => 'Adjon meg egy portot 1 és 65535 között.';
+  String get upstreamProxyInvalidPort =>
+      'Adjon meg egy portot 1 és 65535 között.';
 
   @override
-  String get upstreamProxyOwn => 'Ez az alkalmazás saját proxyja. Adjon meg egy másikat.';
+  String get upstreamProxyOwn =>
+      'Ez az alkalmazás saját proxyja. Adjon meg egy másikat.';
 
   @override
   String get apiRelayInvalid => 'https:// címnek kell lennie.';
@@ -993,10 +1039,12 @@ class AppLocalizationsHu extends AppLocalizations {
   String get proxyPassword => 'Proxyjelszó';
 
   @override
-  String get proxyLoginHint => 'Az alkalmazásoknak ezekkel kell bejelentkezniük. Hagyja mindkettőt üresen, ha nem kell bejelentkezés.';
+  String get proxyLoginHint =>
+      'Az alkalmazásoknak ezekkel kell bejelentkezniük. Hagyja mindkettőt üresen, ha nem kell bejelentkezés.';
 
   @override
-  String get loginBothOrNone => 'Töltse ki mindkettőt, vagy hagyja üresen mindkettőt.';
+  String get loginBothOrNone =>
+      'Töltse ki mindkettőt, vagy hagyja üresen mindkettőt.';
 
   @override
   String get proxyLogin => 'Proxyhitelesítés';
@@ -1047,7 +1095,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get notifySignInTitle => 'Bejelentkezés szükséges';
 
   @override
-  String get notifySignInBody => 'Egy fiókba újra be kell jelentkezni a Fiókok oldalon.';
+  String get notifySignInBody =>
+      'Egy fiókba újra be kell jelentkezni a Fiókok oldalon.';
 
   @override
   String get navAbout => 'Névjegy';
@@ -1081,7 +1130,8 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get updateCheckNoNetwork => 'A frissítések ellenőrzése nem sikerült. Ellenőrizze az internetkapcsolatot, és próbálja újra.';
+  String get updateCheckNoNetwork =>
+      'A frissítések ellenőrzése nem sikerült. Ellenőrizze az internetkapcsolatot, és próbálja újra.';
 
   @override
   String get updateNow => 'Frissítés';
@@ -1159,7 +1209,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get tapToConnectTv => 'Nyomja meg az OK gombot a csatlakozáshoz';
 
   @override
-  String get tapToDisconnectTv => 'Nyomja meg az OK gombot a kapcsolat bontásához';
+  String get tapToDisconnectTv =>
+      'Nyomja meg az OK gombot a kapcsolat bontásához';
 
   @override
   String lanAddress(String address) {
@@ -1181,7 +1232,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get connectedTo => 'Csatlakozva ide:';
 
   @override
-  String get vpnNotAllowed => 'A VPN-hez az Ön engedélye szükséges. Koppintson újra a gombra, és engedélyezze.';
+  String get vpnNotAllowed =>
+      'A VPN-hez az Ön engedélye szükséges. Koppintson újra a gombra, és engedélyezze.';
 
   @override
   String get dataUsedTitle => 'Felhasznált adat';
@@ -1190,22 +1242,28 @@ class AppLocalizationsHu extends AppLocalizations {
   String get bypassApps => 'Alkalmazásonkénti proxy';
 
   @override
-  String get connectRetrying => 'Nem sikerült csatlakozni. Ellenőrizze az internetet.';
+  String get connectRetrying =>
+      'Nem sikerült csatlakozni. Ellenőrizze az internetet.';
 
   @override
-  String get failUnreachable => 'Nem sikerült elérni a Mozilla szervereit. Próbáljon másik internetkapcsolatot.';
+  String get failUnreachable =>
+      'Nem sikerült elérni a Mozilla szervereit. Próbáljon másik internetkapcsolatot.';
 
   @override
-  String get failUpstreamProxy => 'Nem sikerült elérni a Mozillát a felsőbb szintű proxyn keresztül. Ellenőrizze, hogy fut-e.';
+  String get failUpstreamProxy =>
+      'Nem sikerült elérni a Mozillát a felsőbb szintű proxyn keresztül. Ellenőrizze, hogy fut-e.';
 
   @override
-  String get failInsideVpn => 'Ez az internet már egy VPN-en keresztül megy. Kapcsolja ki.';
+  String get failInsideVpn =>
+      'Ez az internet már egy VPN-en keresztül megy. Kapcsolja ki.';
 
   @override
-  String get failRefused => 'A Mozilla szervere elutasította a kapcsolatot. Próbálja újra néhány perc múlva.';
+  String get failRefused =>
+      'A Mozilla szervere elutasította a kapcsolatot. Próbálja újra néhány perc múlva.';
 
   @override
-  String get failLocationRefused => 'Ez az ország nem érhető el a fiókja számára. Válasszon másik országot.';
+  String get failLocationRefused =>
+      'Ez az ország nem érhető el a fiókja számára. Válasszon másik országot.';
 
   @override
   String get useRecommendedLocation => 'Az ajánlott helyszín használata';
@@ -1216,31 +1274,39 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get failSignIn => 'A fiók bejelentkezése lejárt. Jelentkezzen be újra a Fiókok oldalon.';
+  String get failSignIn =>
+      'A fiók bejelentkezése lejárt. Jelentkezzen be újra a Fiókok oldalon.';
 
   @override
-  String get failQuota => 'Az e havi adatkeret elfogyott. Adjon hozzá egy másik fiókot.';
+  String get failQuota =>
+      'Az e havi adatkeret elfogyott. Adjon hozzá egy másik fiókot.';
 
   @override
-  String get failNotEntitled => 'A Mozilla nem engedi, hogy ez a fiók használja a VPN-t. Adjon hozzá egy másik fiókot.';
+  String get failNotEntitled =>
+      'A Mozilla nem engedi, hogy ez a fiók használja a VPN-t. Adjon hozzá egy másik fiókot.';
 
   @override
-  String get failRegion => 'A Mozilla nem nyújtja szolgáltatását az Ön országában.';
+  String get failRegion =>
+      'A Mozilla nem nyújtja szolgáltatását az Ön országában.';
 
   @override
-  String get failServer => 'A Mozilla szolgáltatásában átmeneti hiba van. Az alkalmazás magától újrapróbálja.';
+  String get failServer =>
+      'A Mozilla szolgáltatásában átmeneti hiba van. Az alkalmazás magától újrapróbálja.';
 
   @override
-  String get failNoAccount => 'Egyik fiók sem áll készen. Nyissa meg a Fiókok oldalt.';
+  String get failNoAccount =>
+      'Egyik fiók sem áll készen. Nyissa meg a Fiókok oldalt.';
 
   @override
-  String get failTestSite => 'Csatlakozott a szerverhez, de az oldalak nem nyílnak meg. Próbáljon másik országot.';
+  String get failTestSite =>
+      'Csatlakozott a szerverhez, de az oldalak nem nyílnak meg. Próbáljon másik országot.';
 
   @override
   String get failOther => 'Nem sikerült csatlakozni. Próbálja újra.';
 
   @override
-  String get failNoInternet => 'Nincs internet. Ellenőrizze a Wi-Fit vagy a mobiladatot.';
+  String get failNoInternet =>
+      'Nincs internet. Ellenőrizze a Wi-Fit vagy a mobiladatot.';
 
   @override
   String get waitingForNetwork => 'Várakozás az internetkapcsolatra…';
@@ -1260,10 +1326,12 @@ class AppLocalizationsHu extends AppLocalizations {
   String get appModeInclude => 'Csak a kijelöltek VPN-nel';
 
   @override
-  String get appModeExcludeHint => 'A kijelölt alkalmazások közvetlenül csatlakoznak, nem a VPN-en át: például a külföldi címeket elutasító banki alkalmazások.';
+  String get appModeExcludeHint =>
+      'A kijelölt alkalmazások közvetlenül csatlakoznak, nem a VPN-en át: például a külföldi címeket elutasító banki alkalmazások.';
 
   @override
-  String get appModeIncludeHint => 'Csak a kijelölt alkalmazások mennek a VPN-en át; a többiek közvetlenül csatlakoznak.';
+  String get appModeIncludeHint =>
+      'Csak a kijelölt alkalmazások mennek a VPN-en át; a többiek közvetlenül csatlakoznak.';
 
   @override
   String fromRegionList(String region) {
@@ -1277,13 +1345,16 @@ class AppLocalizationsHu extends AppLocalizations {
   String get connectionMode => 'Kapcsolati mód';
 
   @override
-  String get modeProxyHint => 'Csak a proxy használatára beállított alkalmazások mennek rajta át.';
+  String get modeProxyHint =>
+      'Csak a proxy használatára beállított alkalmazások mennek rajta át.';
 
   @override
-  String get modeSystemProxyHint => 'A Windows és a legtöbb alkalmazás a proxyn át megy.';
+  String get modeSystemProxyHint =>
+      'A Windows és a legtöbb alkalmazás a proxyn át megy.';
 
   @override
-  String get modeSystemProxyHintOther => 'A böngészők és a legtöbb alkalmazás a proxyn át megy.';
+  String get modeSystemProxyHintOther =>
+      'A böngészők és a legtöbb alkalmazás a proxyn át megy.';
 
   @override
   String get suggestedApps => 'Javasolt alkalmazások';
@@ -1333,7 +1404,8 @@ class AppLocalizationsHu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'A hálózat DNS-e $count névre szűrő címet adott vissza. Ezeknél az alkalmazás nem használja ezt a DNS-t.',
+      other:
+          'A hálózat DNS-e $count névre szűrő címet adott vissza. Ezeknél az alkalmazás nem használja ezt a DNS-t.',
       one: 'A hálózat DNS-e 1 névre szűrő címet adott vissza. Ennél az alkalmazás nem használja ezt a DNS-t.',
     );
     return '$_temp0';
@@ -1376,7 +1448,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get modeProxyOnly => 'Csak proxy';
 
   @override
-  String get noNetwork => 'Nincs internetkapcsolat. Kapcsolja be a Wi-Fit vagy a mobiladatot.';
+  String get noNetwork =>
+      'Nincs internetkapcsolat. Kapcsolja be a Wi-Fit vagy a mobiladatot.';
 
   @override
   String get blockAds => 'Hirdetések tiltása';
@@ -1387,7 +1460,8 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get systemProxyTakenOff => 'Egy másik program kikapcsolta a rendszerproxyt, így a forgalom nem a VPN-en megy.';
+  String get systemProxyTakenOff =>
+      'Egy másik program kikapcsolta a rendszerproxyt, így a forgalom nem a VPN-en megy.';
 
   @override
   String get setSystemProxyAgain => 'Beállítás újra';
@@ -1410,10 +1484,12 @@ class AppLocalizationsHu extends AppLocalizations {
   String get osMacos => 'macOS';
 
   @override
-  String get tunInstallWaiting => 'Várakozás az engedélyre a TUN-szolgáltatás telepítéséhez…';
+  String get tunInstallWaiting =>
+      'Várakozás az engedélyre a TUN-szolgáltatás telepítéséhez…';
 
   @override
-  String get tunInstallCancelled => 'A TUN módhoz egyszer rendszergazdai engedély kell. Az engedély nem érkezett meg, ezért a mód nem változott.';
+  String get tunInstallCancelled =>
+      'A TUN módhoz egyszer rendszergazdai engedély kell. Az engedély nem érkezett meg, ezért a mód nem változott.';
 
   @override
   String tunInstallFailed(String error) {
@@ -1436,16 +1512,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get tunMissing => 'A TUN-szolgáltatás nincs telepítve.';
 
   @override
-  String get tunOutdated => 'A TUN-szolgáltatás régebbi, mint ez az alkalmazás. A TUN mód használatához telepítse újra.';
+  String get tunOutdated =>
+      'A TUN-szolgáltatás régebbi, mint ez az alkalmazás. A TUN mód használatához telepítse újra.';
 
   @override
-  String get tunAppOutdated => 'A TUN-szolgáltatás újabb, mint ez az alkalmazás. A TUN mód használatához frissítse az alkalmazást.';
+  String get tunAppOutdated =>
+      'A TUN-szolgáltatás újabb, mint ez az alkalmazás. A TUN mód használatához frissítse az alkalmazást.';
 
   @override
   String get tunBusy => 'Az Fali VPN egy másik példánya használja a TUN módot.';
 
   @override
-  String get tunNoDriver => 'A rendszer TUN-illesztőprogramja nem érhető el. Indítsa újra a számítógépet, és próbálja újra.';
+  String get tunNoDriver =>
+      'A rendszer TUN-illesztőprogramja nem érhető el. Indítsa újra a számítógépet, és próbálja újra.';
 
   @override
   String get tunInstall => 'Telepítés';
@@ -1460,16 +1539,19 @@ class AppLocalizationsHu extends AppLocalizations {
   String get removeTunService => 'A TUN-szolgáltatás eltávolítása';
 
   @override
-  String get removeTunServiceHint => 'Eltávolítja a rendszerszolgáltatást, amelyet a TUN mód használ. A TUN újbóli választása újra telepíti.';
+  String get removeTunServiceHint =>
+      'Eltávolítja a rendszerszolgáltatást, amelyet a TUN mód használ. A TUN újbóli választása újra telepíti.';
 
   @override
   String get tunServiceRemoved => 'A TUN-szolgáltatás eltávolítva.';
 
   @override
-  String get tunInstallPrompt => 'Az Fali VPN telepíteni szeretné a TUN mód szolgáltatását.';
+  String get tunInstallPrompt =>
+      'Az Fali VPN telepíteni szeretné a TUN mód szolgáltatását.';
 
   @override
-  String get tunRemovePrompt => 'Az Fali VPN el szeretné távolítani a TUN mód szolgáltatását.';
+  String get tunRemovePrompt =>
+      'Az Fali VPN el szeretné távolítani a TUN mód szolgáltatását.';
 
   @override
   String tunRemoveFailed(String error) {
@@ -1483,7 +1565,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get tunPrograms => 'VPN-t megkerülő programok';
 
   @override
-  String get tunProgramsHint => 'Közvetlenül csatlakoznak, nem a Mozillán át. Csak VPN nélkül is működő programokhoz.';
+  String get tunProgramsHint =>
+      'Közvetlenül csatlakoznak, nem a Mozillán át. Csak VPN nélkül is működő programokhoz.';
 
   @override
   String get tunProgramsEmpty => 'Még nincs program.';
@@ -1504,7 +1587,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get tunProgramUdp => 'Csak UDP';
 
   @override
-  String get tunProgramUdpHint => 'Csak az UDP-je csatlakozik közvetlenül; a többi a VPN-en át megy.';
+  String get tunProgramUdpHint =>
+      'Csak az UDP-je csatlakozik közvetlenül; a többi a VPN-en át megy.';
 
   @override
   String get udpNoticeSetting => 'Értesítés letiltott UDP-ről';
@@ -1527,7 +1611,8 @@ class AppLocalizationsHu extends AppLocalizations {
   String get addProgramName => 'Név beírása…';
 
   @override
-  String get programNameHint => 'Egy program fájlneve, például steam.exe; a * bármilyen szöveget jelent (a steam* az összes Steam-program).';
+  String get programNameHint =>
+      'Egy program fájlneve, például steam.exe; a * bármilyen szöveget jelent (a steam* az összes Steam-program).';
 
   @override
   String get runningProgramsEmpty => 'Más program nem fut.';
@@ -1631,10 +1716,12 @@ class AppLocalizationsHu extends AppLocalizations {
   String get speedStop => 'Stop';
 
   @override
-  String get speedHint => 'Turn the VPN on first, so the test measures the VPN\'s own path.';
+  String get speedHint =>
+      'Turn the VPN on first, so the test measures the VPN\'s own path.';
 
   @override
-  String get speedFailed => 'The test did not finish; check the internet and try again.';
+  String get speedFailed =>
+      'The test did not finish; check the internet and try again.';
 
   @override
   String get speedHistory => 'History';
@@ -1728,10 +1815,12 @@ class AppLocalizationsHu extends AppLocalizations {
   String get updateAllowInstall => 'Telepítés engedélyezése';
 
   @override
-  String get updateAllowInstallHint => 'A frissítés telepítéséhez engedélyezze az alkalmazásnak az alkalmazások telepítését.';
+  String get updateAllowInstallHint =>
+      'A frissítés telepítéséhez engedélyezze az alkalmazásnak az alkalmazások telepítését.';
 
   @override
-  String get updateDownloadFailed => 'A frissítés letöltése nem sikerült. Ellenőrizze az internetet, és próbálja újra.';
+  String get updateDownloadFailed =>
+      'A frissítés letöltése nem sikerült. Ellenőrizze az internetet, és próbálja újra.';
 
   @override
   String get paramMode => 'Mód';

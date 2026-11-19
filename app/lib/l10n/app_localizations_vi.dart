@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -48,10 +49,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get stateWaiting => 'Đang chờ';
 
   @override
-  String get waitingForAccount => 'Thêm một Firefox Account ở trang Tài khoản để kết nối.';
+  String get waitingForAccount =>
+      'Thêm một Firefox Account ở trang Tài khoản để kết nối.';
 
   @override
-  String get waitingForEnabledAccount => 'Tất cả tài khoản đang tắt. Hãy bật một tài khoản ở trang Tài khoản.';
+  String get waitingForEnabledAccount =>
+      'Tất cả tài khoản đang tắt. Hãy bật một tài khoản ở trang Tài khoản.';
 
   @override
   String get stateError => 'Lỗi';
@@ -184,13 +187,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String get noAccountsHint => 'Thêm một Firefox Account để kết nối.';
 
   @override
-  String get delayTestFailed => 'Không đo được độ trễ của máy chủ. Hãy kiểm tra internet.';
+  String get delayTestFailed =>
+      'Không đo được độ trễ của máy chủ. Hãy kiểm tra internet.';
 
   @override
   String get createAccountTitle => 'Chưa có Firefox Account?';
 
   @override
-  String get createAccountHint => 'Hãy tạo miễn phí tại accounts.firefox.com, rồi quay lại và nhấn Thêm tài khoản.';
+  String get createAccountHint =>
+      'Hãy tạo miễn phí tại accounts.firefox.com, rồi quay lại và nhấn Thêm tài khoản.';
 
   @override
   String get moveUp => 'Lên trên';
@@ -236,13 +241,15 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get reasonQuotaExhausted => 'Dung lượng tháng này đã hết; sẽ dùng lại sau khi làm mới hằng tháng.';
+  String get reasonQuotaExhausted =>
+      'Dung lượng tháng này đã hết; sẽ dùng lại sau khi làm mới hằng tháng.';
 
   @override
   String get reasonSignInRequired => 'Hãy đăng nhập lại để dùng tài khoản này.';
 
   @override
-  String get reasonSignInConfirm => 'Mozilla yêu cầu xác nhận đăng nhập: nhấn Đăng nhập lại (chỉ cần mã).';
+  String get reasonSignInConfirm =>
+      'Mozilla yêu cầu xác nhận đăng nhập: nhấn Đăng nhập lại (chỉ cần mã).';
 
   @override
   String reasonSignInFailed(String detail) {
@@ -260,7 +267,8 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get reasonNotEntitled => 'Mozilla đã từ chối tài khoản này; sẽ thử lại sau.';
+  String get reasonNotEntitled =>
+      'Mozilla đã từ chối tài khoản này; sẽ thử lại sau.';
 
   @override
   String get more => 'Tùy chọn khác';
@@ -322,7 +330,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get noBrowserTitle => 'Thiết bị này không có trình duyệt';
 
   @override
-  String get noBrowserText => 'Hãy mở địa chỉ này trên điện thoại hoặc máy tính:';
+  String get noBrowserText =>
+      'Hãy mở địa chỉ này trên điện thoại hoặc máy tính:';
 
   @override
   String get cancel => 'Hủy';
@@ -379,7 +388,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get signInNoAccount => 'Không có Firefox Account nào với email này.';
 
   @override
-  String get signInNoAccountHint => 'Hãy kiểm tra email, hoặc tạo một Firefox Account miễn phí bằng email này trên trang của Mozilla, xác nhận từ hộp thư rồi thêm vào đây.';
+  String get signInNoAccountHint =>
+      'Hãy kiểm tra email, hoặc tạo một Firefox Account miễn phí bằng email này trên trang của Mozilla, xác nhận từ hộp thư rồi thêm vào đây.';
 
   @override
   String get createAccountButton => 'Tạo Firefox Account';
@@ -388,31 +398,39 @@ class AppLocalizationsVi extends AppLocalizations {
   String get signInWrongPassword => 'Mật khẩu không đúng.';
 
   @override
-  String get signInNoPassword => 'Tài khoản này chưa có mật khẩu: nó được tạo bằng đăng nhập Google hoặc Apple. Hãy đặt mật khẩu, rồi đăng nhập tại đây bằng mật khẩu đó.';
+  String get signInNoPassword =>
+      'Tài khoản này chưa có mật khẩu: nó được tạo bằng đăng nhập Google hoặc Apple. Hãy đặt mật khẩu, rồi đăng nhập tại đây bằng mật khẩu đó.';
 
   @override
   String get setPasswordButton => 'Đặt mật khẩu';
 
   @override
-  String get signInTooManyAttempts => 'Thử quá nhiều lần. Hãy đợi một lúc rồi thử lại.';
+  String get signInTooManyAttempts =>
+      'Thử quá nhiều lần. Hãy đợi một lúc rồi thử lại.';
 
   @override
-  String get signInUnblockRejected => 'Mã bỏ chặn không được chấp nhận. Hãy dùng mã trong email mới nhất của Mozilla.';
+  String get signInUnblockRejected =>
+      'Mã bỏ chặn không được chấp nhận. Hãy dùng mã trong email mới nhất của Mozilla.';
 
   @override
-  String get signInWrongCode => 'Mã sai hoặc đã hết hạn. Hãy dùng mã trong email mới nhất của Mozilla; mã cũ không còn dùng được khi có mã mới.';
+  String get signInWrongCode =>
+      'Mã sai hoặc đã hết hạn. Hãy dùng mã trong email mới nhất của Mozilla; mã cũ không còn dùng được khi có mã mới.';
 
   @override
-  String get signInWrongTotp => 'Mã sai. Nhập mã mà ứng dụng xác thực đang hiển thị.';
+  String get signInWrongTotp =>
+      'Mã sai. Nhập mã mà ứng dụng xác thực đang hiển thị.';
 
   @override
-  String get signInTooManyCodes => 'Nhập sai mã quá nhiều lần. Hãy đăng nhập lại từ đầu.';
+  String get signInTooManyCodes =>
+      'Nhập sai mã quá nhiều lần. Hãy đăng nhập lại từ đầu.';
 
   @override
-  String get signInTimedOut => 'Đăng nhập mất quá nhiều thời gian. Hãy bắt đầu lại.';
+  String get signInTimedOut =>
+      'Đăng nhập mất quá nhiều thời gian. Hãy bắt đầu lại.';
 
   @override
-  String get signInNetwork => 'Không kết nối được tới Mozilla. Hãy kiểm tra internet rồi thử lại.';
+  String get signInNetwork =>
+      'Không kết nối được tới Mozilla. Hãy kiểm tra internet rồi thử lại.';
 
   @override
   String get coreConnecting => 'Đang kết nối với lõi…';
@@ -443,7 +461,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get errNotAnswering => 'Lõi không phản hồi.';
 
   @override
-  String get errRefused => 'Lõi từ chối kết nối từ ứng dụng; có thể lõi này thuộc về một bản cài đặt khác.';
+  String get errRefused =>
+      'Lõi từ chối kết nối từ ứng dụng; có thể lõi này thuộc về một bản cài đặt khác.';
 
   @override
   String get settingsTitle => 'Cài đặt';
@@ -497,7 +516,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get routingDirect => 'Kết nối trực tiếp cho trang trong nước';
 
   @override
-  String get routingDirectHint => 'Các trang và IP của quốc gia đã chọn sẽ không qua VPN: mở nhanh hơn và tiết kiệm dung lượng.';
+  String get routingDirectHint =>
+      'Các trang và IP của quốc gia đã chọn sẽ không qua VPN: mở nhanh hơn và tiết kiệm dung lượng.';
 
   @override
   String get region => 'Quốc gia';
@@ -536,13 +556,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String get openFolder => 'Mở thư mục';
 
   @override
-  String get unofficialNote => 'Ứng dụng không chính thức. Không liên kết với Mozilla.';
+  String get unofficialNote =>
+      'Ứng dụng không chính thức. Không liên kết với Mozilla.';
 
   @override
   String get closeTitle => 'Đóng cửa sổ?';
 
   @override
-  String get closeBody => 'Khi thu nhỏ xuống khay hệ thống, VPN vẫn giữ kết nối. Thoát ứng dụng sẽ ngắt VPN.';
+  String get closeBody =>
+      'Khi thu nhỏ xuống khay hệ thống, VPN vẫn giữ kết nối. Thoát ứng dụng sẽ ngắt VPN.';
 
   @override
   String get rememberChoice => 'Ghi nhớ lựa chọn';
@@ -587,7 +609,8 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get portChangeBody => 'Các ứng dụng kết nối tới cổng này. Hãy chọn một cổng từ 1024 đến 65535.';
+  String get portChangeBody =>
+      'Các ứng dụng kết nối tới cổng này. Hãy chọn một cổng từ 1024 đến 65535.';
 
   @override
   String get portLabel => 'Cổng';
@@ -614,7 +637,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get welcomeTitle => 'Chào mừng';
 
   @override
-  String get welcomeBody => 'Chọn ngôn ngữ và quốc gia của bạn. Các trang trong nước sẽ mở trực tiếp, không qua VPN, giúp nhanh hơn và tiết kiệm dung lượng.';
+  String get welcomeBody =>
+      'Chọn ngôn ngữ và quốc gia của bạn. Các trang trong nước sẽ mở trực tiếp, không qua VPN, giúp nhanh hơn và tiết kiệm dung lượng.';
 
   @override
   String get start => 'Bắt đầu';
@@ -670,7 +694,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get modeRecommendedHint => 'Mozilla chọn vị trí cho bạn.';
 
   @override
-  String get modeFastestHint => 'Mỗi lần kết nối, chọn vị trí có độ trễ thấp nhất.';
+  String get modeFastestHint =>
+      'Mỗi lần kết nối, chọn vị trí có độ trễ thấp nhất.';
 
   @override
   String get testDelay => 'Đo độ trễ thực';
@@ -695,7 +720,8 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get noServers => 'Chưa có máy chủ. Danh sách sẽ hiện khi lõi kết nối được với Mozilla.';
+  String get noServers =>
+      'Chưa có máy chủ. Danh sách sẽ hiện khi lõi kết nối được với Mozilla.';
 
   @override
   String get levelAll => 'Tất cả';
@@ -725,7 +751,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get switchThreshold => 'Chuyển tài khoản khi đạt';
 
   @override
-  String get switchThresholdHint => 'Khi dung lượng đã dùng đạt mức này, ứng dụng chuyển sang tài khoản tiếp theo.';
+  String get switchThresholdHint =>
+      'Khi dung lượng đã dùng đạt mức này, ứng dụng chuyển sang tài khoản tiếp theo.';
 
   @override
   String get signInMethod => 'Phương thức đăng nhập';
@@ -740,7 +767,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get browserSignInBroken => 'Không thể mở trang đăng nhập.';
 
   @override
-  String get browserSignInBlocked => 'Mozilla chưa hoàn tất bước cuối để thêm tài khoản (HTTP 406).';
+  String get browserSignInBlocked =>
+      'Mozilla chưa hoàn tất bước cuối để thêm tài khoản (HTTP 406).';
 
   @override
   String get browserSignInFallback => 'Đăng nhập bằng email và mật khẩu';
@@ -760,7 +788,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get backupImportTitle => 'Thêm các tài khoản này?';
 
   @override
-  String get backupAccountExists => 'Đã có sẵn; thông tin đăng nhập sẽ lấy từ tệp';
+  String get backupAccountExists =>
+      'Đã có sẵn; thông tin đăng nhập sẽ lấy từ tệp';
 
   @override
   String get backupImportAction => 'Thêm';
@@ -791,7 +820,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get dnsCustom => 'Tùy chỉnh';
 
   @override
-  String get dnsCustomHint => 'Mỗi dòng một máy chủ: https://…/dns-query, tls://…, hoặc một địa chỉ IP.';
+  String get dnsCustomHint =>
+      'Mỗi dòng một máy chủ: https://…/dns-query, tls://…, hoặc một địa chỉ IP.';
 
   @override
   String get dnsFallback => 'Dùng DNS hệ thống làm dự phòng';
@@ -827,7 +857,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tunMtu => 'MTU';
 
   @override
-  String get tunMtuHint => 'Kích thước gói của giao diện VPN, từ 1280 đến 9000. Để trống: tự động.';
+  String get tunMtuHint =>
+      'Kích thước gói của giao diện VPN, từ 1280 đến 9000. Để trống: tự động.';
 
   @override
   String get tunMtuInvalid => 'Một số từ 1280 đến 9000, hoặc để trống';
@@ -842,7 +873,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get directRules => 'Trực tiếp';
 
   @override
-  String get directRulesHint => 'Các trang và địa chỉ trong danh sách này mở không qua VPN, trực tiếp bằng mạng của bạn. Quy tắc của quốc gia đã chọn đã có sẵn ở đây: bạn có thể thêm, sửa hoặc xóa dòng. Chọn quốc gia khác sẽ thay bằng quy tắc của quốc gia đó.';
+  String get directRulesHint =>
+      'Các trang và địa chỉ trong danh sách này mở không qua VPN, trực tiếp bằng mạng của bạn. Quy tắc của quốc gia đã chọn đã có sẵn ở đây: bạn có thể thêm, sửa hoặc xóa dòng. Chọn quốc gia khác sẽ thay bằng quy tắc của quốc gia đó.';
 
   @override
   String get restoreRegionRules => 'Khôi phục quy tắc của quốc gia';
@@ -851,7 +883,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get blockRules => 'Chặn';
 
   @override
-  String get blockRulesHint => 'Các trang và địa chỉ trong danh sách này hoàn toàn không mở được, dù trực tiếp hay qua VPN: dùng cho quảng cáo hoặc những trang bạn không bao giờ muốn truy cập.';
+  String get blockRulesHint =>
+      'Các trang và địa chỉ trong danh sách này hoàn toàn không mở được, dù trực tiếp hay qua VPN: dùng cho quảng cáo hoặc những trang bạn không bao giờ muốn truy cập.';
 
   @override
   String get rulesTitle => 'Quy tắc';
@@ -924,7 +957,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tlsFragmentSni => 'Tên máy chủ (SNI)';
 
   @override
-  String get tlsFragmentFirstByteHint => 'Tách phần đầu TLS tại byte đầu tiên (0x16)';
+  String get tlsFragmentFirstByteHint =>
+      'Tách phần đầu TLS tại byte đầu tiên (0x16)';
 
   @override
   String get tlsFragmentSniHint => 'Chia tên máy chủ (SNI) thành nhiều gói TCP';
@@ -933,7 +967,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tlsFragmentRecord => 'Bản ghi TLS';
 
   @override
-  String get tlsFragmentRecordHint => 'Chia tên máy chủ (SNI) thành hai bản ghi TLS';
+  String get tlsFragmentRecordHint =>
+      'Chia tên máy chủ (SNI) thành hai bản ghi TLS';
 
   @override
   String get tlsFragmentOffHint => 'Kết nối TLS thông thường';
@@ -948,7 +983,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get apiRelayUse => 'Dùng máy chủ chuyển tiếp';
 
   @override
-  String get apiRelayHint => 'Cloudflare Worker của riêng bạn, hoặc relay.php trên hosting của bạn.\nChỉ dùng khi Mozilla không trả lời trực tiếp: đăng nhập, tài khoản và danh sách máy chủ đi qua nó, không phải lưu lượng VPN.';
+  String get apiRelayHint =>
+      'Cloudflare Worker của riêng bạn, hoặc relay.php trên hosting của bạn.\nChỉ dùng khi Mozilla không trả lời trực tiếp: đăng nhập, tài khoản và danh sách máy chủ đi qua nó, không phải lưu lượng VPN.';
 
   @override
   String get upstreamProxy => 'Proxy thượng nguồn';
@@ -963,7 +999,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get upstreamProxyPort => 'Cổng';
 
   @override
-  String get upstreamProxyHint => 'Kết nối đến Mozilla đi qua proxy này, dành cho các mạng chặn hoặc làm chậm Mozilla.\nNếu proxy chạy trên thiết bị này, hãy để nó ngoài VPN.';
+  String get upstreamProxyHint =>
+      'Kết nối đến Mozilla đi qua proxy này, dành cho các mạng chặn hoặc làm chậm Mozilla.\nNếu proxy chạy trên thiết bị này, hãy để nó ngoài VPN.';
 
   @override
   String get upstreamProxyInvalid => 'Nhập địa chỉ proxy, ví dụ 127.0.0.1.';
@@ -972,7 +1009,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get upstreamProxyInvalidPort => 'Nhập cổng từ 1 đến 65535.';
 
   @override
-  String get upstreamProxyOwn => 'Đó là proxy của chính ứng dụng này. Hãy nhập proxy khác.';
+  String get upstreamProxyOwn =>
+      'Đó là proxy của chính ứng dụng này. Hãy nhập proxy khác.';
 
   @override
   String get apiRelayInvalid => 'Phải là địa chỉ https://.';
@@ -993,7 +1031,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get proxyPassword => 'Mật khẩu proxy';
 
   @override
-  String get proxyLoginHint => 'Các ứng dụng phải dùng thông tin này để kết nối. Để trống cả hai nếu không cần xác thực.';
+  String get proxyLoginHint =>
+      'Các ứng dụng phải dùng thông tin này để kết nối. Để trống cả hai nếu không cần xác thực.';
 
   @override
   String get loginBothOrNone => 'Điền cả hai, hoặc để trống cả hai.';
@@ -1047,7 +1086,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get notifySignInTitle => 'Cần đăng nhập';
 
   @override
-  String get notifySignInBody => 'Một tài khoản cần đăng nhập lại ở trang Tài khoản.';
+  String get notifySignInBody =>
+      'Một tài khoản cần đăng nhập lại ở trang Tài khoản.';
 
   @override
   String get navAbout => 'Giới thiệu';
@@ -1081,7 +1121,8 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get updateCheckNoNetwork => 'Không thể kiểm tra cập nhật. Kiểm tra kết nối mạng và thử lại.';
+  String get updateCheckNoNetwork =>
+      'Không thể kiểm tra cập nhật. Kiểm tra kết nối mạng và thử lại.';
 
   @override
   String get updateNow => 'Cập nhật';
@@ -1181,7 +1222,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get connectedTo => 'Đã kết nối tới';
 
   @override
-  String get vpnNotAllowed => 'VPN cần sự cho phép của bạn. Chạm nút lần nữa và cho phép.';
+  String get vpnNotAllowed =>
+      'VPN cần sự cho phép của bạn. Chạm nút lần nữa và cho phép.';
 
   @override
   String get dataUsedTitle => 'Dung lượng đã dùng';
@@ -1193,19 +1235,23 @@ class AppLocalizationsVi extends AppLocalizations {
   String get connectRetrying => 'Không thể kết nối. Hãy kiểm tra internet.';
 
   @override
-  String get failUnreachable => 'Không thể kết nối đến máy chủ của Mozilla. Hãy thử kết nối internet khác.';
+  String get failUnreachable =>
+      'Không thể kết nối đến máy chủ của Mozilla. Hãy thử kết nối internet khác.';
 
   @override
-  String get failUpstreamProxy => 'Không thể kết nối đến Mozilla qua proxy thượng nguồn. Hãy kiểm tra xem proxy có đang chạy không.';
+  String get failUpstreamProxy =>
+      'Không thể kết nối đến Mozilla qua proxy thượng nguồn. Hãy kiểm tra xem proxy có đang chạy không.';
 
   @override
   String get failInsideVpn => 'Internet này đã đi qua một VPN. Hãy tắt nó.';
 
   @override
-  String get failRefused => 'Máy chủ Mozilla đã từ chối kết nối. Hãy thử lại sau vài phút.';
+  String get failRefused =>
+      'Máy chủ Mozilla đã từ chối kết nối. Hãy thử lại sau vài phút.';
 
   @override
-  String get failLocationRefused => 'Quốc gia này không mở cho tài khoản của bạn. Hãy chọn quốc gia khác.';
+  String get failLocationRefused =>
+      'Quốc gia này không mở cho tài khoản của bạn. Hãy chọn quốc gia khác.';
 
   @override
   String get useRecommendedLocation => 'Dùng vị trí đề xuất';
@@ -1216,31 +1262,39 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get failSignIn => 'Phiên đăng nhập của tài khoản này đã hết hạn. Hãy đăng nhập lại ở trang Tài khoản.';
+  String get failSignIn =>
+      'Phiên đăng nhập của tài khoản này đã hết hạn. Hãy đăng nhập lại ở trang Tài khoản.';
 
   @override
-  String get failQuota => 'Dung lượng tháng này đã hết. Hãy thêm tài khoản khác.';
+  String get failQuota =>
+      'Dung lượng tháng này đã hết. Hãy thêm tài khoản khác.';
 
   @override
-  String get failNotEntitled => 'Mozilla không cho tài khoản này dùng VPN. Hãy thêm tài khoản khác.';
+  String get failNotEntitled =>
+      'Mozilla không cho tài khoản này dùng VPN. Hãy thêm tài khoản khác.';
 
   @override
-  String get failRegion => 'Mozilla không cung cấp dịch vụ tại quốc gia của bạn.';
+  String get failRegion =>
+      'Mozilla không cung cấp dịch vụ tại quốc gia của bạn.';
 
   @override
-  String get failServer => 'Dịch vụ Mozilla đang gặp sự cố tạm thời. Ứng dụng sẽ tự thử lại.';
+  String get failServer =>
+      'Dịch vụ Mozilla đang gặp sự cố tạm thời. Ứng dụng sẽ tự thử lại.';
 
   @override
-  String get failNoAccount => 'Không có tài khoản nào sẵn sàng. Hãy mở trang Tài khoản.';
+  String get failNoAccount =>
+      'Không có tài khoản nào sẵn sàng. Hãy mở trang Tài khoản.';
 
   @override
-  String get failTestSite => 'Đã kết nối máy chủ nhưng không mở được trang web. Hãy thử quốc gia khác.';
+  String get failTestSite =>
+      'Đã kết nối máy chủ nhưng không mở được trang web. Hãy thử quốc gia khác.';
 
   @override
   String get failOther => 'Không thể kết nối. Hãy thử lại.';
 
   @override
-  String get failNoInternet => 'Không có internet. Hãy kiểm tra Wi-Fi hoặc dữ liệu di động.';
+  String get failNoInternet =>
+      'Không có internet. Hãy kiểm tra Wi-Fi hoặc dữ liệu di động.';
 
   @override
   String get waitingForNetwork => 'Đang chờ kết nối internet…';
@@ -1260,10 +1314,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get appModeInclude => 'Chỉ ứng dụng đã chọn qua VPN';
 
   @override
-  String get appModeExcludeHint => 'Ứng dụng đã chọn kết nối trực tiếp, không qua VPN: ví dụ ứng dụng ngân hàng chặn IP nước ngoài.';
+  String get appModeExcludeHint =>
+      'Ứng dụng đã chọn kết nối trực tiếp, không qua VPN: ví dụ ứng dụng ngân hàng chặn IP nước ngoài.';
 
   @override
-  String get appModeIncludeHint => 'Chỉ các ứng dụng đã chọn đi qua VPN; các ứng dụng khác kết nối trực tiếp.';
+  String get appModeIncludeHint =>
+      'Chỉ các ứng dụng đã chọn đi qua VPN; các ứng dụng khác kết nối trực tiếp.';
 
   @override
   String fromRegionList(String region) {
@@ -1277,13 +1333,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String get connectionMode => 'Chế độ kết nối';
 
   @override
-  String get modeProxyHint => 'Chỉ những ứng dụng được cài đặt dùng proxy mới đi qua proxy.';
+  String get modeProxyHint =>
+      'Chỉ những ứng dụng được cài đặt dùng proxy mới đi qua proxy.';
 
   @override
   String get modeSystemProxyHint => 'Windows và hầu hết ứng dụng đi qua proxy.';
 
   @override
-  String get modeSystemProxyHintOther => 'Trình duyệt và hầu hết ứng dụng đi qua proxy.';
+  String get modeSystemProxyHintOther =>
+      'Trình duyệt và hầu hết ứng dụng đi qua proxy.';
 
   @override
   String get suggestedApps => 'Ứng dụng gợi ý';
@@ -1333,7 +1391,8 @@ class AppLocalizationsVi extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'DNS của mạng bạn trả về địa chỉ bị lọc cho $count tên miền. Ứng dụng không dùng DNS đó cho các tên miền này.',
+      other:
+          'DNS của mạng bạn trả về địa chỉ bị lọc cho $count tên miền. Ứng dụng không dùng DNS đó cho các tên miền này.',
       one: 'DNS của mạng bạn trả về địa chỉ bị lọc cho 1 tên miền. Ứng dụng không dùng DNS đó cho tên miền này.',
     );
     return '$_temp0';
@@ -1376,7 +1435,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get modeProxyOnly => 'Chỉ proxy';
 
   @override
-  String get noNetwork => 'Không có kết nối internet. Hãy bật Wi-Fi hoặc dữ liệu di động.';
+  String get noNetwork =>
+      'Không có kết nối internet. Hãy bật Wi-Fi hoặc dữ liệu di động.';
 
   @override
   String get blockAds => 'Chặn quảng cáo';
@@ -1387,7 +1447,8 @@ class AppLocalizationsVi extends AppLocalizations {
   }
 
   @override
-  String get systemProxyTakenOff => 'Một chương trình khác đã tắt proxy hệ thống, nên lưu lượng không đi qua VPN.';
+  String get systemProxyTakenOff =>
+      'Một chương trình khác đã tắt proxy hệ thống, nên lưu lượng không đi qua VPN.';
 
   @override
   String get setSystemProxyAgain => 'Đặt lại';
@@ -1413,7 +1474,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tunInstallWaiting => 'Đang chờ cho phép cài đặt dịch vụ TUN…';
 
   @override
-  String get tunInstallCancelled => 'Chế độ TUN cần quyền quản trị một lần. Quyền không được cấp nên chế độ không thay đổi.';
+  String get tunInstallCancelled =>
+      'Chế độ TUN cần quyền quản trị một lần. Quyền không được cấp nên chế độ không thay đổi.';
 
   @override
   String tunInstallFailed(String error) {
@@ -1436,16 +1498,19 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tunMissing => 'Dịch vụ TUN chưa được cài đặt.';
 
   @override
-  String get tunOutdated => 'Dịch vụ TUN cũ hơn ứng dụng này. Hãy cài đặt lại để dùng chế độ TUN.';
+  String get tunOutdated =>
+      'Dịch vụ TUN cũ hơn ứng dụng này. Hãy cài đặt lại để dùng chế độ TUN.';
 
   @override
-  String get tunAppOutdated => 'Dịch vụ TUN mới hơn ứng dụng này. Hãy cập nhật ứng dụng để dùng chế độ TUN.';
+  String get tunAppOutdated =>
+      'Dịch vụ TUN mới hơn ứng dụng này. Hãy cập nhật ứng dụng để dùng chế độ TUN.';
 
   @override
   String get tunBusy => 'Một bản Fali VPN khác đang dùng chế độ TUN.';
 
   @override
-  String get tunNoDriver => 'Trình điều khiển TUN của hệ thống không khả dụng. Hãy khởi động lại máy tính rồi thử lại.';
+  String get tunNoDriver =>
+      'Trình điều khiển TUN của hệ thống không khả dụng. Hãy khởi động lại máy tính rồi thử lại.';
 
   @override
   String get tunInstall => 'Cài đặt';
@@ -1460,13 +1525,15 @@ class AppLocalizationsVi extends AppLocalizations {
   String get removeTunService => 'Gỡ dịch vụ TUN';
 
   @override
-  String get removeTunServiceHint => 'Gỡ dịch vụ hệ thống mà chế độ TUN dùng. Chọn lại TUN sẽ cài đặt lại dịch vụ.';
+  String get removeTunServiceHint =>
+      'Gỡ dịch vụ hệ thống mà chế độ TUN dùng. Chọn lại TUN sẽ cài đặt lại dịch vụ.';
 
   @override
   String get tunServiceRemoved => 'Đã gỡ dịch vụ TUN.';
 
   @override
-  String get tunInstallPrompt => 'Fali VPN muốn cài đặt dịch vụ cho chế độ TUN.';
+  String get tunInstallPrompt =>
+      'Fali VPN muốn cài đặt dịch vụ cho chế độ TUN.';
 
   @override
   String get tunRemovePrompt => 'Fali VPN muốn gỡ dịch vụ của chế độ TUN.';
@@ -1483,7 +1550,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tunPrograms => 'Chương trình không qua VPN';
 
   @override
-  String get tunProgramsHint => 'Kết nối trực tiếp, không qua Mozilla. Chỉ dành cho chương trình chạy được mà không cần VPN.';
+  String get tunProgramsHint =>
+      'Kết nối trực tiếp, không qua Mozilla. Chỉ dành cho chương trình chạy được mà không cần VPN.';
 
   @override
   String get tunProgramsEmpty => 'Chưa có chương trình nào.';
@@ -1504,7 +1572,8 @@ class AppLocalizationsVi extends AppLocalizations {
   String get tunProgramUdp => 'Chỉ UDP';
 
   @override
-  String get tunProgramUdpHint => 'Chỉ UDP của nó kết nối trực tiếp; phần còn lại qua VPN.';
+  String get tunProgramUdpHint =>
+      'Chỉ UDP của nó kết nối trực tiếp; phần còn lại qua VPN.';
 
   @override
   String get udpNoticeSetting => 'Thông báo UDP bị chặn';
@@ -1527,10 +1596,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get addProgramName => 'Nhập tên…';
 
   @override
-  String get programNameHint => 'Tên tệp của chương trình, ví dụ steam.exe; * nghĩa là văn bản bất kỳ (steam* là mọi chương trình của Steam).';
+  String get programNameHint =>
+      'Tên tệp của chương trình, ví dụ steam.exe; * nghĩa là văn bản bất kỳ (steam* là mọi chương trình của Steam).';
 
   @override
-  String get runningProgramsEmpty => 'Không có chương trình nào khác đang chạy.';
+  String get runningProgramsEmpty =>
+      'Không có chương trình nào khác đang chạy.';
 
   @override
   String get tabLog => 'Nhật ký';
@@ -1631,10 +1702,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get speedStop => 'Stop';
 
   @override
-  String get speedHint => 'Turn the VPN on first, so the test measures the VPN\'s own path.';
+  String get speedHint =>
+      'Turn the VPN on first, so the test measures the VPN\'s own path.';
 
   @override
-  String get speedFailed => 'The test did not finish; check the internet and try again.';
+  String get speedFailed =>
+      'The test did not finish; check the internet and try again.';
 
   @override
   String get speedHistory => 'History';
@@ -1728,10 +1801,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get updateAllowInstall => 'Cho phép cài đặt';
 
   @override
-  String get updateAllowInstallHint => 'Để cài đặt bản cập nhật, hãy cho phép ứng dụng này cài đặt ứng dụng.';
+  String get updateAllowInstallHint =>
+      'Để cài đặt bản cập nhật, hãy cho phép ứng dụng này cài đặt ứng dụng.';
 
   @override
-  String get updateDownloadFailed => 'Không thể tải bản cập nhật. Kiểm tra kết nối mạng và thử lại.';
+  String get updateDownloadFailed =>
+      'Không thể tải bản cập nhật. Kiểm tra kết nối mạng và thử lại.';
 
   @override
   String get paramMode => 'Chế độ';

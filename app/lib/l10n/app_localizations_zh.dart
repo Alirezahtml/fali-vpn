@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -190,7 +191,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get createAccountTitle => '还没有 Firefox 账户？';
 
   @override
-  String get createAccountHint => '可在 accounts.firefox.com 免费注册，然后回到这里点击“添加账户”。';
+  String get createAccountHint =>
+      '可在 accounts.firefox.com 免费注册，然后回到这里点击“添加账户”。';
 
   @override
   String get moveUp => '上移';
@@ -379,7 +381,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signInNoAccount => '此邮箱没有 Firefox 账户。';
 
   @override
-  String get signInNoAccountHint => '请检查邮箱地址，或用它在 Mozilla 网站免费创建一个 Firefox 账户，在邮箱中确认后再在此添加。';
+  String get signInNoAccountHint =>
+      '请检查邮箱地址，或用它在 Mozilla 网站免费创建一个 Firefox 账户，在邮箱中确认后再在此添加。';
 
   @override
   String get createAccountButton => '创建 Firefox 账户';
@@ -388,7 +391,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signInWrongPassword => '密码错误。';
 
   @override
-  String get signInNoPassword => '此账户没有密码：它是通过 Google 或 Apple 登录创建的。请先设置密码，然后在此用该密码登录。';
+  String get signInNoPassword =>
+      '此账户没有密码：它是通过 Google 或 Apple 登录创建的。请先设置密码，然后在此用该密码登录。';
 
   @override
   String get setPasswordButton => '设置密码';
@@ -400,7 +404,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signInUnblockRejected => '解锁码未被接受。请使用 Mozilla 最新邮件中的验证码。';
 
   @override
-  String get signInWrongCode => '验证码错误或已过期。请使用 Mozilla 最新邮件中的验证码；发送新验证码后，旧的即失效。';
+  String get signInWrongCode =>
+      '验证码错误或已过期。请使用 Mozilla 最新邮件中的验证码；发送新验证码后，旧的即失效。';
 
   @override
   String get signInWrongTotp => '验证码错误。请输入身份验证器应用当前显示的验证码。';
@@ -842,7 +847,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get directRules => '直连';
 
   @override
-  String get directRulesHint => '此列表中的网站和地址不经过 VPN，直接通过你自己的网络打开。所选国家的规则已在此处：可以添加、修改或删除。选择其他国家会替换为该国的规则。';
+  String get directRulesHint =>
+      '此列表中的网站和地址不经过 VPN，直接通过你自己的网络打开。所选国家的规则已在此处：可以添加、修改或删除。选择其他国家会替换为该国的规则。';
 
   @override
   String get restoreRegionRules => '恢复该国家的默认规则';
@@ -851,7 +857,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get blockRules => '拦截';
 
   @override
-  String get blockRulesHint => '此列表中的网站和地址完全无法打开，无论直连还是通过 VPN：适用于广告或你永远不想访问的网站。';
+  String get blockRulesHint =>
+      '此列表中的网站和地址完全无法打开，无论直连还是通过 VPN：适用于广告或你永远不想访问的网站。';
 
   @override
   String get rulesTitle => '规则';
@@ -948,7 +955,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get apiRelayUse => '使用中继服务器';
 
   @override
-  String get apiRelayHint => '你自己的 Cloudflare Worker，或你自己主机上的 relay.php。\n仅在 Mozilla 无法直接应答时使用：登录、账户和服务器列表经过它，VPN 流量不经过。';
+  String get apiRelayHint =>
+      '你自己的 Cloudflare Worker，或你自己主机上的 relay.php。\n仅在 Mozilla 无法直接应答时使用：登录、账户和服务器列表经过它，VPN 流量不经过。';
 
   @override
   String get upstreamProxy => '上游代理';
@@ -963,7 +971,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get upstreamProxyPort => '端口';
 
   @override
-  String get upstreamProxyHint => '与 Mozilla 的连接通过此代理，适用于封锁或限速 Mozilla 的网络。\n如果代理运行在本设备上，请将其排除在 VPN 之外。';
+  String get upstreamProxyHint =>
+      '与 Mozilla 的连接通过此代理，适用于封锁或限速 Mozilla 的网络。\n如果代理运行在本设备上，请将其排除在 VPN 之外。';
 
   @override
   String get upstreamProxyInvalid => '请输入代理地址，例如 127.0.0.1。';
@@ -1524,7 +1533,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get addProgramName => '输入名称…';
 
   @override
-  String get programNameHint => '程序的文件名，例如 steam.exe；* 代表任意文字（steam* 即 Steam 的所有程序）。';
+  String get programNameHint =>
+      '程序的文件名，例如 steam.exe；* 代表任意文字（steam* 即 Steam 的所有程序）。';
 
   @override
   String get runningProgramsEmpty => '没有其他正在运行的程序。';
@@ -1628,10 +1638,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get speedStop => 'Stop';
 
   @override
-  String get speedHint => 'Turn the VPN on first, so the test measures the VPN\'s own path.';
+  String get speedHint =>
+      'Turn the VPN on first, so the test measures the VPN\'s own path.';
 
   @override
-  String get speedFailed => 'The test did not finish; check the internet and try again.';
+  String get speedFailed =>
+      'The test did not finish; check the internet and try again.';
 
   @override
   String get speedHistory => 'History';
@@ -1742,7 +1754,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
 class AppLocalizationsZhHant extends AppLocalizationsZh {
-  AppLocalizationsZhHant(): super('zh_Hant');
+  AppLocalizationsZhHant() : super('zh_Hant');
 
   @override
   String get appTitle => 'Fali VPN';
@@ -2115,7 +2127,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get signInNoAccount => '此電子郵件沒有 Firefox Account。';
 
   @override
-  String get signInNoAccountHint => '請檢查電子郵件地址，或用它在 Mozilla 網站免費建立 Firefox Account，從信箱確認後再在此新增。';
+  String get signInNoAccountHint =>
+      '請檢查電子郵件地址，或用它在 Mozilla 網站免費建立 Firefox Account，從信箱確認後再在此新增。';
 
   @override
   String get createAccountButton => '建立 Firefox Account';
@@ -2124,7 +2137,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get signInWrongPassword => '密碼錯誤。';
 
   @override
-  String get signInNoPassword => '此帳號沒有密碼：它是透過 Google 或 Apple 登入建立的。請先設定密碼，再於此用該密碼登入。';
+  String get signInNoPassword =>
+      '此帳號沒有密碼：它是透過 Google 或 Apple 登入建立的。請先設定密碼，再於此用該密碼登入。';
 
   @override
   String get setPasswordButton => '設定密碼';
@@ -2136,7 +2150,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get signInUnblockRejected => '解除封鎖碼未被接受。請使用 Mozilla 最新郵件中的代碼。';
 
   @override
-  String get signInWrongCode => '驗證碼錯誤或已過期。請使用 Mozilla 最新郵件中的驗證碼；寄出新驗證碼後，舊的即失效。';
+  String get signInWrongCode =>
+      '驗證碼錯誤或已過期。請使用 Mozilla 最新郵件中的驗證碼；寄出新驗證碼後，舊的即失效。';
 
   @override
   String get signInWrongTotp => '驗證碼錯誤。請輸入驗證器應用程式目前顯示的驗證碼。';
@@ -2578,7 +2593,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get directRules => '直接連線';
 
   @override
-  String get directRulesHint => '此清單中的網站和位址不經過 VPN，直接透過你自己的網路開啟。所選國家的規則已在此處：可以新增、修改或刪除。選擇其他國家會換成該國的規則。';
+  String get directRulesHint =>
+      '此清單中的網站和位址不經過 VPN，直接透過你自己的網路開啟。所選國家的規則已在此處：可以新增、修改或刪除。選擇其他國家會換成該國的規則。';
 
   @override
   String get restoreRegionRules => '還原該地區的規則';
@@ -2684,7 +2700,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get apiRelayUse => '使用中繼伺服器';
 
   @override
-  String get apiRelayHint => '你自己的 Cloudflare Worker，或你自己主機上的 relay.php。\n僅在 Mozilla 無法直接回應時使用：登入、帳戶和伺服器清單經過它，VPN 流量不經過。';
+  String get apiRelayHint =>
+      '你自己的 Cloudflare Worker，或你自己主機上的 relay.php。\n僅在 Mozilla 無法直接回應時使用：登入、帳戶和伺服器清單經過它，VPN 流量不經過。';
 
   @override
   String get upstreamProxy => '上游代理';
@@ -2699,7 +2716,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get upstreamProxyPort => '連接埠';
 
   @override
-  String get upstreamProxyHint => '與 Mozilla 的連線會經過此代理，適用於封鎖或限速 Mozilla 的網路。\n如果代理在本裝置上執行，請將其排除在 VPN 之外。';
+  String get upstreamProxyHint =>
+      '與 Mozilla 的連線會經過此代理，適用於封鎖或限速 Mozilla 的網路。\n如果代理在本裝置上執行，請將其排除在 VPN 之外。';
 
   @override
   String get upstreamProxyInvalid => '請輸入代理位址，例如 127.0.0.1。';
@@ -3263,7 +3281,8 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get addProgramName => '輸入名稱…';
 
   @override
-  String get programNameHint => '程式的檔案名稱，例如 steam.exe；* 代表任意文字（steam* 即 Steam 的所有程式）。';
+  String get programNameHint =>
+      '程式的檔案名稱，例如 steam.exe；* 代表任意文字（steam* 即 Steam 的所有程式）。';
 
   @override
   String get runningProgramsEmpty => '沒有其他正在執行的程式。';
