@@ -62,6 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
   /// wears a spinner until the core answers.
   String? _savingTransport;
 
+  /// Whether a test has confirmed this session: kept so a mid-session
+  /// test that misses does not demote "Connected" back to "Connecting"
+  /// (see build).
+  bool _confirmedSession = false;
+
   @override
   void initState() {
     super.initState();
@@ -220,6 +225,15 @@ class _HomeScreenState extends State<HomeScreen> {
     final canSwitch = status.systemProxySupported;
     final proxy = status.proxy;
     final running = status.state.phase == Phase.running;
+    // Once a test has passed in this session, the state's word stays
+    // "Connected": a later test that misses (a busy endpoint, on a tunnel
+    // that still carries traffic) no longer flips the top's word back to
+    // "Connecting". A new connect, the proxy going off, and no network
+    // ask to be confirmed again.
+    if (status.confirmedBy(core.lastTest)) _confirmedSession = true;
+    if (!status.proxyOn || status.noNetwork || status.connectPending) {
+      _confirmedSession = false;
+    }
     // The phone's VPN is "Connecting", in amber, until a test confirms it
     // works (the controller tests again meanwhile).
     final confirming =
@@ -227,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
         (status.proxyOn &&
             running &&
             !canSwitch &&
-            !status.confirmedBy(core.lastTest));
+            !_confirmedSession);
     final test = status.isCurrentTest(core.lastTest) ? core.lastTest : null;
     final noNetwork = !status.connectPending && status.noNetwork && status.proxyOn;
     final failing =
@@ -398,8 +412,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       _coreNotices(context, status),
                       _lowQuota(context),
                       // The controls sit at the bottom, where the thumb
-                      // reaches them.
-                      const Spacer(),
+                      // reaches them — but the room between the card and
+                      // them keeps a ceiling: a tall screen's spare space
+                      // no longer pools into one wide void in the middle.
+                      const Flexible(child: SizedBox(height: 48)),
                       const SizedBox(height: 12),
                       MotionEntrance(
                         delay: const Duration(milliseconds: 60),
@@ -830,13 +846,20 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    place.caption,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: Dali.onVar(context),
-                      fontWeight: FontWeight.w500,
+                  // The caption above the place's name: a tall row's tight
+                  // room shrinks it a step instead of losing its tail —
+                  // "Recommended location" reads whole, as every word here
+                  // does.
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      place.caption,
+                      maxLines: 1,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: Dali.onVar(context),
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 1),

@@ -113,4 +113,10 @@ dependencies {
     // ProxyController: the browser sign-in's WebView uses the core's
     // sign-in proxy. The version webview_flutter_android itself uses.
     implementation("androidx.webkit:webkit:1.15.0")
+    // NotificationCompat, for the VPN notification — and, where the phone
+    // offers it, the Dynamic Island's capsule (Android 16's Live Updates:
+    // the ongoing notification promoted around the camera). ZedSecure's
+    // version for its own notification, at the newest line the AGP's
+    // compileSdk 36 accepts (1.19.0 asks for 37).
+    implementation("androidx.core:core-ktx:1.17.0")
 }

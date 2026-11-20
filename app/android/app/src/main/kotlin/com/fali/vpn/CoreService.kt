@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
+import androidx.core.app.NotificationCompat
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
@@ -419,6 +420,14 @@ class CoreService : VpnService() {
      * header, and a Disconnect action. Every piece is the phone's to
      * decline: a launcher that shows no large icon, or no timer, simply
      * shows the standard notification, and nothing else changes.
+     *
+     * Where the phone offers a Dynamic Island — Android 16's Live
+     * Updates, the capsule that sits by the camera, as ZedSecure's
+     * notification wears too — this notification asks to be promoted
+     * there (setRequestPromotedOngoing), and the capsule carries the
+     * short words of [shortChip]. A phone without the feature reads
+     * neither extra and shows the standard notification; no permission,
+     * no overlay, nothing else is needed for either shape.
      */
     private fun notification(code: String): Notification {
         val country = if (code.length == 2) {
@@ -442,22 +451,29 @@ class CoreService : VpnService() {
             this, 1, Intent(this, CoreService::class.java).setAction(ACTION_STOP),
             PendingIntent.FLAG_IMMUTABLE,
         )
-        val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Notification.Builder(this, CHANNEL)
-        } else {
-            @Suppress("DEPRECATION")
-            Notification.Builder(this)
-        }
+        // NotificationCompat handles the channel itself on every version,
+        // so the pre-O branch of the framework builder goes away.
+        val builder = NotificationCompat.Builder(this, CHANNEL)
         builder
             .setSmallIcon(R.drawable.ic_stat_logo)
             .setColor(ACCENT)
             .setContentTitle(if (country.isNotEmpty()) country else getString(R.string.app_name))
             .setContentText(text)
-            .setStyle(Notification.BigTextStyle().bigText(text))
+            .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setContentIntent(open)
             .setOngoing(true)
             .setOnlyAlertOnce(true)
-            .addAction(Notification.Action.Builder(null, getString(R.string.notification_stop), stop).build())
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            // The Dynamic Island's capsule, where the phone offers one:
+            // the request costs nothing where it is not supported.
+            .setRequestPromotedOngoing(true)
+            // The capsule's own words, the one figure its small room
+            // carries: the download speed, or the state without it.
+            .setShortCriticalText(shortChip(state))
+            .addAction(
+                NotificationCompat.Action.Builder(0, getString(R.string.notification_stop), stop).build(),
+            )
         flagIcon(code)?.let { builder.setLargeIcon(it) }
         // The connection's age, ticking on its own; no timestamp beside it
         // while the state is not "connected".
@@ -468,6 +484,22 @@ class CoreService : VpnService() {
         }
         return builder.build()
     }
+
+    /**
+     * The capsule's short words (setShortCriticalText): the room is small,
+     * so it carries one figure — the download speed the user asked to see
+     * ("↓ 9.4 KB/s", the upload stays in the notification itself), or the
+     * state's words when the speed is turned off. The figure is wrapped in
+     * its own left-to-right isolate (ZedSecure's BidiText.ltr), so a
+     * right-to-left phone reads the speed the same way.
+     */
+    private fun shortChip(state: String): String =
+        if (shownSpeed.isEmpty()) {
+            state
+        } else {
+            val speed = shownSpeed.substringBefore("\u2191").trim()
+            "\u2066$speed\u2069"
+        }
 
     /** The country's flag as a bitmap, from the PNG the app rendered; null without one. Kept, so a poll does not read the file again. */
     private var flagCache: Pair<String, Bitmap>? = null
