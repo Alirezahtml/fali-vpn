@@ -285,11 +285,7 @@ class StatChip extends StatelessWidget {
 /// The round search field of the servers page. Under the finger's focus
 /// it lights: a soft blue halo breathes out of it while the user types.
 class SearchField extends StatefulWidget {
-  const SearchField({
-    super.key,
-    required this.hint,
-    required this.onChanged,
-  });
+  const SearchField({super.key, required this.hint, required this.onChanged});
 
   final String hint;
   final ValueChanged<String> onChanged;
@@ -469,8 +465,9 @@ class ServerTile extends StatelessWidget {
           // and the state's wash on the chosen one.
           color: selected
               ? Dali.wash(StatusColors.good, dark)
-              : theme.colorScheme.surfaceContainer
-                    .withValues(alpha: GlassCard.fillAlpha(dark)),
+              : theme.colorScheme.surfaceContainer.withValues(
+                  alpha: GlassCard.fillAlpha(dark),
+                ),
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: edge),
         ),
@@ -559,8 +556,9 @@ class ChoiceTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected
               ? Dali.wash(Dali.primary, dark)
-              : theme.colorScheme.surfaceContainer
-                    .withValues(alpha: GlassCard.fillAlpha(dark)),
+              : theme.colorScheme.surfaceContainer.withValues(
+                  alpha: GlassCard.fillAlpha(dark),
+                ),
           borderRadius: BorderRadius.circular(22),
           border: Border.all(
             color: selected
@@ -630,377 +628,6 @@ class ChoiceTile extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// The capsule power switch of the approved design: a wide pill whose
-/// white knob carries the power mark and glides across as the VPN turns
-/// on and off, with three chevrons flowing toward the knob while the
-/// traffic runs. The pill's own color wears the state — the electric blue
-/// at rest, the green while connected — and a ring of light breathes out
-/// of the whole. The knob's travel is held left-to-right on purpose, so
-/// "on" always reads as the knob at the same end, in either reading
-/// direction.
-class PowerCapsule extends StatefulWidget {
-  const PowerCapsule({
-    super.key,
-    required this.tooltip,
-    required this.on,
-    required this.busy,
-    required this.onPressed,
-    this.autofocus = false,
-  });
-
-  /// What a long press, or the screen reader, calls the button.
-  final String tooltip;
-
-  /// Green while on, the blue while off.
-  final bool on;
-  final bool busy;
-  final VoidCallback? onPressed;
-  final bool autofocus;
-
-  @override
-  State<PowerCapsule> createState() => _PowerCapsuleState();
-}
-
-class _PowerCapsuleState extends State<PowerCapsule>
-    with TickerProviderStateMixin {
-  /// The chevrons' flow toward the knob, running only while connected.
-  AnimationController? _flow;
-
-  /// The one-shot rings that bloom out of the capsule the moment the
-  /// tunnel is up: the arrival is worth a small celebration.
-  AnimationController? _cheer;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _syncFlow();
-    _syncCheer();
-  }
-
-  @override
-  void didUpdateWidget(PowerCapsule old) {
-    super.didUpdateWidget(old);
-    if (old.on != widget.on) {
-      _syncFlow();
-      // Off to on, not while the switch is still working: the rings
-      // bloom when the arrival is certain.
-      if (widget.on && !widget.busy) {
-        _cheer?.forward(from: 0);
-      }
-    }
-  }
-
-  void _syncFlow() {
-    final running = widget.on && !widget.busy && repeatingEffectsOn(context);
-    if (running && _flow == null) {
-      final c = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 1250),
-      );
-      _flow = c..repeat();
-    } else if (!running && _flow != null) {
-      _flow!.dispose();
-      _flow = null;
-    }
-  }
-
-  void _syncCheer() {
-    _cheer ??= AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 950),
-    );
-  }
-
-  @override
-  void dispose() {
-    _flow?.dispose();
-    _cheer?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final dark = theme.brightness == Brightness.dark;
-    final color = widget.on ? StatusColors.good : Dali.primary;
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        // The rings breathe while connected, and quicken while the
-        // switch is working, so waiting reads as happening.
-        PulseHalo(
-          color: color,
-          size: 238,
-          enabled: widget.on || widget.busy,
-          rings: 2,
-          period: widget.busy
-              ? const Duration(milliseconds: 1500)
-              : Motion.breathe,
-        ),
-        // The arrival's rings, one play.
-        if (_cheer != null)
-          IgnorePointer(
-            child: AnimatedBuilder(
-              animation: _cheer!,
-              builder: (context, _) {
-                if (_cheer!.value == 0) return const SizedBox.shrink();
-                return CustomPaint(
-                  size: const Size.square(238),
-                  painter: _CheerPainter(
-                    color: StatusColors.good,
-                    progress: _cheer!.value,
-                  ),
-                );
-              },
-            ),
-          ),
-        Tooltip(
-          message: widget.tooltip,
-          child: FocusableActionDetector(
-            autofocus: widget.autofocus,
-            mouseCursor: widget.onPressed == null
-                ? MouseCursor.defer
-                : SystemMouseCursors.click,
-            actions: {
-              ActivateIntent: CallbackAction<ActivateIntent>(
-                onInvoke: (_) => widget.onPressed?.call(),
-              ),
-            },
-            child: PressScale(
-              onTap: widget.onPressed,
-              amount: 0.965,
-              haptic: true,
-              child: _capsule(context, color, dark),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// The pill itself: the state's color, the flow's chevrons, and the
-  /// sliding knob with the power mark (a spinner while the switch runs).
-  Widget _capsule(BuildContext context, Color color, bool dark) {
-    final idle = dark ? const Color(0xFFC7C7CC) : const Color(0xFF5B6474);
-    final knob = Container(
-      width: 48,
-      height: 48,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: dark ? 0.5 : 0.22),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Center(
-        child: ScaleSwitcher(
-          duration: Motion.fast,
-          child: widget.busy
-              ? SizedBox.square(
-                  key: const ValueKey('spin'),
-                  dimension: 19,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.6,
-                    color: color,
-                  ),
-                )
-              : Icon(
-                  Icons.power_settings_new_rounded,
-                  key: const ValueKey('pow'),
-                  size: 26,
-                  color: widget.on ? StatusColors.good : idle,
-                ),
-        ),
-      ),
-    );
-
-    // Three chevrons whose light runs toward the knob, so the pill reads
-    // alive while the VPN carries traffic.
-    Widget flow() {
-      final c = _flow;
-      return AnimatedOpacity(
-        duration: Motion.normal,
-        curve: Motion.emphasized,
-        opacity: widget.on && !widget.busy ? 1 : 0,
-        child: AnimatedBuilder(
-          animation: c ?? kAlwaysCompleteAnimation,
-          builder: (context, _) {
-            final t = c?.value ?? 0;
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (var i = 0; i < 3; i++)
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    size: 22,
-                    color: Colors.white.withValues(
-                      alpha:
-                          0.25 +
-                          0.55 *
-                              math.max(
-                                0,
-                                math.sin((t * 2 - i * 0.33) * math.pi),
-                              ),
-                    ),
-                  ),
-              ],
-            );
-          },
-        ),
-      );
-    }
-
-    return Directionality(
-      // The knob's travel does not mirror: "on" is the far end everywhere.
-      textDirection: TextDirection.ltr,
-      // While the switch works, a band of light sweeps across the pill,
-      // so the wait reads as motion, not as a freeze.
-      child: ShimmerSweep(
-        enabled: widget.busy,
-        color: Colors.white,
-        period: const Duration(milliseconds: 1300),
-        child: AnimatedContainer(
-        duration: Motion.normal,
-        curve: Motion.emphasized,
-        width: 208,
-        height: 60,
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(999),
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.lerp(color, Colors.white, 0.14)!,
-              color,
-              Color.lerp(color, Colors.black, dark ? 0.18 : 0.08)!,
-            ],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: color.withValues(alpha: dark ? 0.45 : 0.35),
-              blurRadius: 18,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            // The flow's chevrons sit at the end the knob leaves.
-            Positioned(left: 12, child: flow()),
-            // The knob glides across with a small overshoot, the way a
-            // well-made switch settles.
-            AnimatedAlign(
-              duration: const Duration(milliseconds: 340),
-              curve: Motion.pop,
-              alignment: widget.on
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
-              child: Padding(padding: const EdgeInsets.all(6), child: knob),
-            ),
-          ],
-        ),
-        ),
-      ),
-    );
-  }
-}
-
-/// The rings that bloom out of the capsule once the tunnel is up: two
-/// circles run outward and fade, one after the other, and then the page
-/// rests still again.
-class _CheerPainter extends CustomPainter {
-  _CheerPainter({required this.color, required this.progress});
-
-  final Color color;
-  final double progress;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = size.center(Offset.zero);
-    final base = size.shortestSide / 2;
-    final paint = Paint()..style = PaintingStyle.stroke;
-    for (var i = 0; i < 2; i++) {
-      final t = (progress - i * 0.22).clamp(0.0, 1.0);
-      if (t <= 0) continue;
-      final eased = Curves.easeOutCubic.transform(t);
-      paint.strokeWidth = 9 * (1 - eased) + 0.5;
-      paint.color = color.withValues(alpha: 0.45 * (1 - eased));
-      canvas.drawCircle(center, base * (1 + 0.5 * eased), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_CheerPainter old) =>
-      old.progress != progress || old.color != color;
-}
-
-/// The rings that bloom out of the switch the moment the tunnel is up:
-/// two circles run outward and fade, one after the other, and then the
-/// page rests still again — the same arrival's celebration the power
-/// capsule plays, sized for whichever control carries it.
-class ArrivalBloom extends StatefulWidget {
-  const ArrivalBloom({
-    super.key,
-    required this.color,
-    required this.size,
-    required this.arrived,
-  });
-
-  final Color color;
-  final double size;
-
-  /// True while the tunnel is up: the rings bloom on the false→true turn,
-  /// once, and not again until the tunnel drops and comes back.
-  final bool arrived;
-
-  @override
-  State<ArrivalBloom> createState() => _ArrivalBloomState();
-}
-
-class _ArrivalBloomState extends State<ArrivalBloom>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 950),
-  );
-
-  @override
-  void didUpdateWidget(ArrivalBloom old) {
-    super.didUpdateWidget(old);
-    if (widget.arrived && !old.arrived && Motion.on(context)) {
-      _c.forward(from: 0);
-    }
-  }
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: AnimatedBuilder(
-        animation: _c,
-        builder: (context, _) {
-          if (_c.value == 0) return const SizedBox.shrink();
-          return CustomPaint(
-            size: Size.square(widget.size),
-            painter: _CheerPainter(color: widget.color, progress: _c.value),
-          );
-        },
       ),
     );
   }
@@ -1149,11 +776,7 @@ class _DialPainter extends CustomPainter {
           ..strokeWidth = 5.4
           ..strokeCap = StrokeCap.round,
       );
-      canvas.drawCircle(
-        at(_start + sweep),
-        3.6,
-        Paint()..color = end,
-      );
+      canvas.drawCircle(at(_start + sweep), 3.6, Paint()..color = end);
     }
   }
 
@@ -1397,7 +1020,8 @@ double mbpsFrom(int bytesPerSecond) => bytesPerSecond * 8 / 1e6;
 /// double — an `as double` on the int it returns would throw every time,
 /// and the page that called it would show as grey nothing.
 double niceCeil(double v) {
-  final e = math.pow(10.0, (math.log(math.max(v, 1)) / math.ln10).floor())
+  final e = math
+      .pow(10.0, (math.log(math.max(v, 1)) / math.ln10).floor())
       .toDouble();
   for (final m in const [1, 1.5, 2, 3, 4, 5, 7.5, 10]) {
     if (m * e >= v) return m * e;

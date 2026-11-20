@@ -11,6 +11,7 @@ import '../core/models.dart';
 import '../l10n/app_localizations.dart';
 import 'connections_view.dart';
 import 'format.dart';
+import 'motion.dart';
 import 'widgets.dart';
 
 /// The core's live log: a level and text filter, auto-scroll,
@@ -325,28 +326,37 @@ class _LogsPageState extends State<LogsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          PageTitle(l.navLogs),
+          MotionEntrance(
+            offset: const Offset(0, 10),
+            duration: Motion.normal,
+            child: PageTitle(l.navLogs),
+          ),
           const SizedBox(height: 16),
           if (widget.connections ?? !Platform.isAndroid) ...[
             Align(
               alignment: AlignmentDirectional.centerStart,
-              child: SegmentedButton<bool>(
-                showSelectedIcon: false,
-                segments: [
-                  ButtonSegment(
-                    value: false,
-                    icon: const Icon(Icons.receipt_long_rounded, size: 18),
-                    label: Text(l.tabLog),
-                  ),
-                  ButtonSegment(
-                    value: true,
-                    icon: const Icon(Icons.swap_vert_rounded, size: 18),
-                    label: Text(l.tabConnections),
-                  ),
-                ],
-                selected: {_connections},
-                onSelectionChanged: (v) =>
-                    setState(() => _connections = v.first),
+              child: MotionEntrance(
+                delay: const Duration(milliseconds: 40),
+                offset: const Offset(0, 12),
+                duration: Motion.normal,
+                child: SegmentedButton<bool>(
+                  showSelectedIcon: false,
+                  segments: [
+                    ButtonSegment(
+                      value: false,
+                      icon: const Icon(Icons.receipt_long_rounded, size: 18),
+                      label: Text(l.tabLog),
+                    ),
+                    ButtonSegment(
+                      value: true,
+                      icon: const Icon(Icons.swap_vert_rounded, size: 18),
+                      label: Text(l.tabConnections),
+                    ),
+                  ],
+                  selected: {_connections},
+                  onSelectionChanged: (v) =>
+                      setState(() => _connections = v.first),
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -359,10 +369,15 @@ class _LogsPageState extends State<LogsPage> {
               ),
             )
           else ...[
-            LayoutBuilder(
-              builder: (context, box) => box.maxWidth < 600
-                  ? _narrowTools(l, visible)
-                  : _wideTools(l, visible),
+            MotionEntrance(
+              delay: const Duration(milliseconds: 80),
+              offset: const Offset(0, 12),
+              duration: Motion.normal,
+              child: LayoutBuilder(
+                builder: (context, box) => box.maxWidth < 600
+                    ? _narrowTools(l, visible)
+                    : _wideTools(l, visible),
+              ),
             ),
             const SizedBox(height: 16),
             Expanded(

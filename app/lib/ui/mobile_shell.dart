@@ -157,19 +157,17 @@ class _MobileShellState extends State<MobileShell> {
                 onOpenConnection: openConnection,
                 onOpenUpstreamProxy: openUpstreamProxy,
               )
-            : _readable(
-                switch (_tab) {
-                  1 => ServersScreen(core: core, settings: settings),
-                  2 => SpeedTestScreen(core: core),
-                  _ => _SettingsList(
-                      core: core,
-                      settings: settings,
-                      openAccounts: openAccounts,
-                      openServers: () => setState(() => _tab = 1),
-                      push: _push,
-                    ),
-                },
-              ));
+            : _readable(switch (_tab) {
+                1 => ServersScreen(core: core, settings: settings),
+                2 => SpeedTestScreen(core: core),
+                _ => _SettingsList(
+                  core: core,
+                  settings: settings,
+                  openAccounts: openAccounts,
+                  openServers: () => setState(() => _tab = 1),
+                  push: _push,
+                ),
+              }));
     return PopScope(
       canPop: _tab == 0,
       onPopInvokedWithResult: (didPop, _) {
@@ -184,7 +182,12 @@ class _MobileShellState extends State<MobileShell> {
               if (widget.banner != null)
                 DropInBanner(visible: true, child: widget.banner!),
               Expanded(
+                // A tab change travels the soft way: a longer, gentler
+                // slide than a card's inner swap, so the page reads as
+                // gliding into its place, not snapping.
                 child: SlideFadeSwitcher(
+                  duration: Motion.slow,
+                  distance: 26,
                   child: KeyedSubtree(
                     // A tab change, not a traffic tick, is what slides.
                     key: ValueKey((_tab, widget.noCore != null)),

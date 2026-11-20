@@ -33,20 +33,24 @@ class AccountsPage extends StatelessWidget {
         // Title and its buttons: one row where the screen has room, and
         // the buttons wrap under the title where it has not — the row
         // never pushes past the screen's edge.
-        Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
-          runSpacing: 10,
-          children: [
-            PageTitle(l.navAccounts),
-            FilledButton.icon(
-              onPressed: () => startAddAccount(context, core, settings),
-              icon: const Icon(Icons.add_rounded),
-              label: Text(l.addAccount),
-            ),
-            BackupMenuButton(core: core),
-          ],
+        MotionEntrance(
+          offset: const Offset(0, 10),
+          duration: Motion.normal,
+          child: Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 8,
+            runSpacing: 10,
+            children: [
+              PageTitle(l.navAccounts),
+              FilledButton.icon(
+                onPressed: () => startAddAccount(context, core, settings),
+                icon: const Icon(Icons.add_rounded),
+                label: Text(l.addAccount),
+              ),
+              BackupMenuButton(core: core),
+            ],
+          ),
         ),
         const SizedBox(height: 20),
         if (core.accounts == null)
@@ -72,40 +76,60 @@ class AccountsPage extends StatelessWidget {
               ),
             ],
           const SizedBox(height: 12),
-          _SignInMethodRow(settings: settings),
+          MotionEntrance(
+            delay: const Duration(milliseconds: 80),
+            offset: const Offset(0, 14),
+            duration: Motion.slow,
+            child: _SignInMethodRow(settings: settings),
+          ),
           // Nothing to switch to with one account.
           if (list.length > 1) ...[
             const SizedBox(height: 12),
-            _AccountSwitching(core: core, percent: threshold),
+            MotionEntrance(
+              delay: const Duration(milliseconds: 120),
+              offset: const Offset(0, 14),
+              duration: Motion.slow,
+              child: _AccountSwitching(core: core, percent: threshold),
+            ),
           ],
         ],
         // More accounts, more data: each has its own month's allowance,
         // and the app moves to the next one by itself.
         const SizedBox(height: 12),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.info_rounded,
-              size: 18,
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                [
-                  l.accountsGuide(_allowance(list)),
-                  if (list.length > 1) l.accountsOrderNote(threshold.round()),
-                ].join(' '),
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
+        MotionEntrance(
+          delay: const Duration(milliseconds: 160),
+          offset: const Offset(0, 14),
+          duration: Motion.slow,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.info_rounded,
+                size: 18,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  [
+                    l.accountsGuide(_allowance(list)),
+                    if (list.length > 1) l.accountsOrderNote(threshold.round()),
+                  ].join(' '),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 16),
-        const _CreateAccountGuide(),
+        MotionEntrance(
+          delay: const Duration(milliseconds: 200),
+          offset: const Offset(0, 14),
+          duration: Motion.slow,
+          child: const _CreateAccountGuide(),
+        ),
       ],
     );
   }

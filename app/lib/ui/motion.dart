@@ -797,11 +797,7 @@ Future<T?> showFaliDialog<T>({
 
 /// A banner that drops in from its top, and slides back out when it goes.
 class DropInBanner extends StatefulWidget {
-  const DropInBanner({
-    super.key,
-    required this.child,
-    required this.visible,
-  });
+  const DropInBanner({super.key, required this.child, required this.visible});
 
   final Widget child;
   final bool visible;
@@ -847,6 +843,59 @@ class _DropInBannerState extends State<DropInBanner>
       // The drop-in pins to the top edge (the old axisAlignment: -1).
       alignment: Alignment(-1.0, -1.0),
       child: FadeTransition(opacity: _curve, child: widget.child),
+    );
+  }
+}
+
+/// A child that arrives and leaves with the page's own easing: the room
+/// it takes grows and closes smoothly (the cards under it never jump),
+/// while the child itself fades in, sliding down a breath from above —
+/// and slides back up as it goes. The [tag] identifies the content: when
+/// it changes, the new content crosses with the old in the same motion,
+/// so a banner that swaps its words swaps them the soft way.
+class MotionAppear extends StatelessWidget {
+  const MotionAppear({
+    super.key,
+    required this.visible,
+    required this.child,
+    this.tag = 'on',
+    this.duration = Motion.normal,
+  });
+
+  final bool visible;
+  final Widget child;
+
+  /// The content's identity, stable across rebuilds (a version's word, a
+  /// notice's key): the crossing plays when it changes, not when the
+  /// page merely rebuilds.
+  final Object tag;
+  final Duration duration;
+
+  @override
+  Widget build(BuildContext context) {
+    final on = Motion.on(context);
+    return AnimatedSize(
+      duration: duration,
+      curve: on ? Motion.emphasized : Curves.linear,
+      alignment: Alignment.topCenter,
+      child: AnimatedSwitcher(
+        duration: duration,
+        switchInCurve: Motion.emphasizedDecelerate,
+        switchOutCurve: Motion.emphasizedAccelerate,
+        transitionBuilder: (child, animation) => FadeTransition(
+          opacity: animation,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, -0.16),
+              end: Offset.zero,
+            ).animate(animation),
+            child: child,
+          ),
+        ),
+        child: visible
+            ? KeyedSubtree(key: ValueKey(tag), child: child)
+            : const SizedBox.shrink(key: ValueKey('off')),
+      ),
     );
   }
 }

@@ -2,7 +2,7 @@ name: fali_vpn
 description: "Cross-platform shell for the Go VPN core"
 publish_to: 'none'
 
-version: 1.9.2+147
+version: 1.9.3+148
 
 environment:
   sdk: ^3.13.5

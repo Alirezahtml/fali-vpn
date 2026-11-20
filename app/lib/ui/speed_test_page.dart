@@ -27,11 +27,9 @@ class SpeedTestPage extends StatefulWidget {
 }
 
 class _SpeedTestPageState extends State<SpeedTestPage> {
-  static const _downUrl =
-      'https://speed.cloudflare.com/__down?bytes=31457280';
+  static const _downUrl = 'https://speed.cloudflare.com/__down?bytes=31457280';
   static const _pingUrl = 'https://speed.cloudflare.com/__down?bytes=0';
-  static const _downFallback =
-      'https://proof.ovh.net/files/100Mb.dat';
+  static const _downFallback = 'https://proof.ovh.net/files/100Mb.dat';
   static const _upUrl = 'https://speed.cloudflare.com/__up';
   static const _downBudget = Duration(seconds: 14);
   static const _upBudget = Duration(seconds: 8);
@@ -65,7 +63,9 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
   /// write; without a data dir the history stays in memory for the visit.
   File? _historyFile() {
     final dir = widget.core.status?.dataDir ?? '';
-    return dir.isEmpty ? null : File('$dir${Platform.pathSeparator}speed-history.json');
+    return dir.isEmpty
+        ? null
+        : File('$dir${Platform.pathSeparator}speed-history.json');
   }
 
   Future<void> _loadHistory() async {
@@ -74,7 +74,11 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
     try {
       final list = jsonDecode(await f.readAsString()) as List<Object?>;
       if (!mounted) return;
-      setState(() => _history = [for (final e in list) Map<String, Object?>.from(e as Map)]);
+      setState(
+        () => _history = [
+          for (final e in list) Map<String, Object?>.from(e as Map),
+        ],
+      );
     } catch (_) {
       // No history yet, or a file that does not parse: the list stays empty.
     }
@@ -112,7 +116,8 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
   /// The time until Cloudflare answers at all: the tunnel's own delay.
   Future<int> _measurePing(HttpClient client) async {
     final watch = Stopwatch()..start();
-    final req = await client.openUrl('GET', Uri.parse(_pingUrl))
+    final req = await client
+        .openUrl('GET', Uri.parse(_pingUrl))
         .timeout(const Duration(seconds: 6));
     await req.close().timeout(const Duration(seconds: 6));
     watch.stop();
@@ -177,7 +182,8 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
     }
     final watch = Stopwatch()..start();
     try {
-      final req = await client.openUrl('POST', Uri.parse(_upUrl))
+      final req = await client
+          .openUrl('POST', Uri.parse(_upUrl))
           .timeout(const Duration(seconds: 6));
       req.headers.contentType = ContentType.binary;
       final sent = req.addStream(Stream.value(bytes)).timeout(_upBudget);
@@ -212,7 +218,8 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
   /// `math.pow` answers an int while both its arguments are ints, so the
   /// base goes in as a double.
   double _niceCeil(double v) {
-    final e = math.pow(10.0, (math.log(math.max(v, 1)) / math.ln10).floor())
+    final e = math
+        .pow(10.0, (math.log(math.max(v, 1)) / math.ln10).floor())
         .toDouble();
     for (final m in const [1, 1.5, 2, 3, 4, 5, 7.5, 10]) {
       if (m * e >= v) return m * e;
@@ -276,8 +283,20 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
     return ListView(
       padding: pagePadding(context),
       children: [
-        PageTitle(l.navSpeedTest),
-        Text(l.speedHint, style: theme.textTheme.bodySmall?.copyWith(color: muted)),
+        MotionEntrance(
+          offset: const Offset(0, 10),
+          duration: Motion.normal,
+          child: PageTitle(l.navSpeedTest),
+        ),
+        MotionEntrance(
+          delay: const Duration(milliseconds: 40),
+          offset: const Offset(0, 10),
+          duration: Motion.normal,
+          child: Text(
+            l.speedHint,
+            style: theme.textTheme.bodySmall?.copyWith(color: muted),
+          ),
+        ),
         const SizedBox(height: 12),
         MotionEntrance(
           offset: const Offset(0, 14),
@@ -312,9 +331,7 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
                       _ResultChip(
                         icon: Icons.bolt_rounded,
                         label: l.realDelay,
-                        text: _ping > 0
-                            ? l.milliseconds(_ping)
-                            : '—',
+                        text: _ping > 0 ? l.milliseconds(_ping) : '—',
                         highlight: false,
                       ),
                     ],
@@ -325,67 +342,98 @@ class _SpeedTestPageState extends State<SpeedTestPage> {
           ),
         ),
         const SizedBox(height: 14),
-        Center(
-          child: FilledButton(
-            style: FilledButton.styleFrom(
-              minimumSize: const Size(196, 52),
-              shape: const StadiumBorder(),
-            ),
-            onPressed: _running ? _stop : () => _run(),
-            child: _running
-                ? Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox.square(
-                        dimension: 14,
-                        child: CircularProgressIndicator(strokeWidth: 2),
+        MotionEntrance(
+          delay: const Duration(milliseconds: 120),
+          offset: const Offset(0, 14),
+          duration: Motion.slow,
+          child: Center(
+            child: FilledButton(
+              style: FilledButton.styleFrom(
+                minimumSize: const Size(196, 52),
+                shape: const StadiumBorder(),
+              ),
+              onPressed: _running ? _stop : () => _run(),
+              // The run and the stop cross with a small scale, so the
+              // button changes its mind without a snap.
+              child: ScaleSwitcher(
+                duration: Motion.fast,
+                child: _running
+                    ? Row(
+                        key: const ValueKey('stop'),
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox.square(
+                            dimension: 14,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(l.speedStop),
+                        ],
+                      )
+                    : Row(
+                        key: const ValueKey('run'),
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.play_arrow_rounded, size: 20),
+                          const SizedBox(width: 6),
+                          Text(l.speedRun),
+                        ],
                       ),
-                      const SizedBox(width: 8),
-                      Text(l.speedStop),
-                    ],
-                  )
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.play_arrow_rounded, size: 20),
-                      const SizedBox(width: 6),
-                      Text(l.speedRun),
-                    ],
-                  ),
+              ),
+            ),
           ),
         ),
         if (_error != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Center(
-              child: Text(
-                _error!,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: theme.colorScheme.error,
+          MotionEntrance(
+            offset: const Offset(0, 8),
+            duration: Motion.fast,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Center(
+                child: Text(
+                  _error!,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.error,
+                  ),
                 ),
               ),
             ),
           ),
         const SizedBox(height: 22),
-        Row(
-          children: [
-            Expanded(child: Text(l.speedHistory, style: theme.textTheme.titleSmall)),
-            if (_history.isNotEmpty)
-              TextButton(
-                onPressed: _running ? null : _clearHistory,
-                child: Text(l.speedClear),
+        MotionEntrance(
+          delay: const Duration(milliseconds: 160),
+          offset: const Offset(0, 12),
+          duration: Motion.normal,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(l.speedHistory, style: theme.textTheme.titleSmall),
               ),
-          ],
+              if (_history.isNotEmpty)
+                TextButton(
+                  onPressed: _running ? null : _clearHistory,
+                  child: Text(l.speedClear),
+                ),
+            ],
+          ),
         ),
         if (_history.isEmpty)
-          Panel(child: Text(l.speedHistoryEmpty, style: theme.textTheme.bodySmall))
+          Panel(
+            child: Text(l.speedHistoryEmpty, style: theme.textTheme.bodySmall),
+          )
         else
           Panel(
             child: Column(
               children: [
+                // Each past test arrives a beat behind the one above it.
                 for (final (i, e) in _history.take(10).indexed) ...[
                   if (i > 0) const Divider(height: 1),
-                  _HistoryRow(entry: e),
+                  MotionEntrance(
+                    offset: const Offset(0, 12),
+                    duration: Motion.normal,
+                    delay: Motion.staggerStep * (i > 8 ? 8 : i),
+                    child: _HistoryRow(entry: e),
+                  ),
                 ],
               ],
             ),
@@ -434,11 +482,7 @@ class _HistoryRow extends StatelessWidget {
               ],
             ),
           ),
-          Icon(
-            Icons.speed_rounded,
-            size: 20,
-            color: theme.colorScheme.primary,
-          ),
+          Icon(Icons.speed_rounded, size: 20, color: theme.colorScheme.primary),
         ],
       ),
     );

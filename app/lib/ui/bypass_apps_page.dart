@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../core/android_core.dart';
 import '../l10n/app_localizations.dart';
+import 'motion.dart';
 import 'widgets.dart';
 
 /// Android, per-app proxy (v2rayN's words): bypass the selected apps, or
@@ -187,28 +188,35 @@ class _BypassAppsPageState extends State<BypassAppsPage> {
                     app.package,
                     () => AndroidCore.appIcon(app.package),
                   );
-                  return CheckboxListTile(
-                    value: routing.checked(app.package),
-                    onChanged: (v) {
-                      setState(() => routing.toggle(app.package, v ?? false));
-                      _save();
-                    },
-                    secondary: SizedBox.square(
-                      dimension: 40,
-                      child: FutureBuilder<Uint8List?>(
-                        future: icon,
-                        builder: (context, snap) => snap.data == null
-                            ? const Icon(Icons.android_rounded)
-                            : Image.memory(snap.data!, gaplessPlayback: true),
+                  return MotionEntrance(
+                    offset: const Offset(0, 12),
+                    duration: Motion.normal,
+                    // Each app row arrives a beat behind the one above
+                    // it; a long list still settles within half a second.
+                    delay: Motion.staggerStep * (i > 12 ? 12 : i - 1),
+                    child: CheckboxListTile(
+                      value: routing.checked(app.package),
+                      onChanged: (v) {
+                        setState(() => routing.toggle(app.package, v ?? false));
+                        _save();
+                      },
+                      secondary: SizedBox.square(
+                        dimension: 40,
+                        child: FutureBuilder<Uint8List?>(
+                          future: icon,
+                          builder: (context, snap) => snap.data == null
+                              ? const Icon(Icons.android_rounded)
+                              : Image.memory(snap.data!, gaplessPlayback: true),
+                        ),
                       ),
-                    ),
-                    title: Text(app.label),
-                    subtitle: Text(
-                      onList ? l.fromRegionList(widget.region!) : app.package,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: onList ? theme.colorScheme.primary : null,
+                      title: Text(app.label),
+                      subtitle: Text(
+                        onList ? l.fromRegionList(widget.region!) : app.package,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: onList ? theme.colorScheme.primary : null,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
                   );
                 },

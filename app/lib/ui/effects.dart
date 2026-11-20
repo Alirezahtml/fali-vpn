@@ -59,8 +59,8 @@ class GlassCard extends StatelessWidget {
 
   /// How much of the surface shows through: high enough that the words
   /// on the card keep their contrast, low enough that the lights behind
-  /// it arrive.
-  static double fillAlpha(bool dark) => dark ? 0.86 : 0.82;
+  /// it arrive and the pane reads as glass, not as paint.
+  static double fillAlpha(bool dark) => dark ? 0.78 : 0.72;
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +75,18 @@ class GlassCard extends StatelessWidget {
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: [
-        Colors.white.withValues(alpha: dark ? 0.16 : 0.90),
+        // The light lands on the pane's top edge: the rim catches it, and
+        // a second, fainter band rides a little lower, the way real
+        // frosted glass scatters the light along its thickness.
+        Colors.white.withValues(alpha: dark ? 0.24 : 0.92),
+        dark
+            ? Colors.white.withValues(alpha: 0.07)
+            : Colors.white.withValues(alpha: 0.30),
         dark
             ? Colors.white.withValues(alpha: 0.04)
             : const Color(0xFF0B3B78).withValues(alpha: 0.10),
       ],
+      stops: const [0.0, 0.28, 1.0],
     );
 
     Widget glass = DecoratedBox(
@@ -101,7 +108,7 @@ class GlassCard extends StatelessWidget {
       glass = ClipRRect(
         borderRadius: BorderRadius.circular(radius),
         child: BackdropFilter(
-          filter: ui.ImageFilter.blur(sigmaX: 16, sigmaY: 16),
+          filter: ui.ImageFilter.blur(sigmaX: 22, sigmaY: 22),
           child: glass,
         ),
       );

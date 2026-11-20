@@ -53,12 +53,14 @@ class _AboutPageState extends State<AboutPage> {
     } on Exception catch (e) {
       // No connection, a timeout, or a refused handshake: say so in words,
       // not as the exception's text.
-      final network = e is SocketException ||
-          e is TimeoutException ||
-          e is TlsException;
+      final network =
+          e is SocketException || e is TimeoutException || e is TlsException;
       if (mounted) {
-        setState(() => _result =
-            network ? l.updateCheckNoNetwork : l.updateCheckFailed('$e'));
+        setState(
+          () => _result = network
+              ? l.updateCheckNoNetwork
+              : l.updateCheckFailed('$e'),
+        );
       }
     } finally {
       if (mounted) setState(() => _checking = false);
@@ -76,7 +78,11 @@ class _AboutPageState extends State<AboutPage> {
     return ListView(
       padding: pagePadding(context),
       children: [
-        PageTitle(l.navAbout),
+        MotionEntrance(
+          offset: const Offset(0, 10),
+          duration: Motion.normal,
+          child: PageTitle(l.navAbout),
+        ),
         const SizedBox(height: 20),
         Panel(
           child: Column(
@@ -117,9 +123,7 @@ class _AboutPageState extends State<AboutPage> {
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
                         : const Icon(Icons.update_rounded, size: 18),
-                    label: Text(
-                      _checking ? l.checkingUpdates : l.checkUpdates,
-                    ),
+                    label: Text(_checking ? l.checkingUpdates : l.checkUpdates),
                   ),
                 ],
               ),

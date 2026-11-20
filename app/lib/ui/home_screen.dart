@@ -351,7 +351,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _header(context),
+                      // The page arrives in one gentle wave: the brand,
+                      // then the card, then the controls, each a step
+                      // behind the one before it.
+                      MotionEntrance(
+                        offset: const Offset(0, 10),
+                        duration: Motion.normal,
+                        child: _header(context),
+                      ),
                       const SizedBox(height: 18),
                       MotionEntrance(
                         offset: const Offset(0, 14),
@@ -394,7 +401,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       // reaches them.
                       const Spacer(),
                       const SizedBox(height: 12),
-                      _SlidePill(
+                      MotionEntrance(
+                        delay: const Duration(milliseconds: 60),
+                        offset: const Offset(0, 16),
+                        duration: Motion.slow,
+                        child: _SlidePill(
                         label: status.proxyOn
                             ? l.swipeToDisconnect
                             : l.swipeToConnect,
@@ -410,11 +421,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context,
                                 () => _toggle(status.proxyOn),
                               ),
+                        ),
                       ),
                       const SizedBox(height: 10),
-                      _modeRow(context, modeText: modeText),
+                      MotionEntrance(
+                        delay: const Duration(milliseconds: 120),
+                        offset: const Offset(0, 14),
+                        duration: Motion.slow,
+                        child: _modeRow(context, modeText: modeText),
+                      ),
                       const SizedBox(height: 10),
-                      _protocolBar(context),
+                      MotionEntrance(
+                        delay: const Duration(milliseconds: 180),
+                        offset: const Offset(0, 14),
+                        duration: Motion.slow,
+                        child: _protocolBar(context),
+                      ),
                     ],
                   ),
                 ),
@@ -554,7 +576,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   alpha: dark ? 0.10 : 0.07,
                 ),
               ),
-              Column(
+              // The card's room breathes with its words: a line that
+              // appears (the address, a second line of the place's name)
+              // grows in smoothly instead of jumping the card.
+              AnimatedSize(
+                duration: Motion.normal,
+                curve: Motion.emphasized,
+                alignment: Alignment.topCenter,
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // The protocol's badge at the reading's start, the state's
@@ -674,6 +703,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 10),
               _readings(context, modeText: modeText),
                 ],
+              ),
               ),
             ],
           ),
@@ -1196,15 +1226,26 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
-    if (cards.isEmpty) return const SizedBox.shrink();
-    return Column(
-      children: [
-        for (final (i, card) in cards.indexed) ...[
-          if (i > 0) const SizedBox(height: 10),
-          Padding(padding: const EdgeInsets.only(bottom: 2), child: card),
+    if (cards.isEmpty) {
+      // Still wrapped, so a banner that leaves closes its room smoothly
+      // instead of jumping the cards under it.
+      return MotionAppear(
+        visible: false,
+        child: const SizedBox.shrink(),
+      );
+    }
+    return MotionAppear(
+      visible: true,
+      tag: cards.map((c) => (c as ProblemCard).text).join('|'),
+      child: Column(
+        children: [
+          for (final (i, card) in cards.indexed) ...[
+            if (i > 0) const SizedBox(height: 10),
+            Padding(padding: const EdgeInsets.only(bottom: 2), child: card),
+          ],
+          const SizedBox(height: 8),
         ],
-        const SizedBox(height: 8),
-      ],
+      ),
     );
   }
 
@@ -1218,40 +1259,48 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, _) {
         final l = AppLocalizations.of(context);
         final release = Updates.available.value;
-        if (release == null || release.version == settings.dismissedUpdate) {
-          return const SizedBox.shrink();
-        }
+        final show =
+            release != null && release.version != settings.dismissedUpdate;
         final failure = Updates.failure.value;
-        return Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: ProblemCard(
-            text: failure != null
-                ? l.updateFailed(release.version)
-                : l.updateAvailable(release.version),
-            color: Dali.amber,
-            icon: Icons.system_update_rounded,
-            tooltip: failure ?? '',
-            actions: [
-              if (failure == null && release.url.isNotEmpty)
-                TextButton.icon(
-                  onPressed: () => showUpdateDialog(
-                    context,
-                    release: release,
-                    core: widget.core,
-                    settings: settings,
+        return MotionAppear(
+          visible: show,
+          tag: release?.version ?? '',
+          child: show
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: ProblemCard(
+                    text: failure != null
+                        ? l.updateFailed(release.version)
+                        : l.updateAvailable(release.version),
+                    color: Dali.amber,
+                    icon: Icons.system_update_rounded,
+                    tooltip: failure ?? '',
+                    actions: [
+                      if (failure == null && release.url.isNotEmpty)
+                        TextButton.icon(
+                          onPressed: () => showUpdateDialog(
+                            context,
+                            release: release,
+                            core: widget.core,
+                            settings: settings,
+                          ),
+                          icon: const Icon(
+                            Icons.system_update_alt_rounded,
+                            size: 18,
+                          ),
+                          label: Text(l.updateNow),
+                        ),
+                      IconButton(
+                        tooltip: l.close,
+                        visualDensity: VisualDensity.compact,
+                        icon: const Icon(Icons.close_rounded, size: 18),
+                        onPressed: () =>
+                            settings.update(dismissedUpdate: release.version),
+                      ),
+                    ],
                   ),
-                  icon: const Icon(Icons.system_update_alt_rounded, size: 18),
-                  label: Text(l.updateNow),
-                ),
-              IconButton(
-                tooltip: l.close,
-                visualDensity: VisualDensity.compact,
-                icon: const Icon(Icons.close_rounded, size: 18),
-                onPressed: () =>
-                    settings.update(dismissedUpdate: release.version),
-              ),
-            ],
-          ),
+                )
+              : const SizedBox.shrink(),
         );
       },
     );
@@ -1265,42 +1314,50 @@ class _HomeScreenState extends State<HomeScreen> {
             (n.kind == 'port' || n.kind == 'command'))
           n,
     ];
-    if (shown.isEmpty) return const SizedBox.shrink();
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    return Column(
-      children: [
-        for (final n in shown)
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: ProblemCard(
-              text: n.kind == 'port'
-                  ? l.noticePort(n.detail)
-                  : l.noticeCommand,
-              color: Dali.amber,
-              icon: Icons.info_rounded,
-              actions: [
-                if (n.last != null)
-                  Text(
-                    [
-                      l.noticeTimes(n.count, formatAgo(l, n.last!)),
-                      if (n.hosts.isNotEmpty) n.hosts.join(', '),
-                    ].join(' · '),
-                    style: theme.textTheme.labelSmall?.copyWith(
-                      color: Dali.onVar(context),
+    return MotionAppear(
+      visible: shown.isNotEmpty,
+      tag: shown.map((n) => n.key).join('|'),
+      child: shown.isEmpty
+          ? const SizedBox.shrink()
+          : Column(
+              children: [
+                for (final n in shown)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: ProblemCard(
+                      text: n.kind == 'port'
+                          ? l.noticePort(n.detail)
+                          : l.noticeCommand,
+                      color: Dali.amber,
+                      icon: Icons.info_rounded,
+                      actions: [
+                        if (n.last != null)
+                          Text(
+                            [
+                              l.noticeTimes(
+                                n.count,
+                                formatAgo(l, n.last!),
+                              ),
+                              if (n.hosts.isNotEmpty) n.hosts.join(', '),
+                            ].join(' · '),
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: Dali.onVar(context),
+                            ),
+                          ),
+                        IconButton(
+                          tooltip: l.dismiss,
+                          visualDensity: VisualDensity.compact,
+                          icon: const Icon(Icons.close_rounded, size: 18),
+                          onPressed: () =>
+                              setState(() => _dismissedNotices.add(n.key)),
+                        ),
+                      ],
                     ),
                   ),
-                IconButton(
-                  tooltip: l.dismiss,
-                  visualDensity: VisualDensity.compact,
-                  icon: const Icon(Icons.close_rounded, size: 18),
-                  onPressed: () =>
-                      setState(() => _dismissedNotices.add(n.key)),
-                ),
               ],
             ),
-          ),
-      ],
     );
   }
 
@@ -1311,33 +1368,39 @@ class _HomeScreenState extends State<HomeScreen> {
   /// The account is running out: a word, a way to add another, a close
   /// that keeps it away for a day.
   Widget _lowQuota(BuildContext context) {
-    if (!_quotaVisible()) return const SizedBox.shrink();
+    final show = _quotaVisible();
+    final usage = widget.core.status?.activeAccount?.usage;
     final l = AppLocalizations.of(context);
-    final usage = widget.core.status!.activeAccount!.usage!;
     String rounded(int bytes) => formatBytes(bytes).replaceAll('.0 ', ' ');
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: ProblemCard(
-        text: l.lowQuotaNotice(rounded(usage.limitBytes)),
-        color: Dali.amber,
-        icon: Icons.data_usage_rounded,
-        actions: [
-          TextButton.icon(
-            onPressed: () =>
-                startAddAccount(context, widget.core, widget.settings),
-            icon: const Icon(Icons.person_add_alt_1_rounded, size: 18),
-            label: Text(l.addAccount),
-          ),
-          IconButton(
-            tooltip: l.close,
-            visualDensity: VisualDensity.compact,
-            icon: const Icon(Icons.close_rounded, size: 18),
-            onPressed: () => widget.settings.update(
-              lowQuotaDismissedAt: DateTime.now(),
-            ),
-          ),
-        ],
-      ),
+    return MotionAppear(
+      visible: show && usage != null,
+      tag: 'quota-${usage?.limitBytes}',
+      child: show && usage != null
+          ? Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: ProblemCard(
+                text: l.lowQuotaNotice(rounded(usage.limitBytes)),
+                color: Dali.amber,
+                icon: Icons.data_usage_rounded,
+                actions: [
+                  TextButton.icon(
+                    onPressed: () =>
+                        startAddAccount(context, widget.core, widget.settings),
+                    icon: const Icon(Icons.person_add_alt_1_rounded, size: 18),
+                    label: Text(l.addAccount),
+                  ),
+                  IconButton(
+                    tooltip: l.close,
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(Icons.close_rounded, size: 18),
+                    onPressed: () => widget.settings.update(
+                      lowQuotaDismissedAt: DateTime.now(),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : const SizedBox.shrink(),
     );
   }
 }
@@ -1443,37 +1506,6 @@ class _SlidePillState extends State<_SlidePill>
   bool _dragging = false;
   bool _passed = false;
 
-  /// The arrival's rings, one play: they bloom out of the pill the moment
-  /// the tunnel comes up, and rest the rest of the time. One-shot, so a
-  /// still screen still costs no frames.
-  AnimationController? _bloom;
-
-  @override
-  void didUpdateWidget(_SlidePill old) {
-    super.didUpdateWidget(old);
-    if (widget.on != old.on && widget.on && !widget.busy) {
-      _bloom ??= AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 950),
-      )
-        ..addListener(() {
-          if (mounted) setState(() {});
-        })
-        ..addStatusListener((status) {
-          if (status == AnimationStatus.completed) {
-            if (mounted) setState(() {});
-          }
-        });
-      if (Motion.on(context)) _bloom!.forward(from: 0);
-    }
-  }
-
-  @override
-  void dispose() {
-    _bloom?.dispose();
-    super.dispose();
-  }
-
   bool get _rtl => Directionality.of(context) == TextDirection.rtl;
 
   void _move(DragUpdateDetails d) {
@@ -1517,19 +1549,9 @@ class _SlidePillState extends State<_SlidePill>
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // The arrival's rings, played once when the tunnel comes up.
-            // No circle rests behind the pill after it: the pill's own
-            // light is enough.
-            if (_bloom != null && _bloom!.value > 0 && _bloom!.value < 1)
-              IgnorePointer(
-                child: CustomPaint(
-                  size: const Size.square(220),
-                  painter: _BloomPainter(
-                    color: color,
-                    progress: _bloom!.value,
-                  ),
-                ),
-              ),
+            // No rings bloom behind the pill when the tunnel arrives: the
+            // connection's own lights — the data flow inside the glass,
+            // the card's energy field — are the whole celebration.
             PressScale(
               onTap: widget.busy ? null : widget.onToggle,
               amount: 0.97,
@@ -1588,20 +1610,26 @@ class _SlidePillState extends State<_SlidePill>
                           ),
                         // The words in the middle, the dots at the far
                         // end: the pill reads as a track, not a button.
+                        // The words cross with a slide when the state
+                        // turns over, so the swap never snaps.
                         Padding(
                           padding: const EdgeInsetsDirectional.symmetric(
                             horizontal: 64,
                           ),
-                          child: Text(
-                            widget.label,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w800,
-                              color: widget.on
-                                  ? StatusColors.good
-                                  : theme.colorScheme.onSurface,
+                          child: SlideFadeSwitcher(
+                            duration: Motion.normal,
+                            child: Text(
+                              widget.label,
+                              key: ValueKey(widget.label),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: widget.on
+                                    ? StatusColors.good
+                                    : theme.colorScheme.onSurface,
+                              ),
                             ),
                           ),
                         ),
@@ -1615,12 +1643,15 @@ class _SlidePillState extends State<_SlidePill>
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 for (var i = 0; i < 3; i++)
-                                  Container(
+                                  AnimatedContainer(
                                     width: 7,
                                     height: 7,
-                                    margin: const EdgeInsetsDirectional.symmetric(
-                                      horizontal: 2.5,
-                                    ),
+                                    duration: Motion.normal,
+                                    curve: Motion.emphasized,
+                                    margin:
+                                        const EdgeInsetsDirectional.symmetric(
+                                          horizontal: 2.5,
+                                        ),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: widget.on
@@ -1710,30 +1741,4 @@ class _SlidePillState extends State<_SlidePill>
   }
 }
 
-/// The rings the tunnel's arrival plays once: two thin circles that run
-/// outward from the pill, thinning and fading as they go. Painted over
-/// the page's cards for under a second, then gone.
-class _BloomPainter extends CustomPainter {
-  _BloomPainter({required this.color, required this.progress});
 
-  final Color color;
-  final double progress;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = size.center(Offset.zero);
-    final base = size.shortestSide / 2;
-    final paint = Paint()..style = PaintingStyle.stroke;
-    for (var i = 0; i < 2; i++) {
-      final t = (progress * 1.15 - i * 0.18).clamp(0.0, 1.0);
-      final eased = Curves.easeOutCubic.transform(t);
-      paint.strokeWidth = 9 * (1 - eased);
-      paint.color = color.withValues(alpha: 0.45 * (1 - eased));
-      canvas.drawCircle(center, base * (0.62 + 0.55 * eased), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_BloomPainter old) =>
-      old.progress != progress || old.color != color;
-}
